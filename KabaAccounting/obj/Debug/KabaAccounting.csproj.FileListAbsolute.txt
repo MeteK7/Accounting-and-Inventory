@@ -1,0 +1,15 @@
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe.config
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.pdb
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csprojAssemblyReference.cache
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\App.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting_MarkupCompile.cache
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting_MarkupCompile.lref
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.g.resources
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.Properties.Resources.resources
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csproj.GenerateResource.cache
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csproj.CoreCompileInputs.cache
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.exe
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.pdb
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\WinAdminDashboard.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\WinAdminDashboard.baml
