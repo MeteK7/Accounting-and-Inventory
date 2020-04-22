@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,14 +56,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="WinAdminDashboard.xaml.cs">
+    <Compile Include="BLL\UserBLL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="UI\WinAdminDashboard.xaml.cs">
       <DependentUpon>WinAdminDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="WinAdminDashboard.xaml">
+    <Compile Include="UI\WinUserDashboard.xaml.cs">
+      <DependentUpon>WinUserDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinUsers.xaml.cs">
+      <DependentUpon>WinUsers.xaml</DependentUpon>
+    </Compile>
+    <Page Include="UI\WinAdminDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinUserDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinUsers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -92,6 +109,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\add-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\delete-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\processing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\update-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\user-background.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

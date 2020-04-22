@@ -11,5 +11,9 @@ C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Deb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csproj.CoreCompileInputs.cache
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.exe
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.pdb
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\WinAdminDashboard.g.cs
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\WinAdminDashboard.baml
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashboard.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinUserDashboard.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinUsers.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashboard.baml
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinUserDashboard.baml
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinUsers.baml
