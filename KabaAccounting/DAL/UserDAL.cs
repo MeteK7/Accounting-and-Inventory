@@ -182,5 +182,29 @@ namespace KabaAccounting.DAL
 
 
         #endregion
+        #region Search User on Database using Keywords
+        public DataTable Search(string keyword)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+            DataTable dt = new DataTable();//To hold the data from database
+            try
+            {
+                String sql = "SELECT * FROM tbl_users WHERE id LIKE '%"+keyword+ "%' OR first_name LIKE '%" + keyword + "%' OR last_name LIKE '%" + keyword + "%' OR username LIKE '%" + keyword + "%'";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                adapter.Fill(dt);//Filling the data in our datatable
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dt;
+        }
+        #endregion
     }
 }

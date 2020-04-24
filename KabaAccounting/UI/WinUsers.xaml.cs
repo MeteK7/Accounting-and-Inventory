@@ -56,22 +56,22 @@ namespace KabaAccounting.UI
             if (success==true)
             {
                 MessageBox.Show("Data inserted successfully.");
-                ClearDataGrid();
+                ClearUserTextBox();
             }
             else
             {
                 MessageBox.Show("Something went wrong:(");
             }
 
-            RefreshDataGridUsers();
+            RefreshUserDataGrid();
         }
 
         private void dtgUsers_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshDataGridUsers();
+            RefreshUserDataGrid();
         }
 
-        private void RefreshDataGridUsers()
+        private void RefreshUserDataGrid()
         {
             //Refreshing Data Grid View
             DataTable dataTable = usrDAL.Select();
@@ -80,7 +80,7 @@ namespace KabaAccounting.UI
             dtgUsers.CanUserAddRows = false;
         }
 
-        private void ClearDataGrid()
+        private void ClearUserTextBox()
         {
             txtUserId.Text = "";
             txtFirstName.Text="";
@@ -136,13 +136,13 @@ namespace KabaAccounting.UI
             if (success==true)
             {
                 MessageBox.Show("User successfully updated");
-                ClearDataGrid();
+                ClearUserTextBox();
             }
             else
             {
                 MessageBox.Show("Failed to update user");
             }
-            RefreshDataGridUsers();
+            RefreshUserDataGrid();
         }
 
         private void btnUserDelete_Click(object sender, RoutedEventArgs e)
@@ -154,13 +154,35 @@ namespace KabaAccounting.UI
             if (success==true)
             {
                 MessageBox.Show("User has been deleted successfully.");
-                ClearDataGrid();
+                ClearUserTextBox();
             }
             else
             {
                 MessageBox.Show("Something went wrong:/");
             }
-            RefreshDataGridUsers();
+            RefreshUserDataGrid();
+        }
+
+        private void txtUserSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Get Keyword from Text box
+            string keyword = txtUserSearch.Text;
+
+            //Check if the keyword has value or not
+
+            if (keyword!=null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshDataGridUsers method!!! */
+            {
+                //Show user informations based on the keyword
+                DataTable dataTable = usrDAL.Search(keyword);
+                dtgUsers.ItemsSource = dataTable.DefaultView;
+                dtgUsers.AutoGenerateColumns = true;
+                dtgUsers.CanUserAddRows = false;
+            }
+            else
+            {
+                //Show all users from the database
+                RefreshUserDataGrid();
+            }
         }
     }
 }

@@ -65,7 +65,7 @@
 
         <DataGrid x:Name="dtgUsers" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" Loaded="dtgUsers_Loaded" MouseLeftButtonUp="dtgUsers_MouseLeftButtonUp"/>
         <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="370,51,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True"/>
+        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtUserSearch_TextChanged"/>
         <Button x:Name="btnUserAdd" Content="ADD" HorizontalAlignment="Left" Margin="138,518,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnUserAdd_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/add-user.png" Stretch="Uniform">
