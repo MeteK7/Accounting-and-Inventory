@@ -19,14 +19,14 @@ namespace KabaAccounting.DAL
         public DataTable Select()
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
-            DataTable dt = new DataTable();//To hold the data from database
+            DataTable dataTable = new DataTable();//To hold the data from database
             try
             {  
                 String sql = "SELECT * FROM tbl_users";//SQL query to get data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//Getting data from database           
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
-                adapter.Fill(dt);//Filling the data in our datatable
+                dataAdapter.Fill(dataTable);//Filling the data in our datatable
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace KabaAccounting.DAL
             {
                 conn.Close();
             }
-            return dt;
+            return dataTable;
         }
         #endregion
 
@@ -182,18 +182,19 @@ namespace KabaAccounting.DAL
 
 
         #endregion
+
         #region Search User on Database using Keywords
         public DataTable Search(string keyword)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
-            DataTable dt = new DataTable();//To hold the data from database
+            DataTable dataTable = new DataTable();//To hold the data from database
             try
             {
                 String sql = "SELECT * FROM tbl_users WHERE id LIKE '%"+keyword+ "%' OR first_name LIKE '%" + keyword + "%' OR last_name LIKE '%" + keyword + "%' OR username LIKE '%" + keyword + "%'";//SQL query to search data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);//Getting data from database           
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
-                adapter.Fill(dt);//Filling the data in our datatable
+                dataAdapter.Fill(dataTable);//Filling the data in our datatable
             }
             catch (Exception ex)
             {
@@ -203,7 +204,39 @@ namespace KabaAccounting.DAL
             {
                 conn.Close();
             }
-            return dt;
+            return dataTable;
+        }
+        #endregion
+
+        #region Getting User ID from Username
+        public UserBLL GetIdFromUsername(string username)
+        {
+            UserBLL usrBLL = new UserBLL();
+            SqlConnection conn = new SqlConnection(connString);
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                string sqlQuery = "SELECT id FROM tbl_users WHERE username='" + username + "'";
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
+                conn.Open();
+
+                dataAdapter.Fill(dataTable);
+                if (dataTable.Rows.Count>0)
+                {
+                    usrBLL.Id = int.Parse(dataTable.Rows[0]["id"].ToString());//TRY to understand this line of code!!!!
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return usrBLL;
         }
         #endregion
     }

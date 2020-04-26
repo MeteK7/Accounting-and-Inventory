@@ -23,12 +23,26 @@ namespace KabaAccounting
         public WinAdminDashboard()
         {
             InitializeComponent();
+            lblLoggedInUser.Content = WinLogin.loggedIn;
         }
 
         private void menuItemUsers_Click(object sender, RoutedEventArgs e)
         {
-            WinUsers user = new WinUsers();
-            user.Show();
+            WinUsers winUsers = new WinUsers();
+            winUsers.Show();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            WinLogin winLogin = new WinLogin();
+            winLogin.Show();
+            this.Hide();
+        }
+
+        private void menuItemCategory_Click(object sender, RoutedEventArgs e)
+        {
+            WinCategories winCategories = new WinCategories();
+            winCategories.Show();
         }
     }
 }

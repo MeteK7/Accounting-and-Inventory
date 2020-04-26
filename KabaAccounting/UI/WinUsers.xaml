@@ -21,7 +21,10 @@
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="USERS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" RenderTransformOrigin="0.333,0.51" HorizontalAlignment="Right" Click="btnClose_Click">
+            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -64,7 +67,7 @@
         <TextBox x:Name="txtUserAddress" HorizontalAlignment="Left" Height="87" Margin="137,417,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True"/>
 
         <DataGrid x:Name="dtgUsers" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" Loaded="dtgUsers_Loaded" MouseLeftButtonUp="dtgUsers_MouseLeftButtonUp"/>
-        <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="370,51,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="84"/>
         <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtUserSearch_TextChanged"/>
         <Button x:Name="btnUserAdd" Content="ADD" HorizontalAlignment="Left" Margin="138,518,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnUserAdd_Click">
             <Button.Background>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KabaAccounting.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,19 @@ namespace KabaAccounting
         public WinUserDashboard()
         {
             InitializeComponent();
+            lblLoggedInUser.Content = WinLogin.loggedIn;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            WinLogin winLogin = new WinLogin();
+            winLogin.Show();
+            this.Hide();
         }
     }
 }

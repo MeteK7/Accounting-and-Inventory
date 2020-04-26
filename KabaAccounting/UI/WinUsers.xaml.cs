@@ -48,7 +48,14 @@ namespace KabaAccounting.UI
             usrBLL.Gender = cboUserGender.Text;
             usrBLL.UserType = cboUserType.Text;
             usrBLL.AddedDate = DateTime.Now;
-            usrBLL.AddedBy = 1;
+
+            //Getting username of the logged in user
+            string loggedUser = WinLogin.loggedIn;
+
+            //Getting ID of the user who is logged in
+            UserBLL userAddedBy = usrDAL.GetIdFromUsername(loggedUser);
+
+            usrBLL.AddedBy = userAddedBy.Id;
 
             //Inserting Data into the Database
             bool success = usrDAL.Insert(usrBLL);

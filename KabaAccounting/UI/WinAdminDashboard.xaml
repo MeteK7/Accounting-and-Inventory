@@ -5,22 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting"
         mc:Ignorable="d"
-        Title="Admin Dashboard" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Admin Dashboard" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <StackPanel x:Name="pnlFooter" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="#FF2471A3">
             <Label x:Name="lblFooter" Content="Developed by Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
         </StackPanel>
-        <Menu x:Name="menuTop" Height="22" VerticalAlignment="Top" Margin="0,0,-0.4,0">
+        <Menu x:Name="menuTop" Height="28" VerticalAlignment="Top" Margin="0,0,-0.4,0">
             <MenuItem x:Name="menuItemUsers" Header="Users" Click="menuItemUsers_Click"/>
-            <MenuItem x:Name="menuItemCategory" Header="Category"/>
+            <MenuItem x:Name="menuItemCategory" Header="Category" Click="menuItemCategory_Click"/>
             <MenuItem x:Name="menuItemProducts" Header="Products"/>
             <MenuItem x:Name="menuItemInventory" Header="Inventory"/>
             <MenuItem x:Name="menuItemTransactions" Header="Transactions"/>
         </Menu>
-        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="0,38,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Label x:Name="lblLoggedInUser" Content="Mete KABA" HorizontalAlignment="Left" Margin="45,38,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737"/>
+        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="3,33,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="48,33,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>
         <Label x:Name="lblAppFirstName" Content="KABA" HorizontalAlignment="Center" Margin="0,0,70,0" VerticalAlignment="Center" FontSize="20"/>
         <Label x:Name="lblAppLastName" Content="STORE" Margin="70,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
         <Label x:Name="lblSubHead" Content="Accounting and Inventory" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Center" FontSize="16" Foreground="#FF1BA94B" FontWeight="SemiBold"/>
+        <Button x:Name="btnClose" Content="" Margin="0" Height="29" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
+            <Button.BorderBrush>
+                <SolidColorBrush Color="#FF707070" Opacity="0"/>
+            </Button.BorderBrush>
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.117"/>
+                    <TranslateTransform X="0.013" Y="-0.028"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Background>
+                <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

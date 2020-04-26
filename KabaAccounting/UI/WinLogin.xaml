@@ -1,0 +1,49 @@
+﻿<Window x:Class="KabaAccounting.UI.WinLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KabaAccounting.UI"
+        mc:Ignorable="d"
+        Title="Login" Height="634.2" Width="474.4" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{x:Null}">
+    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="634" VerticalAlignment="Top" Width="474" CornerRadius="15">
+        <Border.Background>
+            <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/navy-blue.jpg"/>
+        </Border.Background>
+        <Grid Margin="0.2,0.2,-1.2,-1.2">
+            <Button x:Name="btnClose" Content="" Margin="0" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.117"/>
+                        <TranslateTransform X="0.013" Y="-0.028"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
+                </Button.Background>
+            </Button>
+            <Label x:Name="lblLogin" Content="LOGIN" Height="64" DockPanel.Dock="Top" Width="136" Margin="171,197,166,372" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Source Serif Pro ExtraLight" Foreground="White"/>
+            <Label x:Name="lblUserName" Content="Username:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,275,0,329" Foreground="White"/>
+            <TextBox x:Name="txtUserName" Height="31" TextWrapping="Wrap" Width="277" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="97,309,99,293" VerticalContentAlignment="Center"/>
+            <Label x:Name="lblUserPassword" Content="Password:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,345,0,259" Foreground="White"/>
+            <PasswordBox x:Name="pswUserPassword" Height="31" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Top" Width="277" Margin="97,379,99,223" BorderBrush="#FF777779" VerticalContentAlignment="Center"/>
+            <Label x:Name="lblUserType" Content="User Type:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,415,0,189" Foreground="White"/>
+            <ComboBox x:Name="cboUserType" Height="30" VerticalAlignment="Center" Width="277" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="97,449,99,154">
+                <ComboBoxItem Content="Admin"/>
+                <ComboBoxItem Content="User"/>
+            </ComboBox>
+            <Button x:Name="btnLogin" Content="LOGIN" Height="53" VerticalAlignment="Bottom" Width="141" Margin="171,426,161,50" HorizontalAlignment="Center" DockPanel.Dock="Top" Click="btnLogin_Click"/>
+            <Label x:Name="lblLoginImg" Content="Label" HorizontalAlignment="Left" Margin="171,66,0,0" VerticalAlignment="Top" Height="126" Width="136">
+                <Label.Background>
+                    <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/avatar.png" Stretch="Uniform"/>
+                </Label.Background>
+            </Label>
+        </Grid>
+    </Border>
+
+</Window>

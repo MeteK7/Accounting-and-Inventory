@@ -56,7 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
+    <Compile Include="DAL\LoginDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="UI\WinAdminDashboard.xaml.cs">
       <DependentUpon>WinAdminDashboard.xaml</DependentUpon>
@@ -65,6 +67,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\WinCategories.xaml.cs">
+      <DependentUpon>WinCategories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinLogin.xaml.cs">
+      <DependentUpon>WinLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\WinUserDashboard.xaml.cs">
       <DependentUpon>WinUserDashboard.xaml</DependentUpon>
     </Compile>
@@ -72,6 +80,14 @@
       <DependentUpon>WinUsers.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\WinAdminDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinCategories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,6 +146,50 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Backgrounds\user-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\navy-blue.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\7419107.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\abstract_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\close.png" />
+    <Resource Include="Images\Buttons\plus.png" />
+    <Resource Include="Images\Buttons\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\plus %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\delete %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\plus %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\plus %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
