@@ -25,10 +25,11 @@ namespace KabaAccounting.UI
         public WinUsers()
         {
             InitializeComponent();
+            RefreshUserDataGrid();
         }
 
-        UserBLL usrBLL = new UserBLL();
-        UserDAL usrDAL = new UserDAL();
+        UserBLL userBLL = new UserBLL();
+        UserDAL userDAL = new UserDAL();
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -38,50 +39,44 @@ namespace KabaAccounting.UI
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
         {
             //Gettting Data from UI
-            usrBLL.FirstName = txtFirstName.Text;
-            usrBLL.LastName = txtLastName.Text;
-            usrBLL.Email = txtUserEmail.Text;
-            usrBLL.UserName = txtUserName.Text;
-            usrBLL.Password = txtUserPassword.Text;
-            usrBLL.Contact = txtUserContact.Text;
-            usrBLL.Address = txtUserAddress.Text;
-            usrBLL.Gender = cboUserGender.Text;
-            usrBLL.UserType = cboUserType.Text;
-            usrBLL.AddedDate = DateTime.Now;
+            userBLL.FirstName = txtFirstName.Text;
+            userBLL.LastName = txtLastName.Text;
+            userBLL.Email = txtUserEmail.Text;
+            userBLL.UserName = txtUserName.Text;
+            userBLL.Password = txtUserPassword.Text;
+            userBLL.Contact = txtUserContact.Text;
+            userBLL.Address = txtUserAddress.Text;
+            userBLL.Gender = cboUserGender.Text;
+            userBLL.UserType = cboUserType.Text;
+            userBLL.AddedDate = DateTime.Now;
 
             //Getting username of the logged in user
             string loggedUser = WinLogin.loggedIn;
 
             //Getting ID of the user who is logged in
-            UserBLL userAddedBy = usrDAL.GetIdFromUsername(loggedUser);
+            UserBLL userAddedBy = userDAL.GetIdFromUsername(loggedUser);
 
-            usrBLL.AddedBy = userAddedBy.Id;
+            userBLL.AddedBy = userAddedBy.Id;
 
             //Inserting Data into the Database
-            bool success = usrDAL.Insert(usrBLL);
+            bool isSuccess = userDAL.Insert(userBLL);
 
-            if (success==true)
+            if (isSuccess==true)
             {
                 MessageBox.Show("Data inserted successfully.");
                 ClearUserTextBox();
+                RefreshUserDataGrid();
             }
             else
             {
                 MessageBox.Show("Something went wrong:(");
             }
-
-            RefreshUserDataGrid();
-        }
-
-        private void dtgUsers_Loaded(object sender, RoutedEventArgs e)
-        {
-            RefreshUserDataGrid();
         }
 
         private void RefreshUserDataGrid()
         {
             //Refreshing Data Grid View
-            DataTable dataTable = usrDAL.Select();
+            DataTable dataTable = userDAL.Select();
             dtgUsers.ItemsSource = dataTable.DefaultView;
             dtgUsers.AutoGenerateColumns = true;
             dtgUsers.CanUserAddRows = false;
@@ -101,73 +96,53 @@ namespace KabaAccounting.UI
             cboUserType.Text = "";
         }
 
-        private void dtgUsers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //Getting the index of a particular row
-
-            //int rowIndex = dtgUsers.SelectedIndex;
-
-            DataRowView drv = (DataRowView)dtgUsers.SelectedItem;
-
-            txtUserId.Text = (drv[0]).ToString();//Selecting the specific ro
-            txtFirstName.Text = (drv["first_name"]).ToString();//You could also define the column name from your table.
-            txtLastName.Text = (drv[2]).ToString();
-            txtUserEmail.Text = (drv[3]).ToString();
-            txtUserName.Text = (drv[4]).ToString();
-            txtUserPassword.Text = (drv[5]).ToString();
-            txtUserContact.Text = (drv[6]).ToString();
-            txtUserAddress.Text = (drv[7]).ToString();
-            cboUserGender.Text = (drv[8]).ToString();
-            cboUserType.Text = (drv[9]).ToString();
-        }
-
         private void btnUserUpdate_Click(object sender, RoutedEventArgs e)
         {
             //Getting values from the UserUI
-            usrBLL.Id = Convert.ToInt32(txtUserId.Text);
-            usrBLL.FirstName=txtFirstName.Text;
-            usrBLL.LastName = txtLastName.Text;
-            usrBLL.Email = txtUserEmail.Text;
-            usrBLL.UserName = txtUserName.Text;
-            usrBLL.Password = txtUserPassword.Text;
-            usrBLL.Contact = txtUserContact.Text;
-            usrBLL.Address = txtUserAddress.Text;
-            usrBLL.Gender = cboUserGender.Text;
-            usrBLL.UserType = cboUserType.Text;
-            usrBLL.AddedDate = DateTime.Now;
-            usrBLL.AddedBy = 1;
+            userBLL.Id = Convert.ToInt32(txtUserId.Text);
+            userBLL.FirstName=txtFirstName.Text;
+            userBLL.LastName = txtLastName.Text;
+            userBLL.Email = txtUserEmail.Text;
+            userBLL.UserName = txtUserName.Text;
+            userBLL.Password = txtUserPassword.Text;
+            userBLL.Contact = txtUserContact.Text;
+            userBLL.Address = txtUserAddress.Text;
+            userBLL.Gender = cboUserGender.Text;
+            userBLL.UserType = cboUserType.Text;
+            userBLL.AddedDate = DateTime.Now;
+            userBLL.AddedBy = 1;
 
             //Updating Data into the database
-            bool success = usrDAL.Update(usrBLL);
+            bool isSuccess = userDAL.Update(userBLL);
 
-            if (success==true)
+            if (isSuccess == true)
             {
                 MessageBox.Show("User successfully updated");
                 ClearUserTextBox();
+                RefreshUserDataGrid();
             }
             else
             {
                 MessageBox.Show("Failed to update user");
             }
-            RefreshUserDataGrid();
         }
 
         private void btnUserDelete_Click(object sender, RoutedEventArgs e)
         {
-            usrBLL.Id = Convert.ToInt32(txtUserId.Text);
+            userBLL.Id = Convert.ToInt32(txtUserId.Text);
 
-            bool success = usrDAL.Delete(usrBLL);
+            bool isSuccess = userDAL.Delete(userBLL);
 
-            if (success==true)
+            if (isSuccess==true)
             {
                 MessageBox.Show("User has been deleted successfully.");
                 ClearUserTextBox();
+                RefreshUserDataGrid();
             }
             else
             {
                 MessageBox.Show("Something went wrong:/");
             }
-            RefreshUserDataGrid();
         }
 
         private void txtUserSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -180,7 +155,7 @@ namespace KabaAccounting.UI
             if (keyword!=null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshDataGridUsers method!!! */
             {
                 //Show user informations based on the keyword
-                DataTable dataTable = usrDAL.Search(keyword);
+                DataTable dataTable = userDAL.Search(keyword);
                 dtgUsers.ItemsSource = dataTable.DefaultView;
                 dtgUsers.AutoGenerateColumns = true;
                 dtgUsers.CanUserAddRows = false;
@@ -191,5 +166,38 @@ namespace KabaAccounting.UI
                 RefreshUserDataGrid();
             }
         }
+
+        private void dtgUsers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DtgUsersIndexChanged();
+        }
+        private void dtgUsers_KeyUp(object sender, KeyEventArgs e)
+        {
+            DtgUsersIndexChanged();
+        }
+        private void dtgUsers_KeyDown(object sender, KeyEventArgs e)
+        {
+            DtgUsersIndexChanged();
+        }
+        private void DtgUsersIndexChanged()
+        {
+            //Getting the index of a particular row
+
+            //int rowIndex = dtgUsers.SelectedIndex;
+
+            DataRowView drv = (DataRowView)dtgUsers.SelectedItem;
+
+            txtUserId.Text = (drv[0]).ToString();//Selecting the specific row
+            txtFirstName.Text = (drv["first_name"]).ToString();//You could also define the column name from your table.
+            txtLastName.Text = (drv[2]).ToString();
+            txtUserEmail.Text = (drv[3]).ToString();
+            txtUserName.Text = (drv[4]).ToString();
+            txtUserPassword.Text = (drv[5]).ToString();
+            txtUserContact.Text = (drv[6]).ToString();
+            txtUserAddress.Text = (drv[7]).ToString();
+            cboUserGender.Text = (drv[8]).ToString();
+            cboUserType.Text = (drv[9]).ToString();
+        }
+
     }
 }
