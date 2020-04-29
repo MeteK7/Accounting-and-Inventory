@@ -198,5 +198,30 @@ namespace KabaAccounting.DAL
             return isSuccess;
         }
         #endregion
+        #region Method for Search Functionality
+        public DataTable Search(string keyword)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+
+            DataTable dataTable = new DataTable();//To hold the data from database
+            try
+            {
+                String sql = "SELECT * FROM tbl_categories WHERE id LIKE '%" + keyword + "%' OR title LIKE '%" + keyword + "%' OR description LIKE '%" + keyword + "%'";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
     }
 }

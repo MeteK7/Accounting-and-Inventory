@@ -194,7 +194,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
-                dataAdapter.Fill(dataTable);//Filling the data in our datatable
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
             }
             catch (Exception ex)
             {

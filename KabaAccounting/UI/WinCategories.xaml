@@ -79,7 +79,7 @@
         </Button>
         <DataGrid x:Name="dtgCategories" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" MouseLeftButtonUp="dtgCategories_MouseLeftButtonUp" KeyUp="dtgCategories_KeyUp" KeyDown="dtgCategories_KeyDown"/>
         <Label x:Name="lblCategorySearch" Content="Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="84" Foreground="White"/>
-        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
+        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtCategorySearch_TextChanged"/>
 
     </Grid>
 </Window>

@@ -160,5 +160,27 @@ namespace KabaAccounting.UI
                 MessageBox.Show("Something went wrong:/");
             } 
         }
+
+        private void txtCategorySearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Get Keyword from Text box
+            string keyword = txtCategorySearch.Text;
+
+            //Check if the keyword has value or not
+
+            if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshCategoryDataGrid method!!! */
+            {
+                //Show category informations based on the keyword
+                DataTable dataTable = categoryDAL.Search(keyword);
+                dtgCategories.ItemsSource = dataTable.DefaultView;
+                dtgCategories.AutoGenerateColumns = true;
+                dtgCategories.CanUserAddRows = false;
+            }
+            else
+            {
+                //Show all categories from the database
+                RefreshCategoryDataGrid();
+            }
+        }
     }
 }
