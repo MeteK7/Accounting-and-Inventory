@@ -44,5 +44,11 @@ namespace KabaAccounting
             WinCategories winCategories = new WinCategories();
             winCategories.Show();
         }
+
+        private void menuItemProducts_Click(object sender, RoutedEventArgs e)
+        {
+            WinProducts winProducts = new WinProducts();
+            winProducts.Show();
+        }
     }
 }

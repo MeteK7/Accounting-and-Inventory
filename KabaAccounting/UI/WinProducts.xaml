@@ -1,0 +1,86 @@
+﻿<Window x:Class="KabaAccounting.UI.WinProducts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KabaAccounting.UI"
+        mc:Ignorable="d"
+        Title="Products" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
+            <Label x:Name="lblTop" Content="PRODUCTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.117"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+        <Label x:Name="lblProductId" Content="Product ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="111"/>
+        <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="26" Margin="137,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True"/>
+        <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="21,92,0,0" VerticalAlignment="Top" Width="111"/>
+        <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="26" Margin="138,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+        <Label x:Name="lblProductCategory" Content="Category" HorizontalAlignment="Left" Margin="21,130,0,0" VerticalAlignment="Top" Width="111"/>
+        <ComboBox x:Name="cboProductCategory" HorizontalAlignment="Left" Margin="137,130,0,0" VerticalAlignment="Top" Width="178" Height="26" Loaded="cboProductCategory_Loaded"/>
+        <Label x:Name="lblProductDescription" Content="Description" HorizontalAlignment="Left" Margin="21,211,0,0" VerticalAlignment="Top" Width="111"/>
+        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="293" Margin="137,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+        <Label x:Name="lblProductRate" Content="Rate" HorizontalAlignment="Left" Margin="21,172,0,0" VerticalAlignment="Top" Width="111"/>
+        <TextBox x:Name="txtProductRate" HorizontalAlignment="Left" Height="26" Margin="137,172,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+        <DataGrid x:Name="dtgProducts" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" KeyUp="dtgProducts_KeyUp" KeyDown="dtgProducts_KeyDown" MouseLeftButtonUp="dtgProducts_MouseLeftButtonUp"/>
+        <Label x:Name="lblProductSearch" Content="Product Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="84"/>
+        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtProductSearch_TextChanged"/>
+        <Button x:Name="btnProductAdd" Content="ADD" HorizontalAlignment="Left" Margin="138,518,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnProductAdd_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/plus (3).png" Stretch="Uniform">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnProductUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="363,518,0,0" VerticalAlignment="Top" Width="179" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnProductUpdate_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Uniform" ImageSource="/KabaAccounting;component/Images/Buttons/refresh.png">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnProductDelete" Content="DELETE" HorizontalAlignment="Left" Margin="644,518,0,0" VerticalAlignment="Top" Width="179" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnProductDelete_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/trash.png" Stretch="Uniform">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

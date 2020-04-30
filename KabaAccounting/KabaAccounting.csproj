@@ -58,9 +58,11 @@
     </ApplicationDefinition>
     <Compile Include="BLL\CategoryBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
+    <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\LoginDAL.cs" />
+    <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="UI\WinAdminDashboard.xaml.cs">
       <DependentUpon>WinAdminDashboard.xaml</DependentUpon>
@@ -74,6 +76,9 @@
     </Compile>
     <Compile Include="UI\WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinProducts.xaml.cs">
+      <DependentUpon>WinProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinUserDashboard.xaml.cs">
       <DependentUpon>WinUserDashboard.xaml</DependentUpon>
@@ -90,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\WinLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

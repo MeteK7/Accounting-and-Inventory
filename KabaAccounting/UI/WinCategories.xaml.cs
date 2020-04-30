@@ -49,7 +49,7 @@ namespace KabaAccounting.UI
             //Creating a Boolean variable to insert data into the database.
             bool isSuccess = categoryDAL.Insert(categoryBLL);
 
-            //If the category is inserted successfull, then the value of the variable isSuccess will be true; otherwise it will be false.
+            //If the category is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
             if (isSuccess==true)
             {
                 MessageBox.Show("New Category inserted successfully.");
@@ -61,7 +61,7 @@ namespace KabaAccounting.UI
                 MessageBox.Show("Something went wrong :(");
             }
         }
-        private int GetUserId()
+        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
             string loggedUser = WinLogin.loggedIn;

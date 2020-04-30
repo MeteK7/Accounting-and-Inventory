@@ -13,7 +13,7 @@
         <Menu x:Name="menuTop" Height="28" VerticalAlignment="Top" Margin="0,0,-0.4,0">
             <MenuItem x:Name="menuItemUsers" Header="Users" Click="menuItemUsers_Click"/>
             <MenuItem x:Name="menuItemCategory" Header="Category" Click="menuItemCategory_Click"/>
-            <MenuItem x:Name="menuItemProducts" Header="Products"/>
+            <MenuItem x:Name="menuItemProducts" Header="Products" Click="menuItemProducts_Click"/>
             <MenuItem x:Name="menuItemInventory" Header="Inventory"/>
             <MenuItem x:Name="menuItemTransactions" Header="Transactions"/>
         </Menu>

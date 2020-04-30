@@ -198,6 +198,7 @@ namespace KabaAccounting.DAL
             return isSuccess;
         }
         #endregion
+
         #region Method for Search Functionality
         public DataTable Search(string keyword)
         {
