@@ -16,6 +16,7 @@
             <MenuItem x:Name="menuItemProducts" Header="Products" Click="menuItemProducts_Click"/>
             <MenuItem x:Name="menuItemInventory" Header="Inventory"/>
             <MenuItem x:Name="menuItemTransactions" Header="Transactions"/>
+            <MenuItem x:Name="menuItemDealerCustomer" Header="Dealer and Customer" Click="menuItemDealerCustomer_Click"/>
         </Menu>
         <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="3,33,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="48,33,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>

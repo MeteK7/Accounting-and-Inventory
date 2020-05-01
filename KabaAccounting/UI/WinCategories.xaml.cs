@@ -61,6 +61,50 @@ namespace KabaAccounting.UI
                 MessageBox.Show("Something went wrong :(");
             }
         }
+
+        private void btnCategoryUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            //Getting values from the CategoryUI
+
+            categoryBLL.Id = Convert.ToInt32(txtCategoryId.Text);
+            categoryBLL.Title = txtTitle.Text;
+            categoryBLL.Description = txtDescription.Text;
+            categoryBLL.AddedDate = DateTime.Now;
+            categoryBLL.AddedBy = GetUserId();
+
+            //Updating Data into the database
+            bool isSuccess = categoryDAL.Update(categoryBLL);
+
+            if (isSuccess == true)
+            {
+                MessageBox.Show("Category successfully updated");
+                ClearCategoryTextBox();
+                RefreshCategoryDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Failed to update category");
+            }
+        }
+
+        private void btnCategoryDelete_Click(object sender, RoutedEventArgs e)
+        {
+            categoryBLL.Id = Convert.ToInt32(txtCategoryId.Text);
+
+            bool isSuccess = categoryDAL.Delete(categoryBLL);
+
+            if (isSuccess == true)
+            {
+                MessageBox.Show("Category has been deleted successfully.");
+                ClearCategoryTextBox();
+                RefreshCategoryDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong:/");
+            }
+        }
+
         private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
@@ -118,48 +162,7 @@ namespace KabaAccounting.UI
             txtDescription.Text = (drv[2]).ToString();
         }
 
-        private void btnCategoryUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            //Getting values from the CategoryUI
 
-            categoryBLL.Id = Convert.ToInt32(txtCategoryId.Text);
-            categoryBLL.Title = txtTitle.Text;
-            categoryBLL.Description = txtDescription.Text;
-            categoryBLL.AddedDate = DateTime.Now;
-            categoryBLL.AddedBy = GetUserId();
-
-            //Updating Data into the database
-            bool isSuccess = categoryDAL.Update(categoryBLL);
-
-            if (isSuccess == true)
-            {
-                MessageBox.Show("Category successfully updated");
-                ClearCategoryTextBox();
-                RefreshCategoryDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Failed to update category");
-            }
-        }
-
-        private void btnCategoryDelete_Click(object sender, RoutedEventArgs e)
-        {
-            categoryBLL.Id = Convert.ToInt32(txtCategoryId.Text);
-
-            bool isSuccess = categoryDAL.Delete(categoryBLL);
-
-            if (isSuccess == true)
-            {
-                MessageBox.Show("Category has been deleted successfully.");
-                ClearCategoryTextBox();
-                RefreshCategoryDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong:/");
-            } 
-        }
 
         private void txtCategorySearch_TextChanged(object sender, TextChangedEventArgs e)
         {

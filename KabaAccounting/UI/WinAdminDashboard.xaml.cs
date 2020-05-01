@@ -50,5 +50,11 @@ namespace KabaAccounting
             WinProducts winProducts = new WinProducts();
             winProducts.Show();
         }
+
+        private void menuItemDealerCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            WinDealerCustomer winDealerCustomer = new WinDealerCustomer();
+            winDealerCustomer.Show();
+        }
     }
 }

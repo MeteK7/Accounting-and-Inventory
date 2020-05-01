@@ -57,10 +57,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BLL\CategoryBLL.cs" />
+    <Compile Include="BLL\DealerCustomerBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
+    <Compile Include="DAL\DealerCustomerDAL.cs" />
     <Compile Include="DAL\LoginDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
@@ -73,6 +75,9 @@
     </Compile>
     <Compile Include="UI\WinCategories.xaml.cs">
       <DependentUpon>WinCategories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinDealerCustomer.xaml.cs">
+      <DependentUpon>WinDealerCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
@@ -91,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\WinCategories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinDealerCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

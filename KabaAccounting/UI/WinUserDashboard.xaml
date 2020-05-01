@@ -8,9 +8,10 @@
         Title="User Dashboard" Height="450" Width="800" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <Menu Height="28" VerticalAlignment="Top" Margin="0,0,-0.4,0">
-            <MenuItem Header="Purchase"/>
-            <MenuItem Header="Sales"/>
-            <MenuItem Header="Inventory"/>
+            <MenuItem x:Name="menuItemPurchase" Header="Purchase"/>
+            <MenuItem x:Name="menuItemSales" Header="Sales"/>
+            <MenuItem x:Name="menuItemInventory" Header="Inventory"/>
+            <MenuItem x:Name="menuItemDealerCustomer" Header="Dealer and Customer"/>
         </Menu>
         <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="0,38,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="45,38,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="346"/>

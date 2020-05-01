@@ -23,3 +23,5 @@ C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Deb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCategories.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinProducts.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinProducts.baml
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealerCustomer.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealerCustomer.baml
