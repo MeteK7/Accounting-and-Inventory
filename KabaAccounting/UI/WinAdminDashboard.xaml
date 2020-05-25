@@ -5,39 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting"
         mc:Ignorable="d"
-        Title="Admin Dashboard" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <StackPanel x:Name="pnlFooter" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="#FF2471A3">
             <Label x:Name="lblFooter" Content="Developed by Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
         </StackPanel>
-        <Menu x:Name="menuTop" Height="28" VerticalAlignment="Top" Margin="0,0,-0.4,0">
-            <MenuItem x:Name="menuItemUsers" Header="Users" Click="menuItemUsers_Click"/>
-            <MenuItem x:Name="menuItemCategory" Header="Category" Click="menuItemCategory_Click"/>
-            <MenuItem x:Name="menuItemProducts" Header="Products" Click="menuItemProducts_Click"/>
-            <MenuItem x:Name="menuItemInventory" Header="Inventory"/>
-            <MenuItem x:Name="menuItemTransactions" Header="Transactions"/>
-            <MenuItem x:Name="menuItemDealerCustomer" Header="Dealer and Customer" Click="menuItemDealerCustomer_Click"/>
-        </Menu>
-        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="3,33,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="48,33,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>
+        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="3,105,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.785,1.417"/>
+        <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="48,105,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>
         <Label x:Name="lblAppFirstName" Content="KABA" HorizontalAlignment="Center" Margin="0,0,70,0" VerticalAlignment="Center" FontSize="20"/>
         <Label x:Name="lblAppLastName" Content="STORE" Margin="70,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
         <Label x:Name="lblSubHead" Content="Accounting and Inventory" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Center" FontSize="16" Foreground="#FF1BA94B" FontWeight="SemiBold"/>
-        <Button x:Name="btnClose" Content="" Margin="0" Height="29" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
-            <Button.BorderBrush>
-                <SolidColorBrush Color="#FF707070" Opacity="0"/>
-            </Button.BorderBrush>
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.117"/>
-                    <TranslateTransform X="0.013" Y="-0.028"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-            <Button.Background>
-                <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
-            </Button.Background>
-        </Button>
+        <TabControl x:Name="tabHeader" Height="100" VerticalAlignment="Top" Margin="0,0,-0.6,0" HorizontalContentAlignment="Center">
+            <TabItem x:Name="tabItemServices" Header="SERVICES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnClose" Content="" Height="42" Width="44" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
+                        <Button.BorderBrush>
+                            <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                        </Button.BorderBrush>
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-0.117"/>
+                                <TranslateTransform X="0.013" Y="-0.028"/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                        <Button.Background>
+                            <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="btnUser" Content="USERS" HorizontalAlignment="Left" Width="75" Click="btnUser_Click"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="75,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="150,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="225,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="300,0,0,0.2"/>
+                    <Label x:Name="lblExit" Content="EXIT" HorizontalAlignment="Right" Margin="0,0,-0.4,0.2" VerticalAlignment="Bottom" Width="51" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemAccounts" Header="ACCOUNTS" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="tabItemSales" Header="SALES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnPointOfSale" Content="Point of Sales" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Click="btnPointOfSale_Click"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Margin="109,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Margin="218,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Margin="326,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Margin="435,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Height="67" Margin="544,0,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnProduct" Content="PRODUCTS" Width="75" HorizontalAlignment="Left" Click="btnProduct_Click"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="75,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="150,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="226,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="301,0,0,0.2"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="376,0,0,0.2"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemPortal" Header="PORTAL" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnBank" Content="BANKS" Margin="-1,0,0,0.2" Width="115" HorizontalAlignment="Left" Click="btnBank_Click"/>
+                    <Button x:Name="btnDealer" Content="DEALERS" Margin="114,0,0,0.2" Width="115" HorizontalAlignment="Left" Click="btnDealer_Click"/>
+                    <Button x:Name="btnCustomer" Content="CUSTOMERS" Margin="228,0,0,0.2" Width="115" HorizontalAlignment="Left" Click="btnCustomer_Click"/>
+                    <Button x:Name="btnCategory" Content="CATEGORIES" Margin="342,0,0,0.2" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click"/>
+                    <Button Content="Button" Margin="457,0,0,0.2" Width="115" HorizontalAlignment="Left"/>
+                    <Button Content="Button" Margin="571,0,0,0.2" Width="115" HorizontalAlignment="Left"/>
+                    <Button Content="Button" Margin="685,0,0,0.2" Width="115" HorizontalAlignment="Left"/>
+                    <Button Content="Button" Margin="799,0,0,0.2" Width="115" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

@@ -56,15 +56,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BLL\BankBLL.cs" />
     <Compile Include="BLL\CategoryBLL.cs" />
-    <Compile Include="BLL\DealerCustomerBLL.cs" />
+    <Compile Include="BLL\CustomerBLL.cs" />
+    <Compile Include="BLL\DealerBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
+    <Compile Include="BLL\PointOfSaleBLL.cs" />
+    <Compile Include="BLL\PointOfSaleDetailBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
+    <Compile Include="BLL\UnitBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
+    <Compile Include="DAL\BankDAL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
-    <Compile Include="DAL\DealerCustomerDAL.cs" />
+    <Compile Include="DAL\CustomerDAL.cs" />
+    <Compile Include="DAL\DealerDAL.cs" />
     <Compile Include="DAL\LoginDAL.cs" />
+    <Compile Include="DAL\PointOfSaleDAL.cs" />
+    <Compile Include="DAL\PointOfSaleDetailDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
+    <Compile Include="DAL\UnitDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="UI\WinAdminDashboard.xaml.cs">
       <DependentUpon>WinAdminDashboard.xaml</DependentUpon>
@@ -73,14 +83,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\WinBanks.xaml.cs">
+      <DependentUpon>WinBanks.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\WinCategories.xaml.cs">
       <DependentUpon>WinCategories.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinDealerCustomer.xaml.cs">
-      <DependentUpon>WinDealerCustomer.xaml</DependentUpon>
+    <Compile Include="UI\WinCustomer.xaml.cs">
+      <DependentUpon>WinCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinDealer.xaml.cs">
+      <DependentUpon>WinDealer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinPointOfSale.xaml.cs">
+      <DependentUpon>WinPointOfSale.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinProducts.xaml.cs">
       <DependentUpon>WinProducts.xaml</DependentUpon>
@@ -95,15 +114,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\WinBanks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\WinCategories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\WinDealerCustomer.xaml">
+    <Page Include="UI\WinCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinDealer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\WinLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinPointOfSale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,6 +241,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Backgrounds\avatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\add-product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\clear-product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\bank.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\customer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\dealer.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

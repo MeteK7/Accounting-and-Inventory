@@ -1,0 +1,120 @@
+﻿<Window x:Class="KabaAccounting.UI.WinPointOfSale"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KabaAccounting.UI"
+        mc:Ignorable="d" Height="698.8" Width="1188.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
+            <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.117"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="/KabaAccounting;component/Images/Icons/close.png"/>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+        <GroupBox Header="PRODUCT" Margin="0,152,250.4,438.8" Padding="0">
+            <Grid Height="77" Margin="10,0,-1.2,-2.6">
+                <Label x:Name="lblProductBarcode" Content="Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
+                <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
+                <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
+                <Label x:Name="lblProductPrice" Content="Price" HorizontalAlignment="Left" Margin="409,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
+                <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70"/>
+                <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
+                <TextBox x:Name="txtProductBarcode" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductBarcode_KeyUp"/>
+                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
+                <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="349,41,0,0" VerticalAlignment="Top" Width="55"/>
+                <TextBox x:Name="txtProductPrice" HorizontalAlignment="Left" Height="23" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
+                <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="23" Margin="484,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" LostFocus="txtProductAmount_LostFocus"/>
+                <TextBox x:Name="txtProductTotalPrice" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="712,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/add-product.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnProductClear" Content="" HorizontalAlignment="Left" Margin="740,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductClear_Click">
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="/KabaAccounting;component/Images/Buttons/clear-product.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="ENTERED PRODUCTS" Margin="5,254,250.4,9.8">
+            <Grid Margin="10,10,-2,-0.4">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="394" VerticalAlignment="Top" Width="906">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="130" />
+                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="470"/>
+                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="60"/>
+                        <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price" Width="70"/>
+                        <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
+                        <DataGridTextColumn Binding="{Binding Total}" ClipboardContentBinding="{x:Null}" Header="Total" Width="150"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Invoice Number" Height="102" Margin="0,34,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+            <Label x:Name="lblInvoiceNo" Content="Label" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="24"/>
+        </GroupBox>
+        <GroupBox Header="Staff Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+            <Grid Margin="0,-3,-1.8,-4.4">
+                <Label x:Name="lblStaffPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <Label x:Name="lblStaffName" Content="Label" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <TextBox x:Name="txtStaffPosition" HorizontalAlignment="Left" Height="26" Margin="90,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>
+                <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Basket Informations" Height="174" Margin="0,501,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+            <Grid Margin="0,0,-1.8,-3">
+                <Label x:Name="lblTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="75"/>
+                <Label x:Name="lblSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="75"/>
+                <Label x:Name="lblVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,66,0,0" Width="75"/>
+                <Label x:Name="lblDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,97,0,0" Width="75"/>
+                <Label x:Name="lblTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,128,0,0" Width="75"/>
+                <TextBox x:Name="txtTotalProducts" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtVat" HorizontalAlignment="Left" Height="26" Margin="95,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtDiscount" HorizontalAlignment="Left" Height="26" Margin="95,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Height="26" Margin="95,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Menu" Height="120" Margin="0,32,250.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="927">
+            <Grid Margin="0,0,-1.8,-4">
+                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnSave_Click"/>
+                <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
+                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
+                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
+                <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="796,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="383,10,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="468,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
+                    <ComboBoxItem Content="CASH"/>
+                    <ComboBoxItem Content="CREDIT"/>
+                </ComboBox>
+                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="383,41,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="468,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>

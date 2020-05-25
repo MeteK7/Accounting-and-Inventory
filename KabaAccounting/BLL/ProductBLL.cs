@@ -12,8 +12,15 @@ namespace KabaAccounting.BLL
         public string Name { get; set; }
         public int Category { get; set; }
         public string Description { get; set; }
-        public decimal Rate { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal Rating { get; set; }
+        public string BarcodeRetail { get; set; }
+        public string BarcodeWholesale { get; set; }
+        public int Amount { get; set; }
+        public decimal CostPrice { get; set; }
+        public decimal SalePrice { get; set; }
+        public decimal TotalSalePrice { get; set; }
+        public int UnitRetail { get; set; }
+        public int UnitWholesale { get; set; }
         public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
     }

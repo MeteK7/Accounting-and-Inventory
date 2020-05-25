@@ -26,13 +26,14 @@ namespace KabaAccounting.UI
         {
             InitializeComponent();
             RefreshProductDataGrid();
+            PopulateCboUnits();
         }
 
         ProductBLL productBLL = new ProductBLL();
         ProductDAL productDAL = new ProductDAL();
         CategoryDAL categoryDAL = new CategoryDAL();
         UserDAL userDAL = new UserDAL();
-
+        UnitDAL unitDAL = new UnitDAL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -50,11 +51,19 @@ namespace KabaAccounting.UI
         private void ClearProductTextBox()
         {
             txtProductId.Text = "";
-            txtProductName.Text = "";
             cboProductCategory.SelectedIndex = -1;
-            txtProductRate.Text = "";
             txtProductDescription.Text = "";
-            txtProductSearch.Text = "";    
+            cboProductUnitRetail.SelectedIndex = -1;
+            txtProductBarcodeRetail.Text = "";
+            txtProductName.Text = "";
+            txtProductCostPriceRetail.Text = "";
+            txtProductSalePriceRetail.Text = "";
+            cboProductUnitWholesale.SelectedIndex = -1;
+            txtProductBarcodeWholesale.Text = "";
+            txtProductAmount.Text = "";
+            txtProductCostPriceWholesale.Text = "";
+            txtProductSalePriceWholesale.Text = "";
+            txtProductSearch.Text = "";
         }
 
         private void DtgProductsIndexChanged()
@@ -69,7 +78,48 @@ namespace KabaAccounting.UI
             txtProductName.Text = (drv["name"]).ToString();//You could also define the column name from your table.
             cboProductCategory.SelectedValue = (drv[2]).ToString();
             txtProductDescription.Text = (drv[3]).ToString();
-            txtProductRate.Text = (drv[4]).ToString();
+            txtProductBarcodeRetail.Text = (drv[5]).ToString();
+            txtProductBarcodeWholesale.Text = (drv[6]).ToString();
+            txtProductAmount.Text = (drv[7]).ToString();
+            txtProductCostPriceRetail.Text =(drv[8]).ToString();
+            txtProductSalePriceRetail.Text = (drv[9]).ToString();
+            cboProductUnitRetail.SelectedValue = (drv[10]);
+            cboProductUnitWholesale.SelectedValue = (drv[11]);
+            txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
+            txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
+        }
+
+        private double CalculateTotalCostPrice()
+        {
+            if (txtProductCostPriceRetail.Text != "")
+            {
+                int amount = Convert.ToInt32(txtProductAmount.Text);
+                double costPriceRetail = Convert.ToDouble(txtProductCostPriceRetail.Text);
+
+                return amount * costPriceRetail;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
+        private double CalculateTotalSalePrice()
+        {
+            if (txtProductSalePriceRetail.Text!="")
+            {
+                int amount = Convert.ToInt32(txtProductAmount.Text);
+                double salePriceRetail = Convert.ToDouble(txtProductSalePriceRetail.Text);
+
+                return salePriceRetail * amount;
+            }
+
+            else
+            {
+                return 0;
+            }
+
         }
 
         private void dtgProducts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -111,7 +161,7 @@ namespace KabaAccounting.UI
 
         private void cboProductCategory_Loaded(object sender, RoutedEventArgs e)
         {
-            //Creating Data Table to hold the products from Databaase
+            //Creating Data Table to hold the products from Database
             DataTable dataTable = categoryDAL.Select();
 
             //Specifying Items Source for product combobox
@@ -123,6 +173,25 @@ namespace KabaAccounting.UI
             //SelectedValuePath helps to store values like a hidden field.
             cboProductCategory.SelectedValuePath = "id";
         }
+
+        private void PopulateCboUnits()
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = unitDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboProductUnitRetail.ItemsSource = dataTable.DefaultView;
+            cboProductUnitWholesale.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboProductUnitRetail.DisplayMemberPath = "name";
+            cboProductUnitWholesale.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboProductUnitRetail.SelectedValuePath = "id";
+            cboProductUnitWholesale.SelectedValuePath = "id";
+        }
+
         private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
@@ -141,8 +210,14 @@ namespace KabaAccounting.UI
             productBLL.Name = txtProductName.Text;
             productBLL.Category = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productBLL.Description = txtProductDescription.Text;
-            productBLL.Rate = decimal.Parse(txtProductRate.Text); //You can also use ===> Convert.ToDecimal(txtProductRate.Text)
-            productBLL.Quantity = 0;
+            productBLL.Rating = 0;
+            productBLL.BarcodeRetail = txtProductBarcodeRetail.Text;
+            productBLL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
+            productBLL.Amount = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productBLL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
+            productBLL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
+            productBLL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
+            productBLL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
             productBLL.AddedDate = DateTime.Now;
             productBLL.AddedBy = GetUserId();
 
@@ -167,9 +242,15 @@ namespace KabaAccounting.UI
 
             productBLL.Id = Convert.ToInt32(txtProductId.Text);
             productBLL.Name = txtProductName.Text;
-            productBLL.Category = Convert.ToInt32(cboProductCategory.SelectedValue);
-            productBLL.Rate = Decimal.Parse(txtProductRate.Text);
+            productBLL.Category = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productBLL.Description = txtProductDescription.Text;
+            productBLL.BarcodeRetail = txtProductBarcodeRetail.Text;
+            productBLL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
+            productBLL.Amount = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productBLL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
+            productBLL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
+            productBLL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
+            productBLL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
             productBLL.AddedDate = DateTime.Now;
             productBLL.AddedBy = GetUserId();
 
@@ -203,6 +284,36 @@ namespace KabaAccounting.UI
             else
             {
                 MessageBox.Show("Something went wrong:/");
+            }
+        }
+
+        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductAmount.Text!="")
+            {
+                txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
+                txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
+            }
+            else
+            {
+                txtProductCostPriceWholesale.Text = "";
+                txtProductSalePriceWholesale.Text = "";
+            }
+        }
+
+        private void txtProductCostPriceRetail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductAmount.Text != "")
+            {
+                txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
+            }
+        }
+
+        private void txtProductSalePriceRetail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductAmount.Text != "")
+            {
+                txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
             }
         }
     }

@@ -26,12 +26,6 @@ namespace KabaAccounting
             lblLoggedInUser.Content = WinLogin.loggedIn;
         }
 
-        private void menuItemUsers_Click(object sender, RoutedEventArgs e)
-        {
-            WinUsers winUsers = new WinUsers();
-            winUsers.Show();
-        }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             WinLogin winLogin = new WinLogin();
@@ -39,22 +33,47 @@ namespace KabaAccounting
             this.Hide();
         }
 
-        private void menuItemCategory_Click(object sender, RoutedEventArgs e)
-        {
-            WinCategories winCategories = new WinCategories();
-            winCategories.Show();
-        }
 
-        private void menuItemProducts_Click(object sender, RoutedEventArgs e)
+        private void btnProduct_Click(object sender, RoutedEventArgs e)
         {
             WinProducts winProducts = new WinProducts();
             winProducts.Show();
         }
 
-        private void menuItemDealerCustomer_Click(object sender, RoutedEventArgs e)
+        private void btnCategory_Click(object sender, RoutedEventArgs e)
         {
-            WinDealerCustomer winDealerCustomer = new WinDealerCustomer();
+            WinCategories winCategories = new WinCategories();
+            winCategories.Show();
+        }
+
+        private void btnCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            WinDealer winDealerCustomer = new WinDealer();
             winDealerCustomer.Show();
+        }
+
+        private void btnDealer_Click(object sender, RoutedEventArgs e)
+        {
+            WinDealer winDealerCustomer = new WinDealer();
+            winDealerCustomer.Show();
+        }
+
+        private void btnUser_Click(object sender, RoutedEventArgs e)
+        {
+            WinUsers winUsers = new WinUsers();
+            winUsers.Show();
+        }
+
+        private void btnBank_Click(object sender, RoutedEventArgs e)
+        {
+            WinBanks winBanks = new WinBanks();
+            winBanks.Show();
+        }
+
+        private void btnPointOfSale_Click(object sender, RoutedEventArgs e)
+        {
+            WinPointOfSale winPointOfSale = new WinPointOfSale();
+            winPointOfSale.Show();
         }
     }
 }

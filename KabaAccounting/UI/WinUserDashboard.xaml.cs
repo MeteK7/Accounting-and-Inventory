@@ -37,5 +37,7 @@ namespace KabaAccounting
             winLogin.Show();
             this.Hide();
         }
+
+
     }
 }
