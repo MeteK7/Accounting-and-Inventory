@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting.UI"
         mc:Ignorable="d" Height="698.8" Width="1188.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/pos.jpg"/>
+    </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
             <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
@@ -54,6 +57,9 @@
         <GroupBox Header="ENTERED PRODUCTS" Margin="5,254,250.4,9.8">
             <Grid Margin="10,10,-2,-0.4">
                 <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="394" VerticalAlignment="Top" Width="906">
+                    <DataGrid.Background>
+                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
+                    </DataGrid.Background>
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="130" />
                         <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="470"/>
@@ -78,23 +84,24 @@
         </GroupBox>
         <GroupBox Header="Basket Informations" Height="174" Margin="0,501,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-1.8,-3">
-                <Label x:Name="lblTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="75"/>
-                <Label x:Name="lblSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="75"/>
-                <Label x:Name="lblVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,66,0,0" Width="75"/>
-                <Label x:Name="lblDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,97,0,0" Width="75"/>
-                <Label x:Name="lblTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,128,0,0" Width="75"/>
-                <TextBox x:Name="txtTotalProducts" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="txtSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="txtVat" HorizontalAlignment="Left" Height="26" Margin="95,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="txtDiscount" HorizontalAlignment="Left" Height="26" Margin="95,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Height="26" Margin="95,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="75"/>
+                <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="75"/>
+                <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,66,0,0" Width="75"/>
+                <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,97,0,0" Width="75"/>
+                <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,128,0,0" Width="75"/>
+                <TextBox x:Name="txtBasketTotalProducts" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketTotal" HorizontalAlignment="Left" Height="26" Margin="95,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="120" Margin="0,32,250.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="927">
             <Grid Margin="0,0,-1.8,-4">
-                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnSave_Click"/>
-                <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
-                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
+                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnNew_Click"/>
+                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnSave_Click"/>
+                <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
+                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnCancel_Click"/>
                 <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
                 <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
                     <Button.Background>
@@ -106,13 +113,14 @@
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="383,10,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="468,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
+                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="447,10,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="532,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
                     <ComboBoxItem Content="CASH"/>
                     <ComboBoxItem Content="CREDIT"/>
                 </ComboBox>
-                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="383,41,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="468,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
+                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="447,41,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="532,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
+                
             </Grid>
         </GroupBox>
 

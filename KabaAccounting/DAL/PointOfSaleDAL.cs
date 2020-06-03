@@ -58,14 +58,14 @@ namespace KabaAccounting.DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("sale_type", pointOfSaleBLL.SaleType);
-                cmd.Parameters.AddWithValue("customer_id", pointOfSaleBLL.CustomerId);
-                cmd.Parameters.AddWithValue("sub_total", pointOfSaleBLL.SubTotal);
-                cmd.Parameters.AddWithValue("vat",pointOfSaleBLL.Vat);
-                cmd.Parameters.AddWithValue("discount",pointOfSaleBLL.Discount);
-                cmd.Parameters.AddWithValue("grand_total",pointOfSaleBLL.GrandTotal);
-                cmd.Parameters.AddWithValue("added_date",pointOfSaleBLL.AddedDate);
-                cmd.Parameters.AddWithValue("added_by",pointOfSaleBLL.AddedBy);
+                cmd.Parameters.AddWithValue("@sale_type", pointOfSaleBLL.SaleType);
+                cmd.Parameters.AddWithValue("@customer_id", pointOfSaleBLL.CustomerId);
+                cmd.Parameters.AddWithValue("@sub_total", pointOfSaleBLL.SubTotal);
+                cmd.Parameters.AddWithValue("@vat",pointOfSaleBLL.Vat);
+                cmd.Parameters.AddWithValue("@discount",pointOfSaleBLL.Discount);
+                cmd.Parameters.AddWithValue("@grand_total",pointOfSaleBLL.GrandTotal);
+                cmd.Parameters.AddWithValue("@added_date",pointOfSaleBLL.AddedDate);
+                cmd.Parameters.AddWithValue("@added_by",pointOfSaleBLL.AddedBy);
 
                 conn.Open();
 
@@ -184,6 +184,43 @@ namespace KabaAccounting.DAL
             }
 
             return isSuccess;
+        }
+        #endregion
+
+        #region GETTING THE LAST ID OF THE TABLE IN THE DATABASE
+        public int Search()
+        {
+            int lastInvoiceNo=0;
+
+            using (SqlConnection conn = new SqlConnection(connString)) 
+            {
+                String sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in te table.
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn)) 
+                {
+                    try
+                    {
+                        /*cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;*/
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            reader.Read();
+                            lastInvoiceNo = Convert.ToInt32(reader["id"]);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return lastInvoiceNo;
+                }
+            }
         }
         #endregion
     }

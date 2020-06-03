@@ -29,7 +29,7 @@ namespace KabaAccounting.UI
         LoginBLL loginBLL = new LoginBLL();
         LoginDAL loginDAL = new LoginDAL();
         public static string loggedIn;
-
+        public static string loggedInPosition;
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -41,13 +41,15 @@ namespace KabaAccounting.UI
             loginBLL.Password = pswUserPassword.Password;
             loginBLL.UserType = cboUserType.Text.Trim();
 
-            //Checkong the login credentials
+            //Checking the login credentials
             bool isSuccess = loginDAL.CheckLogin(loginBLL);
+
             if (isSuccess==true)
             {
                 //Login Successful
                 MessageBox.Show("Login Successful");
                 loggedIn = loginBLL.Username;
+                loggedInPosition = loginBLL.UserType;
 
                 switch (loginBLL.UserType)
                 {

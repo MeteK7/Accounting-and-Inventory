@@ -1,6 +1,10 @@
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe.config
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.pdb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashboard.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinBanks.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCategories.g.cs
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealer.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinLogin.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfSale.g.cs
@@ -10,12 +14,10 @@ C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Deb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\App.g.cs
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting_MarkupCompile.cache
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting_MarkupCompile.lref
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe.config
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.exe
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\bin\Debug\KabaAccounting.pdb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashboard.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinBanks.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCategories.baml
+C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealer.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinLogin.baml
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfSale.baml
@@ -29,5 +31,3 @@ C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Deb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.exe
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.pdb
 C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csprojAssemblyReference.cache
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.g.cs
-C:\Users\MeteK\Desktop\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.baml

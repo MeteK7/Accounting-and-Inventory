@@ -263,5 +263,11 @@
   <ItemGroup>
     <Resource Include="Images\Backgrounds\dealer.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\accounting-pattern.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\pos.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

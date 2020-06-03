@@ -212,8 +212,8 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Search Product Id
-        public DataTable SearchProductId(string keyword)
+        #region Search Specific Product
+        public DataTable SearchSpecificProductByBarcode(string keyword)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
             DataTable dataTable = new DataTable();//To hold the data from database

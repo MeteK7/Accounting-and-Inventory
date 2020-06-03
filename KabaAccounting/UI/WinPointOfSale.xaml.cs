@@ -26,9 +26,10 @@ namespace KabaAccounting.UI
         public WinPointOfSale()
         {
             InitializeComponent();
-            btnProductAdd.IsEnabled = false;//Disabling the add button for the first run.
-            btnProductClear.IsEnabled = false;//Disabling the clear button for the first run.
+            DisableButtonsTools();
+            FillStaffInformations();
         }
+
         UserDAL userDAL = new UserDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleBLL pointOfSaleBLL = new PointOfSaleBLL();
@@ -40,7 +41,29 @@ namespace KabaAccounting.UI
         CustomerBLL customerBLL = new CustomerBLL();
         UnitDAL unitDAL = new UnitDAL();
         UnitBLL unitBLL = new UnitBLL();
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
+
+        private void FillStaffInformations()
+        {
+            txtStaffName.Text = WinLogin.loggedIn;
+            txtStaffPosition.Text = WinLogin.loggedInPosition;
+        }
+        private void DisableButtonsTools()
+        {
+            btnProductAdd.IsEnabled = false;//Disabling the add button for the first run.
+            btnProductClear.IsEnabled = false;//Disabling the clear button for the first run.
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
+            btnPrint.IsEnabled = false;
+            cboSaleType.IsEnabled = false;
+            cboCustomer.IsEnabled = false;
+            cboProductUnit.IsEnabled = false;
+            txtProductBarcode.IsEnabled = false;
+            txtProductName.IsEnabled = false;
+            txtProductPrice.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
+            txtProductTotalPrice.IsEnabled = false;
+        }
+        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
             string loggedUser = WinLogin.loggedIn;
@@ -64,42 +87,83 @@ namespace KabaAccounting.UI
             //Get the values from the POS Window and fill them into the pointOfSaleBLL.
             pointOfSaleBLL.SaleType = cboSaleType.Text;
             pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedItem);
-            pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtSubTotal.Text);
-            pointOfSaleBLL.Vat = Convert.ToDecimal(txtVat.Text);
-            pointOfSaleBLL.Discount = Convert.ToDecimal(txtDiscount.Text);
-            pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtTotal.Text);
+            pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+            pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+            pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+            pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtBasketTotal.Text);
             pointOfSaleBLL.AddedDate = DateTime.Now;
             pointOfSaleBLL.AddedBy = GetUserId();
 
-
-            //Creating a Boolean variable to insert data into the database.
-            bool isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
-
-
             #region TABLE POS DETAILS SAVING SECTION
 
+            int specificRowIndex = 0;
+            int invoiceNo, cellLength = 6;
+            int addedBy = GetUserId();
+            string[] cells = new string[cellLength];
+            DateTime dateTime = DateTime.Now;
+            bool isSuccessDetail=false;
+            bool isSuccess=false;
+
+            invoiceNo = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
+
+
+            for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                for (int colNo = 0; colNo < cellLength; colNo++)
+                {
+                    TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+
+                    cells[colNo] = cellContent.Text;
+                }
+
+                DataTable dataTable = new DataTable();
+                dataTable = productDAL.SearchSpecificProductByBarcode(cells[0]);//Cell[0] contains the product barcode.
+
+                //dataTable.Rows[rowIndex]["saleprice"].ToString();
+                pointOfSaleDetailBLL.ProductId = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"].ToString());//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+                pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
+                pointOfSaleDetailBLL.AddedDate = dateTime;
+                pointOfSaleDetailBLL.AddedBy = addedBy;
+                pointOfSaleDetailBLL.ProductRate = 0;//Modify this code dynamically.
+                pointOfSaleDetailBLL.ProductCostPrice = Convert.ToDecimal(dataTable.Rows[specificRowIndex]["costprice"].ToString());
+                pointOfSaleDetailBLL.ProductSalePrice = Convert.ToDecimal(cells[3]);//cells[3] contains sale price of the product in the list.
+                pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[4]);
+                pointOfSaleDetailBLL.ProductTotalPrice = Convert.ToDecimal(cells[5]);
+
+                isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailBLL);
+            }
             #endregion
 
+            //Creating a Boolean variable to insert data into the database.
+            isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
+            
 
             //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-            if (isSuccess == true)
+            if (isSuccess == true && isSuccessDetail==true)
             {
-                ClearPointOfSaleTextBox();
+                ClearBasketTextBox();
                 ClearPointOfSaleListView();
+                DisableButtonsTools();
+
+                btnNew.IsEnabled = true;//If the previous products are saved successfully, enable the new button to be able to add new products.
+                btnEdit.IsEnabled = true;//If the previous products are saved successfully, enable the edit button to be able to edit an existing invoice.
             }
             else
             {
                 MessageBox.Show("Something went wrong :(");
             }
+
         }
 
-        private void ClearPointOfSaleTextBox()
+        private void ClearBasketTextBox()
         {
-            txtTotalProducts.Text = "";
-            txtSubTotal.Text = "";
-            txtVat.Text = "";
-            txtDiscount.Text = "";
-            txtTotal.Text = "";
+            txtBasketTotalProducts.Text = "";
+            txtBasketSubTotal.Text = "";
+            txtBasketVat.Text = "";
+            txtBasketDiscount.Text = "";
+            txtBasketTotal.Text = "";
         }
 
         private void ClearPointOfSaleListView()
@@ -121,7 +185,7 @@ namespace KabaAccounting.UI
         }
         private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
         {
-            DataTable dataTable = productDAL.SearchProductId(txtProductBarcode.Text);
+            DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
 
             int number;
             if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count!=0)//Validating the barcode if it is a number(except zero) or not.
@@ -180,9 +244,13 @@ namespace KabaAccounting.UI
             bool addNewProductLine = true;
             int barcodeColNo=0;
             int amountColNo = 4;
+            int priceColNo = 3;
+            int totalPriceColNo = 5;
             int amount = 0;
+            decimal totalPrice;
+            int rowQuntity = dgProducts.Items.Count;
 
-            for (int i = 0; i < dgProducts.Items.Count; i++)
+            for (int i = 0; i < rowQuntity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -192,15 +260,21 @@ namespace KabaAccounting.UI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock cellContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!              
+                        TextBlock cellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!              
+                        TextBlock cellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!              
+                        TextBlock cellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+
                         //MessageBox.Show(cellContent.Text);
-                        amount = Convert.ToInt32(cellContent.Text);
+                        amount = Convert.ToInt32(cellAmountContent.Text);
                         amount += 1;
-                        cellContent.Text = amount.ToString();
+                        cellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
+                        totalPrice = amount * Convert.ToDecimal(cellPriceContent.Text);//Calculating the new total price according to the new quantity. Then, assigning the result into the total price variable.
+                        cellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
                     }
                 }
             }
+
 
             if (addNewProductLine == true)
             {
@@ -208,11 +282,36 @@ namespace KabaAccounting.UI
                 dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Price=txtProductPrice.Text, Amount=txtProductAmount.Text, Total=txtProductTotalPrice.Text});
             }
 
+            dgProducts.UpdateLayout();
+            rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
+
+            PopulateBasket(rowQuntity);
+
             ClearProductEntranceTextBox();
 
             //items[0].BarcodeRetail = "EXAMPLECODE"; This code can change the 0th row's data on the column called BarcodeRetail.
         }
 
+        private void PopulateBasket(int rowQuntity)
+        {
+            int productPriceCol=3;
+            DataGridRow dataGridRow;
+            TextBlock priceCellContent;
+            txtBasketSubTotal.Text = 0.ToString();
+            txtBasketTotal.Text = 0.ToString();
+
+            for (int i = 0; i < rowQuntity; i++)
+            {
+                dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                priceCellContent = dgProducts.Columns[productPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+
+                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(priceCellContent.Text)).ToString();
+
+                txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            }
+
+        }
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {
             ClearProductEntranceTextBox();
@@ -245,14 +344,14 @@ namespace KabaAccounting.UI
 
             if (strProductAmount != "" && decimal.TryParse(strProductAmount, out number) && result==true)
             {
-                DataTable dataTable = productDAL.SearchProductId(txtProductBarcode.Text);
+                DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
 
                 string unitKg = "Kilogram", unitLt = "Liter";
                 int rowIndex = 0;
                 decimal productAmount;
                 string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
-                if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
+                    if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
                 {
                     /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
                     So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
@@ -271,6 +370,55 @@ namespace KabaAccounting.UI
             else
             {
                 MessageBox.Show("Please enter a valid number");
+            }
+        }
+
+        private void LoadNewInvoice()
+        {
+            int invoiceNo, increment=1;
+
+            invoiceNo = pointOfSaleDAL.Search();
+            invoiceNo += increment;
+            lblInvoiceNo.Content = invoiceNo;
+        }
+
+        private void btnNew_Click(object sender, RoutedEventArgs e)//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        {
+            LoadNewInvoice();
+            btnNew.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnCancel.IsEnabled = true;
+            btnEdit.IsEnabled = false;
+            btnPrint.IsEnabled = true;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboSaleType.IsEnabled = true;
+            cboCustomer.IsEnabled = true;
+            cboProductUnit.IsEnabled = true;
+            txtProductBarcode.IsEnabled = true;
+            txtProductName.IsEnabled = true;
+            txtProductPrice.IsEnabled = true;
+            txtProductAmount.IsEnabled = true;
+            txtProductTotalPrice.IsEnabled = true;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the invoice, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableButtonsTools();
+                    dgProducts.Items.Clear();
+                    btnNew.IsEnabled = true;
+                    btnEdit.IsEnabled = true;
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
             }
         }
     }

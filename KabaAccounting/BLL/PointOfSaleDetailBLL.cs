@@ -10,8 +10,8 @@ namespace KabaAccounting.BLL
     {
         public int InvoiceNo { get; set; }
         public int ProductId { get; set; }
-        public double ProductRate { get; set; }
-        public int ProductAmount { get; set; }
+        public decimal ProductRate { get; set; }
+        public decimal ProductAmount { get; set; }
         public decimal ProductCostPrice { get; set; }
         public decimal ProductSalePrice { get; set; }
         public decimal ProductTotalPrice { get; set; }
