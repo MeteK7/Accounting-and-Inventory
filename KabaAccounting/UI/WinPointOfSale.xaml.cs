@@ -47,6 +47,15 @@ namespace KabaAccounting.UI
             txtStaffName.Text = WinLogin.loggedIn;
             txtStaffPosition.Text = WinLogin.loggedInPosition;
         }
+
+        private void RefreshProductDataGrid()
+        {
+            //Refreshing Data Grid View
+            DataTable dataTable = productDAL.Select();
+            dgProducts.ItemsSource = dataTable.DefaultView;
+            dgProducts.AutoGenerateColumns = true;
+            dgProducts.CanUserAddRows = false;
+        }
         private void DisableButtonsTools()
         {
             btnProductAdd.IsEnabled = false;//Disabling the add button for the first run.
@@ -104,8 +113,7 @@ namespace KabaAccounting.UI
             bool isSuccessDetail=false;
             bool isSuccess=false;
 
-            invoiceNo = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
-
+            invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add a number to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
             for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
             {
@@ -377,9 +385,19 @@ namespace KabaAccounting.UI
         {
             int invoiceNo, increment=1;
 
-            invoiceNo = pointOfSaleDAL.Search();
-            invoiceNo += increment;
-            lblInvoiceNo.Content = invoiceNo;
+            invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+        }
+
+        private int GetLastInvoiceNumber()
+        {
+            int specificRowIndex = 0, invoiceNo;
+
+            DataTable dataTableUnit = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
+
+            invoiceNo = Convert.ToInt32(dataTableUnit.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
+            return invoiceNo;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!

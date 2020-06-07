@@ -187,13 +187,13 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region GETTING THE LAST ID OF THE TABLE IN THE DATABASE
-        public int Search()
+        #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
+        public DataTable Search()
         {
-            int lastInvoiceNo=0;
-
             using (SqlConnection conn = new SqlConnection(connString)) 
             {
+                DataTable dataTable = new DataTable();
+
                 String sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in te table.
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn)) 
@@ -202,6 +202,44 @@ namespace KabaAccounting.DAL
                     {
                         /*cmd.CommandType = CommandType.Text;
                         cmd.Connection = conn;*/
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+    }
+}
+
+/* DO NOT FORGET THIS CODE BLOCK!!! THIS IS VALID FOR IF YOU WANT TO HAVE SOME OF THE CELLS FROM THE TABLE!
+         public int Search()
+        {
+            int lastInvoiceNo=0;
+
+            using (SqlConnection conn = new SqlConnection(connString)) 
+            {
+                String sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn)) 
+                {
+                    try
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
                         conn.Open();//Opening the database connection
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -222,6 +260,4 @@ namespace KabaAccounting.DAL
                 }
             }
         }
-        #endregion
-    }
-}
+ */
