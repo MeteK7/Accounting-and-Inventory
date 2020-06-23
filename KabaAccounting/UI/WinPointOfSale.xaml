@@ -103,12 +103,12 @@
                 <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
                 <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnCancel_Click"/>
                 <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
-                <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="796,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                <Button x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="796,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>

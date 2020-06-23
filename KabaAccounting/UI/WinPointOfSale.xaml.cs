@@ -28,6 +28,7 @@ namespace KabaAccounting.UI
             InitializeComponent();
             DisableButtonsTools();
             FillStaffInformations();
+            LoadPastInvoice();
         }
 
         UserDAL userDAL = new UserDAL();
@@ -41,6 +42,69 @@ namespace KabaAccounting.UI
         CustomerBLL customerBLL = new CustomerBLL();
         UnitDAL unitDAL = new UnitDAL();
         UnitBLL unitBLL = new UnitBLL();
+
+
+        private void LoadPastInvoice(int invoiceNo=0, int invoiceArrow=-1)//Optional parameter
+        {
+            int firstRowIndex=0;
+            string productId,productBarcode, productName, productUnit, productPrice, productAmount, productTotal;
+
+            if (invoiceNo==0)
+            {
+                invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            }
+
+
+            DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+
+            if (dataTablePosDetail.Rows.Count!=0)
+            {
+                #region LOADING THE PRODUCT DATA GRID
+
+                for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                {
+                    productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
+                    productUnit = dataTablePosDetail.Rows[currentRow]["product_unit"].ToString();
+                    productPrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
+                    productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
+                    productTotal = dataTablePosDetail.Rows[currentRow]["total_price"].ToString();
+
+                    DataTable dataTableProduct = productDAL.SearchById(productId);
+
+                    productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
+                    productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+
+                    dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnit, Price = productPrice, Amount = productAmount, Total = productTotal });
+                }
+                #endregion
+
+                #region FILLING THE PREVIOUS BASKET INFORMATIONS
+
+                DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);//This Search method gets the id and row informations in the table which belong to the last invoice.
+
+                //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+                //txtBasketTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
+                txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
+                txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
+                txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
+                txtBasketTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
+
+                #endregion
+            }
+            else
+            {
+                if (invoiceArrow==0)//If the invoice arrow is 0, that means use clicked the previous button.
+                {
+                    invoiceNo = invoiceNo - 1;  
+                }
+                else
+                {
+                    invoiceNo = invoiceNo + 1;
+                }
+                LoadPastInvoice(invoiceNo, invoiceArrow);
+            }
+        }
 
         private void FillStaffInformations()
         {
@@ -56,10 +120,16 @@ namespace KabaAccounting.UI
             dgProducts.AutoGenerateColumns = true;
             dgProducts.CanUserAddRows = false;
         }
+
+        private void DisableProductEntranceButtons()
+        {
+            btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
+            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
+        }
+
         private void DisableButtonsTools()
         {
-            btnProductAdd.IsEnabled = false;//Disabling the add button for the first run.
-            btnProductClear.IsEnabled = false;//Disabling the clear button for the first run.
+            DisableProductEntranceButtons();
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
@@ -95,7 +165,7 @@ namespace KabaAccounting.UI
         {
             //Get the values from the POS Window and fill them into the pointOfSaleBLL.
             pointOfSaleBLL.SaleType = cboSaleType.Text;
-            pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedItem);
+            pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
             pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
             pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
             pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
@@ -113,7 +183,7 @@ namespace KabaAccounting.UI
             bool isSuccessDetail=false;
             bool isSuccess=false;
 
-            invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add a number to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+            invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
             for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
             {
@@ -167,11 +237,11 @@ namespace KabaAccounting.UI
 
         private void ClearBasketTextBox()
         {
-            txtBasketTotalProducts.Text = "";
-            txtBasketSubTotal.Text = "";
-            txtBasketVat.Text = "";
-            txtBasketDiscount.Text = "";
-            txtBasketTotal.Text = "";
+            txtBasketTotalProducts.Text = "0";
+            txtBasketSubTotal.Text = "0";
+            txtBasketVat.Text = "0";
+            txtBasketDiscount.Text = "0";
+            txtBasketTotal.Text = "0";
         }
 
         private void ClearPointOfSaleListView()
@@ -188,9 +258,9 @@ namespace KabaAccounting.UI
             txtProductAmount.Text = "";
             txtProductTotalPrice.Text = "";
             Keyboard.Focus(txtProductBarcode); // set keyboard focus
-            btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
-            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
+            DisableProductEntranceButtons();
         }
+
         private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
         {
             DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
@@ -284,9 +354,9 @@ namespace KabaAccounting.UI
             }
 
 
-            if (addNewProductLine == true)
+            if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name from the datagrid with the name of the property in ProductBLL if you wish to use this code.
+                //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
                 dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Price=txtProductPrice.Text, Amount=txtProductAmount.Text, Total=txtProductTotalPrice.Text});
             }
 
@@ -302,7 +372,7 @@ namespace KabaAccounting.UI
 
         private void PopulateBasket(int rowQuntity)
         {
-            int productPriceCol=3;
+            int productTotalPriceCol=5;
             DataGridRow dataGridRow;
             TextBlock priceCellContent;
             txtBasketSubTotal.Text = 0.ToString();
@@ -312,7 +382,7 @@ namespace KabaAccounting.UI
             {
                 dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                priceCellContent = dgProducts.Columns[productPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+                priceCellContent = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
                 txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(priceCellContent.Text)).ToString();
 
@@ -383,6 +453,9 @@ namespace KabaAccounting.UI
 
         private void LoadNewInvoice()
         {
+            ClearBasketTextBox();
+            ClearPointOfSaleListView();
+
             int invoiceNo, increment=1;
 
             invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
@@ -427,9 +500,12 @@ namespace KabaAccounting.UI
             {
                 case MessageBoxResult.Yes:
                     DisableButtonsTools();
-                    dgProducts.Items.Clear();
+                    ClearProductEntranceTextBox();
+                    LoadPastInvoice();
                     btnNew.IsEnabled = true;
                     btnEdit.IsEnabled = true;
+                    btnPrev.IsEnabled = true;
+                    btnNext.IsEnabled = true;
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
@@ -437,6 +513,33 @@ namespace KabaAccounting.UI
                 case MessageBoxResult.Cancel:
                     MessageBox.Show("Nevermind then...", "KABA Accounting");
                     break;
+            }
+        }
+
+        int invoiceArrow;
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            int firstInvoiceNo = 0, currentInvoiceNo= Convert.ToInt32(lblInvoiceNo.Content);
+
+            if (currentInvoiceNo!= firstInvoiceNo)
+            {
+                ClearPointOfSaleListView();
+                int prevInvoice = Convert.ToInt32(lblInvoiceNo.Content) - 1;
+                invoiceArrow = 0;//0 means customer has clicked the previous button.
+                LoadPastInvoice(prevInvoice, invoiceArrow);
+            }
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            int lastInvoiceNo = GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
+
+            if (currentInvoiceNo != lastInvoiceNo)
+            {
+                ClearPointOfSaleListView();
+                int nextInvoice = Convert.ToInt32(lblInvoiceNo.Content) + 1;
+                invoiceArrow = 1;//1 means customer has clicked the next button.
+                LoadPastInvoice(nextInvoice, invoiceArrow);
             }
         }
     }

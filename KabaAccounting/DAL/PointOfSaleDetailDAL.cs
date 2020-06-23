@@ -195,7 +195,7 @@ namespace KabaAccounting.DAL
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                String sql = "SELECT * FROM tbl_pos_details WHERE id=IDENT_CURRENT('tbl_pos_details')";//SQL query to get the last id of rows in te table.
+                String sql = "SELECT * FROM tbl_pos_detailed WHERE id=IDENT_CURRENT('tbl_pos_details')";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -220,6 +220,41 @@ namespace KabaAccounting.DAL
                         conn.Close();
                     }
                     return lastInvoiceNo;
+                }
+            }
+        }
+        #endregion
+
+        #region GETTING THE ROW INFORMATION OF A TABLE BY USING INVOICE NO.
+        public DataTable Search(int invoiceNo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";//SQL query to get the last id of rows in te table.
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
                 }
             }
         }

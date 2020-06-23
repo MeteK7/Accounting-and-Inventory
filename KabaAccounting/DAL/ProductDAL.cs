@@ -236,5 +236,40 @@ namespace KabaAccounting.DAL
             return dataTable;
         }
         #endregion
+
+        #region GETTING THE PRODUCT INFORMATIONS BY USING PRODUCT ID.
+        public DataTable SearchById(string productId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_products WHERE id= " + productId + "";//SQL query to get the last id of rows in te table.
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
     }
 }
