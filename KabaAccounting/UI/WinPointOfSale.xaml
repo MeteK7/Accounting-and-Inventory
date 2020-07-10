@@ -62,11 +62,19 @@
                     </DataGrid.Background>
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="130" />
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="470"/>
-                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="60"/>
+                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="406"/>
+                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="50"/>
+                        <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
                         <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price" Width="70"/>
                         <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
                         <DataGridTextColumn Binding="{Binding Total}" ClipboardContentBinding="{x:Null}" Header="Total" Width="150"/>
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Name="btnDelete" Content="Delete" Click="btnDelete_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -102,7 +110,7 @@
                 <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnSave_Click"/>
                 <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
                 <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnCancel_Click"/>
-                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55"/>
+                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnEdit_Click"/>
                 <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>

@@ -43,6 +43,7 @@ namespace KabaAccounting.UI
         UnitDAL unitDAL = new UnitDAL();
         UnitBLL unitBLL = new UnitBLL();
 
+        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
 
         private void LoadPastInvoice(int invoiceNo=0, int invoiceArrow=-1)//Optional parameter
         {
@@ -54,56 +55,65 @@ namespace KabaAccounting.UI
                 invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
-
-            DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
-
-            if (dataTablePosDetail.Rows.Count!=0)
+            if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                #region LOADING THE PRODUCT DATA GRID
 
-                for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+
+                if (dataTablePosDetail.Rows.Count != 0)
                 {
-                    productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
-                    productUnit = dataTablePosDetail.Rows[currentRow]["product_unit"].ToString();
-                    productPrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
-                    productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
-                    productTotal = dataTablePosDetail.Rows[currentRow]["total_price"].ToString();
+                    #region LOADING THE PRODUCT DATA GRID
 
-                    DataTable dataTableProduct = productDAL.SearchById(productId);
+                    for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                    {
+                        productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
+                        productUnit = dataTablePosDetail.Rows[currentRow]["product_unit"].ToString();
+                        productPrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
+                        productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
+                        productTotal = dataTablePosDetail.Rows[currentRow]["total_price"].ToString();
 
-                    productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
-                    productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+                        DataTable dataTableProduct = productDAL.SearchById(productId);
 
-                    dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnit, Price = productPrice, Amount = productAmount, Total = productTotal });
+                        productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
+                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+
+                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnit, Price = productPrice, Amount = productAmount, Total = productTotal });
+                    }
+                    #endregion
+
+                    #region FILLING THE PREVIOUS BASKET INFORMATIONS
+
+                    DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);//This Search method gets the id and row informations in the table which belong to the last invoice.
+
+                    //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+                    //txtBasketTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
+                    txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
+                    txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
+                    txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
+                    txtBasketTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
+
+                    #endregion
                 }
-                #endregion
+                else if(dataTablePosDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                {
+                    if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
+                    {
+                        invoiceNo = invoiceNo - 1;
+                    }
+                    else
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
 
-                #region FILLING THE PREVIOUS BASKET INFORMATIONS
-
-                DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);//This Search method gets the id and row informations in the table which belong to the last invoice.
-
-                //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-                //txtBasketTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
-                txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
-                txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
-                txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
-                txtBasketTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
-
-                #endregion
+                    if (invoiceArrow!=-1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    {
+                        LoadPastInvoice(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
+                    }
+                    
+                }
             }
-            else
-            {
-                if (invoiceArrow==0)//If the invoice arrow is 0, that means use clicked the previous button.
-                {
-                    invoiceNo = invoiceNo - 1;  
-                }
-                else
-                {
-                    invoiceNo = invoiceNo + 1;
-                }
-                LoadPastInvoice(invoiceNo, invoiceArrow);
-            }
+
         }
 
         private void FillStaffInformations()
@@ -127,9 +137,18 @@ namespace KabaAccounting.UI
             btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
         }
 
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
+            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
         private void DisableButtonsTools()
         {
             DisableProductEntranceButtons();
+            dgProducts.IsReadOnly = true;//Disabling the datagrid editing.
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
@@ -163,7 +182,10 @@ namespace KabaAccounting.UI
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+
             //Get the values from the POS Window and fill them into the pointOfSaleBLL.
+            pointOfSaleBLL.Id = invoiceNo;
             pointOfSaleBLL.SaleType = cboSaleType.Text;
             pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
             pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
@@ -175,15 +197,15 @@ namespace KabaAccounting.UI
 
             #region TABLE POS DETAILS SAVING SECTION
 
+            int userClickedNewOrEdit=btnNewOrEdit;
             int specificRowIndex = 0;
-            int invoiceNo, cellLength = 6;
+            int cellLength = 6;
             int addedBy = GetUserId();
             string[] cells = new string[cellLength];
             DateTime dateTime = DateTime.Now;
-            bool isSuccessDetail=false;
-            bool isSuccess=false;
+            bool isSuccessDetail = false;
+            bool isSuccess = false;
 
-            invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
             for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
             {
@@ -210,23 +232,38 @@ namespace KabaAccounting.UI
                 pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[4]);
                 pointOfSaleDetailBLL.ProductTotalPrice = Convert.ToDecimal(cells[5]);
 
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
+                {
+                    pointOfSaleDetailDAL.Delete(pointOfSaleDetailBLL);
+                    userClickedNewOrEdit = 2; //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice no at once.
+                }
+                
                 isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailBLL);
             }
             #endregion
 
-            //Creating a Boolean variable to insert data into the database.
-            isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
-            
+            userClickedNewOrEdit = btnNewOrEdit;// We arereassigning the btnNewOrEdit value into userClickedNewOrEdit.
+
+            if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+            {
+                isSuccess = pointOfSaleDAL.Update(pointOfSaleBLL);
+            }
+
+            else
+            {
+                //Creating a Boolean variable to insert data into the database.
+                isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
+            }
+
 
             //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-            if (isSuccess == true && isSuccessDetail==true)
+            if (isSuccess == true && isSuccessDetail==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
             {
-                ClearBasketTextBox();
-                ClearPointOfSaleListView();
+                //ClearBasketTextBox();
+                //ClearPointOfSaleListView();
                 DisableButtonsTools();
 
-                btnNew.IsEnabled = true;//If the previous products are saved successfully, enable the new button to be able to add new products.
-                btnEdit.IsEnabled = true;//If the previous products are saved successfully, enable the edit button to be able to edit an existing invoice.
+                EnableButtonsOnClickSaveCancel();
             }
             else
             {
@@ -467,15 +504,34 @@ namespace KabaAccounting.UI
         {
             int specificRowIndex = 0, invoiceNo;
 
-            DataTable dataTableUnit = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
+            DataTable dataTable = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
 
-            invoiceNo = Convert.ToInt32(dataTableUnit.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
+            if (dataTable.Rows.Count!=0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
+            {
+                invoiceNo = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
+            }
+            else//If there is no any invoice number, that means it is the first sale. So, assing invoiceNo with 0;
+            {
+                invoiceNo = 0;
+            }
             return invoiceNo;
         }
 
-        private void btnNew_Click(object sender, RoutedEventArgs e)//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        private void btnNew_Click(object sender, RoutedEventArgs e)
         {
+            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
+            EnteredBtnNewOrEdit();
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            EnteredBtnNewOrEdit();
+        }
+
+        private void EnteredBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnCancel.IsEnabled = true;
@@ -491,6 +547,7 @@ namespace KabaAccounting.UI
             txtProductPrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
             txtProductTotalPrice.IsEnabled = true;
+            dgProducts.IsReadOnly = false;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -501,11 +558,9 @@ namespace KabaAccounting.UI
                 case MessageBoxResult.Yes:
                     DisableButtonsTools();
                     ClearProductEntranceTextBox();
+                    ClearPointOfSaleListView();
                     LoadPastInvoice();
-                    btnNew.IsEnabled = true;
-                    btnEdit.IsEnabled = true;
-                    btnPrev.IsEnabled = true;
-                    btnNext.IsEnabled = true;
+                    EnableButtonsOnClickSaveCancel();
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
@@ -540,6 +595,22 @@ namespace KabaAccounting.UI
                 int nextInvoice = Convert.ToInt32(lblInvoiceNo.Content) + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedRow = dgProducts.SelectedItem;
+
+            if (selectedRow != null)
+            {
+                dgProducts.Items.Remove(selectedRow);
+
+                int rowQuntity = dgProducts.Items.Count;//Getting the new amount of the list rows.
+
+                rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after deleting an existing product.
+
+                PopulateBasket(rowQuntity);
             }
         }
     }

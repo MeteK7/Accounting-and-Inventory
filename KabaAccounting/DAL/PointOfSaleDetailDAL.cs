@@ -93,8 +93,8 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region UPDATE METHOD
-        public bool Update(PointOfSaleBLL pointOfSaleBLL)
+        /*#region UPDATE METHOD
+        public bool Update(PointOfSaleDetailBLL pointOfSaleDetailBLL)
         {
             bool isSuccess = false;
 
@@ -102,19 +102,19 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pos_details SET sale_type=@sale_type, customer_id=@customer_id, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pos_detailed SET sale_type=@sale_type, customer_id=@customer_id, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE invoice_no=@invoice_no";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("sale_type", pointOfSaleBLL.SaleType);
-                cmd.Parameters.AddWithValue("customer_id", pointOfSaleBLL.CustomerId);
-                cmd.Parameters.AddWithValue("sub_total", pointOfSaleBLL.SubTotal);
-                cmd.Parameters.AddWithValue("vat", pointOfSaleBLL.Vat);
-                cmd.Parameters.AddWithValue("discount", pointOfSaleBLL.Discount);
-                cmd.Parameters.AddWithValue("grand_total", pointOfSaleBLL.GrandTotal);
-                cmd.Parameters.AddWithValue("added_date", pointOfSaleBLL.AddedDate);
-                cmd.Parameters.AddWithValue("added_by", pointOfSaleBLL.AddedBy);
-                cmd.Parameters.AddWithValue("id", pointOfSaleBLL.Id);//Do you really need to update the ID?
+                cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailBLL.ProductId);
+                cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailBLL.InvoiceNo);//Do you really need to update the invoice no?
+                cmd.Parameters.AddWithValue("@added_date", pointOfSaleDetailBLL.AddedDate);
+                cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailBLL.AddedBy);
+                cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailBLL.ProductRate);
+                cmd.Parameters.AddWithValue("@amount", pointOfSaleDetailBLL.ProductAmount);
+                cmd.Parameters.AddWithValue("@product_cost_price", pointOfSaleDetailBLL.ProductCostPrice);
+                cmd.Parameters.AddWithValue("@product_sale_price", pointOfSaleDetailBLL.ProductSalePrice);
+                cmd.Parameters.AddWithValue("@total_price", pointOfSaleDetailBLL.ProductTotalPrice);
 
 
                 conn.Open();
@@ -141,7 +141,7 @@ namespace KabaAccounting.DAL
             }
             return isSuccess;
         }
-        #endregion
+        #endregion*/
 
         #region DELETE METHOD
         public bool Delete(PointOfSaleDetailBLL pointOfSaleDetailBLL)
@@ -154,12 +154,12 @@ namespace KabaAccounting.DAL
             try
             {
                 //SQL Query to Delete from the Database
-                string sqlQuery = "DELETE FROM tbl_pos_details WHERE product_id=@product_id";
+                string sqlQuery = "DELETE FROM tbl_pos_detailed WHERE invoice_no=@invoice_no";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailBLL.ProductId);
+                cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailBLL.InvoiceNo);
 
                 //Opening the SQL connection
                 conn.Open();
