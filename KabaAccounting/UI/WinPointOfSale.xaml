@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting.UI"
-        mc:Ignorable="d" Height="781.3" Width="1329.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="841.3" Width="1329.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/pos.jpg"/>
     </Window.Background>
@@ -56,7 +56,7 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="5,254,250.4,9.8">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="466" VerticalAlignment="Top" Width="1037">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="526" VerticalAlignment="Top" Width="1037" IsReadOnly="True">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -90,7 +90,7 @@
                 <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="174" Margin="0,572,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Basket Informations" Height="174" Margin="0,630,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-1.8,-3">
                 <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="75"/>
                 <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="75"/>

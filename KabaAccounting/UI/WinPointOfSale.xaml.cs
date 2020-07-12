@@ -149,7 +149,7 @@ namespace KabaAccounting.UI
         private void DisableButtonsTools()
         {
             DisableProductEntranceButtons();
-            dgProducts.IsReadOnly = true;//Disabling the datagrid editing.
+            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
@@ -549,7 +549,8 @@ namespace KabaAccounting.UI
             txtProductPrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
             txtProductTotalPrice.IsEnabled = true;
-            dgProducts.IsReadOnly = false;
+            dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
+
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
