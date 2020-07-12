@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting.UI"
-        mc:Ignorable="d" Height="698.8" Width="1188.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="781.3" Width="1329.607" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/pos.jpg"/>
     </Window.Background>
@@ -28,8 +28,8 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="0,152,250.4,438.8" Padding="0">
-            <Grid Height="77" Margin="10,0,-1.2,-2.6">
+        <GroupBox Header="PRODUCT" Margin="0,152,250,524" Padding="0">
+            <Grid Margin="10,0,-2,-2">
                 <Label x:Name="lblProductBarcode" Content="Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
                 <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
@@ -56,22 +56,22 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="5,254,250.4,9.8">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="394" VerticalAlignment="Top" Width="906">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="466" VerticalAlignment="Top" Width="1037">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="130" />
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="406"/>
+                        <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="170" />
+                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="536"/>
                         <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="50"/>
                         <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
                         <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price" Width="70"/>
                         <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
-                        <DataGridTextColumn Binding="{Binding Total}" ClipboardContentBinding="{x:Null}" Header="Total" Width="150"/>
+                        <DataGridTextColumn Binding="{Binding Total}" ClipboardContentBinding="{x:Null}" Header="Total" Width="100"/>
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="btnDelete" Content="Delete" Click="btnDelete_Click"/>
+                                    <Button Name="btnDeleteListRow" Content="Delete" Click="btnDeleteListRow_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -90,7 +90,7 @@
                 <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="174" Margin="0,501,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Basket Informations" Height="174" Margin="0,572,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-1.8,-3">
                 <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="75"/>
                 <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="75"/>
@@ -104,31 +104,32 @@
                 <TextBox x:Name="txtBasketTotal" HorizontalAlignment="Left" Height="26" Margin="95,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="120" Margin="0,32,250.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="927">
+        <GroupBox Header="Menu" Height="120" Margin="0,32,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1072">
             <Grid Margin="0,0,-1.8,-4">
                 <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnNew_Click"/>
                 <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnSave_Click"/>
-                <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
+                <Button x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" Width="75" Height="55" RenderTransformOrigin="1.824,0.147"/>
                 <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnCancel_Click"/>
                 <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnEdit_Click"/>
-                <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="707,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
+                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="55" Click="btnDelete_Click"/>
+                <Button x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="829,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="796,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
+                <Button x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="918,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="447,10,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="532,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
+                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="569,10,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="654,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
                     <ComboBoxItem Content="CASH"/>
                     <ComboBoxItem Content="CREDIT"/>
                 </ComboBox>
-                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="447,41,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="532,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
-                
+                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="569,41,0,0" VerticalAlignment="Top" Width="75"/>
+                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="654,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
+
             </Grid>
         </GroupBox>
 
