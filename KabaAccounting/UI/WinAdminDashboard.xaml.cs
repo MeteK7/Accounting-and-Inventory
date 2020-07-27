@@ -28,9 +28,9 @@ namespace KabaAccounting
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             WinLogin winLogin = new WinLogin();
             winLogin.Show();
-            this.Hide();
         }
 
 
@@ -48,14 +48,14 @@ namespace KabaAccounting
 
         private void btnCustomer_Click(object sender, RoutedEventArgs e)
         {
-            WinDealer winDealerCustomer = new WinDealer();
-            winDealerCustomer.Show();
+            WinSupplier winSupplierCustomer = new WinSupplier();
+            winSupplierCustomer.Show();
         }
 
-        private void btnDealer_Click(object sender, RoutedEventArgs e)
+        private void btnSupplier_Click(object sender, RoutedEventArgs e)
         {
-            WinDealer winDealerCustomer = new WinDealer();
-            winDealerCustomer.Show();
+            WinSupplier winSupplierCustomer = new WinSupplier();
+            winSupplierCustomer.Show();
         }
 
         private void btnUser_Click(object sender, RoutedEventArgs e)
@@ -74,6 +74,12 @@ namespace KabaAccounting
         {
             WinPointOfSale winPointOfSale = new WinPointOfSale();
             winPointOfSale.Show();
+        }
+
+        private void btnPosReport_Click(object sender, RoutedEventArgs e)
+        {
+            WinPosReport winPosReport = new WinPosReport();
+            winPosReport.Show();
         }
     }
 }

@@ -189,6 +189,7 @@ namespace KabaAccounting.UI
             pointOfSaleBLL.Id = invoiceNo;
             pointOfSaleBLL.SaleType = cboSaleType.Text;
             pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
+            pointOfSaleBLL.CostTotal = Convert.ToInt32(txtBasketCostTotal.Text);
             pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
             pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
             pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
@@ -335,9 +336,11 @@ namespace KabaAccounting.UI
 
                 cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
                 cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
-                
+
+                string costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
                 string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
+                txtProductCost.Text = costPrice;
                 txtProductPrice.Text = productPrice;
                 txtProductAmount.Text = productAmount.ToString();
                 txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
@@ -359,9 +362,9 @@ namespace KabaAccounting.UI
         {
             bool addNewProductLine = true;
             int barcodeColNo=0;
-            int amountColNo = 4;
-            int priceColNo = 3;
-            int totalPriceColNo = 5;
+            int priceColNo = 4;
+            int amountColNo = 5;
+            int totalPriceColNo = 6;
             int amount = 0;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
@@ -376,8 +379,8 @@ namespace KabaAccounting.UI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock cellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!              
-                        TextBlock cellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!              
+                        TextBlock cellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock cellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
                         TextBlock cellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
@@ -395,7 +398,7 @@ namespace KabaAccounting.UI
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
                 //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
-                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Price=txtProductPrice.Text, Amount=txtProductAmount.Text, Total=txtProductTotalPrice.Text});
+                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Cost = txtProductCost.Text, Price =txtProductPrice.Text, Amount=txtProductAmount.Text, Total=txtProductTotalPrice.Text});
             }
 
             dgProducts.UpdateLayout();
@@ -410,9 +413,12 @@ namespace KabaAccounting.UI
 
         private void PopulateBasket(int rowQuntity)
         {
-            int productTotalPriceCol=5;
+            int productCostCol = 3;
+            int productTotalPriceCol=6;
             DataGridRow dataGridRow;
-            TextBlock priceCellContent;
+            TextBlock costCellContent;
+            TextBlock totalPriceCellContent;
+            txtBasketCostTotal.Text = 0.ToString();
             txtBasketSubTotal.Text = 0.ToString();
             txtBasketTotal.Text = 0.ToString();
 
@@ -420,9 +426,13 @@ namespace KabaAccounting.UI
             {
                 dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                priceCellContent = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+                costCellContent = dgProducts.Columns[productCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
-                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(priceCellContent.Text)).ToString();
+                totalPriceCellContent = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+
+                txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(costCellContent.Text)).ToString();
+
+                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(totalPriceCellContent.Text)).ToString();
 
                 txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
             }

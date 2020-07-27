@@ -39,7 +39,7 @@ namespace KabaAccounting.UI
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //Get the values from the Dealer Window and fill them into the dealerBLL.
+            //Get the values from the Supplier Window and fill them into the supplierBLL.
 
             customerBLL.Name = txtName.Text;
             customerBLL.Email = txtEmail.Text;
@@ -181,7 +181,7 @@ namespace KabaAccounting.UI
 
             //Check if the keyword has value or not
 
-            if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshDealerCustomerDataGrid method!!! */
+            if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshSupplierCustomerDataGrid method!!! */
             {
                 //Show category informations based on the keyword
                 DataTable dataTable = customerDAL.Search(keyword);

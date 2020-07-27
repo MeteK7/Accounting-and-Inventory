@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\App.xaml
-101861612293
+112094356851
 
-341001297909
+351421348095
 141066371409
-UI\WinAdminDashboard.xaml;UI\WinBanks.xaml;UI\WinCategories.xaml;UI\WinCustomer.xaml;UI\WinDealer.xaml;UI\WinLogin.xaml;UI\WinPointOfSale.xaml;UI\WinProducts.xaml;UI\WinUserDashboard.xaml;UI\WinUsers.xaml;
+UI\WinAdminDashboard.xaml;UI\WinBanks.xaml;UI\WinCategories.xaml;UI\WinCustomer.xaml;UI\WinPosReport.xaml;UI\WinSupplier.xaml;UI\WinLogin.xaml;UI\WinPointOfSale.xaml;UI\WinProducts.xaml;UI\WinUserDashboard.xaml;UI\WinUsers.xaml;
 
 False
 

@@ -59,7 +59,7 @@
     <Compile Include="BLL\BankBLL.cs" />
     <Compile Include="BLL\CategoryBLL.cs" />
     <Compile Include="BLL\CustomerBLL.cs" />
-    <Compile Include="BLL\DealerBLL.cs" />
+    <Compile Include="BLL\SupplierBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\PointOfSaleBLL.cs" />
     <Compile Include="BLL\PointOfSaleDetailBLL.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="DAL\BankDAL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
-    <Compile Include="DAL\DealerDAL.cs" />
+    <Compile Include="DAL\SupplierDAL.cs" />
     <Compile Include="DAL\LoginDAL.cs" />
     <Compile Include="DAL\PointOfSaleDAL.cs" />
     <Compile Include="DAL\PointOfSaleDetailDAL.cs" />
@@ -92,8 +92,11 @@
     <Compile Include="UI\WinCustomer.xaml.cs">
       <DependentUpon>WinCustomer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinDealer.xaml.cs">
-      <DependentUpon>WinDealer.xaml</DependentUpon>
+    <Compile Include="UI\WinPosReport.xaml.cs">
+      <DependentUpon>WinPosReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinSupplier.xaml.cs">
+      <DependentUpon>WinSupplier.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinLogin.xaml.cs">
       <DependentUpon>WinLogin.xaml</DependentUpon>
@@ -126,7 +129,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\WinDealer.xaml">
+    <Page Include="UI\WinPosReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinSupplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,13 +268,122 @@
     <Resource Include="Images\Backgrounds\customer.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Backgrounds\dealer.jpg" />
+    <Resource Include="Images\Backgrounds\supplier.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Backgrounds\accounting-pattern.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Backgrounds\pos.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\payment-terminal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\analysis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\inventory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\inventory %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\inventory %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\inventory %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\inventory %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\add-to-cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\floppy-disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\delivery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\deletecart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\trash_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\printer.png" />
+    <Resource Include="Images\Buttons\printer_colorful.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\bank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\supplier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\customers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\barcode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\qr-code.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\category.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\wooden-floor-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\paint-border.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\file-management.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\preferences.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\system-preferences.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\backup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\backup-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\users.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\maths.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\cash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\credit-card.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

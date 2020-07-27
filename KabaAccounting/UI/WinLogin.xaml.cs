@@ -55,17 +55,17 @@ namespace KabaAccounting.UI
                 {
                     case "Admin":
                         {
-                            WinAdminDashboard winAdmin = new WinAdminDashboard();
-                            winAdmin.Show();
                             this.Hide();
+                            WinAdminDashboard winAdmin = new WinAdminDashboard();
+                            winAdmin.Show(); 
                         }
                         break;
 
                     case "User":
                         {
-                            WinUserDashboard winUser = new WinUserDashboard();
-                            winUser.Show();
                             this.Hide();
+                            WinUserDashboard winUser = new WinUserDashboard();
+                            winUser.Show();  
                         }
                         break;
 

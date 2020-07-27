@@ -54,13 +54,14 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pos (id, sale_type, customer_id, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@id, @sale_type, @customer_id, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pos (id, sale_type, customer_id, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@id, @sale_type, @customer_id, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", pointOfSaleBLL.Id);
                 cmd.Parameters.AddWithValue("@sale_type", pointOfSaleBLL.SaleType);
                 cmd.Parameters.AddWithValue("@customer_id", pointOfSaleBLL.CustomerId);
+                cmd.Parameters.AddWithValue("@cost_total", pointOfSaleBLL.CostTotal);
                 cmd.Parameters.AddWithValue("@sub_total", pointOfSaleBLL.SubTotal);
                 cmd.Parameters.AddWithValue("@vat",pointOfSaleBLL.Vat);
                 cmd.Parameters.AddWithValue("@discount",pointOfSaleBLL.Discount);
@@ -102,12 +103,13 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pos SET sale_type=@sale_type, customer_id=@customer_id, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pos SET sale_type=@sale_type, customer_id=@customer_id, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("sale_type", pointOfSaleBLL.SaleType);
                 cmd.Parameters.AddWithValue("customer_id", pointOfSaleBLL.CustomerId);
+                cmd.Parameters.AddWithValue("cost_total", pointOfSaleBLL.CostTotal);
                 cmd.Parameters.AddWithValue("sub_total", pointOfSaleBLL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfSaleBLL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfSaleBLL.Discount);

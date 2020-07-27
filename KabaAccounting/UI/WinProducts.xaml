@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:KabaAccounting.UI"
         mc:Ignorable="d"
         Title="Products" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/paint-border.jpg"/>
+    </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="PRODUCTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>

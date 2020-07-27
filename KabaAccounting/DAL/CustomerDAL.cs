@@ -60,7 +60,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                //Writing SQL Query to insert new dealer or customer to the database
+                //Writing SQL Query to insert new customer to the database
                 string sqlQuery = "INSERT INTO tbl_customer (name, email, contact, address, added_date, added_by) VALUES (@name, @email, @contact, @address, @added_date, @added_by)";
 
                 //Creating SQL Command to pass values in our query.
@@ -116,7 +116,7 @@ namespace KabaAccounting.DAL
             try
             {
                 //Query to Update Category
-                string sqlQuery = "UPDATE tbl_dealer_customer SET name=@name, email=@email, contact=@contact, address=@address, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_supplier_customer SET name=@name, email=@email, contact=@contact, address=@address, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 //SQL Command to pass the value on SQL query
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);

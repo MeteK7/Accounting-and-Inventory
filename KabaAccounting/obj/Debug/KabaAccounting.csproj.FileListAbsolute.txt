@@ -39,7 +39,6 @@ C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashbo
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinBanks.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCategories.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.g.cs
-C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealer.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinLogin.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfSale.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinProducts.g.cs
@@ -52,7 +51,6 @@ C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinAdminDashbo
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinBanks.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCategories.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinCustomer.baml
-C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinDealer.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinLogin.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfSale.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinProducts.baml
@@ -64,3 +62,7 @@ C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.csproj.CoreCompileInputs.cache
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.exe
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\KabaAccounting.pdb
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinSupplier.g.cs
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinSupplier.baml
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPosReport.g.cs
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPosReport.baml

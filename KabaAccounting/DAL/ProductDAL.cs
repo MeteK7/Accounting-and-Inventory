@@ -271,5 +271,71 @@ namespace KabaAccounting.DAL
             }
         }
         #endregion
+
+
+        #region COUNT BY DAY METHOD
+        public int CountByDay()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            int counter = 0;
+
+            try
+            {
+                string sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate())";//This query counts the records from the beginning of the day to the rest of the day.
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read(); // read first row
+                    counter = sqlDataReader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return counter;
+        }
+        #endregion
+
+        #region COUNT BY DAY METHOD
+        public DataTable FetchByToday()
+        {
+            //Creating database connection
+            SqlConnection conn = new SqlConnection(connString);
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                //Writing SQL Query to get all the datas from database
+                string sqlQuery = "Select * FROM tbl_pos WHERE added_date>Convert(date, getdate())";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                conn.Open();
+
+                //Adding the value from dataAdapter into the dataTable.
+                dataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
     }
 }
