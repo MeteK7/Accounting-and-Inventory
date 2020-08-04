@@ -274,15 +274,25 @@ namespace KabaAccounting.DAL
 
 
         #region COUNT BY DAY METHOD
-        public int CountByDay()
+        public int CountByDay(bool cashOrCredit)
         {
             SqlConnection conn = new SqlConnection(connString);
 
             int counter = 0;
+            string sqlQuery;
 
             try
             {
-                string sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate())";//This query counts the records from the beginning of the day to the rest of the day.
+                if (cashOrCredit==true)//Get the cash sales for today if the cashOrCredit boolean variable is true
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND sale_type='CASH'";//This query counts the records from the beginning of the day to the rest of the day.
+
+                }
+                else//Get the credit sales for today if the cashOrCredit boolean variable is false
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND sale_type='CREDIT'";//This query counts the records from the beginning of the day to the rest of the day.
+                }
+
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();

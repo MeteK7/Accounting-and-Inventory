@@ -40,7 +40,7 @@
         <Image x:Name="imgCash" HorizontalAlignment="Left" Height="57" Margin="40,218,0,0" VerticalAlignment="Top" Width="61" Source="/KabaAccounting;component/Images/Buttons/cash.png"/>
         <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="57" Margin="182,218,0,0" VerticalAlignment="Top" Width="62" Source="/KabaAccounting;component/Images/Buttons/credit-card.png"/>
         <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="106,218,0,0" VerticalAlignment="Top" Height="57" Width="71" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
-        <Label Content="0" HorizontalAlignment="Left" Margin="249,218,0,0" VerticalAlignment="Top" Height="57" Width="71" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="249,218,0,0" VerticalAlignment="Top" Height="57" Width="71" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="493" Margin="23,330,0,0" Stroke="Black" VerticalAlignment="Top" Width="615"/>
         <Label x:Name="lblTopProducts" Content="TOP 20 PRODUCTS" HorizontalAlignment="Left" Margin="40,350,0,0" VerticalAlignment="Top" Height="51" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
         <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="404" Margin="40,419,0,0" VerticalAlignment="Top" Width="586"/>

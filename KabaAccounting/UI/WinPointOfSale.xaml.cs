@@ -189,7 +189,7 @@ namespace KabaAccounting.UI
             pointOfSaleBLL.Id = invoiceNo;
             pointOfSaleBLL.SaleType = cboSaleType.Text;
             pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
-            pointOfSaleBLL.CostTotal = Convert.ToInt32(txtBasketCostTotal.Text);
+            pointOfSaleBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
             pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
             pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
             pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
@@ -236,15 +236,18 @@ namespace KabaAccounting.UI
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                 {
+                    //We are sending pointOfSaleDetailBLL as a parameter to the Delete method just to use the Invoice Number property in the SQL Query. So that we can erase all the products which have the specific invoice number.
                     pointOfSaleDetailDAL.Delete(pointOfSaleDetailBLL);
-                    userClickedNewOrEdit = 2; //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice no at once.
+
+                    //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
+                    userClickedNewOrEdit = 2; 
                 }
                 
                 isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailBLL);
             }
             #endregion
 
-            userClickedNewOrEdit = btnNewOrEdit;// We arereassigning the btnNewOrEdit value into userClickedNewOrEdit.
+            userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
             if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
             {
@@ -293,6 +296,7 @@ namespace KabaAccounting.UI
             txtProductBarcode.Text="";
             txtProductName.Text = "";
             cboProductUnit.SelectedIndex = -1;
+            txtProductCost.Text = "";
             txtProductPrice.Text = "";
             txtProductAmount.Text = "";
             txtProductTotalPrice.Text = "";
@@ -301,20 +305,24 @@ namespace KabaAccounting.UI
         }
 
         private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
-        {
-            DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
-
+       {
             int number;
-            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count!=0)//Validating the barcode if it is a number(except zero) or not.
+            //bool verifyBarcode = false;//This is for verifying that the entered barcode is correct or not;
+
+            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number))//Validating the barcode if it is a number(except zero) or not.
             {
-                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
+                //verifyBarcode = true;
 
                 int productAmount = 1;
                 int rowIndex = 0;
                 int productId;
                 int productUnit = 0;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
+
+                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
+                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
+
+                DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
 
                 productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
                 productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
@@ -325,6 +333,7 @@ namespace KabaAccounting.UI
                 {
                     productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail"]);
                 }
+
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
                     productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale"]);
@@ -346,13 +355,20 @@ namespace KabaAccounting.UI
                 txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
             }
 
-            else
-            {
-                if (txtProductBarcode.Text != "")
-                {
-                    MessageBox.Show("You have entered a wrong barcode.");
-                }
+            //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
+            //{
+            //    if (verifyBarcode!=true)
+            //    {
+            //        MessageBox.Show("You have entered a wrong barcode");
+            //    }
+            //}
 
+
+            //If the txtProductBarcode is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            /*Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                    If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+            else if (txtProductBarcode.Text == "" && btnProductAdd.IsEnabled==true)
+            {
                 ClearProductEntranceTextBox();
             }
         }
@@ -656,5 +672,6 @@ namespace KabaAccounting.UI
                     break;
             }
         }
+
     }
 }
