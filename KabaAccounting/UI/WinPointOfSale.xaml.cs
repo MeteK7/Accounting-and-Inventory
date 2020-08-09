@@ -88,6 +88,7 @@ namespace KabaAccounting.UI
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
                     //txtBasketTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
+                    txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
                     txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
@@ -185,7 +186,7 @@ namespace KabaAccounting.UI
         {
             int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
-            //Get the values from the POS Window and fill them into the pointOfSaleBLL.
+            //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
             pointOfSaleBLL.Id = invoiceNo;
             pointOfSaleBLL.SaleType = cboSaleType.Text;
             pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
@@ -266,8 +267,8 @@ namespace KabaAccounting.UI
             {
                 //ClearBasketTextBox();
                 //ClearPointOfSaleListView();
+                ClearProductEntranceTextBox();
                 DisableButtonsTools();
-
                 EnableButtonsOnClickSaveCancel();
             }
             else
@@ -280,6 +281,7 @@ namespace KabaAccounting.UI
         private void ClearBasketTextBox()
         {
             txtBasketTotalProducts.Text = "0";
+            txtBasketCostTotal.Text = "0";
             txtBasketSubTotal.Text = "0";
             txtBasketVat.Text = "0";
             txtBasketDiscount.Text = "0";
@@ -305,14 +307,13 @@ namespace KabaAccounting.UI
         }
 
         private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
-       {
+        {
             int number;
-            //bool verifyBarcode = false;//This is for verifying that the entered barcode is correct or not;
 
-            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number))//Validating the barcode if it is a number(except zero) or not.
+            DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
+
+            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
-                //verifyBarcode = true;
-
                 int productAmount = 1;
                 int rowIndex = 0;
                 int productId;
@@ -322,8 +323,7 @@ namespace KabaAccounting.UI
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
-                DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
-
+                
                 productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
                 productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
                 //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
@@ -477,14 +477,14 @@ namespace KabaAccounting.UI
 
         private void txtProductAmount_LostFocus(object sender, RoutedEventArgs e)
         {
-            string strProductAmount = txtProductAmount.Text;
-            char lastCharacter = char.Parse(strProductAmount.Substring(strProductAmount.Length-1));
+            string textProductAmount = txtProductAmount.Text;
+            char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length-1));//Getting the last character to check if the user has entered a missing amount like " 3, "
 
             bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
             decimal number;
 
-            if (strProductAmount != "" && decimal.TryParse(strProductAmount, out number) && result==true)
+            if (textProductAmount != "" && decimal.TryParse(textProductAmount, out number) && result==true)
             {
                 DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
 
@@ -493,14 +493,14 @@ namespace KabaAccounting.UI
                 decimal productAmount;
                 string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
-                    if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
+                if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
                 {
                     /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
                     So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
                     productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
                     txtProductAmount.Text = productAmount.ToString();
                 }
-                else
+                else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
                 {
                     productAmount = Convert.ToDecimal(txtProductAmount.Text);
                 }
