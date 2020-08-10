@@ -66,3 +66,5 @@ C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinSupplier.g.
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinSupplier.baml
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPosReport.g.cs
 C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPosReport.baml
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfPurchase.g.cs
+C:\Lessons\C# Programs\KabaAccounting\KabaAccounting\obj\Debug\UI\WinPointOfPurchase.baml

@@ -81,5 +81,11 @@ namespace KabaAccounting
             WinPosReport winPosReport = new WinPosReport();
             winPosReport.Show();
         }
+
+        private void btnPointOfPurchase_Click(object sender, RoutedEventArgs e)
+        {
+            WinPointOfPurchase winPointOfPurchase = new WinPointOfPurchase();
+            winPointOfPurchase.Show();
+        }
     }
 }

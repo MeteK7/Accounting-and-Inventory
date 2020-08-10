@@ -285,7 +285,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="0,152,250,608" Padding="0">
+        <GroupBox Header="PRODUCT" Margin="10,152,250,608" Padding="0">
             <Grid Margin="10,0,-2,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1037*"/>
@@ -317,7 +317,7 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="5,254,250.4,9.8">
+        <GroupBox Header="ENTERED PRODUCTS" Margin="10,254,250,10">
             <Grid Margin="10,10,-2,-0.4">
                 <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="True">
                     <DataGrid.Background>
@@ -370,7 +370,7 @@
                 <TextBox x:Name="txtBasketTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="120" Margin="0,32,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1072">
+        <GroupBox Header="Menu" Height="120" Margin="0,32,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
             <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>

@@ -59,6 +59,8 @@
     <Compile Include="BLL\BankBLL.cs" />
     <Compile Include="BLL\CategoryBLL.cs" />
     <Compile Include="BLL\CustomerBLL.cs" />
+    <Compile Include="BLL\PointOfPurchaseBLL.cs" />
+    <Compile Include="BLL\PointOfPurchaseDetailBLL.cs" />
     <Compile Include="BLL\SupplierBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\PointOfSaleBLL.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="DAL\BankDAL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
+    <Compile Include="DAL\PointOfPurchaseDAL.cs" />
+    <Compile Include="DAL\PointOfPurchaseDetailDAL.cs" />
     <Compile Include="DAL\SupplierDAL.cs" />
     <Compile Include="DAL\LoginDAL.cs" />
     <Compile Include="DAL\PointOfSaleDAL.cs" />
@@ -91,6 +95,9 @@
     </Compile>
     <Compile Include="UI\WinCustomer.xaml.cs">
       <DependentUpon>WinCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WinPointOfPurchase.xaml.cs">
+      <DependentUpon>WinPointOfPurchase.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WinPosReport.xaml.cs">
       <DependentUpon>WinPosReport.xaml</DependentUpon>
@@ -126,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\WinCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinPointOfPurchase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -384,6 +395,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\credit-card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\watercolor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\red-hand-printed.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

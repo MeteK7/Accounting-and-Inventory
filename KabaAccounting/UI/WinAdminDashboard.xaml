@@ -465,7 +465,7 @@
             </TabItem>
             <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
                 <Grid Background="#FFE5E5E5">
-                    <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="Point of Purchase" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Click="btnPointOfSale_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="Point of Purchase" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnPointOfPurchase_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/inventory (2).png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
