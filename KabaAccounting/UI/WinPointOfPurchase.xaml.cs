@@ -402,7 +402,7 @@ namespace KabaAccounting.UI
 
                         //MessageBox.Show(cellContent.Text);
                         amount = Convert.ToInt32(cellAmountContent.Text);
-                        amount += 1;
+                        amount += Convert.ToInt32(txtProductAmount.Text);
                         cellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
                         totalPrice = amount * Convert.ToDecimal(cellPriceContent.Text);//Calculating the new total price according to the new quantity. Then, assigning the result into the total price variable.
                         cellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
