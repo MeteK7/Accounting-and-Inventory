@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KabaAccounting.UI"
         mc:Ignorable="d"
-        Title="Login" Height="634.2" Width="474.4" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{x:Null}">
-    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="634" VerticalAlignment="Top" Width="474" CornerRadius="15">
+        Title="Login" Height="634.2" Width="474.4" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Foreground="{x:Null}" Background="Transparent" AllowsTransparency="True">
+    <Border BorderThickness="1" HorizontalAlignment="Left" Height="634" VerticalAlignment="Top" Width="474" CornerRadius="15">
         <Border.Background>
-            <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/navy-blue.jpg"/>
+            <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/login-background.jpg"/>
         </Border.Background>
         <Grid Margin="0.2,0.2,-1.2,-1.2">
             <Button x:Name="btnClose" Content="" Margin="0" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
@@ -38,9 +38,9 @@
                 <ComboBoxItem Content="User"/>
             </ComboBox>
             <Button x:Name="btnLogin" Content="LOGIN" Height="53" VerticalAlignment="Bottom" Width="141" Margin="171,426,161,50" HorizontalAlignment="Center" DockPanel.Dock="Top" Click="btnLogin_Click"/>
-            <Label x:Name="lblLoginImg" Content="Label" HorizontalAlignment="Left" Margin="171,66,0,0" VerticalAlignment="Top" Height="126" Width="136">
+            <Label x:Name="lblLoginImg" HorizontalAlignment="Left" Margin="171,66,0,0" VerticalAlignment="Top" Height="126" Width="136">
                 <Label.Background>
-                    <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/avatar.png" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="/KabaAccounting;component/Images/actions/entry_2.png" Stretch="Uniform"/>
                 </Label.Background>
             </Label>
         </Grid>
