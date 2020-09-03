@@ -280,7 +280,7 @@ namespace KabaAccounting.UI
 
         private void ClearBasketTextBox()
         {
-            txtBasketTotalProducts.Text = "0";
+            txtBasketAmount.Text = "0";
             txtBasketCostTotal.Text = "0";
             txtBasketSubTotal.Text = "0";
             txtBasketVat.Text = "0";
@@ -379,6 +379,7 @@ namespace KabaAccounting.UI
         {
             bool addNewProductLine = true;
             int barcodeColNo = 0;
+            int costColNo = 3;
             int priceColNo = 4;
             int amountColNo = 5;
             int totalPriceColNo = 6;
@@ -396,17 +397,20 @@ namespace KabaAccounting.UI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock cellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock cellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock cellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock tbCellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
-                        amount = Convert.ToInt32(cellAmountContent.Text);
-                        amount += Convert.ToInt32(txtProductAmount.Text);
-                        cellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        totalPrice = amount * Convert.ToDecimal(cellPriceContent.Text);//Calculating the new total price according to the new quantity. Then, assigning the result into the total price variable.
-                        cellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
+                        amount = Convert.ToInt32(tbCellAmountContent.Text);
+                        amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
+                        tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
+                        tbCellCostContent.Text = (amount * Convert.ToDecimal(tbCellCostContent.Text)).ToString();
+                        totalPrice = amount * Convert.ToDecimal(tbCellPriceContent.Text);//Calculating the new total price according to the new quantity. Then, assigning the result into the total price variable.
+                        tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
+                        break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
                     }
                 }
             }
@@ -421,40 +425,53 @@ namespace KabaAccounting.UI
             dgProducts.UpdateLayout();
             rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
 
-            PopulateBasket(rowQuntity);
+            PopulateBasket();
 
             ClearEntranceTextBox();
 
             //items[0].BarcodeRetail = "EXAMPLECODE"; This code can change the 0th row's data on the column called BarcodeRetail.
         }
 
-        private void PopulateBasket(int rowQuntity)
+        private void PopulateBasket()
         {
-            int productCostCol = 3;
-            int productTotalPriceCol = 6;
-            DataGridRow dataGridRow;
-            TextBlock costCellContent;
-            TextBlock totalPriceCellContent;
-            txtBasketCostTotal.Text = 0.ToString();
-            txtBasketSubTotal.Text = 0.ToString();
-            txtBasketTotal.Text = 0.ToString();
+            decimal amountFromTextEntry = Convert.ToDecimal(txtProductAmount.Text);
 
-            for (int i = 0; i < rowQuntity; i++)
-            {
-                dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromTextEntry).ToString();
 
-                costCellContent = dgProducts.Columns[productCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCost.Text) * amountFromTextEntry)).ToString();
 
-                totalPriceCellContent = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductPrice.Text) * amountFromTextEntry)).ToString();
 
-                txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(costCellContent.Text)).ToString();
-
-                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(totalPriceCellContent.Text)).ToString();
-
-                txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
-            }
-
+            txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
+
+        private void SubstractBasket(int selectedRowIndex)
+        {
+            DataGridRow dataGridRow;
+            TextBlock tbCostCell;
+            TextBlock tbAmountCell;
+            TextBlock tbTotalPriceCell;
+            int productCostCol = 3;
+            int productAmountCol = 5;
+            int productTotalPriceCol = 6;
+
+            dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
+
+            tbAmountCell = dgProducts.Columns[productAmountCol].GetCellContent(dataGridRow) as TextBlock;
+
+            tbCostCell = dgProducts.Columns[productCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+
+            tbTotalPriceCell = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+
+            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbAmountCell.Text)).ToString();
+
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCostCell.Text)).ToString();
+
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbTotalPriceCell.Text)).ToString();
+
+            txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+        }
+
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {
             ClearEntranceTextBox();
@@ -632,16 +649,13 @@ namespace KabaAccounting.UI
         private void btnDeleteListRow_Click(object sender, RoutedEventArgs e)
         {
             var selectedRow = dgProducts.SelectedItem;
+            int selectedRowIndex = dgProducts.SelectedIndex;
 
             if (selectedRow != null)
             {
+                SubstractBasket(selectedRowIndex);
+
                 dgProducts.Items.Remove(selectedRow);
-
-                int rowQuntity = dgProducts.Items.Count;//Getting the new amount of the list rows.
-
-                rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after deleting an existing product.
-
-                PopulateBasket(rowQuntity);
             }
         }
 

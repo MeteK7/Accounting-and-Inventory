@@ -362,7 +362,7 @@
                 <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,114,0,0" Width="80"/>
                 <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" Width="80"/>
                 <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold"/>
-                <TextBox x:Name="txtBasketTotalProducts" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketAmount" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
