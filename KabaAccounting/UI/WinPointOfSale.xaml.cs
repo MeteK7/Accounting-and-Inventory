@@ -47,8 +47,8 @@ namespace KabaAccounting.UI
 
         private void LoadPastInvoice(int invoiceNo=0, int invoiceArrow=-1)//Optional parameter
         {
-            int firstRowIndex=0;
-            string productId,productBarcode, productName, productUnit, productPrice, productAmount, productTotal;
+            int firstRowIndex=0, productUnitId;
+            string productId,productBarcode, productName, productUnitName, productCost, productPrice, productAmount, productTotalCost, productTotalPrice;
 
             if (invoiceNo==0)
             {
@@ -57,8 +57,8 @@ namespace KabaAccounting.UI
 
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-
                 DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+                DataTable dataTableUnitInfo;
 
                 if (dataTablePosDetail.Rows.Count != 0)
                 {
@@ -67,17 +67,23 @@ namespace KabaAccounting.UI
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
-                        productUnit = dataTablePosDetail.Rows[currentRow]["product_unit"].ToString();
+                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit"]);
+
+                        dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
+                        productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
+
+                        productCost = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productPrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
                         productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
-                        productTotal = dataTablePosDetail.Rows[currentRow]["total_price"].ToString();
+                        productTotalCost = (Convert.ToDecimal(productCost) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalPrice = (Convert.ToDecimal(productPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
 
                         DataTable dataTableProduct = productDAL.SearchById(productId);
 
                         productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
-                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnit, Price = productPrice, Amount = productAmount, Total = productTotal });
+                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnitName, Cost=productCost, Price = productPrice, Amount = productAmount, TotalCost= productTotalCost, TotalPrice = productTotalPrice });
                     }
                     #endregion
 
@@ -87,12 +93,12 @@ namespace KabaAccounting.UI
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-                    //txtBasketTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
+                    //txtBasketGrandTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
                     txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
-                    txtBasketTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
+                    txtBasketGrandTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
 
                     #endregion
                 }
@@ -185,6 +191,7 @@ namespace KabaAccounting.UI
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+            int userId= GetUserId();
 
             //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
             pointOfSaleBLL.Id = invoiceNo;
@@ -194,21 +201,21 @@ namespace KabaAccounting.UI
             pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
             pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
             pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
-            pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtBasketTotal.Text);
+            pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
             pointOfSaleBLL.AddedDate = DateTime.Now;
-            pointOfSaleBLL.AddedBy = GetUserId();
+            pointOfSaleBLL.AddedBy = userId;
 
             #region TABLE POS DETAILS SAVING SECTION
 
             int userClickedNewOrEdit=btnNewOrEdit;
             int specificRowIndex = 0;
             int cellLength = 6;
-            int addedBy = GetUserId();
+            int addedBy = userId;
             string[] cells = new string[cellLength];
             DateTime dateTime = DateTime.Now;
             bool isSuccessDetail = false;
             bool isSuccess = false;
-
+            int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
             for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
             {
@@ -229,11 +236,11 @@ namespace KabaAccounting.UI
                 pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
                 pointOfSaleDetailBLL.AddedDate = dateTime;
                 pointOfSaleDetailBLL.AddedBy = addedBy;
-                pointOfSaleDetailBLL.ProductRate = 0;//Modify this code dynamically.
-                pointOfSaleDetailBLL.ProductCostPrice = Convert.ToDecimal(dataTable.Rows[specificRowIndex]["costprice"].ToString());
-                pointOfSaleDetailBLL.ProductSalePrice = Convert.ToDecimal(cells[3]);//cells[3] contains sale price of the product in the list.
-                pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[4]);
-                pointOfSaleDetailBLL.ProductTotalPrice = Convert.ToDecimal(cells[5]);
+                pointOfSaleDetailBLL.ProductRate = productRate;
+                pointOfSaleDetailBLL.ProductUnitId = Convert.ToInt32(cells[2]);//cells[2] contains unit id of the product in the list.
+                pointOfSaleDetailBLL.ProductCostPrice = Convert.ToDecimal(cells[3]);//cells[3] contains cost price of the product in the list.
+                pointOfSaleDetailBLL.ProductSalePrice = Convert.ToDecimal(cells[4]);//cells[4] contains sale price of the product in the list.
+                pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[5]);
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                 {
@@ -285,7 +292,7 @@ namespace KabaAccounting.UI
             txtBasketSubTotal.Text = "0";
             txtBasketVat.Text = "0";
             txtBasketDiscount.Text = "0";
-            txtBasketTotal.Text = "0";
+            txtBasketGrandTotal.Text = "0";
         }
 
         private void ClearPointOfSaleListView()
@@ -341,7 +348,7 @@ namespace KabaAccounting.UI
 
                 txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
 
-                DataTable dataTableUnit = unitDAL.GetNameById(productUnit);//Datatable for finding the unit name by unit id.
+                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
 
                 cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
                 cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
@@ -378,10 +385,11 @@ namespace KabaAccounting.UI
         {
             bool addNewProductLine = true;
             int barcodeColNo=0;
-            int costColNo = 3;
-            int priceColNo = 4;
+            //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
+            //int priceColNo = 4;
             int amountColNo = 5;
-            int totalPriceColNo = 6;
+            int totalCostColNo = 6;
+            int totalPriceColNo = 7;
             int amount = 0;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
@@ -396,17 +404,20 @@ namespace KabaAccounting.UI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock tbCellCostContent= dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
+                        //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
                         TextBlock tbCellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
                         TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
                         amount = Convert.ToInt32(tbCellAmountContent.Text);
                         amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
+
+                        //tbCellCostContent.Text = txtProductCost.Text; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        tbCellCostContent.Text= (amount * Convert.ToDecimal(tbCellCostContent.Text)).ToString();
-                        totalPrice = amount * Convert.ToDecimal(tbCellPriceContent.Text);//Calculating the new total price according to the new quantity. Then, assigning the result into the total price variable.
+                        tbCellTotalCostContent.Text= (amount * Convert.ToDecimal(txtProductCost.Text)).ToString();
+                        totalPrice = amount * Convert.ToDecimal(txtProductPrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
                         tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
@@ -417,8 +428,9 @@ namespace KabaAccounting.UI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
+                decimal totalCost = Convert.ToDecimal(txtProductCost.Text) * Convert.ToDecimal(txtProductAmount.Text);
                 //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
-                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Cost = txtProductCost.Text, Price =txtProductPrice.Text, Amount=txtProductAmount.Text, Total=txtProductTotalPrice.Text});
+                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Cost = txtProductCost.Text, Price =txtProductPrice.Text, Amount=txtProductAmount.Text, TotalCost = totalCost.ToString(), TotalPrice = txtProductTotalPrice.Text});
             }
 
             dgProducts.UpdateLayout();
@@ -441,34 +453,35 @@ namespace KabaAccounting.UI
 
             txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductPrice.Text)* amountFromTextEntry)).ToString();
 
-            txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void SubstractBasket(int selectedRowIndex)
         {
             DataGridRow dataGridRow;
-            TextBlock tbCostCell;
+            TextBlock tbTotalCostCell;
             TextBlock tbAmountCell;
             TextBlock tbTotalPriceCell;
-            int productCostCol = 3;
+            int productTotalCostCol = 6;
             int productAmountCol = 5;
-            int productTotalPriceCol = 6;
+            int productTotalPriceCol = 7;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
             tbAmountCell = dgProducts.Columns[productAmountCol].GetCellContent(dataGridRow) as TextBlock;
 
-            tbCostCell = dgProducts.Columns[productCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbTotalCostCell = dgProducts.Columns[productTotalCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
             tbTotalPriceCell = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
+            
             txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbAmountCell.Text)).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCostCell.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbTotalCostCell.Text)).ToString();
 
             txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbTotalPriceCell.Text)).ToString();
 
-            txtBasketTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {

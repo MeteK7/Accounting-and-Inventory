@@ -325,13 +325,14 @@
                     </DataGrid.Background>
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="150" />
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="530"/>
+                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="495"/>
                         <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="50"/>
                         <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
                         <DataGridTextColumn Binding="{Binding Cost}" ClipboardContentBinding="{x:Null}" Header="Cost" Width="70"/>
                         <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Price" Width="70"/>
                         <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
-                        <DataGridTextColumn Binding="{Binding Total}" ClipboardContentBinding="{x:Null}" Header="Total" Width="85"/>
+                        <DataGridTextColumn Binding="{Binding TotalCost}" ClipboardContentBinding="{x:Null}" Header="Total Cost"/>
+                        <DataGridTextColumn Binding="{Binding TotalPrice}" ClipboardContentBinding="{x:Null}" Header="Total Price" Width="85"/>
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -367,7 +368,7 @@
                 <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-                <TextBox x:Name="txtBasketTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
+                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="120" Margin="0,32,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">

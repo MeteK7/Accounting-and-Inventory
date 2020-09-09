@@ -49,8 +49,8 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Getting Unit Name By Id
-        public DataTable GetNameById(int unitId)
+        #region Getting Unit Infos By Id
+        public DataTable GetUnitInfoById(int unitId)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
             DataTable dataTable = new DataTable();//To hold the data from database
