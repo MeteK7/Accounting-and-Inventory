@@ -164,9 +164,9 @@ namespace KabaAccounting.UI
             cboProductUnit.IsEnabled = false;
             txtProductBarcode.IsEnabled = false;
             txtProductName.IsEnabled = false;
-            txtProductPrice.IsEnabled = false;
+            txtProductCostPrice.IsEnabled = false;
             txtProductAmount.IsEnabled = false;
-            txtProductTotalPrice.IsEnabled = false;
+            txtProductTotalCostPrice.IsEnabled = false;
             txtInvoiceNo.IsEnabled = false;
         }
         private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
@@ -304,10 +304,9 @@ namespace KabaAccounting.UI
             txtProductBarcode.Text = "";
             txtProductName.Text = "";
             cboProductUnit.SelectedIndex = -1;
-            txtProductCost.Text = "";
-            txtProductPrice.Text = "";
+            txtProductCostPrice.Text = "";
             txtProductAmount.Text = "";
-            txtProductTotalPrice.Text = "";
+            txtProductTotalCostPrice.Text = "";
             txtInvoiceNo.Text = "HELLO";//Setting the txtInvoiceNo to the default value even if it will be loaded from the previous invoice later. If it is the first purchase, so there is no any previous invoice number to be filled into the txtInvoiceNo.
             Keyboard.Focus(txtProductBarcode); // set keyboard focus
             DisableProductEntranceButtons();
@@ -354,12 +353,10 @@ namespace KabaAccounting.UI
                 cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
 
                 string costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-                string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
-                txtProductCost.Text = costPrice;
-                txtProductPrice.Text = productPrice;
+                txtProductCostPrice.Text = costPrice;
                 txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
+                txtProductTotalCostPrice.Text = (Convert.ToDecimal(costPrice) * productAmount).ToString();
             }
 
             //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
@@ -387,11 +384,9 @@ namespace KabaAccounting.UI
             int barcodeColNo = 0;
             //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
             //int priceColNo = 4;
-            int amountColNo = 5;
-            int totalCostColNo = 6;
-            int totalPriceColNo = 7;
+            int amountColNo = 4;
+            int totalCostColNo = 5;
             int amount = 0;
-            decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
 
             for (int i = 0; i < rowQuntity; i++)
@@ -407,18 +402,13 @@ namespace KabaAccounting.UI
                         //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
                         TextBlock tbCellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
 
-                        //MessageBox.Show(cellContent.Text);
                         amount = Convert.ToInt32(tbCellAmountContent.Text);
                         amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
 
-                        //tbCellCostContent.Text = txtProductCost.Text; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        tbCellTotalCostContent.Text = (amount * Convert.ToDecimal(txtProductCost.Text)).ToString();
-                        totalPrice = amount * Convert.ToDecimal(txtProductPrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
-                        tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
+                        tbCellTotalCostPriceContent.Text = (amount * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();//Calculating the new total cost price according to the new entry. Then, assigning the result into the table total price. User may have entered a new price in the entry box.
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
                     }
@@ -428,12 +418,13 @@ namespace KabaAccounting.UI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                decimal totalCost = Convert.ToDecimal(txtProductCost.Text) * Convert.ToDecimal(txtProductAmount.Text);
-                //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
-                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, Cost = txtProductCost.Text, Price = txtProductPrice.Text, Amount = txtProductAmount.Text, TotalCost = totalCost.ToString(), TotalPrice = txtProductTotalPrice.Text });
+                decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
+
+                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString()});
             }
 
             dgProducts.UpdateLayout();
+
             rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
 
             PopulateBasket();
@@ -448,10 +439,9 @@ namespace KabaAccounting.UI
             decimal amountFromTextEntry = Convert.ToDecimal(txtProductAmount.Text);
 
             txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromTextEntry).ToString();
-
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCost.Text) * amountFromTextEntry)).ToString();
-
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductPrice.Text) * amountFromTextEntry)).ToString();
+            
+            //You may think that it would be better to get the total cost price instead of multiplying the amount by unit cost price. However, the total cost price is updated only when the txtAmount is lost the focus.
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductTotalCostPrice.Text))).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
@@ -503,46 +493,6 @@ namespace KabaAccounting.UI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboSupplier.SelectedValuePath = "id";
-        }
-
-        private void txtProductAmount_LostFocus(object sender, RoutedEventArgs e)
-        {
-            string textProductAmount = txtProductAmount.Text;
-            char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
-
-            bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
-
-            decimal number;
-
-            if (textProductAmount != "" && decimal.TryParse(textProductAmount, out number) && result == true)
-            {
-                DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
-
-                string unitKg = "Kilogram", unitLt = "Liter";
-                int rowIndex = 0;
-                decimal productAmount;
-                string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
-
-                if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
-                {
-                    /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
-                    So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
-                    productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
-                    txtProductAmount.Text = productAmount.ToString();
-                }
-                else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
-                {
-                    productAmount = Convert.ToDecimal(txtProductAmount.Text);
-                }
-
-                txtProductPrice.Text = productPrice;
-
-                txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid number");
-            }
         }
 
         private void LoadNewInvoice()
@@ -602,9 +552,9 @@ namespace KabaAccounting.UI
             cboProductUnit.IsEnabled = true;
             txtProductBarcode.IsEnabled = true;
             txtProductName.IsEnabled = true;
-            txtProductPrice.IsEnabled = true;
+            txtProductCostPrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
-            txtProductTotalPrice.IsEnabled = true;
+            txtProductTotalCostPrice.IsEnabled = true;
             txtInvoiceNo.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
 
@@ -714,6 +664,60 @@ namespace KabaAccounting.UI
             if (txtInvoiceNo.Text == "" || !Int32.TryParse(txtInvoiceNo.Text, out int value))//The code will work if the text is empty or does NOT contain a numeric value.
             {
                 txtInvoiceNo.Text = "HELLO";
+            }
+        }
+
+        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)/*----THIS IS NOT A PRODUCTIVE CODE----*/
+        {
+            if (txtProductAmount.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
+            {
+                if (txtProductAmount.Text != "")
+                {
+                    decimal number;
+                    string textProductAmount = txtProductAmount.Text;
+
+                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
+
+                    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+
+                    if (decimal.TryParse(textProductAmount, out number) && result == true)
+                    {
+                        DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
+
+                        string unitKg = "Kilogram", unitLt = "Liter";
+                        int rowIndex = 0;
+                        decimal productAmount;
+                        string productCostPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+
+                        if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
+                        {
+                            /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
+                            So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
+                            productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
+                            txtProductAmount.Text = productAmount.ToString();
+                        }
+                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
+                        {
+                            productAmount = Convert.ToDecimal(txtProductAmount.Text);
+                        }
+
+                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
+                    }
+
+                    else//Revert the amount to the default value if the text of txtProductAmount is not empty, otherwise no need for correction.
+                    {
+                        MessageBox.Show("Please enter a valid number");
+                        txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
+                        btnProductAdd.IsEnabled = true;
+                    }
+                }
+
+                /* If the user left the txtProductAmount as empty, wait for him to enter a new value and block the btnProductAdd. 
+                   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+                else
+                {
+                    btnProductAdd.IsEnabled = false;
+                }
             }
         }
     }
