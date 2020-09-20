@@ -56,7 +56,7 @@
                     <ComboBox x:Name="cboProductUnitWholesale" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="165" Height="27"/>
                     <Label x:Name="lblProductBarcodeWholesale" Content="Barcode" HorizontalAlignment="Left" Margin="7,51,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductBarcodeWholesale" HorizontalAlignment="Left" Height="28" Margin="115,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-                    <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="7,94,0,0" VerticalAlignment="Top" Width="103" Height="26"/>
+                    <Label x:Name="lblProductAmount" Content="Amount in Unit" HorizontalAlignment="Left" Margin="7,94,0,0" VerticalAlignment="Top" Width="103" Height="26"/>
                     <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="28" Margin="115,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductAmount_TextChanged"/>
                     <Label x:Name="lblProductCostPriceWholesale" Content="Cost Price" HorizontalAlignment="Left" Margin="8,137,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductCostPriceWholesale" HorizontalAlignment="Left" Height="28" Margin="115,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" IsReadOnly="True"/>

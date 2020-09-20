@@ -207,13 +207,16 @@ namespace KabaAccounting.UI
         }
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)
         {
+            int initialAmount = 0;
+
             productBLL.Name = txtProductName.Text;
             productBLL.Category = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productBLL.Description = txtProductDescription.Text;
             productBLL.Rating = 0;
             productBLL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productBLL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
-            productBLL.Amount = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productBLL.AmountInUnit = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productBLL.AmountInStock = Convert.ToDecimal(initialAmount);//Amount in stock is always 0 while recording a new product.
             productBLL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
             productBLL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
             productBLL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
@@ -246,7 +249,7 @@ namespace KabaAccounting.UI
             productBLL.Description = txtProductDescription.Text;
             productBLL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productBLL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
-            productBLL.Amount = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productBLL.AmountInUnit = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
             productBLL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
             productBLL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
             productBLL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);

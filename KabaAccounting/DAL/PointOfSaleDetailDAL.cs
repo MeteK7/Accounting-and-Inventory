@@ -54,12 +54,13 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (product_id, invoice_no, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@product_id, @invoice_no, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (product_id, invoice_no, product_unit_id, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@product_id, @invoice_no, @product_unit_id, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailBLL.ProductId);
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailBLL.InvoiceNo);
+                cmd.Parameters.AddWithValue("@product_unit_id", pointOfSaleDetailBLL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_date", pointOfSaleDetailBLL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailBLL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailBLL.ProductRate);
@@ -143,7 +144,7 @@ namespace KabaAccounting.DAL
         #endregion*/
 
         #region DELETE METHOD
-        public bool Delete(PointOfSaleDetailBLL pointOfSaleDetailBLL)
+        public bool Delete(int invoiceNo)
         {
             //Create a Boolean variable and set its value to false.
             bool isSuccess = false;
@@ -158,7 +159,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailBLL.InvoiceNo);
+                cmd.Parameters.AddWithValue("@invoice_no", invoiceNo);
 
                 //Opening the SQL connection
                 conn.Open();

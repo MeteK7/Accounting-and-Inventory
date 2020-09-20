@@ -44,6 +44,8 @@ namespace KabaAccounting.UI
         UnitBLL unitBLL = new UnitBLL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        string[,] dgOldProductCells = new string[,] { };
+        int oldItemsRowCount;
 
         private void LoadPastInvoice(int invoiceNo=0, int invoiceArrow=-1)//Optional parameter
         {
@@ -67,7 +69,7 @@ namespace KabaAccounting.UI
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
-                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit"]);
+                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
@@ -188,101 +190,178 @@ namespace KabaAccounting.UI
             this.Close();
         }
 
+        private void GetOldDataGridContent(string[,] cells, int colLength)//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
+        {
+            int itemsRowCount = dgProducts.Items.Count;
+
+            for (int rowNo = 0; rowNo < itemsRowCount; rowNo++)
+            {
+                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                for (int colNo = 0; colNo < colLength; colNo++)
+                {
+                    TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
+
+                    cells[rowNo, colNo] = tbCellContent.Text;
+
+                    //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
+                }
+
+                dgOldProductCells = (string[,])cells.Clone();
+            }
+
+            oldItemsRowCount = itemsRowCount;
+        }
+
+        private void RevertOldAmountInStock()
+        {
+            int initialRowIndex = 0;
+            int colProductId = 0;
+            int colProductAmount = 5;
+            decimal productAmountFromDB;
+
+
+            DataTable dataTableProduct = new DataTable();
+
+            for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
+            {
+                dataTableProduct = productDAL.SearchSpecificProductById(dgOldProductCells[rowNo, colProductId]);
+
+                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
+
+                productBLL.AmountInStock = Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]) + productAmountFromDB;//Revert the amount in stock.
+
+                productBLL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
+
+                productDAL.UpdateAmountInStock(productBLL);
+            }
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
-            int userId= GetUserId();
-
-            //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
-            pointOfSaleBLL.Id = invoiceNo;
-            pointOfSaleBLL.SaleType = cboSaleType.Text;
-            pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
-            pointOfSaleBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-            pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
-            pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
-            pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
-            pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
-            pointOfSaleBLL.AddedDate = DateTime.Now;
-            pointOfSaleBLL.AddedBy = userId;
-
-            #region TABLE POS DETAILS SAVING SECTION
-
-            int userClickedNewOrEdit=btnNewOrEdit;
-            int specificRowIndex = 0;
-            int cellLength = 6;
-            int addedBy = userId;
-            string[] cells = new string[cellLength];
-            DateTime dateTime = DateTime.Now;
-            bool isSuccessDetail = false;
-            bool isSuccess = false;
-            int productRate = 0;//Modify this code dynamically!!!!!!!!!
-
-            for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+            //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
+            if (cboSaleType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
             {
-                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                for (int colNo = 0; colNo < cellLength; colNo++)
+                int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                int userId = GetUserId();
+
+                //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
+                pointOfSaleBLL.Id = invoiceNo;
+                pointOfSaleBLL.SaleType = cboSaleType.Text;
+                pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
+                pointOfSaleBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
+                pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+                pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+                pointOfSaleBLL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+                pointOfSaleBLL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                pointOfSaleBLL.AddedDate = DateTime.Now;
+                pointOfSaleBLL.AddedBy = userId;
+
+                #region TABLE POS DETAILS SAVING SECTION
+
+                int userClickedNewOrEdit = btnNewOrEdit;
+                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
+                int productId;
+                int unitId;
+                decimal productOldAmountInStock;
+                int initialRowIndex = 0;
+                int cellLength = 7;
+                int addedBy = userId;
+                string[] cells = new string[cellLength];
+                DateTime dateTime = DateTime.Now;
+                bool isSuccessDetail = false;
+                bool isSuccess = false;
+                int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
+                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
-                    TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
+                    {
+                        RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
-                    cells[colNo] = cellContent.Text;
+                        //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
+                        pointOfSaleDetailDAL.Delete(invoiceNo);
+
+                        //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
+                        userClickedNewOrEdit = 2;
+                    }
+
+                    DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    {
+                        TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;
+
+                        cells[colNo] = cellContent.Text;
+                    }
+
+                    DataTable dataTableProduct = new DataTable();
+                    dataTableProduct = productDAL.SearchSpecificProductById(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+
+
+                    DataTable dataTableUnit = new DataTable();
+                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
+                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
+
+                    //dataTable.Rows[rowIndex]["saleprice"].ToString();
+                    pointOfSaleDetailBLL.ProductId = productId;
+                    pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
+                    pointOfSaleDetailBLL.AddedDate = dateTime;
+                    pointOfSaleDetailBLL.AddedBy = addedBy;
+                    pointOfSaleDetailBLL.ProductRate = productRate;
+                    pointOfSaleDetailBLL.ProductUnitId = unitId;
+                    pointOfSaleDetailBLL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
+                    pointOfSaleDetailBLL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
+                    pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+
+
+                    productBLL.Id = productId;//Assigning the Id in the productBLL to update the stock in the DB of a specific product.
+
+                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+
+                    productBLL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productDAL.UpdateAmountInStock(productBLL);
+
+                    isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailBLL);
+                }
+                #endregion
+
+                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                {
+                    isSuccess = pointOfSaleDAL.Update(pointOfSaleBLL);
                 }
 
-                DataTable dataTable = new DataTable();
-                dataTable = productDAL.SearchSpecificProductByBarcode(cells[0]);//Cell[0] contains the product barcode.
-
-                //dataTable.Rows[rowIndex]["saleprice"].ToString();
-                pointOfSaleDetailBLL.ProductId = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"].ToString());//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
-                pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
-                pointOfSaleDetailBLL.AddedDate = dateTime;
-                pointOfSaleDetailBLL.AddedBy = addedBy;
-                pointOfSaleDetailBLL.ProductRate = productRate;
-                pointOfSaleDetailBLL.ProductUnitId = Convert.ToInt32(cells[2]);//cells[2] contains unit id of the product in the list.
-                pointOfSaleDetailBLL.ProductCostPrice = Convert.ToDecimal(cells[3]);//cells[3] contains cost price of the product in the list.
-                pointOfSaleDetailBLL.ProductSalePrice = Convert.ToDecimal(cells[4]);//cells[4] contains sale price of the product in the list.
-                pointOfSaleDetailBLL.ProductAmount = Convert.ToDecimal(cells[5]);
-
-                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
+                else
                 {
-                    //We are sending pointOfSaleDetailBLL as a parameter to the Delete method just to use the Invoice Number property in the SQL Query. So that we can erase all the products which have the specific invoice number.
-                    pointOfSaleDetailDAL.Delete(pointOfSaleDetailBLL);
-
-                    //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
-                    userClickedNewOrEdit = 2; 
+                    //Creating a Boolean variable to insert data into the database.
+                    isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
                 }
-                
-                isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailBLL);
-            }
-            #endregion
 
-            userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
-            if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
-            {
-                isSuccess = pointOfSaleDAL.Update(pointOfSaleBLL);
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    //ClearBasketTextBox();
+                    //ClearPointOfSaleListView();
+                    ClearProductEntranceTextBox();
+                    DisableButtonsTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
             }
 
             else
             {
-                //Creating a Boolean variable to insert data into the database.
-                isSuccess = pointOfSaleDAL.Insert(pointOfSaleBLL);
+                MessageBox.Show("You have a missing part!");
             }
-
-
-            //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-            if (isSuccess == true && isSuccessDetail==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
-            {
-                //ClearBasketTextBox();
-                //ClearPointOfSaleListView();
-                ClearProductEntranceTextBox();
-                DisableButtonsTools();
-                EnableButtonsOnClickSaveCancel();
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong :(");
-            }
-
         }
 
         private void ClearBasketTextBox()
@@ -317,7 +396,7 @@ namespace KabaAccounting.UI
         {
             int number;
 
-            DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
+            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
 
             if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
@@ -515,7 +594,7 @@ namespace KabaAccounting.UI
 
             if (textProductAmount != "" && decimal.TryParse(textProductAmount, out number) && result==true)
             {
-                DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
+                DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
 
                 string unitKg = "Kilogram", unitLt = "Liter";
                 int rowIndex = 0;
@@ -544,7 +623,7 @@ namespace KabaAccounting.UI
             }
         }
 
-        private void LoadNewInvoice()
+        private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
             ClearBasketTextBox();
             ClearPointOfSaleListView();
@@ -582,7 +661,12 @@ namespace KabaAccounting.UI
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            int rowLength = dgProducts.Items.Count;
+            int colLength = 8;
+            string[,] dgProductCells = new string[rowLength, colLength];
+
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            GetOldDataGridContent(dgProductCells, colLength);
             EnteredBtnNewOrEdit();
         }
 
@@ -682,7 +766,7 @@ namespace KabaAccounting.UI
                     pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
                     
                     pointOfSaleDAL.Delete(pointOfSaleBLL);
-                    pointOfSaleDetailDAL.Delete(pointOfSaleDetailBLL);
+                    pointOfSaleDetailDAL.Delete(invoiceNo);
 
                     DisableButtonsTools();
                     ClearProductEntranceTextBox();
@@ -714,7 +798,7 @@ namespace KabaAccounting.UI
 
                     if (decimal.TryParse(textProductAmount, out number) && result == true)
                     {
-                        DataTable dataTable = productDAL.SearchSpecificProductByBarcode(txtProductBarcode.Text);
+                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         int rowIndex = 0;

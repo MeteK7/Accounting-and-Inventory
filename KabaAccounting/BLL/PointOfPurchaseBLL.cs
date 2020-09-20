@@ -8,7 +8,7 @@ namespace KabaAccounting.BLL
 {
     class PointOfPurchaseBLL
     {
-        public int Id { get; set; }
+        public int InvoiceNo { get; set; }
         public string SaleType { get; set; }
         public int CustomerId { get; set; }
         public decimal CostTotal { get; set; }

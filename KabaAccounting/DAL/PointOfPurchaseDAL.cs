@@ -54,11 +54,11 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (id, sale_type, customer_id, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@id, @sale_type, @customer_id, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (invoice_no, sale_type, customer_id, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@invoice_no, @sale_type, @customer_id, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", PointOfPurchaseBLL.Id);
+                cmd.Parameters.AddWithValue("@invoice_no", PointOfPurchaseBLL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@sale_type", PointOfPurchaseBLL.SaleType);
                 cmd.Parameters.AddWithValue("@customer_id", PointOfPurchaseBLL.CustomerId);
                 cmd.Parameters.AddWithValue("@cost_total", PointOfPurchaseBLL.CostTotal);
@@ -116,7 +116,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("grand_total", PointOfPurchaseBLL.GrandTotal);
                 cmd.Parameters.AddWithValue("added_date", PointOfPurchaseBLL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", PointOfPurchaseBLL.AddedBy);
-                cmd.Parameters.AddWithValue("id", PointOfPurchaseBLL.Id);//Do you really need to update the ID?
+                cmd.Parameters.AddWithValue("id", PointOfPurchaseBLL.InvoiceNo);//Do you really need to update the ID?
 
 
                 conn.Open();
@@ -161,7 +161,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@id", PointOfPurchaseBLL.Id);
+                cmd.Parameters.AddWithValue("@id", PointOfPurchaseBLL.InvoiceNo);
 
                 //Opening the SQL connection
                 conn.Open();
