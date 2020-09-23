@@ -59,7 +59,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", pointOfSaleBLL.Id);
-                cmd.Parameters.AddWithValue("@sale_type", pointOfSaleBLL.SaleType);
+                cmd.Parameters.AddWithValue("@sale_type", pointOfSaleBLL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@customer_id", pointOfSaleBLL.CustomerId);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfSaleBLL.CostTotal);
                 cmd.Parameters.AddWithValue("@sub_total", pointOfSaleBLL.SubTotal);
@@ -107,7 +107,7 @@ namespace KabaAccounting.DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("sale_type", pointOfSaleBLL.SaleType);
+                cmd.Parameters.AddWithValue("sale_type", pointOfSaleBLL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("customer_id", pointOfSaleBLL.CustomerId);
                 cmd.Parameters.AddWithValue("cost_total", pointOfSaleBLL.CostTotal);
                 cmd.Parameters.AddWithValue("sub_total", pointOfSaleBLL.SubTotal);

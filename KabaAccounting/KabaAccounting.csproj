@@ -60,6 +60,7 @@
     <Compile Include="BLL\BankBLL.cs" />
     <Compile Include="BLL\CategoryBLL.cs" />
     <Compile Include="BLL\CustomerBLL.cs" />
+    <Compile Include="BLL\PaymentBLL.cs" />
     <Compile Include="BLL\PointOfPurchaseBLL.cs" />
     <Compile Include="BLL\PointOfPurchaseDetailBLL.cs" />
     <Compile Include="BLL\SupplierBLL.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="DAL\BankDAL.cs" />
     <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\CustomerDAL.cs" />
+    <Compile Include="DAL\PaymentDAL.cs" />
     <Compile Include="DAL\PointOfPurchaseDAL.cs" />
     <Compile Include="DAL\PointOfPurchaseDetailDAL.cs" />
     <Compile Include="DAL\SupplierDAL.cs" />
@@ -416,6 +418,36 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Icons\close-onmousehover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\background-abstract.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\background-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\clouds.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\light-blur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\rm218batch4-ning-34.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\rm218batch4-ning-33.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\bokeh-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\2324673.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\particles.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

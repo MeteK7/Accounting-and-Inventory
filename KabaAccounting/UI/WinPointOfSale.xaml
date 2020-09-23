@@ -263,7 +263,7 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/pos.jpg"/>
+        <ImageBrush ImageSource="/KabaAccounting;component/Images/Backgrounds/rm218batch4-ning-34.jpg"/>
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
@@ -344,7 +344,7 @@
                 </DataGrid>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Invoice Number" Height="102" Margin="0,34,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Label x:Name="lblInvoiceNo" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
         <GroupBox Header="Staff Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
@@ -371,7 +371,7 @@
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="120" Margin="0,32,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
+        <GroupBox Header="Menu" Height="118" Margin="0,34,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
             <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
@@ -457,23 +457,20 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="894,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
+                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="930,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="983,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
+                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblSaleType" Content="Sale Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboSaleType" HorizontalAlignment="Left" Margin="756,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
-                    <ComboBoxItem Content="CASH"/>
-                    <ComboBoxItem Content="CREDIT"/>
-                </ComboBox>
-                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="756,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
+                <Label x:Name="lblPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="107"/>
+                <ComboBox x:Name="cboPaymentType" HorizontalAlignment="Left" Margin="778,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboPaymentType_Loaded"/>
+                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="107"/>
+                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="778,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
 
             </Grid>
         </GroupBox>

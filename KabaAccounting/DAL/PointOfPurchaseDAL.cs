@@ -54,13 +54,13 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (invoice_no, sale_type, customer_id, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@invoice_no, @sale_type, @customer_id, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (invoice_no, payment_type_id, supplier_id, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@invoice_no, @payment_type_id, @supplier_id, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@invoice_no", PointOfPurchaseBLL.InvoiceNo);
-                cmd.Parameters.AddWithValue("@sale_type", PointOfPurchaseBLL.SaleType);
-                cmd.Parameters.AddWithValue("@customer_id", PointOfPurchaseBLL.CustomerId);
+                cmd.Parameters.AddWithValue("@payment_type_id", PointOfPurchaseBLL.PaymentTypeId);
+                cmd.Parameters.AddWithValue("@supplier_id", PointOfPurchaseBLL.SupplierId);
                 cmd.Parameters.AddWithValue("@cost_total", PointOfPurchaseBLL.CostTotal);
                 cmd.Parameters.AddWithValue("@sub_total", PointOfPurchaseBLL.SubTotal);
                 cmd.Parameters.AddWithValue("@vat", PointOfPurchaseBLL.Vat);
@@ -103,12 +103,12 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pop SET sale_type=@sale_type, customer_id=@customer_id, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("sale_type", PointOfPurchaseBLL.SaleType);
-                cmd.Parameters.AddWithValue("customer_id", PointOfPurchaseBLL.CustomerId);
+                cmd.Parameters.AddWithValue("payment_type_id", PointOfPurchaseBLL.PaymentTypeId);
+                cmd.Parameters.AddWithValue("supplier_id", PointOfPurchaseBLL.SupplierId);
                 cmd.Parameters.AddWithValue("cost_total", PointOfPurchaseBLL.CostTotal);
                 cmd.Parameters.AddWithValue("sub_total", PointOfPurchaseBLL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", PointOfPurchaseBLL.Vat);
@@ -191,22 +191,22 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
-        public DataTable Search(int invoiceNo = 0)//Optional parameter
+        public DataTable Search(int invoiceId = 0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dataTable = new DataTable();
                 String sql;
 
-                if (invoiceNo == 0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
+                if (invoiceId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
                 {
                     sql = "SELECT * FROM tbl_pop WHERE id=(SELECT max(id) FROM tbl_pop)";
-                    //sql = "SELECT * FROM tbl_pop WHERE id=IDENT_CURRENT('tbl_pop')";//SQL query to get the last id of rows in te table.
+                    //sql = "SELECT * FROM tbl_pop WHERE id=IDENT_CURRENT('tbl_pop')";//SQL query to get the last id of rows in the table.
                 }
 
                 else
                 {
-                    sql = "SELECT * FROM tbl_pop WHERE id=" + invoiceNo + "";//SQL query to get the last id of rows in te table.
+                    sql = "SELECT * FROM tbl_pop WHERE id=" + invoiceId + "";//SQL query to get the last id of rows in the table.
                 }
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))

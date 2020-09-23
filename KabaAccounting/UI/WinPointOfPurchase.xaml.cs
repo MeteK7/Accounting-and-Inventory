@@ -37,27 +37,34 @@ namespace KabaAccounting.UI
         PointOfPurchaseDetailBLL pointOfPurchaseDetailBLL = new PointOfPurchaseDetailBLL();
         ProductDAL productDAL = new ProductDAL();
         ProductBLL productBLL = new ProductBLL();
-        CustomerDAL customerDAL = new CustomerDAL();
-        CustomerBLL customerBLL = new CustomerBLL();
+        PaymentDAL paymentDAL = new PaymentDAL();
+        PaymentBLL paymentBLL = new PaymentBLL();
+        SupplierDAL supplierDAL = new SupplierDAL();
+        SupplierBLL supplierBLL = new SupplierBLL();
         UnitDAL unitDAL = new UnitDAL();
         UnitBLL unitBLL = new UnitBLL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
 
-        private void LoadPastInvoice(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
+        //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
+        private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
         {
+            DataTable dataTableLastInvoice;
             int firstRowIndex = 0, productUnitId;
-            string productId, productBarcode, productName, productUnitName, productCost, productPrice, productAmount, productTotalCost, productTotalPrice;
+            string productId, productName, productUnitName, productCostPrice, productAmount, productTotalCostPrice;
 
-            if (invoiceNo == 0)
+            if (invoiceId == 0)//If the ID in table_pop is 0, that means user just clicked the pop button to open it.
             {
-                invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                dataTableLastInvoice=GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                invoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);
             }
 
-            if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (invoiceId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceNo);
+                DataTable dataTablePop = pointOfPurchaseDAL.Search(invoiceId);
+                DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                 DataTable dataTableUnitInfo;
+                DataTable dataTableProduct;
 
                 if (dataTablePopDetail.Rows.Count != 0)
                 {
@@ -65,34 +72,29 @@ namespace KabaAccounting.UI
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
                     {
+                        cboPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                        cboSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
+                        txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
+
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePopDetail.Rows[currentRow]["product_unit_id"]);
+                        productCostPrice = dataTablePopDetail.Rows[currentRow]["product_cost_price"].ToString();
+                        productAmount = dataTablePopDetail.Rows[currentRow]["amount"].ToString();
+                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+
+                        dataTableProduct = productDAL.SearchById(productId);
+                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCost = dataTablePopDetail.Rows[currentRow]["product_cost_price"].ToString();
-                        productPrice = dataTablePopDetail.Rows[currentRow]["product_sale_price"].ToString();
-                        productAmount = dataTablePopDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCost = (Convert.ToDecimal(productCost) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
-                        productTotalPrice = (Convert.ToDecimal(productPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
-
-                        DataTable dataTableProduct = productDAL.SearchById(productId);
-
-                        productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
-                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
-
-                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnitName, Cost = productCost, Price = productPrice, Amount = productAmount, TotalCost = productTotalCost, TotalPrice = productTotalPrice });
+                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice});
                     }
                     #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    DataTable dataTablePop = pointOfPurchaseDAL.Search(invoiceNo);//This Search method gets the id and row informations in the table which belong to the last invoice.
-
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["id"].ToString();
-                    //txtBasketGrandTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
                     txtBasketCostTotal.Text = dataTablePop.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePop.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePop.Rows[firstRowIndex]["vat"].ToString();
@@ -105,16 +107,16 @@ namespace KabaAccounting.UI
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        invoiceNo = invoiceNo - 1;
+                        invoiceId = invoiceId - 1;
                     }
                     else
                     {
-                        invoiceNo = invoiceNo + 1;
+                        invoiceId = invoiceId + 1;
                     }
 
                     if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInvoice(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
+                        LoadPastInvoice(invoiceId, invoiceArrow);//Call the method again to get the new past invoice.
                     }
 
                 }
@@ -159,10 +161,10 @@ namespace KabaAccounting.UI
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
-            cboPurchaseType.IsEnabled = false;
+            cboPaymentType.IsEnabled = false;
             cboSupplier.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
-            txtProductBarcode.IsEnabled = false;
+            txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
             txtProductCostPrice.IsEnabled = false;
             txtProductAmount.IsEnabled = false;
@@ -196,15 +198,20 @@ namespace KabaAccounting.UI
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text!="0" && cboPurchaseType.SelectedIndex!=-1 &&cboSupplier.SelectedIndex!=-1)
+            if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text!="0" && cboPaymentType.SelectedIndex!=-1 &&cboSupplier.SelectedIndex!=-1)
             {
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
                 int userId = GetUserId();
 
+                int newInvoiceId = 1, firstRowIndex = 0;//New invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
+                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
+
                 //Getting the values from the POS Window and fill them into the pointOfPurchaseBLL.
                 pointOfPurchaseBLL.InvoiceNo = invoiceNo;
-                pointOfPurchaseBLL.SaleType = cboPurchaseType.Text;
-                pointOfPurchaseBLL.CustomerId = Convert.ToInt32(cboSupplier.SelectedValue);
+                pointOfPurchaseBLL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
+                pointOfPurchaseBLL.SupplierId = Convert.ToInt32(cboSupplier.SelectedValue);
                 pointOfPurchaseBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfPurchaseBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfPurchaseBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -221,7 +228,7 @@ namespace KabaAccounting.UI
                 int unitId;
                 decimal productOldAmountInStock;
                 int initialRowIndex = 0;
-                int cellLength = 7;
+                int cellLength = 6;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
                 DateTime dateTime = DateTime.Now;
@@ -240,16 +247,17 @@ namespace KabaAccounting.UI
                         cells[colNo] = cellContent.Text;
                     }
 
-                    DataTable dataTableProduct = new DataTable();
                     dataTableProduct = productDAL.SearchSpecificProductById(cells[initialRowIndex]);//Cell[0] contains the product barcode.
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    DataTable dataTableUnit = new DataTable();
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[0] contains the product barcode.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
+                    newInvoiceId = newInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
+
                     //dataTable.Rows[rowIndex]["saleprice"].ToString();
+                    pointOfPurchaseDetailBLL.Id = newInvoiceId;
                     pointOfPurchaseDetailBLL.ProductId = productId;
                     pointOfPurchaseDetailBLL.InvoiceNo = invoiceNo;
                     pointOfPurchaseDetailBLL.AddedDate = dateTime;
@@ -334,23 +342,23 @@ namespace KabaAccounting.UI
 
         private void ClearProductEntranceTextBox()
         {
-            txtProductBarcode.Text = "";
+            txtProductId.Text = "";
             txtProductName.Text = "";
             cboProductUnit.SelectedIndex = -1;
             txtProductCostPrice.Text = "";
             txtProductAmount.Text = "";
             txtProductTotalCostPrice.Text = "";
-            Keyboard.Focus(txtProductBarcode); // set keyboard focus
+            Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
 
-        private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
+        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             int number;
 
-            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
+            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
 
-            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
                 int productAmount = 1;
                 int rowIndex = 0;
@@ -367,7 +375,7 @@ namespace KabaAccounting.UI
                 //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
 
 
-                if (productBarcodeRetail == txtProductBarcode.Text || productId.ToString() == txtProductBarcode.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
+                if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
                     productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail"]);
                 }
@@ -400,10 +408,10 @@ namespace KabaAccounting.UI
             //}
 
 
-            //If the txtProductBarcode is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            //If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
             /*Note: I just checked the btnProductAdd to know if there was a product entry before or not.
                     If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
-            else if (txtProductBarcode.Text == "" && btnProductAdd.IsEnabled == true)
+            else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
             {
                 ClearProductEntranceTextBox();
             }
@@ -427,7 +435,7 @@ namespace KabaAccounting.UI
 
                 TextBlock barcodeCellContent = dgProducts.Columns[barcodeColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
 
-                if (barcodeCellContent.Text == txtProductBarcode.Text)
+                if (barcodeCellContent.Text == txtProductId.Text)
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -452,7 +460,7 @@ namespace KabaAccounting.UI
             {
                 decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
 
-                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString()});
+                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString()});
             }
 
             dgProducts.UpdateLayout();
@@ -512,10 +520,25 @@ namespace KabaAccounting.UI
 
         }
 
+        private void cboPaymentType_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboPaymentType.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboPaymentType.DisplayMemberPath = "payment_type";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboPaymentType.SelectedValuePath = "id";
+        }
+
         private void cboSupplier_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
-            DataTable dataTable = customerDAL.Select();
+            DataTable dataTable = supplierDAL.Select();
 
             //Specifying Items Source for product combobox
             cboSupplier.ItemsSource = dataTable.DefaultView;
@@ -539,21 +562,21 @@ namespace KabaAccounting.UI
             //txtInvoiceNo.Text = invoiceNo.ToString();//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
-        private int GetLastInvoiceNumber()
+        private DataTable GetLastInvoice()
         {
-            int specificRowIndex = 0, invoiceNo;
+            //int specificRowIndex = 0, invoiceNo;
 
             DataTable dataTable = pointOfPurchaseDAL.Search();//Searching the last id number in the tbl_pop which actually stands for the current invoice number to save it to tbl_pop_details as an invoice number for this sale.
 
-            if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
-            {
-                invoiceNo = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
-            }
-            else//If there is no any invoice number, that means it is the first sale. So, assing invoiceNo with 0;
-            {
-                invoiceNo = 0;
-            }
-            return invoiceNo;
+            //if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
+            //{
+            //    invoiceNo = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
+            //}
+            //else//If there is no any invoice number, that means it is the first sale. So, assing invoiceNo with 0;
+            //{
+            //    invoiceNo = 0;
+            //}
+            return dataTable;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -579,16 +602,17 @@ namespace KabaAccounting.UI
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            cboPurchaseType.IsEnabled = true;
+            cboPaymentType.IsEnabled = true;
             cboSupplier.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
-            txtProductBarcode.IsEnabled = true;
+            txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
             txtProductCostPrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
             txtProductTotalCostPrice.IsEnabled = true;
             txtInvoiceNo.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
+            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
 
         }
 
@@ -616,22 +640,29 @@ namespace KabaAccounting.UI
         int invoiceArrow;
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceNo = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+            int firstInvoiceId = 1, currentInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
-            if (currentInvoiceNo != firstInvoiceNo)
+            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.Search(currentInvoiceNo);
+            currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[firstInvoiceId]["id"]);
+
+            if (currentInvoiceId != firstInvoiceId)
             {
                 ClearPointOfSaleListView();
-                int prevInvoice = Convert.ToInt32(txtInvoiceNo.Text) - 1;
+                int prevInvoiceId = currentInvoiceId - 1;
                 invoiceArrow = 0;//0 means customer has clicked the previous button.
-                LoadPastInvoice(prevInvoice, invoiceArrow);
+                LoadPastInvoice(prevInvoiceId, invoiceArrow);
             }
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceNo = GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+            int firstRowIndex = 0, lastInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
-            if (currentInvoiceNo != lastInvoiceNo)
+            DataTable dataTableLastInvoice = GetLastInvoice();
+            lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["invoice_no"]);
+            
+
+            if (currentInvoiceNo != lastInvoiceId)
             {
                 ClearPointOfSaleListView();
                 int nextInvoice = Convert.ToInt32(txtInvoiceNo.Text) + 1;
@@ -714,7 +745,7 @@ namespace KabaAccounting.UI
 
                     if (decimal.TryParse(textProductAmount, out number) && result == true)
                     {
-                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
+                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         int rowIndex = 0;
@@ -752,5 +783,11 @@ namespace KabaAccounting.UI
                 }
             }
         }
+
+        private void cboSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MessageBox.Show(cboSupplier.SelectedValue.ToString());
+        }
+
     }
 }

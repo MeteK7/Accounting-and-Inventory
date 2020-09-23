@@ -292,13 +292,13 @@
                     <ColumnDefinition Width="1037*"/>
                     <ColumnDefinition Width="15*"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="lblProductBarcode" Content="Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
+                <Label x:Name="lblProductId" Content="Id/Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
                 <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="424,14,0,0" VerticalAlignment="Top" Width="55"/>
                 <Label x:Name="lblProductCostPrice" Content="Cost Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductTotalCostPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductBarcode" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductBarcode_KeyUp"/>
+                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="424,40,0,0" VerticalAlignment="Top" Width="55"/>
                 <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
@@ -323,7 +323,7 @@
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Barcode}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="170" />
+                        <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="170" />
                         <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="500"/>
                         <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="70"/>
                         <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
@@ -458,23 +458,20 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="894,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
+                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="930,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="983,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
+                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblPurchaseType" Content="Purchase Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboPurchaseType" HorizontalAlignment="Left" Margin="756,10,0,0" VerticalAlignment="Top" Width="120" Height="26">
-                    <ComboBoxItem Content="CASH"/>
-                    <ComboBoxItem Content="CREDIT"/>
-                </ComboBox>
-                <Label x:Name="lblSupplierId" Content="Supplier" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="75"/>
-                <ComboBox x:Name="cboSupplier" HorizontalAlignment="Left" Margin="756,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboSupplier_Loaded"/>
+                <Label x:Name="lblPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="107"/>
+                <ComboBox x:Name="cboPaymentType" HorizontalAlignment="Left" Margin="778,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboPaymentType_Loaded"/>
+                <Label x:Name="lblSupplierId" Content="Supplier" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="107"/>
+                <ComboBox x:Name="cboSupplier" HorizontalAlignment="Left" Margin="778,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboSupplier_Loaded" SelectionChanged="cboSupplier_SelectionChanged"/>
 
             </Grid>
         </GroupBox>

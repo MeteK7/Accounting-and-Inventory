@@ -225,14 +225,14 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region GETTING THE ROW INFORMATION OF A TABLE BY USING INVOICE NO.
-        public DataTable Search(int invoiceNo)
+        #region GETTING THE ROW INFORMATION OF A TABLE BY USING INVOICE ID.
+        public DataTable Search(int invoiceId)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE invoice_no= " + invoiceNo + "";//SQL query to get the last id of rows in te table.
+                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id= " + invoiceId + "";//SQL query to get the last id of rows in te table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {

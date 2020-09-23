@@ -38,6 +38,8 @@ namespace KabaAccounting.UI
         PointOfSaleDetailBLL pointOfSaleDetailBLL = new PointOfSaleDetailBLL();
         ProductDAL productDAL = new ProductDAL();
         ProductBLL productBLL = new ProductBLL();
+        PaymentDAL paymentDAL = new PaymentDAL();
+        PaymentBLL paymentBLL = new PaymentBLL();
         CustomerDAL customerDAL = new CustomerDAL();
         CustomerBLL customerBLL = new CustomerBLL();
         UnitDAL unitDAL = new UnitDAL();
@@ -85,7 +87,7 @@ namespace KabaAccounting.UI
                         productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
-                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnitName, Cost=productCost, Price = productPrice, Amount = productAmount, TotalCost= productTotalCost, TotalPrice = productTotalPrice });
+                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnitName, CostPrice=productCost, Price = productPrice, Amount = productAmount, TotalCost= productTotalCost, TotalPrice = productTotalPrice });
                     }
                     #endregion
 
@@ -162,7 +164,7 @@ namespace KabaAccounting.UI
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
-            cboSaleType.IsEnabled = false;
+            cboPaymentType.IsEnabled = false;
             cboCustomer.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
             txtProductBarcode.IsEnabled = false;
@@ -207,7 +209,7 @@ namespace KabaAccounting.UI
                     //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
                 }
 
-                dgOldProductCells = (string[,])cells.Clone();
+                dgOldProductCells = (string[,])cells.Clone();//Cloning one array into another array.
             }
 
             oldItemsRowCount = itemsRowCount;
@@ -240,7 +242,7 @@ namespace KabaAccounting.UI
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
-            if (cboSaleType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
+            if (cboPaymentType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
             {
 
                 int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
@@ -248,7 +250,7 @@ namespace KabaAccounting.UI
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
                 pointOfSaleBLL.Id = invoiceNo;
-                pointOfSaleBLL.SaleType = cboSaleType.Text;
+                pointOfSaleBLL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
                 pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
                 pointOfSaleBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
@@ -568,6 +570,21 @@ namespace KabaAccounting.UI
             
         }
 
+        private void cboPaymentType_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboPaymentType.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboPaymentType.DisplayMemberPath = "payment_type";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboPaymentType.SelectedValuePath = "id";
+        }
+
         private void cboCustomer_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
@@ -680,7 +697,7 @@ namespace KabaAccounting.UI
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            cboSaleType.IsEnabled = true;
+            cboPaymentType.IsEnabled = true;
             cboCustomer.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
             txtProductBarcode.IsEnabled = true;
