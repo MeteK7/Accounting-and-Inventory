@@ -40,13 +40,13 @@ namespace KabaAccounting.UI
         {
             bool cash = true, credit = false;
 
-            lblCashSales.Content = productDAL.CountByDay(cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
+            lblCashSales.Content = productDAL.CountPaymentTypeByToday(cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
 
-            lblCreditSales.Content = productDAL.CountByDay(credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
+            lblCreditSales.Content = productDAL.CountPaymentTypeByToday(credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
 
-            DataTable dataTableProduct = productDAL.FetchByToday();
+            DataTable dataTableProduct = productDAL.FetchReportByToday();
             
             for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
             {

@@ -275,7 +275,7 @@ namespace KabaAccounting.DAL
 
 
         #region COUNT BY DAY METHOD
-        public int CountByDay(bool cashOrCredit)
+        public int CountPaymentTypeByToday(bool cashOrCredit)
         {
             SqlConnection conn = new SqlConnection(connString);
 
@@ -286,12 +286,12 @@ namespace KabaAccounting.DAL
             {
                 if (cashOrCredit==true)//Get the cash sales for today if the cashOrCredit boolean variable is true
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND sale_type='CASH'";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=1";//This query counts the records from the beginning of the day to the rest of the day.
 
                 }
                 else//Get the credit sales for today if the cashOrCredit boolean variable is false
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND sale_type='CREDIT'";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=2";//This query counts the records from the beginning of the day to the rest of the day.
                 }
 
                 conn.Open();
@@ -317,7 +317,7 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region FETCH BY TODAY METHOD
-        public DataTable FetchByToday()
+        public DataTable FetchReportByToday()
         {
             //Creating database connection
             SqlConnection conn = new SqlConnection(connString);
