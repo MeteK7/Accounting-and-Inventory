@@ -52,7 +52,7 @@ namespace KabaAccounting.UI
         private void LoadPastInvoice(int invoiceNo=0, int invoiceArrow=-1)//Optional parameter
         {
             int firstRowIndex=0, productUnitId;
-            string productId,productBarcode, productName, productUnitName, productCost, productPrice, productAmount, productTotalCost, productTotalPrice;
+            string productId, productName, productUnitName, productCostPrice, productSalePrice, productAmount, productTotalCostPrice, productTotalSalePrice;
 
             if (invoiceNo==0)
             {
@@ -61,8 +61,10 @@ namespace KabaAccounting.UI
 
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
+                DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);
                 DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
                 DataTable dataTableUnitInfo;
+                DataTable dataTableProduct;
 
                 if (dataTablePosDetail.Rows.Count != 0)
                 {
@@ -70,34 +72,33 @@ namespace KabaAccounting.UI
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
+                        cboPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                        cboCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of supplier.
+                        lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCost = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
-                        productPrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
+                        productCostPrice = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
+                        productSalePrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
                         productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCost = (Convert.ToDecimal(productCost) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
-                        productTotalPrice = (Convert.ToDecimal(productPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
+                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalSalePrice = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
 
-                        DataTable dataTableProduct = productDAL.SearchById(productId);
+                        dataTableProduct = productDAL.SearchById(productId);
 
-                        productBarcode = dataTableProduct.Rows[firstRowIndex]["id"].ToString();//The id column in the products table stands for the barcode of the product.
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
-                        dgProducts.Items.Add(new { Barcode = productBarcode, Name = productName, Unit = productUnitName, CostPrice=productCost, Price = productPrice, Amount = productAmount, TotalCost= productTotalCost, TotalPrice = productTotalPrice });
+                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice=productCostPrice, SalePrice = productSalePrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
                     }
                     #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);//This Search method gets the id and row informations in the table which belong to the last invoice.
-
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-                    //txtBasketGrandTotalProducts.Text= dataTablePos.Rows[rowIndex]["id"].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
@@ -167,7 +168,7 @@ namespace KabaAccounting.UI
             cboPaymentType.IsEnabled = false;
             cboCustomer.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
-            txtProductBarcode.IsEnabled = false;
+            txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
             txtProductPrice.IsEnabled = false;
             txtProductAmount.IsEnabled = false;
@@ -231,7 +232,7 @@ namespace KabaAccounting.UI
 
                 productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
 
-                productBLL.AmountInStock = Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]) + productAmountFromDB;//Revert the amount in stock.
+                productBLL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
 
                 productBLL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
 
@@ -247,6 +248,10 @@ namespace KabaAccounting.UI
 
                 int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
                 int userId = GetUserId();
+
+                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
                 pointOfSaleBLL.Id = invoiceNo;
@@ -298,16 +303,13 @@ namespace KabaAccounting.UI
                         cells[colNo] = cellContent.Text;
                     }
 
-                    DataTable dataTableProduct = new DataTable();
                     dataTableProduct = productDAL.SearchSpecificProductById(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    DataTable dataTableUnit = new DataTable();
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    //dataTable.Rows[rowIndex]["saleprice"].ToString();
                     pointOfSaleDetailBLL.ProductId = productId;
                     pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
                     pointOfSaleDetailBLL.AddedDate = dateTime;
@@ -383,24 +385,24 @@ namespace KabaAccounting.UI
 
         private void ClearProductEntranceTextBox()
         {
-            txtProductBarcode.Text="";
+            txtProductId.Text="";
             txtProductName.Text = "";
             cboProductUnit.SelectedIndex = -1;
             txtProductCost.Text = "";
             txtProductPrice.Text = "";
             txtProductAmount.Text = "";
             txtProductTotalPrice.Text = "";
-            Keyboard.Focus(txtProductBarcode); // set keyboard focus
+            Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
 
-        private void txtProductBarcode_KeyUp(object sender, KeyEventArgs e)
+        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             int number;
 
-            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
+            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
 
-            if (txtProductBarcode.Text != 0.ToString() && int.TryParse(txtProductBarcode.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
                 int productAmount = 1;
                 int rowIndex = 0;
@@ -417,7 +419,7 @@ namespace KabaAccounting.UI
                 //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
 
 
-                if (productBarcodeRetail == txtProductBarcode.Text || productId.ToString() == txtProductBarcode.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
+                if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
                     productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail"]);
                 }
@@ -452,10 +454,10 @@ namespace KabaAccounting.UI
             //}
 
 
-            //If the txtProductBarcode is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            //If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
             /*Note: I just checked the btnProductAdd to know if there was a product entry before or not.
                     If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
-            else if (txtProductBarcode.Text == "" && btnProductAdd.IsEnabled==true)
+            else if (txtProductId.Text == "" && btnProductAdd.IsEnabled==true)
             {
                 ClearProductEntranceTextBox();
             }
@@ -481,7 +483,7 @@ namespace KabaAccounting.UI
 
                 TextBlock barcodeCellContent = dgProducts.Columns[barcodeColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
 
-                if (barcodeCellContent.Text==txtProductBarcode.Text)
+                if (barcodeCellContent.Text==txtProductId.Text)
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -510,8 +512,8 @@ namespace KabaAccounting.UI
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
                 decimal totalCost = Convert.ToDecimal(txtProductCost.Text) * Convert.ToDecimal(txtProductAmount.Text);
-                //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductBarcode.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
-                dgProducts.Items.Add(new { Barcode = txtProductBarcode.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, Cost = txtProductCost.Text, Price =txtProductPrice.Text, Amount=txtProductAmount.Text, TotalCost = totalCost.ToString(), TotalPrice = txtProductTotalPrice.Text});
+                //dgProducts.Items.Add(new ProductBLL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductBLL if you wish to use this code.
+                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text,  Unit=cboProductUnit.SelectedItem, CostPrice = txtProductCost.Text, SalePrice = txtProductPrice.Text, Amount=txtProductAmount.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalPrice.Text});
             }
 
             dgProducts.UpdateLayout();
@@ -611,7 +613,7 @@ namespace KabaAccounting.UI
 
             if (textProductAmount != "" && decimal.TryParse(textProductAmount, out number) && result==true)
             {
-                DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
+                DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
 
                 string unitKg = "Kilogram", unitLt = "Liter";
                 int rowIndex = 0;
@@ -650,6 +652,15 @@ namespace KabaAccounting.UI
             invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+        }
+
+        private DataTable GetLastInvoice()
+        {
+            //int specificRowIndex = 0, invoiceNo;
+
+            DataTable dataTable = pointOfSaleDAL.Search();//A METHOD WHICH HAVE AN OPTIONAL PARAMETER
+
+            return dataTable;
         }
 
         private int GetLastInvoiceNumber()
@@ -700,7 +711,7 @@ namespace KabaAccounting.UI
             cboPaymentType.IsEnabled = true;
             cboCustomer.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
-            txtProductBarcode.IsEnabled = true;
+            txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
             txtProductPrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
@@ -815,7 +826,7 @@ namespace KabaAccounting.UI
 
                     if (decimal.TryParse(textProductAmount, out number) && result == true)
                     {
-                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductBarcode.Text);
+                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         int rowIndex = 0;

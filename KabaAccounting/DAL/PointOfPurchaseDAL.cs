@@ -190,8 +190,8 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
-        public DataTable Search(int invoiceId = 0)//Optional parameter
+        #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE USING INVOICE NO
+        public DataTable SearchByInvoiceId(int invoiceId = 0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -208,6 +208,43 @@ namespace KabaAccounting.DAL
                 {
                     sql = "SELECT * FROM tbl_pop WHERE id=" + invoiceId + "";//SQL query to get the last id of rows in the table.
                 }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    try
+                    {
+                        /*cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;*/
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region GETTING THE LAST NO AND ROW DATAS OF THE TABLE IN THE DATABASE USING INVOICE ID
+        public DataTable SearchByInvoiceNo(int invoiceNo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+                String sql;
+
+                    sql = "SELECT * FROM tbl_pop WHERE invoice_no=" + invoiceNo + "";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
