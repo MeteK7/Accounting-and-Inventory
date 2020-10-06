@@ -11,6 +11,7 @@ namespace KabaAccounting.BLL
         public int Id { get; set; }
         public int PaymentTypeId { get; set; }
         public int CustomerId { get; set; }
+        public int TotalProductAmount { get; set; }
         public decimal CostTotal { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Vat { get; set; }

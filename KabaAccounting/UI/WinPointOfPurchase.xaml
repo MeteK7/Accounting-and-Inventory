@@ -342,7 +342,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Center" Height="82" Margin="0,10,-2,3" TextWrapping="Wrap" VerticalAlignment="Center" Width="225" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0">
+            <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Center" Height="82" Margin="0,10,-2,3" TextWrapping="Wrap" VerticalAlignment="Center" Width="225" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="">
                 <TextBox.Background>
                     <SolidColorBrush Color="White" Opacity="0"/>
                 </TextBox.Background>

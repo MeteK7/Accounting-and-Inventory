@@ -55,12 +55,17 @@ namespace KabaAccounting.UI
             int firstRowIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productAmount, productTotalCostPrice;
 
-            if (invoiceId == 0)//If the ID in table_pop is 0, that means user just clicked the pop button to open it.
+            if (invoiceId == 0)//If the ID is 0 came from the optional parameter, that means user just clicked the pop button to open it.
             {
                 dataTableLastInvoice=GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
-                invoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);
+
+                if (dataTableLastInvoice.Rows.Count!=0)
+                {
+                    invoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);
+                }
             }
 
+            /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePop = pointOfPurchaseDAL.SearchByInvoiceId(invoiceId);
@@ -99,6 +104,7 @@ namespace KabaAccounting.UI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketAmount.Text = dataTablePop.Rows[firstRowIndex]["total_product_amount"].ToString();
                     txtBasketCostTotal.Text = dataTablePop.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePop.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePop.Rows[firstRowIndex]["vat"].ToString();
@@ -258,6 +264,7 @@ namespace KabaAccounting.UI
                 pointOfPurchaseBLL.InvoiceNo = invoiceNo;
                 pointOfPurchaseBLL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseBLL.SupplierId = Convert.ToInt32(cboSupplier.SelectedValue);
+                pointOfPurchaseBLL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfPurchaseBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfPurchaseBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfPurchaseBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -621,7 +628,7 @@ namespace KabaAccounting.UI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            EnteredBtnNewOrEdit();
+            ModifyTools();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -632,10 +639,10 @@ namespace KabaAccounting.UI
 
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             GetOldDataGridContent(dgProductCells, colLength);
-            EnteredBtnNewOrEdit();
+            ModifyTools();
         }
 
-        private void EnteredBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        private void ModifyTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -656,6 +663,7 @@ namespace KabaAccounting.UI
             txtInvoiceNo.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            txtInvoiceNo.Text = "";
 
         }
 

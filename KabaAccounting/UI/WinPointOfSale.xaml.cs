@@ -59,6 +59,7 @@ namespace KabaAccounting.UI
                 invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
+            /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);
@@ -99,6 +100,7 @@ namespace KabaAccounting.UI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketAmount.Text= dataTablePos.Rows[firstRowIndex]["total_product_amount"].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
@@ -257,6 +259,7 @@ namespace KabaAccounting.UI
                 pointOfSaleBLL.Id = invoiceNo;
                 pointOfSaleBLL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
                 pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
+                pointOfSaleBLL.TotalProductAmount= Convert.ToInt32(txtBasketAmount.Text);
                 pointOfSaleBLL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfSaleBLL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfSaleBLL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -684,7 +687,7 @@ namespace KabaAccounting.UI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            EnteredBtnNewOrEdit();
+            ModifyTools();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -695,10 +698,10 @@ namespace KabaAccounting.UI
 
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             GetOldDataGridContent(dgProductCells, colLength);
-            EnteredBtnNewOrEdit();
+            ModifyTools();
         }
 
-        private void EnteredBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        private void ModifyTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
