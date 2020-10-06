@@ -54,10 +54,11 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (product_id, product_unit_id, invoice_no, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@product_id, @product_unit_id, @invoice_no, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, invoice_no, added_date, added_by, rate, amount, product_cost_price) VALUES (@id, @product_id, @product_unit_id, @invoice_no, @added_date, @added_by, @rate, @amount, @product_cost_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
+                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailBLL.Id);
                 cmd.Parameters.AddWithValue("@product_id", pointOfPurchaseDetailBLL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailBLL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseDetailBLL.InvoiceNo);
@@ -66,7 +67,6 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@rate", pointOfPurchaseDetailBLL.ProductRate);
                 cmd.Parameters.AddWithValue("@amount", pointOfPurchaseDetailBLL.ProductAmount);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfPurchaseDetailBLL.ProductCostPrice);
-                cmd.Parameters.AddWithValue("@product_sale_price", pointOfPurchaseDetailBLL.ProductSalePrice);
 
                 conn.Open();
 

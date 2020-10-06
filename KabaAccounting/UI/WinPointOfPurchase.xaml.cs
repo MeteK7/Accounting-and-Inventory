@@ -131,7 +131,18 @@ namespace KabaAccounting.UI
 
                 }
             }
+            else
+            {
+                FirstTimeRun();//This method is called when it is the first time of using this program.
+            }
 
+        }
+
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
         private void FillStaffInformations()
@@ -318,9 +329,15 @@ namespace KabaAccounting.UI
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[0] contains the product barcode.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    newInvoiceId = newInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
+                    //Run only at the beginning. Otherwise, it will increase the newInvoiceId respectively for all goods which must have the same invoiceId.
+                    //If there is a row in the datatable, then fetch the id of the invoice. Otherwise, it is the first run and keep the default value.
+                    if (rowNo == initialRowIndex && dataTableLastInvoice.Rows.Count!=0)
+                    {
+                        newInvoiceId = newInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
+                    }
+                    
 
-                    pointOfPurchaseDetailBLL.Id = newInvoiceId;
+                    pointOfPurchaseDetailBLL.Id = newInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailBLL.ProductId = productId;
                     pointOfPurchaseDetailBLL.InvoiceNo = invoiceNo;
                     pointOfPurchaseDetailBLL.AddedDate = dateTime;
@@ -707,16 +724,19 @@ namespace KabaAccounting.UI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int firstRowIndex = 0, lastInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+            int voidInvoiceId = 0, lastInvoiceId, currentInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+
+            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
+            currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id by using invoice no.
 
             DataTable dataTableLastInvoice = GetLastInvoice();
-            lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["invoice_no"]);
+            lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[voidInvoiceId]["id"]);//Getting the last invoice id.
             
 
-            if (currentInvoiceNo != lastInvoiceId)
+            if (currentInvoiceId != lastInvoiceId)
             {
                 ClearPointOfSaleListView();
-                int nextInvoice = Convert.ToInt32(txtInvoiceNo.Text) + 1;
+                int nextInvoice = Convert.ToInt32(currentInvoiceId) + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
             }
