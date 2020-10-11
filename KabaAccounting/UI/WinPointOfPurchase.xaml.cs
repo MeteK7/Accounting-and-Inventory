@@ -211,11 +211,14 @@ namespace KabaAccounting.UI
             this.Close();
         }
 
-        private void GetOldDataGridContent(string[,] cells, int colLength)//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
+        private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
-            int itemsRowCount = dgProducts.Items.Count;
+            int rowLength = dgProducts.Items.Count;
+            int colLength = 6;
+            string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowNo = 0; rowNo < itemsRowCount; rowNo++)
+
+            for (int rowNo = 0; rowNo < rowLength; rowNo++)
             {
                 DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
@@ -223,15 +226,13 @@ namespace KabaAccounting.UI
                 {
                     TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
 
-                    cells[rowNo, colNo] = tbCellContent.Text;
+                    dgProductCells[rowNo, colNo] = tbCellContent.Text;
 
                     //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
                 }
-
-                dgOldProductCells = (string[,])cells.Clone();//Cloning one array into another array.
             }
 
-            oldItemsRowCount = itemsRowCount;
+            return dgProductCells;
         }
 
         private void RevertOldAmountInStock()
@@ -260,8 +261,20 @@ namespace KabaAccounting.UI
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            string[,] dgNewProductCells = new string[,] { };
+
+            dgNewProductCells= (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+
+            #region Comparing two multidimensional arrays
+            bool isDgEqual =
+            dgOldProductCells.Rank == dgNewProductCells.Rank &&
+            Enumerable.Range(0, dgOldProductCells.Rank).All(dimension => dgOldProductCells.GetLength(dimension) == dgNewProductCells.GetLength(dimension)) &&
+            dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
+            #endregion
+
+            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text!="0" && cboPaymentType.SelectedIndex!=-1 &&cboSupplier.SelectedIndex!=-1)
+            if (isDgEqual==false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text!="0" && cboPaymentType.SelectedIndex!=-1 &&cboSupplier.SelectedIndex!=-1)
             {
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
                 int userId = GetUserId();
@@ -391,7 +404,7 @@ namespace KabaAccounting.UI
 
             else
             {
-                MessageBox.Show("You have a missing part!");
+                MessageBox.Show("You have a missing part or you are trying to save the same things!");
             }
         }
 
@@ -650,12 +663,9 @@ namespace KabaAccounting.UI
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            int rowLength = dgProducts.Items.Count;
-            int colLength = 8;
-            string[,] dgProductCells = new string[rowLength, colLength];
-
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
-            GetOldDataGridContent(dgProductCells, colLength);
+            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+            dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyTools();
         }
 
