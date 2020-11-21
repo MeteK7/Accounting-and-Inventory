@@ -259,8 +259,8 @@ namespace KabaAccounting.UI
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
             if (isDgEqual == false && cboPaymentType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
             {
-
-                int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                
+                int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
                 int userId = GetUserId();
 
                 DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
@@ -268,7 +268,7 @@ namespace KabaAccounting.UI
                 DataTable dataTableUnit = new DataTable();
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleBLL.
-                pointOfSaleBLL.Id = invoiceNo;
+                pointOfSaleBLL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfSaleBLL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
                 pointOfSaleBLL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
                 pointOfSaleBLL.TotalProductAmount= Convert.ToInt32(txtBasketAmount.Text);
@@ -303,7 +303,7 @@ namespace KabaAccounting.UI
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
-                        pointOfSaleDetailDAL.Delete(invoiceNo);
+                        pointOfSaleDetailDAL.Delete(invoiceId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
@@ -326,7 +326,7 @@ namespace KabaAccounting.UI
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     pointOfSaleDetailBLL.ProductId = productId;
-                    pointOfSaleDetailBLL.InvoiceNo = invoiceNo;
+                    pointOfSaleDetailBLL.InvoiceNo = invoiceId;
                     pointOfSaleDetailBLL.AddedDate = dateTime;
                     pointOfSaleDetailBLL.AddedBy = addedBy;
                     pointOfSaleDetailBLL.ProductRate = productRate;

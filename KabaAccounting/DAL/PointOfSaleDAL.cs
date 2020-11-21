@@ -58,7 +58,7 @@ namespace KabaAccounting.DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfSaleBLL.Id);
+                cmd.Parameters.AddWithValue("@id", pointOfSaleBLL.Id);//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfSaleBLL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@customer_id", pointOfSaleBLL.CustomerId);
                 cmd.Parameters.AddWithValue("@total_product_amount", pointOfSaleBLL.TotalProductAmount);
