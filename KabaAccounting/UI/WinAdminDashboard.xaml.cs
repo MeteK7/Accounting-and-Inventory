@@ -87,5 +87,10 @@ namespace KabaAccounting
             WinPointOfPurchase winPointOfPurchase = new WinPointOfPurchase();
             winPointOfPurchase.Show();
         }
+
+        private void btnPhyInventory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

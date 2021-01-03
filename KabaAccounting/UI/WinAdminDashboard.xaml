@@ -533,6 +533,20 @@
             </TabItem>
             <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Height="25">
                 <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnPhyInventory" Content="Physical Inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="91" VerticalContentAlignment="Bottom" Click="btnPhyInventory_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/KabaAccounting;component/Images/Buttons/checklist.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.3" CenterX="0.6" ScaleX="0.5" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.3" CenterX="0.6"/>
+                                        <RotateTransform CenterY="0.3" CenterX="0.6"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
                     <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="150,0,0,0.2"/>
                     <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="226,0,0,0.2"/>
                     <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="301,0,0,0.2"/>

@@ -452,5 +452,8 @@
   <ItemGroup>
     <Resource Include="Images\Backgrounds\1752.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\checklist.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
