@@ -1,0 +1,648 @@
+﻿<Window x:Class="GUI.WinAdminDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+        <!--Add images for button mouse over event.-->
+        <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonFileManagement" ImageSource="/Images/Buttons/file-management.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonSysPref" ImageSource="/Images/Buttons/system-preferences.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonBackup" ImageSource="/Images/Buttons/backup-1.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonUser" ImageSource="/Images/Buttons/users.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonCalc" ImageSource="/Images/Buttons/maths.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonPop" ImageSource="/Images/Buttons/edit.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonPopReports" ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonPos" ImageSource="/Images/Buttons/printer.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonPosReports" ImageSource="/Images/Buttons/back.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonBank" ImageSource="/Images/Buttons/bank.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonSupplier" ImageSource="/Images/Buttons/supplier.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonCustomer" ImageSource="/Images/Buttons/customers.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonProduct" ImageSource="/Images/Buttons/qr-code.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonCategory" ImageSource="/Images/Buttons/category.png" Stretch="Uniform"></ImageBrush>
+
+        <Style TargetType="Button" x:Key="ButtonCloseStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonFileManagementStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonFileManagement}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonSysPrefStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonSysPref}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonBackupStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonBackup}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonUserStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonUser}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonCalcStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonCalc}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonPopStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonPop}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonPopReportsStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonPopReports}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonPosStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonPos}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonPosReportsStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonPosReports}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonBankStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonBank}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonSupplierStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonSupplier}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonCustomerStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonCustomer}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonProductStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonProduct}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonCategoryStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonCategory}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/abstract-green.jpg"/>
+    </Window.Background>
+    <Grid>
+        <StackPanel x:Name="pnlFooter" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="#FF2471A3">
+            <Label x:Name="lblFooter" Content="Developed by Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
+        </StackPanel>
+        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="7,129,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.785,1.417"/>
+        <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="53,129,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>
+        <Label x:Name="lblHead" Content="KABA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Height="60" FontWeight="Normal" FontFamily="Source Serif Pro Light"/>
+        <Label x:Name="lblSubHead" Content="Accounting and Inventory" FontSize="16" Foreground="#FF1272C1" FontWeight="SemiBold" Width="203" Margin="403,338,403,242" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TabControl x:Name="tabHeader" Height="124" VerticalAlignment="Top" Margin="0,0,-1,0" HorizontalContentAlignment="Center">
+            <TabItem x:Name="tabItemServices" Header="SERVICES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="42" Width="44" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
+                        <Button.BorderBrush>
+                            <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                        </Button.BorderBrush>
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-0.117"/>
+                                <TranslateTransform X="0.013" Y="-0.028"/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonFileManagementStyle}" x:Name="btnFileManagement" Content="File Management" HorizontalAlignment="Left" Width="113" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/file-management.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.3" CenterX="0.5" ScaleX="0.75" ScaleY="0.8"/>
+                                        <SkewTransform CenterY="0.3" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.3" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonSysPrefStyle}" x:Name="btnSysPref" Content="System Preferences" HorizontalAlignment="Left" Width="111" Margin="121,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/system-preferences.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonBackupStyle}" x:Name="btnBackup" Content="BACK-UP" HorizontalAlignment="Left" Width="101" Margin="240,0,0,0" RenderTransformOrigin="1.4,0.539" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/backup-1.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.4" CenterX="0.5" ScaleY="0.7" ScaleX="0.7"/>
+                                        <SkewTransform CenterY="0.4" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.4" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonUserStyle}" x:Name="btnUser" Content="USERS" HorizontalAlignment="Left" Width="103" Click="btnUser_Click" Margin="349,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/users.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.75" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonCalcStyle}" Content="CALCULATOR" HorizontalAlignment="Left" Width="97" Margin="460,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/maths.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.3" CenterX="0.5" ScaleX="0.7" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.3" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.3" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Label x:Name="lblExit" Content="EXIT" HorizontalAlignment="Right" Margin="0,0,-0.4,0.2" VerticalAlignment="Bottom" Width="51" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemAccounts" Header="ACCOUNTS" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnReports" Content="REPORTS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="91"/>
+                    <Button x:Name="btnDailySum" Content="Daily Summary" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Top" Width="117" Height="91"/>
+                    <Button x:Name="btnAssets" Content="Assests" HorizontalAlignment="Left" Width="133" Margin="229,0,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="Point of Purchase" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnPointOfPurchase_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/inventory (2).png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterX="0.5" ScaleX="0.75" ScaleY="0.75" CenterY="0.3"/>
+                                        <SkewTransform CenterX="0.5" CenterY="0.3"/>
+                                        <RotateTransform CenterX="0.5" CenterY="0.3"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonPopReportsStyle}" x:Name="btnPopReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/chart.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.65" ScaleY="0.65"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemSales" Header="SALES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button Style="{StaticResource ButtonPosStyle}" x:Name="btnPointOfSale" Content="Point of Sale" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Click="btnPointOfSale_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/payment-terminal.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterX="0.5" ScaleX="0.8" ScaleY="0.8"/>
+                                        <SkewTransform CenterX="0.5"/>
+                                        <RotateTransform CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonPosReportsStyle}" x:Name="btnPosReport" Content="Report" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPosReport_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/analysis.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.65" ScaleY="0.65"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="280,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="420,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="560,0,0,0" RenderTransformOrigin="0.748,0.495"/>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="700,0,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="btnPhyInventory" Content="Physical Inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="91" VerticalContentAlignment="Bottom" Click="btnPhyInventory_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/physical-inventory.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.4" CenterX="0.5" ScaleX="0.45" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.4" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.4" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/checklist.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.4" CenterX="0.6" ScaleX="0.5" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.4" CenterX="0.6"/>
+                                        <RotateTransform CenterY="0.4" CenterX="0.6"/>
+                                        <TranslateTransform X="0" Y="0"/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="302,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="377,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="452,0,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemPortal" Header="PORTAL" HorizontalContentAlignment="Stretch" Height="25" Margin="0,-1,-90,1">
+                <Grid Background="#FFE5E5E5">
+                    <Button Style="{StaticResource ButtonBankStyle}" x:Name="btnBank" Content="BANKS" Width="115" HorizontalAlignment="Left" Click="btnBank_Click" Margin="2,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/bank.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.2" CenterX="0.5" ScaleX="0.7" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.2" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.2" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonSupplierStyle}" x:Name="btnSupplier" Content="SUPPLIERS" Margin="116,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnSupplier_Click" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/supplier.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.25" CenterX="0.5" ScaleX="0.8" ScaleY="0.8"/>
+                                        <SkewTransform CenterY="0.25" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.25" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonCustomerStyle}" x:Name="btnCustomer" Content="CUSTOMERS" Margin="230,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCustomer_Click" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/customers.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.3" CenterX="0.5" ScaleX="0.7" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.3" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.3" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonProductStyle}" x:Name="btnProduct" Content="PRODUCTS" Width="115" HorizontalAlignment="Left" Click="btnProduct_Click" Margin="344,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/qr-code.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterX="0.5" ScaleX="0.75" ScaleY="0.75" CenterY="0.3"/>
+                                        <SkewTransform CenterX="0.5" CenterY="0.3"/>
+                                        <RotateTransform CenterX="0.5" CenterY="0.3"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonCategoryStyle}" x:Name="btnCategory" Content="CATEGORIES" Margin="458,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/category.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.75" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
+

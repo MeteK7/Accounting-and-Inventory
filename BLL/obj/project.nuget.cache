@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "I43mtUjOcc1y7fnkP4lLkGetIV6wwRiITZiTJ/tbJIe5DNVmDu9iv2yz+v1zasYaAvVbYGtZrhQsSKmDbng4KQ==",
+  "success": true,
+  "projectFilePath": "C:\\Lessons\\C# Programs\\KabaAccounting\\BLL\\BLL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
+    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

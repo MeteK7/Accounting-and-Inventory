@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "rrzQYBn/OHRtt7cbstYPqN2nrsYj138la8SpdGJYQ9FtyiFS2i4KCWwqKAj0FdV276XN02TenyEaBkHKsCKr8w==",
+  "success": true,
+  "projectFilePath": "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\CUL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
+    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

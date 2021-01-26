@@ -1,0 +1,20 @@
+﻿GUI
+
+
+winexe
+C#
+.cs
+C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\
+GUI
+none
+false
+TRACE;DEBUG;NET;NET5_0;NETCOREAPP
+C:\Lessons\C# Programs\KabaAccounting\GUI\App.xaml
+13-731672966
+
+15-274236343
+207974370011
+WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;WinUserDashboard.xaml;
+
+True
+

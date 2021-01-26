@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="WinAdminDashboard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinBank.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinCategory.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinCustomer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinLogin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinPhyInventory.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinPointOfPurchase.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinPointOfSale.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinPosReport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinProducts.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinSupplier.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinUser.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinUserDashboard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="WinAdminDashboard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinBank.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinCategory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinCustomer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinLogin.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPhyInventory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPointOfPurchase.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPointOfSale.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPosReport.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinProducts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinSupplier.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinUser.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinUserDashboard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

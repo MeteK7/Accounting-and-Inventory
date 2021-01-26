@@ -1,0 +1,210 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Image1.png" />
+    <None Remove="Images\actions\entry.png" />
+    <None Remove="Images\actions\entry_1.png" />
+    <None Remove="Images\actions\entry_2.png" />
+    <None Remove="Images\Backgrounds\1752.jpg" />
+    <None Remove="Images\Backgrounds\2324673.jpg" />
+    <None Remove="Images\Backgrounds\7419107.jpg" />
+    <None Remove="Images\Backgrounds\abstract-green.jpg" />
+    <None Remove="Images\Backgrounds\abstract_2.png" />
+    <None Remove="Images\Backgrounds\accounting-pattern.jpg" />
+    <None Remove="Images\Backgrounds\avatar.png" />
+    <None Remove="Images\Backgrounds\background-2.jpg" />
+    <None Remove="Images\Backgrounds\background-abstract.jpg" />
+    <None Remove="Images\Backgrounds\background.jpg" />
+    <None Remove="Images\Backgrounds\bank.jpg" />
+    <None Remove="Images\Backgrounds\black-hexagonal.jpg" />
+    <None Remove="Images\Backgrounds\bokeh-background.jpg" />
+    <None Remove="Images\Backgrounds\business-analysis.jpg" />
+    <None Remove="Images\Backgrounds\clouds.jpg" />
+    <None Remove="Images\Backgrounds\customer.png" />
+    <None Remove="Images\Backgrounds\key.png" />
+    <None Remove="Images\Backgrounds\light-blur.jpg" />
+    <None Remove="Images\Backgrounds\login-background.jpg" />
+    <None Remove="Images\Backgrounds\navy-blue.jpg" />
+    <None Remove="Images\Backgrounds\paint-border.jpg" />
+    <None Remove="Images\Backgrounds\particles.jpg" />
+    <None Remove="Images\Backgrounds\pos.jpg" />
+    <None Remove="Images\Backgrounds\red-hand-printed.jpg" />
+    <None Remove="Images\Backgrounds\rm218batch4-ning-33.jpg" />
+    <None Remove="Images\Backgrounds\rm218batch4-ning-34.jpg" />
+    <None Remove="Images\Backgrounds\supplier.jpg" />
+    <None Remove="Images\Backgrounds\user-background.jpg" />
+    <None Remove="Images\Backgrounds\user.png" />
+    <None Remove="Images\Backgrounds\watercolor.jpg" />
+    <None Remove="Images\Backgrounds\wooden-floor-background.jpg" />
+    <None Remove="Images\Buttons\add-product.png" />
+    <None Remove="Images\Buttons\add-to-cart.png" />
+    <None Remove="Images\Buttons\add-user.png" />
+    <None Remove="Images\Buttons\analysis.png" />
+    <None Remove="Images\Buttons\back.png" />
+    <None Remove="Images\Buttons\backup-1.png" />
+    <None Remove="Images\Buttons\backup.png" />
+    <None Remove="Images\Buttons\bank.png" />
+    <None Remove="Images\Buttons\barcode.png" />
+    <None Remove="Images\Buttons\cancel.png" />
+    <None Remove="Images\Buttons\cash.png" />
+    <None Remove="Images\Buttons\category.png" />
+    <None Remove="Images\Buttons\chart.png" />
+    <None Remove="Images\Buttons\checklist.png" />
+    <None Remove="Images\Buttons\clear-product.png" />
+    <None Remove="Images\Buttons\close.png" />
+    <None Remove="Images\Buttons\credit-card.png" />
+    <None Remove="Images\Buttons\cross.png" />
+    <None Remove="Images\Buttons\customers.png" />
+    <None Remove="Images\Buttons\delete (1).png" />
+    <None Remove="Images\Buttons\delete-user.png" />
+    <None Remove="Images\Buttons\delete.png" />
+    <None Remove="Images\Buttons\deletecart.png" />
+    <None Remove="Images\Buttons\delivery.png" />
+    <None Remove="Images\Buttons\edit.png" />
+    <None Remove="Images\Buttons\error.png" />
+    <None Remove="Images\Buttons\file-management.png" />
+    <None Remove="Images\Buttons\floppy-disk.png" />
+    <None Remove="Images\Buttons\inventory (1).png" />
+    <None Remove="Images\Buttons\inventory (2).png" />
+    <None Remove="Images\Buttons\inventory (3).png" />
+    <None Remove="Images\Buttons\inventory (4).png" />
+    <None Remove="Images\Buttons\inventory.png" />
+    <None Remove="Images\Buttons\login-button-png-18036.png" />
+    <None Remove="Images\Buttons\maths.png" />
+    <None Remove="Images\Buttons\next.png" />
+    <None Remove="Images\Buttons\payment-terminal.png" />
+    <None Remove="Images\Buttons\physical-inventory.png" />
+    <None Remove="Images\Buttons\plus (1).png" />
+    <None Remove="Images\Buttons\plus (2).png" />
+    <None Remove="Images\Buttons\plus (3).png" />
+    <None Remove="Images\Buttons\plus.png" />
+    <None Remove="Images\Buttons\preferences.png" />
+    <None Remove="Images\Buttons\printer.png" />
+    <None Remove="Images\Buttons\printer_colorful.png" />
+    <None Remove="Images\Buttons\processing.png" />
+    <None Remove="Images\Buttons\qr-code.png" />
+    <None Remove="Images\Buttons\refresh.png" />
+    <None Remove="Images\Buttons\save.png" />
+    <None Remove="Images\Buttons\supplier.png" />
+    <None Remove="Images\Buttons\system-preferences.png" />
+    <None Remove="Images\Buttons\trash.png" />
+    <None Remove="Images\Buttons\trash_red.png" />
+    <None Remove="Images\Buttons\update-user.png" />
+    <None Remove="Images\Buttons\user.png" />
+    <None Remove="Images\Buttons\users.png" />
+    <None Remove="Images\Icons\close-onmousehover.png" />
+    <None Remove="Images\Icons\close.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CUL\CUL.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image1.png" />
+    <Resource Include="Images\actions\entry.png" />
+    <Resource Include="Images\actions\entry_1.png" />
+    <Resource Include="Images\actions\entry_2.png" />
+    <Resource Include="Images\Backgrounds\1752.jpg" />
+    <Resource Include="Images\Backgrounds\2324673.jpg" />
+    <Resource Include="Images\Backgrounds\7419107.jpg" />
+    <Resource Include="Images\Backgrounds\abstract-green.jpg" />
+    <Resource Include="Images\Backgrounds\abstract_2.png" />
+    <Resource Include="Images\Backgrounds\accounting-pattern.jpg" />
+    <Resource Include="Images\Backgrounds\avatar.png" />
+    <Resource Include="Images\Backgrounds\background-2.jpg" />
+    <Resource Include="Images\Backgrounds\background-abstract.jpg" />
+    <Resource Include="Images\Backgrounds\background.jpg" />
+    <Resource Include="Images\Backgrounds\bank.jpg" />
+    <Resource Include="Images\Backgrounds\black-hexagonal.jpg" />
+    <Resource Include="Images\Backgrounds\bokeh-background.jpg" />
+    <Resource Include="Images\Backgrounds\business-analysis.jpg" />
+    <Resource Include="Images\Backgrounds\clouds.jpg" />
+    <Resource Include="Images\Backgrounds\customer.png" />
+    <Resource Include="Images\Backgrounds\key.png" />
+    <Resource Include="Images\Backgrounds\light-blur.jpg" />
+    <Resource Include="Images\Backgrounds\login-background.jpg" />
+    <Resource Include="Images\Backgrounds\navy-blue.jpg" />
+    <Resource Include="Images\Backgrounds\paint-border.jpg" />
+    <Resource Include="Images\Backgrounds\particles.jpg" />
+    <Resource Include="Images\Backgrounds\pos.jpg" />
+    <Resource Include="Images\Backgrounds\red-hand-printed.jpg" />
+    <Resource Include="Images\Backgrounds\rm218batch4-ning-33.jpg" />
+    <Resource Include="Images\Backgrounds\rm218batch4-ning-34.jpg" />
+    <Resource Include="Images\Backgrounds\supplier.jpg" />
+    <Resource Include="Images\Backgrounds\user-background.jpg" />
+    <Resource Include="Images\Backgrounds\user.png" />
+    <Resource Include="Images\Backgrounds\watercolor.jpg" />
+    <Resource Include="Images\Backgrounds\wooden-floor-background.jpg" />
+    <Resource Include="Images\Buttons\add-product.png" />
+    <Resource Include="Images\Buttons\add-to-cart.png" />
+    <Resource Include="Images\Buttons\add-user.png" />
+    <Resource Include="Images\Buttons\analysis.png" />
+    <Resource Include="Images\Buttons\back.png" />
+    <Resource Include="Images\Buttons\backup-1.png" />
+    <Resource Include="Images\Buttons\backup.png" />
+    <Resource Include="Images\Buttons\bank.png" />
+    <Resource Include="Images\Buttons\barcode.png" />
+    <Resource Include="Images\Buttons\cancel.png" />
+    <Resource Include="Images\Buttons\cash.png" />
+    <Resource Include="Images\Buttons\category.png" />
+    <Resource Include="Images\Buttons\chart.png" />
+    <Resource Include="Images\Buttons\checklist.png" />
+    <Resource Include="Images\Buttons\clear-product.png" />
+    <Resource Include="Images\Buttons\close.png" />
+    <Resource Include="Images\Buttons\credit-card.png" />
+    <Resource Include="Images\Buttons\cross.png" />
+    <Resource Include="Images\Buttons\customers.png" />
+    <Resource Include="Images\Buttons\delete (1).png" />
+    <Resource Include="Images\Buttons\delete-user.png" />
+    <Resource Include="Images\Buttons\delete.png" />
+    <Resource Include="Images\Buttons\deletecart.png" />
+    <Resource Include="Images\Buttons\delivery.png" />
+    <Resource Include="Images\Buttons\edit.png" />
+    <Resource Include="Images\Buttons\error.png" />
+    <Resource Include="Images\Buttons\file-management.png" />
+    <Resource Include="Images\Buttons\floppy-disk.png" />
+    <Resource Include="Images\Buttons\inventory (1).png" />
+    <Resource Include="Images\Buttons\inventory (2).png" />
+    <Resource Include="Images\Buttons\inventory (3).png" />
+    <Resource Include="Images\Buttons\inventory (4).png" />
+    <Resource Include="Images\Buttons\inventory.png" />
+    <Resource Include="Images\Buttons\login-button-png-18036.png" />
+    <Resource Include="Images\Buttons\maths.png" />
+    <Resource Include="Images\Buttons\next.png" />
+    <Resource Include="Images\Buttons\payment-terminal.png" />
+    <Resource Include="Images\Buttons\physical-inventory.png" />
+    <Resource Include="Images\Buttons\plus (1).png" />
+    <Resource Include="Images\Buttons\plus (2).png" />
+    <Resource Include="Images\Buttons\plus (3).png" />
+    <Resource Include="Images\Buttons\plus.png" />
+    <Resource Include="Images\Buttons\preferences.png" />
+    <Resource Include="Images\Buttons\printer.png" />
+    <Resource Include="Images\Buttons\printer_colorful.png" />
+    <Resource Include="Images\Buttons\processing.png" />
+    <Resource Include="Images\Buttons\qr-code.png" />
+    <Resource Include="Images\Buttons\refresh.png" />
+    <Resource Include="Images\Buttons\save.png" />
+    <Resource Include="Images\Buttons\supplier.png" />
+    <Resource Include="Images\Buttons\system-preferences.png" />
+    <Resource Include="Images\Buttons\trash.png" />
+    <Resource Include="Images\Buttons\trash_red.png" />
+    <Resource Include="Images\Buttons\update-user.png" />
+    <Resource Include="Images\Buttons\user.png" />
+    <Resource Include="Images\Buttons\users.png" />
+    <Resource Include="Images\Icons\close-onmousehover.png" />
+    <Resource Include="Images\Icons\close.png" />
+  </ItemGroup>
+
+</Project>
