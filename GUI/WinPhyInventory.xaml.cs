@@ -33,27 +33,38 @@ namespace GUI
         ProductCUL productCUL = new ProductCUL();
         ProductDAL productDAL = new ProductDAL();
 
-        private void LoadLvwPhysicalInventory()
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            DataTable dataTableProduct = productDAL.Select();
+            this.Close();
+        }
+
+        private string ConvertCategoryIdIntoName(DataTable dataTableProduct, int rowIndex)
+        {
             DataTable dataTableCategory;
 
             int categoryId;
             int rowFirstIndex = 0;
             string categoryName;
 
+            categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category"]);//Getting the category id first to find its name.
+            dataTableCategory = categoryDAL.GetCategoryInfoById(categoryId);//Getting all of the category infos by using id.
+            categoryName = dataTableCategory.Rows[rowFirstIndex]["name"].ToString();//Fetching the name of the category from dataTableCategory. Index is always zero since we are dealing with a unique category only.
+
+            return categoryName;
+        }
+        private void LoadLvwPhysicalInventory(string keyword=null)
+        {
+            DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(keyword);//If keyword is null, then fetch all data.
+
+
             for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
             {
-                categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category"]);//Getting the category id first to find its name.
-                dataTableCategory = categoryDAL.GetCategoryInfoById(categoryId);//Getting all of the category infos by using id.
-                categoryName = dataTableCategory.Rows[rowFirstIndex]["name"].ToString();//Fetching the name of the category from dataTableCategory. Index is always zero since we are dealing with a unique category only.
-
                 lvwPhyInventory.Items.Add(
                     new ProductCUL()
                     {
                         Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
                         Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
-                        CategoryName = categoryName,
+                        CategoryName = ConvertCategoryIdIntoName(dataTableProduct, rowIndex),
                         Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
                         AmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]),
                         CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
@@ -64,9 +75,11 @@ namespace GUI
             }
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void txtSearchByIdBarcode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.Close();
+            lvwPhyInventory.Items.Clear();
+
+            LoadLvwPhysicalInventory(txtSearchByKeyword.Text);
         }
     }
 }

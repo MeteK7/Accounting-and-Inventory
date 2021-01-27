@@ -15,14 +15,20 @@ namespace KabaAccounting.DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
-        #region Select Data from Database
-        public DataTable Select()
+        #region Select All Data from Database | Search Product by Keyword (LIKE QUERY)
+        public DataTable SelectAllOrByKeyword(string keyword = null)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
             DataTable dataTable = new DataTable();//To hold the data from database
             try
             {
-                String sql = "SELECT * FROM tbl_products";//SQL query to get data from database 
+                String sql;
+
+                if (keyword==null)
+                    sql = "SELECT * FROM tbl_products";//SQL query to get data from database 
+                else
+                    sql = "SELECT * FROM tbl_products WHERE id LIKE '%" + keyword + "%' OR name LIKE '%" + keyword + "%' OR barcode_retail LIKE '%" + keyword + "%' OR barcode_wholesale LIKE '%" + keyword + "%'";//SQL query to search data from database 
+                
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
@@ -188,33 +194,9 @@ namespace KabaAccounting.DAL
 
         #endregion
 
-        #region Search Product on Database using Keywords
-        public DataTable Search(string keyword)
-        {
-            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
-            DataTable dataTable = new DataTable();//To hold the data from database
-            try
-            {
-                String sql = "SELECT * FROM tbl_products WHERE id LIKE '%" + keyword + "%' OR name LIKE '%" + keyword + "%' OR barcode_retail LIKE '%" + keyword + "%' OR barcode_wholesale LIKE '%" + keyword + "%'";//SQL query to search data from database 
-                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
-                conn.Open();//Opening the database connection
-                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return dataTable;
-        }
-        #endregion
-
-        #region Search Specific Product
-        public DataTable SearchSpecificProductById(string keyword)
+        //YOU MAY WISH TO ERASE THIS CODE BLOCK!!!
+        #region Search Specific Product By Id or Barcode
+        public DataTable SearchProductByIdBarcode(string keyword)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
             DataTable dataTable = new DataTable();//To hold the data from database
@@ -272,7 +254,6 @@ namespace KabaAccounting.DAL
             }
         }
         #endregion
-
 
         #region COUNT BY DAY METHOD
         public int CountPaymentTypeByToday(bool cashOrCredit)

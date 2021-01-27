@@ -138,7 +138,7 @@ namespace GUI
         private void RefreshProductDataGrid()
         {
             //Refreshing Data Grid View
-            DataTable dataTable = productDAL.Select();
+            DataTable dataTable = productDAL.SelectAllOrByKeyword();
             dgProducts.ItemsSource = dataTable.DefaultView;
             dgProducts.AutoGenerateColumns = true;
             dgProducts.CanUserAddRows = false;
@@ -229,7 +229,7 @@ namespace GUI
 
             for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
             {
-                dataTableProduct = productDAL.SearchSpecificProductById(dgOldProductCells[rowNo, colProductId]);
+                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
 
                 productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
 
@@ -317,7 +317,7 @@ namespace GUI
                         cells[colNo] = cellContent.Text;
                     }
 
-                    dataTableProduct = productDAL.SearchSpecificProductById(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
@@ -414,7 +414,7 @@ namespace GUI
         {
             int number;
 
-            DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
+            DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
             if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
@@ -627,7 +627,7 @@ namespace GUI
 
             if (textProductAmount != "" && decimal.TryParse(textProductAmount, out number) && result == true)
             {
-                DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
+                DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                 string unitKg = "Kilogram", unitLt = "Liter";
                 int rowIndex = 0;
@@ -837,7 +837,7 @@ namespace GUI
 
                     if (decimal.TryParse(textProductAmount, out number) && result == true)
                     {
-                        DataTable dataTable = productDAL.SearchSpecificProductById(txtProductId.Text);
+                        DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         int rowIndex = 0;

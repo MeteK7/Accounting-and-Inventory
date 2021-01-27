@@ -14,6 +14,7 @@
     <None Remove="Images\Backgrounds\1752.jpg" />
     <None Remove="Images\Backgrounds\2324673.jpg" />
     <None Remove="Images\Backgrounds\7419107.jpg" />
+    <None Remove="Images\Backgrounds\abstract-blue-line-wave.jpg" />
     <None Remove="Images\Backgrounds\abstract-green.jpg" />
     <None Remove="Images\Backgrounds\abstract_2.png" />
     <None Remove="Images\Backgrounds\accounting-pattern.jpg" />
@@ -41,6 +42,9 @@
     <None Remove="Images\Backgrounds\user-background.jpg" />
     <None Remove="Images\Backgrounds\user.png" />
     <None Remove="Images\Backgrounds\watercolor.jpg" />
+    <None Remove="Images\Backgrounds\white-abstract-background.jpg" />
+    <None Remove="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
+    <None Remove="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <None Remove="Images\Backgrounds\wooden-floor-background.jpg" />
     <None Remove="Images\Buttons\add-product.png" />
     <None Remove="Images\Buttons\add-to-cart.png" />
@@ -119,6 +123,7 @@
     <Resource Include="Images\Backgrounds\1752.jpg" />
     <Resource Include="Images\Backgrounds\2324673.jpg" />
     <Resource Include="Images\Backgrounds\7419107.jpg" />
+    <Resource Include="Images\Backgrounds\abstract-blue-line-wave.jpg" />
     <Resource Include="Images\Backgrounds\abstract-green.jpg" />
     <Resource Include="Images\Backgrounds\abstract_2.png" />
     <Resource Include="Images\Backgrounds\accounting-pattern.jpg" />
@@ -146,6 +151,9 @@
     <Resource Include="Images\Backgrounds\user-background.jpg" />
     <Resource Include="Images\Backgrounds\user.png" />
     <Resource Include="Images\Backgrounds\watercolor.jpg" />
+    <Resource Include="Images\Backgrounds\white-abstract-background.jpg" />
+    <Resource Include="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
+    <Resource Include="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <Resource Include="Images\Backgrounds\wooden-floor-background.jpg" />
     <Resource Include="Images\Buttons\add-product.png" />
     <Resource Include="Images\Buttons\add-to-cart.png" />

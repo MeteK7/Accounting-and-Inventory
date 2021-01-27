@@ -42,7 +42,7 @@ namespace GUI
         private void RefreshProductDataGrid()
         {
             //Refreshing Data Grid View
-            DataTable dataTable = productDAL.Select();
+            DataTable dataTable = productDAL.SelectAllOrByKeyword();
             dtgProducts.ItemsSource = dataTable.DefaultView;
             dtgProducts.AutoGenerateColumns = true;
             dtgProducts.CanUserAddRows = false;
@@ -147,7 +147,7 @@ namespace GUI
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshCategoryDataGrid method!!! */
             {
                 //Show category informations based on the keyword
-                DataTable dataTable = productDAL.Search(keyword);
+                DataTable dataTable = productDAL.SelectAllOrByKeyword(keyword);
                 dtgProducts.ItemsSource = dataTable.DefaultView;
                 dtgProducts.AutoGenerateColumns = true;
                 dtgProducts.CanUserAddRows = false;
