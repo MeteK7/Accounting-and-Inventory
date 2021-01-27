@@ -89,7 +89,8 @@ namespace GUI
 
         private void btnPhyInventory_Click(object sender, RoutedEventArgs e)
         {
-
+            WinPhyInventory winPhyInventory = new WinPhyInventory();
+            winPhyInventory.Show();
         }
     }
 }

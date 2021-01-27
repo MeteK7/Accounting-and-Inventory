@@ -67,7 +67,7 @@
         <ListView x:Name="lvwPhyInventory" Margin="10,199,10,10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding IdBarcode}" Header="Id / Barcode" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width="150"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Rating}" Header="Rating" Width="100"/>
