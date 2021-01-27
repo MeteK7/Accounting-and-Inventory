@@ -51,7 +51,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@category", product.Category);
+                cmd.Parameters.AddWithValue("@category", product.CategoryId);
                 cmd.Parameters.AddWithValue("@description", product.Description);
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);
@@ -106,7 +106,7 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@category", product.Category);
+                cmd.Parameters.AddWithValue("@category", product.CategoryId);
                 cmd.Parameters.AddWithValue("@description", product.Description);
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);

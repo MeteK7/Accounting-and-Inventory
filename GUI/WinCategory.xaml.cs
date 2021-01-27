@@ -40,7 +40,7 @@ namespace GUI
         private void btnCategoryAdd_Click(object sender, RoutedEventArgs e)
         {
             //Get the values from the Category Window and fill them into the categoryCUL.
-            categoryCUL.Title = txtTitle.Text;
+            categoryCUL.Name = txtTitle.Text;
             categoryCUL.Description = txtDescription.Text;
             categoryCUL.AddedDate = DateTime.Now;
             categoryCUL.AddedBy = GetUserId();
@@ -67,7 +67,7 @@ namespace GUI
             //Getting values from the CategoryUI
 
             categoryCUL.Id = Convert.ToInt32(txtCategoryId.Text);
-            categoryCUL.Title = txtTitle.Text;
+            categoryCUL.Name = txtTitle.Text;
             categoryCUL.Description = txtDescription.Text;
             categoryCUL.AddedDate = DateTime.Now;
             categoryCUL.AddedBy = GetUserId();

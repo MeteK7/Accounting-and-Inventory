@@ -61,13 +61,13 @@ namespace KabaAccounting.DAL
             try
             {
                 //Writing SQL Query to insert new category to the database
-                string sqlQuery = "INSERT INTO tbl_categories (title, description, added_date, added_by) VALUES (@title, @description, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_categories (name, description, added_date, added_by) VALUES (@name, @description, @added_date, @added_by)";
 
                 //Creating SQL Command to pass values in our query.
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing Values through parameter
-                cmd.Parameters.AddWithValue("@title", categoryCUL.Title);
+                cmd.Parameters.AddWithValue("@name", categoryCUL.Name);
                 cmd.Parameters.AddWithValue("@description", categoryCUL.Description);
                 cmd.Parameters.AddWithValue("@added_date", categoryCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", categoryCUL.AddedBy);
@@ -114,13 +114,13 @@ namespace KabaAccounting.DAL
             try
             {
                 //Query to Update Category
-                string sqlQuery = "UPDATE tbl_categories SET title=@title, description=@description, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_categories SET name=@name, description=@description, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 //SQL Command to pass the value on SQL query
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing values using cmd
-                cmd.Parameters.AddWithValue("@title", categoryCUL.Title);
+                cmd.Parameters.AddWithValue("@name", categoryCUL.Name);
                 cmd.Parameters.AddWithValue("@description", categoryCUL.Description);
                 cmd.Parameters.AddWithValue("@added_date", categoryCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", categoryCUL.AddedBy);
@@ -207,7 +207,32 @@ namespace KabaAccounting.DAL
             DataTable dataTable = new DataTable();//To hold the data from database
             try
             {
-                String sql = "SELECT * FROM tbl_categories WHERE id LIKE '%" + keyword + "%' OR title LIKE '%" + keyword + "%' OR description LIKE '%" + keyword + "%'";//SQL query to search data from database 
+                String sql = "SELECT * FROM tbl_categories WHERE id LIKE '%" + keyword + "%' OR name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword + "%'";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
+
+        #region Getting Category Infos By Id
+        public DataTable GetCategoryInfoById(int categoryId)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+            DataTable dataTable = new DataTable();//To hold the data from database
+            try
+            {
+                String sql = "SELECT * FROM tbl_categories WHERE id=" + categoryId + "";//SQL query to search data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection

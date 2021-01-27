@@ -29,29 +29,37 @@ namespace GUI
             LoadLvwPhysicalInventory();
         }
 
+        CategoryDAL categoryDAL = new CategoryDAL();
         ProductCUL productCUL = new ProductCUL();
         ProductDAL productDAL = new ProductDAL();
 
         private void LoadLvwPhysicalInventory()
         {
-            DataTable dataTable = productDAL.Select();
+            DataTable dataTableProduct = productDAL.Select();
+            DataTable dataTableCategory;
 
-            for (int rowIndex = 0; rowIndex < dataTable.Rows.Count; rowIndex++)
+            int categoryId;
+            int rowFirstIndex = 0;
+            string categoryName;
+
+            for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
             {
-
+                categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category"]);//Getting the category id first to find its name.
+                dataTableCategory = categoryDAL.GetCategoryInfoById(categoryId);//Getting all of the category infos by using id.
+                categoryName = dataTableCategory.Rows[rowFirstIndex]["name"].ToString();//Fetching the name of the category from dataTableCategory. Index is always zero since we are dealing with a unique category only.
 
                 lvwPhyInventory.Items.Add(
                     new ProductCUL()
                     {
-                        Id = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]),
-                        Name = dataTable.Rows[rowIndex]["name"].ToString(),
-                        Category = Convert.ToInt32(dataTable.Rows[rowIndex]["category"]),
-                        Rating = Convert.ToDecimal(dataTable.Rows[rowIndex]["rating"]),
-                        AmountInStock = Convert.ToInt32(dataTable.Rows[rowIndex]["amount_in_stock"]),
-                        CostPrice = Convert.ToDecimal(dataTable.Rows[rowIndex]["costprice"]),
-                        SalePrice = Convert.ToDecimal(dataTable.Rows[rowIndex]["saleprice"]),
-                        AddedDate = Convert.ToDateTime(dataTable.Rows[rowIndex]["added_date"]),
-                        AddedBy = Convert.ToInt32(dataTable.Rows[rowIndex]["added_by"])
+                        Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
+                        Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
+                        CategoryName = categoryName,
+                        Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
+                        AmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]),
+                        CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
+                        SalePrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["saleprice"]),
+                        AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["added_date"]),
+                        AddedBy = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["added_by"])
                     });
             }
         }

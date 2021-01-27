@@ -210,7 +210,7 @@ namespace GUI
             int initialAmount = 0;
 
             productCUL.Name = txtProductName.Text;
-            productCUL.Category = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
+            productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productCUL.Description = txtProductDescription.Text;
             productCUL.Rating = 0;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
@@ -245,7 +245,7 @@ namespace GUI
 
             productCUL.Id = Convert.ToInt32(txtProductId.Text);
             productCUL.Name = txtProductName.Text;
-            productCUL.Category = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
+            productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productCUL.Description = txtProductDescription.Text;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;

@@ -9,7 +9,7 @@ namespace KabaAccounting.CUL
     public class CategoryCUL
     {
         public int Id { get; set; } //Properties are naming with Pascal Case.
-        public string Title { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
