@@ -16,7 +16,7 @@ namespace KabaAccounting.DAL
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
         #region Select All Data from Database | Search Product by Keyword (LIKE QUERY)
-        public DataTable SelectAllOrByKeyword(string keyword = null)
+        public DataTable SelectAllOrByKeyword(string searchBy = null, string keyword = null)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
             DataTable dataTable = new DataTable();//To hold the data from database
@@ -24,11 +24,15 @@ namespace KabaAccounting.DAL
             {
                 String sql;
 
-                if (keyword==null)
+                if (keyword==null && searchBy==null)
                     sql = "SELECT * FROM tbl_products";//SQL query to get data from database 
-                else
+                else if(keyword!=null && searchBy == null)
                     sql = "SELECT * FROM tbl_products WHERE id LIKE '%" + keyword + "%' OR name LIKE '%" + keyword + "%' OR barcode_retail LIKE '%" + keyword + "%' OR barcode_wholesale LIKE '%" + keyword + "%'";//SQL query to search data from database 
-                
+                else if(keyword != null && searchBy != null)
+                    sql = "SELECT * FROM tbl_products WHERE (id LIKE '%" + keyword + "%' OR name LIKE '%" + keyword + "%' OR barcode_retail LIKE '%" + keyword + "%' OR barcode_wholesale LIKE '%" + keyword + "%') AND category_id = '" + searchBy + "'";//SQL query to search data from database 
+                else
+                    sql = "SELECT * FROM tbl_products WHERE category_id = '" + keyword + "";//SQL query to search data from database 
+
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
@@ -53,11 +57,11 @@ namespace KabaAccounting.DAL
             SqlConnection conn = new SqlConnection(connString);
             try
             {
-                String sqlQuery = "INSERT INTO tbl_products (name, category, description, rating, barcode_retail, barcode_wholesale, amount_in_unit, amount_in_stock, costprice, saleprice, unit_retail, unit_wholesale, added_date, added_by) VALUES (@name, @category, @description, @rating, @barcode_retail, @barcode_wholesale, @amount_in_unit, @amount_in_stock, @costprice, @saleprice, @unit_retail, @unit_wholesale, @added_date, @added_by)";
+                String sqlQuery = "INSERT INTO tbl_products (name, category_id, description, rating, barcode_retail, barcode_wholesale, amount_in_unit, amount_in_stock, costprice, saleprice, unit_retail, unit_wholesale, added_date, added_by) VALUES (@name, @category_id, @description, @rating, @barcode_retail, @barcode_wholesale, @amount_in_unit, @amount_in_stock, @costprice, @saleprice, @unit_retail, @unit_wholesale, @added_date, @added_by)";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@category", product.CategoryId);
+                cmd.Parameters.AddWithValue("@category_id", product.CategoryId);
                 cmd.Parameters.AddWithValue("@description", product.Description);
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);
@@ -108,11 +112,11 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sql = "UPDATE tbl_products SET name=@name, category=@category, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, amount_in_unit=@amount_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail=@unit_retail, unit_wholesale=@unit_wholesale, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sql = "UPDATE tbl_products SET name=@name, category_id=@category_id, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, amount_in_unit=@amount_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail=@unit_retail, unit_wholesale=@unit_wholesale, added_date=@added_date, added_by=@added_by WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@category", product.CategoryId);
+                cmd.Parameters.AddWithValue("@category_id", product.CategoryId);
                 cmd.Parameters.AddWithValue("@description", product.Description);
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);

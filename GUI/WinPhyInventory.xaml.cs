@@ -33,6 +33,10 @@ namespace GUI
         ProductCUL productCUL = new ProductCUL();
         ProductDAL productDAL = new ProductDAL();
 
+        string searchBy; //Fix the naming!!!
+        int initialCboIndex=-1;
+        bool canLoadListView = true;
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -46,16 +50,27 @@ namespace GUI
             int rowFirstIndex = 0;
             string categoryName;
 
-            categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category"]);//Getting the category id first to find its name.
+            categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category_id"]);//Getting the category id first to find its name.
             dataTableCategory = categoryDAL.GetCategoryInfoById(categoryId);//Getting all of the category infos by using id.
             categoryName = dataTableCategory.Rows[rowFirstIndex]["name"].ToString();//Fetching the name of the category from dataTableCategory. Index is always zero since we are dealing with a unique category only.
 
             return categoryName;
         }
-        private void LoadLvwPhysicalInventory(string keyword=null)
+        private void LoadLvwPhysicalInventory(string searchBy=null, string keyword=null)
         {
-            DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(keyword);//If keyword is null, then fetch all data.
+            lvwPhyInventory.Items.Clear();
 
+            #region AssignSearchBy
+
+            string selectedIndex = cboSearchByCategory.SelectedIndex.ToString();
+
+            if (selectedIndex != initialCboIndex.ToString())
+                searchBy = cboSearchByCategory.SelectedValue.ToString();
+
+            #endregion
+
+
+            DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(searchBy, keyword);//If keyword is null, then fetch all data.
 
             for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
             {
@@ -74,12 +89,16 @@ namespace GUI
                     });
             }
         }
-
-        private void txtSearchByIdBarcode_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtSearchByKeyword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            lvwPhyInventory.Items.Clear();
+            if (canLoadListView == true)
+                LoadLvwPhysicalInventory(searchBy, txtSearchByKeyword.Text);
+        }
 
-            LoadLvwPhysicalInventory(txtSearchByKeyword.Text);
+        private void cboSearchByCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (canLoadListView == true)
+                LoadLvwPhysicalInventory(searchBy, txtSearchByKeyword.Text);
         }
 
         private void cboSearchByCategory_Loaded(object sender, RoutedEventArgs e)
@@ -95,6 +114,15 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboSearchByCategory.SelectedValuePath = "id";
+        }
+
+        private void btnResetFilters_Click(object sender, RoutedEventArgs e)
+        {
+            canLoadListView = false; //Do not load the listview in order to block the txt and cbo change triggers.
+            txtSearchByKeyword.Text = null;
+            cboSearchByCategory.SelectedIndex = initialCboIndex;
+            LoadLvwPhysicalInventory();
+            canLoadListView = true;//You can now let the listview to be populated in case of any changes in the txt and cbo part.
         }
     }
 }

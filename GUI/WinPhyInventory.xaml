@@ -60,9 +60,10 @@
         <GroupBox x:Name="grpSearch" Header="SEARCH" Margin="10,34,10,702">
             <Grid>
                 <Label x:Name="lblSearchByKeyword" Content="By Keyword" HorizontalAlignment="Left" Height="27" Width="95" VerticalAlignment="Top" Margin="3,4,0,0"/>
-                <Label x:Name="lblSearchByCategory" Content="By Category" HorizontalAlignment="Left" Height="27" Width="95" VerticalAlignment="Top" Margin="3,68,0,0"/>
-                <TextBox x:Name="txtSearchByKeyword" HorizontalAlignment="Left" Margin="103,4,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="27" TextChanged="txtSearchByIdBarcode_TextChanged"/>
-                <ComboBox x:Name="cboSearchByCategory" HorizontalAlignment="Left" Margin="103,68,0,0" VerticalAlignment="Top" Width="120" Height="27" Loaded="cboSearchByCategory_Loaded"/>
+                <Label x:Name="lblSearchByCategory" Content="By Category" HorizontalAlignment="Left" Height="27" Width="95" VerticalAlignment="Top" Margin="3,36,0,0"/>
+                <TextBox x:Name="txtSearchByKeyword" HorizontalAlignment="Left" Margin="103,4,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="27" TextChanged="txtSearchByKeyword_TextChanged"/>
+                <ComboBox x:Name="cboSearchByCategory" HorizontalAlignment="Left" Margin="103,36,0,0" VerticalAlignment="Top" Width="120" Height="27" Loaded="cboSearchByCategory_Loaded" SelectionChanged="cboSearchByCategory_SelectionChanged"/>
+                <Button x:Name="btnResetFilters" Content="RESET FILTERS" HorizontalAlignment="Left" Margin="103,68,0,0" VerticalAlignment="Top" Width="120" Height="39" Click="btnResetFilters_Click"/>
             </Grid>
         </GroupBox>
         <ListView x:Name="lvwPhyInventory" Margin="10,199,10,10">
