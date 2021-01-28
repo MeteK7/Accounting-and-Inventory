@@ -38,6 +38,7 @@
     <None Remove="Images\Backgrounds\red-hand-printed.jpg" />
     <None Remove="Images\Backgrounds\rm218batch4-ning-33.jpg" />
     <None Remove="Images\Backgrounds\rm218batch4-ning-34.jpg" />
+    <None Remove="Images\Backgrounds\stylish-soft-blue-curve-lines-abstract-background.jpg" />
     <None Remove="Images\Backgrounds\supplier.jpg" />
     <None Remove="Images\Backgrounds\user-background.jpg" />
     <None Remove="Images\Backgrounds\user.png" />
@@ -147,6 +148,7 @@
     <Resource Include="Images\Backgrounds\red-hand-printed.jpg" />
     <Resource Include="Images\Backgrounds\rm218batch4-ning-33.jpg" />
     <Resource Include="Images\Backgrounds\rm218batch4-ning-34.jpg" />
+    <Resource Include="Images\Backgrounds\stylish-soft-blue-curve-lines-abstract-background.jpg" />
     <Resource Include="Images\Backgrounds\supplier.jpg" />
     <Resource Include="Images\Backgrounds\user-background.jpg" />
     <Resource Include="Images\Backgrounds\user.png" />

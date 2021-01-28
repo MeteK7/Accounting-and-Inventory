@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GUI
 {
@@ -23,6 +24,21 @@ namespace GUI
         {
             InitializeComponent();
             lblLoggedInUser.Content = WinLogin.loggedIn;
+            StartClock();
+        }
+
+        private void StartClock()
+        {
+            int second = 1;
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(second);
+            dispatcherTimer.Tick += TickEvent;
+            dispatcherTimer.Start();
+        }
+
+        private void TickEvent(object sender, EventArgs e)
+        {
+            lblCurrentDateTime.Content = DateTime.Now.ToString("HH:mm:ss, dddd, MMM dd yyyy");
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

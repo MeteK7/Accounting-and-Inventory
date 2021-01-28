@@ -369,7 +369,7 @@
         <TabControl x:Name="tabHeader" Height="124" VerticalAlignment="Top" Margin="0,0,-1,0" HorizontalContentAlignment="Center">
             <TabItem x:Name="tabItemServices" Header="SERVICES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
                 <Grid Background="#FFE5E5E5">
-                    <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="42" Width="44" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
+                    <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="42" Width="42" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
                         <Button.BorderBrush>
                             <SolidColorBrush Color="#FF707070" Opacity="0"/>
                         </Button.BorderBrush>
@@ -643,6 +643,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Label x:Name="lblCurrentDateTime" Content="DATE-TIME" HorizontalAlignment="Right" Margin="0,143,10,0" VerticalAlignment="Top" Width="360" Height="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Foreground="#FFDC0000" FontFamily="SimSun"/>
     </Grid>
 </Window>
 
