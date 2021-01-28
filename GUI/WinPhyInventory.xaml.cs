@@ -81,5 +81,20 @@ namespace GUI
 
             LoadLvwPhysicalInventory(txtSearchByKeyword.Text);
         }
+
+        private void cboSearchByCategory_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = categoryDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboSearchByCategory.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboSearchByCategory.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboSearchByCategory.SelectedValuePath = "id";
+        }
     }
 }

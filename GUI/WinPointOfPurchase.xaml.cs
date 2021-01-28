@@ -865,10 +865,5 @@ namespace GUI
             }
         }
 
-        private void cboSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //MessageBox.Show(cboSupplier.SelectedValue.ToString());
-        }
-
     }
 }
