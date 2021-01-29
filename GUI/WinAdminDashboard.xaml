@@ -362,13 +362,19 @@
         <StackPanel x:Name="pnlFooter" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="#FF2471A3">
             <Label x:Name="lblFooter" Content="Developed by Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
         </StackPanel>
-        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="7,129,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.785,1.417"/>
-        <Label x:Name="lblLoggedInUser" Content="" HorizontalAlignment="Left" Margin="53,129,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF963737" Width="343"/>
+        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="7,129,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.785,1.417" Width="54" Height="46" VerticalContentAlignment="Center" Foreground="White" FontFamily="Noto Serif Light" FontWeight="Normal"/>
+        <Label x:Name="lblLoggedInUser" Content="SAMPLE NAME" HorizontalAlignment="Left" Margin="66,129,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFB80000" Width="330" Height="46" FontFamily="Noto Serif Light" VerticalContentAlignment="Center"/>
         <Label x:Name="lblHead" Content="KABA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Height="60" FontWeight="Normal" FontFamily="Source Serif Pro Light"/>
         <Label x:Name="lblSubHead" Content="Accounting and Inventory" FontSize="16" Foreground="#FF1272C1" FontWeight="SemiBold" Width="203" Margin="403,338,403,242" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl x:Name="tabHeader" Height="124" VerticalAlignment="Top" Margin="0,0,-1,0" HorizontalContentAlignment="Center">
+            <TabControl.Background>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </TabControl.Background>
             <TabItem x:Name="tabItemServices" Header="SERVICES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="42" Width="42" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
                         <Button.BorderBrush>
                             <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -459,14 +465,46 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemAccounts" Header="ACCOUNTS" HorizontalContentAlignment="Stretch" Width="165" Height="25">
-                <Grid Background="#FFE5E5E5">
-                    <Button x:Name="btnReports" Content="REPORTS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="91"/>
-                    <Button x:Name="btnDailySum" Content="Daily Summary" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Top" Width="117" Height="91"/>
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
+                    <Button x:Name="btnReports" Content="REPORTS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="91" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/spreadsheet-app.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.55" ScaleX="0.55" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.55" AngleY="0"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.55"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="btnDailySum" Content="Daily Summary" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Top" Width="117" Height="91" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/calendar.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.5" ScaleY="0.7"/>
+                                        <SkewTransform CenterY="0.35" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
                     <Button x:Name="btnAssets" Content="Assests" HorizontalAlignment="Left" Width="133" Margin="229,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="Point of Purchase" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnPointOfPurchase_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/inventory (2).png" Stretch="Uniform">
@@ -498,7 +536,10 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemSales" Header="SALES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <Button Style="{StaticResource ButtonPosStyle}" x:Name="btnPointOfSale" Content="Point of Sale" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Click="btnPointOfSale_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/payment-terminal.png" Stretch="Uniform">
@@ -513,7 +554,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonPosReportsStyle}" x:Name="btnPosReport" Content="Report" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPosReport_Click">
+                    <Button Style="{StaticResource ButtonPosReportsStyle}" x:Name="btnPosReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPosReports_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/analysis.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -534,7 +575,10 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Height="25">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <Button x:Name="btnPhyInventory" Content="Physical Inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="91" VerticalContentAlignment="Bottom" Click="btnPhyInventory_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/physical-inventory.png">
@@ -569,7 +613,10 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemPortal" Header="PORTAL" HorizontalContentAlignment="Stretch" Height="25" Margin="0,-1,-90,1">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <Button Style="{StaticResource ButtonBankStyle}" x:Name="btnBank" Content="BANKS" Width="115" HorizontalAlignment="Left" Click="btnBank_Click" Margin="2,0,0,0" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/bank.png" Stretch="Uniform">

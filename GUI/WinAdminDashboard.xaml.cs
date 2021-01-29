@@ -38,7 +38,7 @@ namespace GUI
 
         private void TickEvent(object sender, EventArgs e)
         {
-            lblCurrentDateTime.Content = DateTime.Now.ToString("HH:mm:ss, dddd, MMM dd yyyy");
+            lblCurrentDateTime.Content = DateTime.Now.ToString("HH:mm:ss | dddd | MMM dd, yyyy");
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -91,7 +91,7 @@ namespace GUI
             winPointOfSale.Show();
         }
 
-        private void btnPosReport_Click(object sender, RoutedEventArgs e)
+        private void btnPosReports_Click(object sender, RoutedEventArgs e)
         {
             WinPosReport winPosReport = new WinPosReport();
             winPosReport.Show();

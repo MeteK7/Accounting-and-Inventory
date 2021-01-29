@@ -56,6 +56,7 @@
     <None Remove="Images\Buttons\backup.png" />
     <None Remove="Images\Buttons\bank.png" />
     <None Remove="Images\Buttons\barcode.png" />
+    <None Remove="Images\Buttons\calendar.png" />
     <None Remove="Images\Buttons\cancel.png" />
     <None Remove="Images\Buttons\cash.png" />
     <None Remove="Images\Buttons\category.png" />
@@ -75,6 +76,7 @@
     <None Remove="Images\Buttons\error.png" />
     <None Remove="Images\Buttons\file-management.png" />
     <None Remove="Images\Buttons\floppy-disk.png" />
+    <None Remove="Images\Buttons\gnumeric.png" />
     <None Remove="Images\Buttons\inventory (1).png" />
     <None Remove="Images\Buttons\inventory (2).png" />
     <None Remove="Images\Buttons\inventory (3).png" />
@@ -95,6 +97,8 @@
     <None Remove="Images\Buttons\processing.png" />
     <None Remove="Images\Buttons\qr-code.png" />
     <None Remove="Images\Buttons\refresh.png" />
+    <None Remove="Images\Buttons\report-arrow.png" />
+    <None Remove="Images\Buttons\reports.png" />
     <None Remove="Images\Buttons\save.png" />
     <None Remove="Images\Buttons\supplier.png" />
     <None Remove="Images\Buttons\system-preferences.png" />
@@ -166,6 +170,7 @@
     <Resource Include="Images\Buttons\backup.png" />
     <Resource Include="Images\Buttons\bank.png" />
     <Resource Include="Images\Buttons\barcode.png" />
+    <Resource Include="Images\Buttons\calendar.png" />
     <Resource Include="Images\Buttons\cancel.png" />
     <Resource Include="Images\Buttons\cash.png" />
     <Resource Include="Images\Buttons\category.png" />
@@ -185,6 +190,7 @@
     <Resource Include="Images\Buttons\error.png" />
     <Resource Include="Images\Buttons\file-management.png" />
     <Resource Include="Images\Buttons\floppy-disk.png" />
+    <Resource Include="Images\Buttons\gnumeric.png" />
     <Resource Include="Images\Buttons\inventory (1).png" />
     <Resource Include="Images\Buttons\inventory (2).png" />
     <Resource Include="Images\Buttons\inventory (3).png" />
@@ -205,6 +211,8 @@
     <Resource Include="Images\Buttons\processing.png" />
     <Resource Include="Images\Buttons\qr-code.png" />
     <Resource Include="Images\Buttons\refresh.png" />
+    <Resource Include="Images\Buttons\report-arrow.png" />
+    <Resource Include="Images\Buttons\reports.png" />
     <Resource Include="Images\Buttons\save.png" />
     <Resource Include="Images\Buttons\supplier.png" />
     <Resource Include="Images\Buttons\system-preferences.png" />
