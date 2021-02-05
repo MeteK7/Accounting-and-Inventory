@@ -158,7 +158,7 @@ namespace GUI
             DataRowView drv = (DataRowView)dtgCategories.SelectedItem;
 
             txtCategoryId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtTitle.Text = (drv["title"]).ToString();//You could also define the column name from your table.
+            txtTitle.Text = (drv["name"]).ToString();//You could also define the column name from your table.
             txtDescription.Text = (drv[2]).ToString();
         }
 

@@ -168,7 +168,7 @@ namespace GUI
             cboProductCategory.ItemsSource = dataTable.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboProductCategory.DisplayMemberPath = "title";
+            cboProductCategory.DisplayMemberPath = "name";
 
             //SelectedValuePath helps to store values like a hidden field.
             cboProductCategory.SelectedValuePath = "id";

@@ -100,6 +100,7 @@
     <None Remove="Images\Buttons\report-arrow.png" />
     <None Remove="Images\Buttons\reports.png" />
     <None Remove="Images\Buttons\save.png" />
+    <None Remove="Images\Buttons\spreadsheet-app.png" />
     <None Remove="Images\Buttons\supplier.png" />
     <None Remove="Images\Buttons\system-preferences.png" />
     <None Remove="Images\Buttons\trash.png" />
@@ -214,6 +215,7 @@
     <Resource Include="Images\Buttons\report-arrow.png" />
     <Resource Include="Images\Buttons\reports.png" />
     <Resource Include="Images\Buttons\save.png" />
+    <Resource Include="Images\Buttons\spreadsheet-app.png" />
     <Resource Include="Images\Buttons\supplier.png" />
     <Resource Include="Images\Buttons\system-preferences.png" />
     <Resource Include="Images\Buttons\trash.png" />
