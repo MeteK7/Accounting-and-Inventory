@@ -448,6 +448,7 @@ namespace GUI
                 int productId;
                 int productUnit = 0;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
+                string costPrice;
 
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
@@ -475,7 +476,7 @@ namespace GUI
                 cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
                 cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
 
-                string costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
 
                 txtProductCostPrice.Text = costPrice;
                 txtProductAmount.Text = productAmount.ToString();
@@ -491,9 +492,10 @@ namespace GUI
             //}
 
 
-            //If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            /*Note: I just checked the btnProductAdd to know if there was a product entry before or not.
-                    If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            
+            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
             else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
             {
                 ClearProductEntranceTextBox();

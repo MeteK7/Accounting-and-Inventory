@@ -108,5 +108,11 @@ namespace GUI
             WinPhyInventory winPhyInventory = new WinPhyInventory();
             winPhyInventory.Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WinInventoryAdjustment winInventoryAdjustment = new WinInventoryAdjustment();
+            winInventoryAdjustment.Show();
+        }
     }
 }

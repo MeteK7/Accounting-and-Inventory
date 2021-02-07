@@ -171,7 +171,7 @@ namespace GUI
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
-            txtProductPrice.IsEnabled = false;
+            txtProductSalePrice.IsEnabled = false;
             txtProductAmount.IsEnabled = false;
             txtProductTotalPrice.IsEnabled = false;
         }
@@ -402,8 +402,8 @@ namespace GUI
             txtProductId.Text = "";
             txtProductName.Text = "";
             cboProductUnit.SelectedIndex = -1;
-            txtProductCost.Text = "";
-            txtProductPrice.Text = "";
+            txtProductCostPrice.Text = "";
+            txtProductSalePrice.Text = "";
             txtProductAmount.Text = "";
             txtProductTotalPrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
@@ -423,6 +423,7 @@ namespace GUI
                 int productId;
                 int productUnit = 0;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
+                string costPrice, salePrice;
 
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
@@ -450,13 +451,13 @@ namespace GUI
                 cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
                 cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
 
-                string costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-                string productPrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
-                txtProductCost.Text = costPrice;
-                txtProductPrice.Text = productPrice;
+                txtProductCostPrice.Text = costPrice;
+                txtProductSalePrice.Text = salePrice;
                 txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
+                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
             }
 
             //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
@@ -468,9 +469,10 @@ namespace GUI
             //}
 
 
-            //If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            /*Note: I just checked the btnProductAdd to know if there was a product entry before or not.
-                    If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            
+            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
             else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
             {
                 ClearProductEntranceTextBox();
@@ -511,10 +513,10 @@ namespace GUI
                         amount = Convert.ToInt32(tbCellAmountContent.Text);
                         amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
 
-                        //tbCellCostContent.Text = txtProductCost.Text; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
+                        //tbCellCostContent.Text = txtProductCostPrice.Text; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        tbCellTotalCostContent.Text = (amount * Convert.ToDecimal(txtProductCost.Text)).ToString();
-                        totalPrice = amount * Convert.ToDecimal(txtProductPrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
+                        tbCellTotalCostContent.Text = (amount * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
+                        totalPrice = amount * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
                         tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
@@ -525,9 +527,9 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                decimal totalCost = Convert.ToDecimal(txtProductCost.Text) * Convert.ToDecimal(txtProductAmount.Text);
+                decimal totalCost = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
-                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCost.Text, SalePrice = txtProductPrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
+                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
             }
 
             dgProducts.UpdateLayout();
@@ -546,9 +548,9 @@ namespace GUI
 
             txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromTextEntry).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCost.Text) * amountFromTextEntry)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * amountFromTextEntry)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductPrice.Text) * amountFromTextEntry)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * amountFromTextEntry)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
@@ -646,7 +648,7 @@ namespace GUI
                     productAmount = Convert.ToDecimal(txtProductAmount.Text);
                 }
 
-                txtProductPrice.Text = productPrice;
+                txtProductSalePrice.Text = productPrice;
 
                 txtProductTotalPrice.Text = (Convert.ToDecimal(productPrice) * productAmount).ToString();
             }
@@ -724,7 +726,7 @@ namespace GUI
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
-            txtProductPrice.IsEnabled = true;
+            txtProductSalePrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
             txtProductTotalPrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.

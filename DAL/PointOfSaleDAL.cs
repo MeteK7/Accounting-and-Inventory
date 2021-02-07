@@ -192,7 +192,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
+        #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
         public DataTable Search(int invoiceNo=0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -208,7 +208,7 @@ namespace KabaAccounting.DAL
 
                 else
                 {
-                    sql = "SELECT * FROM tbl_pos WHERE id=" + invoiceNo + "";//SQL query to get the last id of rows in te table.
+                    sql = "SELECT * FROM tbl_pos WHERE id=" + invoiceNo + "";
                 }
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn)) 

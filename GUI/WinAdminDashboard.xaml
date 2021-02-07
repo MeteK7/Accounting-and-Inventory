@@ -593,7 +593,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch">
+                    <Button Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" Click="Button_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/checklist.png">
                                 <ImageBrush.RelativeTransform>

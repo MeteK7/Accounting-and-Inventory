@@ -66,3 +66,5 @@ C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\GUI.dll
 C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\ref\GUI.dll
 C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\GUI.pdb
 C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\GUI.genruntimeconfig.cache
+C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\WinInventoryAdjustment.g.cs
+C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\WinInventoryAdjustment.baml
