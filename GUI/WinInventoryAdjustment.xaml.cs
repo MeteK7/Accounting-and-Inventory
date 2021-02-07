@@ -256,5 +256,61 @@ namespace GUI
 
             //items[0].BarcodeRetail = "EXAMPLECODE"; This code can change the 0th row's data on the column called BarcodeRetail.
         }
+
+        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductAmount.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
+            {
+                if (txtProductAmount.Text != "")
+                {
+                    decimal number;
+                    string textProductAmount = txtProductAmount.Text;
+
+                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
+
+                    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+
+                    if (decimal.TryParse(textProductAmount, out number) && result == true)
+                    {
+                        DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+
+                        string unitKg = "Kilogram", unitLt = "Liter";
+                        int rowIndex = 0;
+                        decimal productAmount;
+                        string productSalePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+
+                        if (txtProductUnit.Text != unitKg && txtProductUnit.Text != unitLt)
+                        {
+                            /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
+                            So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
+                            productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
+                            txtProductAmount.Text = productAmount.ToString();
+                        }
+                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
+                        {
+                            productAmount = Convert.ToDecimal(txtProductAmount.Text);
+                        }
+
+                        txtProductAmountDifference.Text = (Convert.ToDecimal(txtProductAmountInStock.Text) - productAmount).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
+
+                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
+                    }
+
+                    else//Revert the amount to the default value if the text of txtProductAmount is not empty, otherwise no need for correction.
+                    {
+                        MessageBox.Show("Please enter a valid number");
+                        txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
+                        btnProductAdd.IsEnabled = true;
+                    }
+                }
+
+                /* If the user left the txtProductAmount as empty, wait for him to enter a new value and block the btnProductAdd. 
+                   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+                else
+                {
+                    btnProductAdd.IsEnabled = false;
+                }
+            }
+        }
     }
 }
