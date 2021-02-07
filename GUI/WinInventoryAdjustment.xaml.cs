@@ -127,18 +127,27 @@ namespace GUI
             btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
         }
 
+        private void PopulateBasket()
+        {
+            decimal amountFromProductEntry = Convert.ToDecimal(txtProductAmount.Text);
+
+            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromProductEntry).ToString();
+
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * amountFromProductEntry)).ToString();
+        }
+
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             int number;
 
-            DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+            DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
-            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
-                int productAmount = 1;
+                int productAmountInStock;
                 int rowIndex = 0;
                 int productId;
-                int productUnit = 0;
+                int productUnit;
                 string productBarcodeRetail;
                 string costPrice, salePrice;
 
@@ -146,31 +155,30 @@ namespace GUI
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
 
-                productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
-                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
-                txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
+                productId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]);
+                productBarcodeRetail = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString();
+                txtProductName.Text = dataTableProduct.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail"]);
+                    productUnit = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail"]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale"]);
+                    productUnit = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale"]);
                 }
 
-                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+                DataTable dataTableProductUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
 
-                txtProductUnit.Text=dataTableUnit.Rows[rowIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
-
-                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-                salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+                txtProductUnit.Text=dataTableProductUnit.Rows[rowIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
+                productAmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]);
+                costPrice = dataTableProduct.Rows[rowIndex]["costprice"].ToString();
+                salePrice = dataTableProduct.Rows[rowIndex]["saleprice"].ToString();
 
                 txtProductCostPrice.Text = costPrice;
                 txtProductSalePrice.Text = salePrice;
-                txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
+                txtProductAmountInStock.Text = productAmountInStock.ToString();
             }
 
 
@@ -191,5 +199,62 @@ namespace GUI
             ModifyTools();
         }
 
+        private void btnProductAdd_Click(object sender, RoutedEventArgs e)
+        {
+            bool addNewProductLine = true;
+            int barcodeColNo = 0;
+            int amountColNo = 5;
+            int totalCostColNo = 6;
+            int totalPriceColNo = 7;
+            int amount = 0;
+            decimal totalPrice;
+            int rowQuntity = dgProducts.Items.Count;
+
+            for (int i = 0; i < rowQuntity; i++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                TextBlock barcodeCellContent = dgProducts.Columns[barcodeColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+
+                if (barcodeCellContent.Text == txtProductId.Text)
+                {
+                    if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        TextBlock tbCellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+
+                        amount = Convert.ToInt32(tbCellAmountContent.Text);
+                        amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
+
+                        tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
+                        
+                        
+                        tbCellTotalCostContent.Text = (amount * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
+                        totalPrice = amount * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
+                        tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
+                        addNewProductLine = false;
+                        break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
+                    }
+                }
+            }
+
+
+            if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
+            {
+                decimal totalCost = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
+                //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
+                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = txtProductUnit.Text, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, AmountInStock=txtProductAmountInStock.Text, AmountDifference=txtProductAmountDifference.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
+            }
+
+            dgProducts.UpdateLayout();
+            rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
+
+            PopulateBasket();
+
+            ClearProductEntranceTextBox();
+
+            //items[0].BarcodeRetail = "EXAMPLECODE"; This code can change the 0th row's data on the column called BarcodeRetail.
+        }
     }
 }

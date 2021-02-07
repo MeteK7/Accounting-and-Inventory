@@ -291,15 +291,19 @@
                 <Label x:Name="lblProductCostPrice" Content="Cost Price" HorizontalAlignment="Left" Margin="409,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductSalePrice" Content="Price Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
+                <Label x:Name="lblProductAmountInStock" Content="Amount in Stock" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="97" RenderTransformOrigin="-0.124,0.489"/>
+                <Label x:Name="lblProductAmountDifference" Content="Amount Difference" HorizontalAlignment="Left" Margin="736,10,0,0" VerticalAlignment="Top" Width="111"/>
+                <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="852,10,0,0" VerticalAlignment="Top" Width="64"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
-                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
-                <TextBox x:Name="txtProductUnit" HorizontalAlignment="Left" Height="23" Margin="349,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" IsReadOnly="True"/>
-                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
-                <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductUnit" HorizontalAlignment="Left" Height="23" Margin="349,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductTotalPrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
-                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="991,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White">
+                <TextBox x:Name="txtProductAmountInStock" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
+                <TextBox x:Name="txtProductAmountDifference" HorizontalAlignment="Left" Height="24" Margin="736,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111"/>
+                <TextBox x:Name="txtProductTotalPrice" HorizontalAlignment="Left" Height="24" Margin="852,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="991,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
                     </Button.Background>
