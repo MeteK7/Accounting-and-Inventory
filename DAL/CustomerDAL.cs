@@ -116,7 +116,7 @@ namespace KabaAccounting.DAL
             try
             {
                 //Query to Update Category
-                string sqlQuery = "UPDATE tbl_supplier_customer SET name=@name, email=@email, contact=@contact, address=@address, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_customer SET name=@name, email=@email, contact=@contact, address=@address, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 //SQL Command to pass the value on SQL query
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);

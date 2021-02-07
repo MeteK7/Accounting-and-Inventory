@@ -25,6 +25,7 @@ namespace GUI
         public WinCustomer()
         {
             InitializeComponent();
+            RefreshCustomerDataGrid();
         }
         CustomerCUL customerCUL = new CustomerCUL();
         CustomerDAL customerDAL = new CustomerDAL();
@@ -152,10 +153,10 @@ namespace GUI
             DataRowView drv = (DataRowView)dtgCustomer.SelectedItem;
 
             txtId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtName.Text = (drv[2]).ToString();
-            txtEmail.Text = (drv[3]).ToString();
-            txtContact.Text = (drv[4]).ToString();
-            txtAddress.Text = (drv[5]).ToString();
+            txtName.Text = (drv[1]).ToString();
+            txtEmail.Text = (drv[2]).ToString();
+            txtContact.Text = (drv[3]).ToString();
+            txtAddress.Text = (drv[4]).ToString();
         }
 
         private void dtgCustomer_KeyUp(object sender, KeyEventArgs e)
