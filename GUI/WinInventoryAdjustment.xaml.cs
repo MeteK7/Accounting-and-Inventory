@@ -25,6 +25,7 @@ namespace GUI
         public WinInventoryAdjustment()
         {
             InitializeComponent();
+            FillStaffInformations();
         }
 
         UserDAL userDAL = new UserDAL();
@@ -47,6 +48,12 @@ namespace GUI
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void FillStaffInformations()
+        {
+            txtStaffName.Text = WinLogin.loggedIn;
+            txtStaffPosition.Text = WinLogin.loggedInPosition;
         }
 
         private void ClearProductEntranceTextBox()
