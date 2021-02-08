@@ -77,7 +77,7 @@ namespace GUI
 
             if (invoiceNo == 0)
             {
-                invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                invoiceNo = GetLastInventoryAdjustmentId();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
@@ -94,9 +94,7 @@ namespace GUI
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
-                        cboPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                        cboCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of supplier.
-                        lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+                        lblIventoryAdjustmentId.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
 
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
@@ -122,10 +120,6 @@ namespace GUI
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketAmount.Text = dataTablePos.Rows[firstRowIndex]["total_product_amount"].ToString();
-                    txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
-                    txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
-                    txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
                     txtBasketGrandTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
 
                     #endregion
@@ -143,7 +137,7 @@ namespace GUI
 
                     if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInvoice(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
+                        LoadPastInventoryAdjustmentPage(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
                     }
 
                 }
