@@ -26,6 +26,7 @@ namespace GUI
         {
             InitializeComponent();
             FillStaffInformations();
+            DisableButtonsTools();
         }
 
         UserDAL userDAL = new UserDAL();
@@ -54,6 +55,18 @@ namespace GUI
         {
             txtStaffName.Text = WinLogin.loggedIn;
             txtStaffPosition.Text = WinLogin.loggedInPosition;
+        }
+
+        private void DisableButtonsTools()
+        {
+            DisableProductEntranceButtons();
+            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
+            btnPrint.IsEnabled = false;
+            txtProductId.IsEnabled = false;
+            txtProductName.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
         }
 
         private void ClearProductEntranceTextBox()
