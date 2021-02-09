@@ -61,13 +61,20 @@ namespace GUI
         private void DisableButtonsTools()
         {
             DisableProductEntranceButtons();
-            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
             txtProductAmount.IsEnabled = false;
+            txtProductUnit.IsEnabled = false;
+            txtProductCostPrice.IsEnabled = false;
+            txtProductSalePrice.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
+            txtProductAmountInStock.IsEnabled = false;
+            txtProductAmountDifference.IsEnabled = false;
+            txtProductTotalSalePrice.IsEnabled = false;
+            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
         }
 
         private void LoadPastInventoryAdjustmentPage(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
@@ -153,6 +160,8 @@ namespace GUI
             txtProductCostPrice.Text = "";
             txtProductSalePrice.Text = "";
             txtProductAmount.Text = "";
+            txtProductAmountInStock.Text = "";
+            txtProductAmountDifference.Text = "";
             txtProductTotalSalePrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
@@ -235,11 +244,10 @@ namespace GUI
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             int number;
+            DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
             if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
-                DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-
                 int productAmountInStock;
                 int rowIndex = 0;
                 int productUnitId;

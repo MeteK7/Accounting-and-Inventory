@@ -264,6 +264,9 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/stylish-soft-blue-curve-lines-abstract-background.jpg"/>
+        </Grid.Background>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
             <Label x:Name="lblTop" Content="Inventory Adjustment" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
@@ -293,7 +296,7 @@
                 <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductAmountInStock" Content="Amount in Stock" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="97" RenderTransformOrigin="-0.124,0.489"/>
                 <Label x:Name="lblProductAmountDifference" Content="Amount Difference" HorizontalAlignment="Left" Margin="736,10,0,0" VerticalAlignment="Top" Width="111"/>
-                <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="852,10,0,0" VerticalAlignment="Top" Width="64"/>
+                <Label x:Name="lblProductTotalSalePrice" Content="Total" HorizontalAlignment="Left" Margin="852,10,0,0" VerticalAlignment="Top" Width="64"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductUnit" HorizontalAlignment="Left" Height="23" Margin="349,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" IsReadOnly="True"/>
