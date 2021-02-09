@@ -236,45 +236,46 @@ namespace GUI
         {
             int number;
 
-            DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-
             if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
+                DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+
                 int productAmountInStock;
                 int rowIndex = 0;
-                int productId;
-                int productUnit;
-                string productBarcodeRetail;
+                int productUnitId;
+                string productId, productBarcodeRetail, productName, productUnitName;
                 string costPrice, salePrice;
 
-                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
-
-
-                productId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]);
+                productId = dataTableProduct.Rows[rowIndex]["id"].ToString();
                 productBarcodeRetail = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString();
-                txtProductName.Text = dataTableProduct.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
+                productName = dataTableProduct.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database.
+                costPrice = dataTableProduct.Rows[rowIndex]["costprice"].ToString();
+                salePrice = dataTableProduct.Rows[rowIndex]["saleprice"].ToString();
+                productAmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]);
+
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail"]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale"]);
                 }
 
-                DataTable dataTableProductUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+                DataTable dataTableProductUnit = unitDAL.GetUnitInfoById(productUnitId);//Datatable for finding the unit name by unit id.
+                productUnitName = dataTableProductUnit.Rows[rowIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
 
-                txtProductUnit.Text=dataTableProductUnit.Rows[rowIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
-                productAmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]);
-                costPrice = dataTableProduct.Rows[rowIndex]["costprice"].ToString();
-                salePrice = dataTableProduct.Rows[rowIndex]["saleprice"].ToString();
-
+                txtProductName.Text = productName;
+                txtProductUnit.Text = productUnitName;
                 txtProductCostPrice.Text = costPrice;
                 txtProductSalePrice.Text = salePrice;
                 txtProductAmountInStock.Text = productAmountInStock.ToString();
+
+
+                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
+                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
             }
 
 
