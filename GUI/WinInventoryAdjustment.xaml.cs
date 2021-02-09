@@ -153,7 +153,7 @@ namespace GUI
             txtProductCostPrice.Text = "";
             txtProductSalePrice.Text = "";
             txtProductAmount.Text = "";
-            txtProductTotalPrice.Text = "";
+            txtProductTotalSalePrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
@@ -213,7 +213,7 @@ namespace GUI
             txtProductName.IsEnabled = true;
             txtProductSalePrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
-            txtProductTotalPrice.IsEnabled = true;
+            txtProductTotalSalePrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
 
         }
@@ -340,7 +340,7 @@ namespace GUI
             {
                 decimal totalCost = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
-                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = txtProductUnit.Text, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, AmountInStock=txtProductAmountInStock.Text, AmountDifference=txtProductAmountDifference.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
+                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = txtProductUnit.Text, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, AmountInStock=txtProductAmountInStock.Text, AmountDifference=txtProductAmountDifference.Text, TotalCostPrice = totalCost.ToString(), TotalSalePrice = txtProductTotalSalePrice.Text });
             }
 
             dgProducts.UpdateLayout();
@@ -389,7 +389,7 @@ namespace GUI
 
                         txtProductAmountDifference.Text = (Convert.ToDecimal(txtProductAmountInStock.Text) - productAmount).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
 
-                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
+                        txtProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
                     }
 
                     else//Revert the amount to the default value if the text of txtProductAmount is not empty, otherwise no need for correction.
