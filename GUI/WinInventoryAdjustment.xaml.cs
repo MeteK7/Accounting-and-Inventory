@@ -409,5 +409,10 @@ namespace GUI
                 }
             }
         }
+
+        private void btnProductClear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearProductEntranceTextBox();
+        }
     }
 }
