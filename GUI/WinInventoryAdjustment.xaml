@@ -451,12 +451,12 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="930,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="930,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Width="75" Height="36">
+                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>

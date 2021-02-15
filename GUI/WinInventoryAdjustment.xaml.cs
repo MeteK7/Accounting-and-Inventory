@@ -452,5 +452,32 @@ namespace GUI
                     break;
             }
         }
+
+        int inventoryAdjustmentArrow;
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            int firstInventoryAdjustmentId = 0, currentInvoiceNo = Convert.ToInt32(lblIventoryAdjustmentId.Content);
+
+            if (currentInvoiceNo != firstInventoryAdjustmentId)
+            {
+                ClearInventoryAdjustmentListView();
+                int prevInventoryAdjustment = Convert.ToInt32(lblIventoryAdjustmentId.Content) - 1;
+                inventoryAdjustmentArrow = 0;//0 means customer has clicked the previous button.
+                LoadPastInventoryAdjustmentPage(prevInventoryAdjustment, inventoryAdjustmentArrow);
+            }
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            int lastInventoryAdjustmentId = GetLastInventoryAdjustmentId(), currentInvoiceNo = Convert.ToInt32(lblIventoryAdjustmentId.Content);
+
+            if (currentInvoiceNo != lastInventoryAdjustmentId)
+            {
+                ClearInventoryAdjustmentListView();
+                int nextInvoice = Convert.ToInt32(lblIventoryAdjustmentId.Content) + 1;
+                inventoryAdjustmentArrow = 1;//1 means customer has clicked the next button.
+                LoadPastInventoryAdjustmentPage(nextInvoice, inventoryAdjustmentArrow);
+            }
+        }
     }
 }
