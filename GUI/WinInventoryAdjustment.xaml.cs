@@ -422,5 +422,35 @@ namespace GUI
         {
             ClearProductEntranceTextBox();
         }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
+            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the inventory adjustment page?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableButtonsTools();
+                    ClearProductEntranceTextBox();
+                    ClearInventoryAdjustmentListView();
+                    LoadNewInventoryAdjustment();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
     }
 }
