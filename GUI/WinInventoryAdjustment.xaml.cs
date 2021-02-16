@@ -188,7 +188,7 @@ namespace GUI
             lblIventoryAdjustmentId.Content = inventoryAdjustmentId;//Assigning inventory adjustment record id to the content of the inventory adjustment record id label.
         }
 
-        private void EnableTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -208,7 +208,6 @@ namespace GUI
             txtProductAmountDifference.IsEnabled = true;
             txtProductTotalSalePrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
-
         }
 
         private void DisableTools()
@@ -314,7 +313,7 @@ namespace GUI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInventoryAdjustment();
-            EnableTools();
+            ModifyToolsOnClickBtnNewOrEdit();
         }
 
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)

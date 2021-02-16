@@ -25,7 +25,7 @@ namespace GUI
         public WinPointOfPurchase()
         {
             InitializeComponent();
-            DisableButtonsTools();
+            DisableTools();
             FillStaffInformations();
             LoadPastInvoice();
         }
@@ -135,7 +135,6 @@ namespace GUI
             {
                 FirstTimeRun();//This method is called when it is the first time of using this program.
             }
-
         }
 
         private void FirstTimeRun()
@@ -175,7 +174,7 @@ namespace GUI
             btnNext.IsEnabled = true;
         }
 
-        private void DisableButtonsTools()
+        private void DisableTools()
         {
             DisableProductEntranceButtons();
             dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
@@ -192,6 +191,31 @@ namespace GUI
             txtProductTotalCostPrice.IsEnabled = false;
             txtInvoiceNo.IsEnabled = false;
         }
+
+        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
+        {
+            btnNew.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnCancel.IsEnabled = true;
+            btnEdit.IsEnabled = false;
+            btnDelete.IsEnabled = false;
+            btnPrint.IsEnabled = true;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboPaymentType.IsEnabled = true;
+            cboSupplier.IsEnabled = true;
+            cboProductUnit.IsEnabled = true;
+            txtProductId.IsEnabled = true;
+            txtProductName.IsEnabled = true;
+            txtProductCostPrice.IsEnabled = true;
+            txtProductAmount.IsEnabled = true;
+            txtProductTotalCostPrice.IsEnabled = true;
+            txtInvoiceNo.IsEnabled = true;
+            dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
+            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            txtInvoiceNo.Text = "";
+        }
+
         private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
@@ -393,7 +417,7 @@ namespace GUI
                     //ClearBasketTextBox();
                     //ClearPointOfSaleListView();
                     ClearProductEntranceTextBox();
-                    DisableButtonsTools();
+                    DisableTools();
                     EnableButtonsOnClickSaveCancel();
                 }
                 else
@@ -660,7 +684,7 @@ namespace GUI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            ModifyTools();
+            ModifyToolsOnClickBtnNewOrEdit();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -668,32 +692,7 @@ namespace GUI
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-            ModifyTools();
-        }
-
-        private void ModifyTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
-        {
-            btnNew.IsEnabled = false;
-            btnSave.IsEnabled = true;
-            btnCancel.IsEnabled = true;
-            btnEdit.IsEnabled = false;
-            btnDelete.IsEnabled = false;
-            btnPrint.IsEnabled = true;
-            btnPrev.IsEnabled = false;
-            btnNext.IsEnabled = false;
-            cboPaymentType.IsEnabled = true;
-            cboSupplier.IsEnabled = true;
-            cboProductUnit.IsEnabled = true;
-            txtProductId.IsEnabled = true;
-            txtProductName.IsEnabled = true;
-            txtProductCostPrice.IsEnabled = true;
-            txtProductAmount.IsEnabled = true;
-            txtProductTotalCostPrice.IsEnabled = true;
-            txtInvoiceNo.IsEnabled = true;
-            dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
-            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
-            txtInvoiceNo.Text = "";
-
+            ModifyToolsOnClickBtnNewOrEdit();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -702,7 +701,7 @@ namespace GUI
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    DisableButtonsTools();
+                    DisableTools();
                     ClearProductEntranceTextBox();
                     ClearPointOfSaleListView();
                     LoadPastInvoice();
@@ -782,7 +781,7 @@ namespace GUI
                     pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
                     pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
 
-                    DisableButtonsTools();
+                    DisableTools();
                     ClearProductEntranceTextBox();
                     ClearPointOfSaleListView();
                     LoadPastInvoice();
