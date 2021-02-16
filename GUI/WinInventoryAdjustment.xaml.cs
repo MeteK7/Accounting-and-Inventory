@@ -26,7 +26,7 @@ namespace GUI
         {
             InitializeComponent();
             FillStaffInformations();
-            DisableButtonsTools();
+            DisableTools();
             LoadPastInventoryAdjustmentPage();
         }
 
@@ -56,25 +56,6 @@ namespace GUI
         {
             txtStaffName.Text = WinLogin.loggedIn;
             txtStaffPosition.Text = WinLogin.loggedInPosition;
-        }
-
-        private void DisableButtonsTools()
-        {
-            DisableProductEntranceButtons();
-            btnSave.IsEnabled = false;
-            btnCancel.IsEnabled = false;
-            btnPrint.IsEnabled = false;
-            txtProductId.IsEnabled = false;
-            txtProductName.IsEnabled = false;
-            txtProductAmount.IsEnabled = false;
-            txtProductUnit.IsEnabled = false;
-            txtProductCostPrice.IsEnabled = false;
-            txtProductSalePrice.IsEnabled = false;
-            txtProductAmount.IsEnabled = false;
-            txtProductAmountInStock.IsEnabled = false;
-            txtProductAmountDifference.IsEnabled = false;
-            txtProductTotalSalePrice.IsEnabled = false;
-            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
         }
 
         private void LoadPastInventoryAdjustmentPage(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
@@ -207,7 +188,7 @@ namespace GUI
             lblIventoryAdjustmentId.Content = inventoryAdjustmentId;//Assigning inventory adjustment record id to the content of the inventory adjustment record id label.
         }
 
-        private void ModifyTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
+        private void EnableTools()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -220,12 +201,44 @@ namespace GUI
             txtProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
+            txtProductCostPrice.IsEnabled = true;
             txtProductSalePrice.IsEnabled = true;
             txtProductAmount.IsEnabled = true;
+            txtProductAmountInStock.IsEnabled = true;
+            txtProductAmountDifference.IsEnabled = true;
             txtProductTotalSalePrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
 
         }
+
+        private void DisableTools()
+        {
+            DisableProductEntranceButtons();
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
+            btnPrint.IsEnabled = false;
+            txtProductId.IsEnabled = false;
+            txtProductName.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
+            txtProductUnit.IsEnabled = false;
+            txtProductCostPrice.IsEnabled = false;
+            txtProductSalePrice.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
+            txtProductAmountInStock.IsEnabled = false;
+            txtProductAmountDifference.IsEnabled = false;
+            txtProductTotalSalePrice.IsEnabled = false;
+            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
+            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
         private void DisableProductEntranceButtons()
         {
             btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
@@ -301,7 +314,7 @@ namespace GUI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInventoryAdjustment();
-            ModifyTools();
+            EnableTools();
         }
 
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)
@@ -396,7 +409,7 @@ namespace GUI
                             productAmount = Convert.ToDecimal(txtProductAmount.Text);
                         }
 
-                        txtProductAmountDifference.Text = (Convert.ToDecimal(txtProductAmountInStock.Text) - productAmount).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
+                        txtProductAmountDifference.Text = (productAmount- Convert.ToDecimal(txtProductAmountInStock.Text)).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
 
                         txtProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
                     }
@@ -423,22 +436,13 @@ namespace GUI
             ClearProductEntranceTextBox();
         }
 
-        private void EnableButtonsOnClickSaveCancel()
-        {
-            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
-            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
-            btnDelete.IsEnabled = true;
-            btnPrev.IsEnabled = true;
-            btnNext.IsEnabled = true;
-        }
-
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Would you really like to cancel the inventory adjustment page?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    DisableButtonsTools();
+                    DisableTools();
                     ClearProductEntranceTextBox();
                     ClearInventoryAdjustmentListView();
                     LoadNewInventoryAdjustment();
