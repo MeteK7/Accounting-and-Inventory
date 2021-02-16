@@ -849,7 +849,7 @@ namespace GUI
                         txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
                     }
 
-                    else//Revert the amount to the default value if the text of txtProductAmount is not empty, otherwise no need for correction.
+                    else//Reverting the amount to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
                         txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".

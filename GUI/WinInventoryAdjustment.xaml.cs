@@ -382,9 +382,7 @@ namespace GUI
                 {
                     decimal number;
                     string textProductAmount = txtProductAmount.Text;
-
-                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
-
+                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
                     if (decimal.TryParse(textProductAmount, out number) && result == true)
@@ -392,10 +390,11 @@ namespace GUI
                         DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
-                        int rowIndex = 0;
-                        decimal productAmount;
-                        string productSalePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+                        int numberZero = 0;
+                        decimal productAmount, productAmountInStock= Convert.ToDecimal(txtProductAmountInStock.Text);
+                        string productSalePrice = dataTable.Rows[numberZero]["saleprice"].ToString();
 
+                        #region Checking the unit type
                         if (txtProductUnit.Text != unitKg && txtProductUnit.Text != unitLt)
                         {
                             /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
@@ -407,17 +406,22 @@ namespace GUI
                         {
                             productAmount = Convert.ToDecimal(txtProductAmount.Text);
                         }
+                        #endregion
 
-                        txtProductAmountDifference.Text = (productAmount- Convert.ToDecimal(txtProductAmountInStock.Text)).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
+                        #region Checking the sign of the amount in stock.
+                        if (productAmountInStock < numberZero) //If it is a negative amount, convert it into positive.
+                            txtProductAmountInStock.Text = Math.Abs(productAmountInStock).ToString();
+                        #endregion
 
+                        txtProductAmountDifference.Text = (productAmount - productAmountInStock).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
                         txtProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
                     }
 
-                    else//Revert the amount to the default value if the text of txtProductAmount is not empty, otherwise no need for correction.
+                    else//Reverting the amount to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
                         txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
-                        btnProductAdd.IsEnabled = true;
+                        btnProductAdd.IsEnabled = true;//Once the mistake has been corrected, enable btnProductAdd.
                     }
                 }
 
