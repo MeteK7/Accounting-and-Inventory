@@ -159,7 +159,7 @@ namespace GUI
             txtBasketGrandTotal.Text = "0";
         }
 
-        private void ClearInventoryAdjustmentListView()
+        private void ClearInventoryAdjustmentDataGrid()
         {
             dgProducts.Items.Clear();
         }
@@ -184,7 +184,7 @@ namespace GUI
         private void LoadNewInventoryAdjustment()/*INVENTORY ADJUSTMENT ID REFERS TO THE ID NUMBER IN THE DATABASE FOR WinInventoryAdjustment.*/
         {
             ClearBasketTextBox();
-            ClearInventoryAdjustmentListView();
+            ClearInventoryAdjustmentDataGrid();
 
             int inventoryAdjustmentId, increment = 1;
 
@@ -452,7 +452,7 @@ namespace GUI
                 case MessageBoxResult.Yes:
                     DisableTools();
                     ClearProductEntranceTextBox();
-                    ClearInventoryAdjustmentListView();
+                    ClearInventoryAdjustmentDataGrid();
                     LoadNewInventoryAdjustment();
                     EnableButtonsOnClickSaveCancel();
                     break;
@@ -472,7 +472,7 @@ namespace GUI
 
             if (currentInvoiceNo != firstInventoryAdjustmentId)
             {
-                ClearInventoryAdjustmentListView();
+                ClearInventoryAdjustmentDataGrid();
                 int prevInventoryAdjustment = Convert.ToInt32(lblIventoryAdjustmentId.Content) - 1;
                 inventoryAdjustmentArrow = 0;//0 means customer has clicked the previous button.
                 LoadPastInventoryAdjustmentPage(prevInventoryAdjustment, inventoryAdjustmentArrow);
@@ -485,7 +485,7 @@ namespace GUI
 
             if (currentInvoiceNo != lastInventoryAdjustmentId)
             {
-                ClearInventoryAdjustmentListView();
+                ClearInventoryAdjustmentDataGrid();
                 int nextInvoice = Convert.ToInt32(lblIventoryAdjustmentId.Content) + 1;
                 inventoryAdjustmentArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInventoryAdjustmentPage(nextInvoice, inventoryAdjustmentArrow);
@@ -579,7 +579,7 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
             if (isDgEqual == false)
             {
-
+                #region TABLE INVENTORY ADJUSTMENT SAVING SECTION
                 int inventoryAdjustmentId = Convert.ToInt32(lblIventoryAdjustmentId.Content);
                 int userId = GetUserId();
 
@@ -593,11 +593,12 @@ namespace GUI
                 inventoryAdjustmentCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
                 inventoryAdjustmentCUL.AddedDate = DateTime.Now;
                 inventoryAdjustmentCUL.AddedBy = userId;
+                #endregion
 
-                #region TABLE POS DETAILS SAVING SECTION
+                #region TABLE INVENTORY ADJUSTMENT DETAILS SAVING SECTION
 
                 int userClickedNewOrEdit = btnNewOrEdit;
-                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
+                int cellUnit = 2, cellProductAmount = 5;
                 int productId;
                 int unitId;
                 decimal productOldAmountInStock;
@@ -608,7 +609,6 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false;
                 bool isSuccess = false;
-                int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
@@ -663,21 +663,21 @@ namespace GUI
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
-                    isSuccess = pointOfSaleDAL.Update(pointOfSaleCUL);
+                    isSuccess = inventoryAdjustmentDAL.Update(inventoryAdjustmentCUL);
                 }
 
                 else
                 {
                     //Creating a Boolean variable to insert data into the database.
-                    isSuccess = pointOfSaleDAL.Insert(pointOfSaleCUL);
+                    isSuccess = inventoryAdjustmentDAL.Insert(inventoryAdjustmentCUL);
                 }
 
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
                 if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
-                    //ClearBasketTextBox();
-                    //ClearPointOfSaleListView();
+                    ClearBasketTextBox();
+                    ClearInventoryAdjustmentDataGrid();
                     ClearProductEntranceTextBox();
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();

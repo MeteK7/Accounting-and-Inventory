@@ -387,7 +387,7 @@ namespace GUI
                 if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     //ClearBasketTextBox();
-                    //ClearPointOfSaleListView();
+                    //ClearPointOfSaleDataGrid();
                     ClearProductEntranceTextBox();
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
@@ -414,7 +414,7 @@ namespace GUI
             txtBasketGrandTotal.Text = "0";
         }
 
-        private void ClearPointOfSaleListView()
+        private void ClearPointOfSaleDataGrid()
         {
             dgProducts.Items.Clear();
         }
@@ -683,7 +683,7 @@ namespace GUI
         private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
             ClearBasketTextBox();
-            ClearPointOfSaleListView();
+            ClearPointOfSaleDataGrid();
 
             int invoiceNo, increment = 1;
 
@@ -741,7 +741,7 @@ namespace GUI
                 case MessageBoxResult.Yes:
                     DisableTools();
                     ClearProductEntranceTextBox();
-                    ClearPointOfSaleListView();
+                    ClearPointOfSaleDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
                     break;
@@ -761,7 +761,7 @@ namespace GUI
 
             if (currentInvoiceNo != firstInvoiceNo)
             {
-                ClearPointOfSaleListView();
+                ClearPointOfSaleDataGrid();
                 int prevInvoice = Convert.ToInt32(lblInvoiceNo.Content) - 1;
                 invoiceArrow = 0;//0 means customer has clicked the previous button.
                 LoadPastInvoice(prevInvoice, invoiceArrow);
@@ -774,7 +774,7 @@ namespace GUI
 
             if (currentInvoiceNo != lastInvoiceNo)
             {
-                ClearPointOfSaleListView();
+                ClearPointOfSaleDataGrid();
                 int nextInvoice = Convert.ToInt32(lblInvoiceNo.Content) + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
@@ -811,7 +811,7 @@ namespace GUI
 
                     DisableTools();
                     ClearProductEntranceTextBox();
-                    ClearPointOfSaleListView();
+                    ClearPointOfSaleDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
                     break;
