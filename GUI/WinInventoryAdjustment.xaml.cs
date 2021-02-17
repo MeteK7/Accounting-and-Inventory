@@ -492,6 +492,29 @@ namespace GUI
             }
         }
 
+        private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
+        {
+            int rowLength = dgProducts.Items.Count;
+            int colLength = 8;
+            string[,] dgProductCells = new string[rowLength, colLength];
+
+            for (int rowNo = 0; rowNo < rowLength; rowNo++)
+            {
+                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                for (int colNo = 0; colNo < colLength; colNo++)
+                {
+                    TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
+
+                    dgProductCells[rowNo, colNo] = tbCellContent.Text;
+
+                    //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
+                }
+            }
+
+            return dgProductCells;
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string[,] dgNewProductCells = new string[,] { };
