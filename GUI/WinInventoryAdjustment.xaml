@@ -381,7 +381,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/floppy-disk.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>

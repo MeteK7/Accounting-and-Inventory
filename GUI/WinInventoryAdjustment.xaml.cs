@@ -410,7 +410,7 @@ namespace GUI
 
                         #region Checking the sign of the amount in stock.
                         if (productAmountInStock < numberZero) //If it is a negative amount, convert it into positive.
-                            txtProductAmountInStock.Text = Math.Abs(productAmountInStock).ToString();
+                            productAmountInStock = Math.Abs(productAmountInStock);
                         #endregion
 
                         txtProductAmountDifference.Text = (productAmount - productAmountInStock).ToString();//Getting the amount difference by subtracting the amount in stock from the current amount.
@@ -484,6 +484,147 @@ namespace GUI
                 int nextInvoice = Convert.ToInt32(lblIventoryAdjustmentId.Content) + 1;
                 inventoryAdjustmentArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInventoryAdjustmentPage(nextInvoice, inventoryAdjustmentArrow);
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string[,] dgNewProductCells = new string[,] { };
+
+            dgNewProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+
+            #region Comparing two multidimensional arrays
+            bool isDgEqual =
+            dgOldProductCells.Rank == dgNewProductCells.Rank &&
+            Enumerable.Range(0, dgOldProductCells.Rank).All(dimension => dgOldProductCells.GetLength(dimension) == dgNewProductCells.GetLength(dimension)) &&
+            dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
+            #endregion
+
+            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
+            //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
+            if (isDgEqual == false && cboPaymentType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
+            {
+
+                int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
+                int userId = GetUserId();
+
+                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
+
+                //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
+                pointOfSaleCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
+                pointOfSaleCUL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
+                pointOfSaleCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
+                pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
+                pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+                pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+                pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+                pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                pointOfSaleCUL.AddedDate = DateTime.Now;
+                pointOfSaleCUL.AddedBy = userId;
+
+                #region TABLE POS DETAILS SAVING SECTION
+
+                int userClickedNewOrEdit = btnNewOrEdit;
+                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
+                int productId;
+                int unitId;
+                decimal productOldAmountInStock;
+                int initialRowIndex = 0;
+                int cellLength = 7;
+                int addedBy = userId;
+                string[] cells = new string[cellLength];
+                DateTime dateTime = DateTime.Now;
+                bool isSuccessDetail = false;
+                bool isSuccess = false;
+                int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
+                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+                {
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
+                    {
+                        RevertOldAmountInStock();//Reverting the old products' amount in stock.
+
+                        //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
+                        pointOfSaleDetailDAL.Delete(invoiceId);
+
+                        //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
+                        userClickedNewOrEdit = 2;
+                    }
+
+                    DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    {
+                        TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;
+
+                        cells[colNo] = cellContent.Text;
+                    }
+
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+
+
+                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
+                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
+
+                    pointOfSaleDetailCUL.ProductId = productId;
+                    pointOfSaleDetailCUL.InvoiceNo = invoiceId;
+                    pointOfSaleDetailCUL.AddedDate = dateTime;
+                    pointOfSaleDetailCUL.AddedBy = addedBy;
+                    pointOfSaleDetailCUL.ProductRate = productRate;
+                    pointOfSaleDetailCUL.ProductUnitId = unitId;
+                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
+                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
+                    pointOfSaleDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+
+
+                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
+
+                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+
+                    productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productDAL.UpdateAmountInStock(productCUL);
+
+                    isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
+                }
+                #endregion
+
+                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                {
+                    isSuccess = pointOfSaleDAL.Update(pointOfSaleCUL);
+                }
+
+                else
+                {
+                    //Creating a Boolean variable to insert data into the database.
+                    isSuccess = pointOfSaleDAL.Insert(pointOfSaleCUL);
+                }
+
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    //ClearBasketTextBox();
+                    //ClearPointOfSaleListView();
+                    ClearProductEntranceTextBox();
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
+            }
+
+            else
+            {
+                MessageBox.Show("You have a missing part or you are trying to save the same things!");
             }
         }
     }

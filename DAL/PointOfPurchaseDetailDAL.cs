@@ -54,11 +54,11 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, invoice_no, added_date, added_by, rate, amount, product_cost_price) VALUES (@id, @product_id, @product_unit_id, @invoice_no, @added_date, @added_by, @rate, @amount, @product_cost_price)";
+                String sqlQuery = "INSERT INTO tbl_pop_detailed (/*id,*/ product_id, product_unit_id, invoice_no, added_date, added_by, rate, amount, product_cost_price) VALUES (/*@id,*/ @product_id, @product_unit_id, @invoice_no, @added_date, @added_by, @rate, @amount, @product_cost_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);
+                //cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);
                 cmd.Parameters.AddWithValue("@product_id", pointOfPurchaseDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseDetailCUL.InvoiceNo);

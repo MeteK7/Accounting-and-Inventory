@@ -8,6 +8,7 @@ namespace KabaAccounting.CUL
 {
     public class PointOfPurchaseCUL
     {
+        public int Id { get; set; }
         public int InvoiceNo { get; set; }
         public int PaymentTypeId { get; set; }
         public int SupplierId { get; set; }

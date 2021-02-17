@@ -46,7 +46,7 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region INSERT METHOD
-        public bool Insert(PointOfPurchaseCUL PointOfPurchaseCUL)
+        public bool Insert(PointOfPurchaseCUL pointOfPurchaseCUL)
         {
             bool isSuccess = false;
 
@@ -54,21 +54,22 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@invoice_no", PointOfPurchaseCUL.InvoiceNo);
-                cmd.Parameters.AddWithValue("@payment_type_id", PointOfPurchaseCUL.PaymentTypeId);
-                cmd.Parameters.AddWithValue("@supplier_id", PointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("@total_product_amount", PointOfPurchaseCUL.TotalProductAmount);
-                cmd.Parameters.AddWithValue("@cost_total", PointOfPurchaseCUL.CostTotal);
-                cmd.Parameters.AddWithValue("@sub_total", PointOfPurchaseCUL.SubTotal);
-                cmd.Parameters.AddWithValue("@vat", PointOfPurchaseCUL.Vat);
-                cmd.Parameters.AddWithValue("@discount", PointOfPurchaseCUL.Discount);
-                cmd.Parameters.AddWithValue("@grand_total", PointOfPurchaseCUL.GrandTotal);
-                cmd.Parameters.AddWithValue("@added_date", PointOfPurchaseCUL.AddedDate);
-                cmd.Parameters.AddWithValue("@added_by", PointOfPurchaseCUL.AddedBy);
+                cmd.Parameters.AddWithValue("@id", pointOfPurchaseCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseCUL.InvoiceNo);
+                cmd.Parameters.AddWithValue("@payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
+                cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
+                cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
+                cmd.Parameters.AddWithValue("@sub_total", pointOfPurchaseCUL.SubTotal);
+                cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
+                cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
+                cmd.Parameters.AddWithValue("@grand_total", pointOfPurchaseCUL.GrandTotal);
+                cmd.Parameters.AddWithValue("@added_date", pointOfPurchaseCUL.AddedDate);
+                cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseCUL.AddedBy);
 
                 conn.Open();
 

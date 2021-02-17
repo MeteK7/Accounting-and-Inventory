@@ -54,10 +54,11 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (product_id, invoice_no, product_unit_id, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@product_id, @invoice_no, @product_unit_id, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, invoice_no, product_unit_id, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@id, @product_id, @invoice_no, @product_unit_id, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
+                cmd.Parameters.AddWithValue("@id", pointOfSaleDetailCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailCUL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfSaleDetailCUL.ProductUnitId);
