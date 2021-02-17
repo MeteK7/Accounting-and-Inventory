@@ -675,7 +675,7 @@ namespace GUI
         {
             //int specificRowIndex = 0, invoiceNo;
 
-            DataTable dataTable = pointOfPurchaseDAL.SearchByInvoiceId();//A METHOD WHICH HAVE AN OPTIONAL PARAMETER
+            DataTable dataTable = pointOfPurchaseDAL.SearchByInvoiceId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
 
             return dataTable;
         }

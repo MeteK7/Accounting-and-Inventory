@@ -515,6 +515,53 @@ namespace GUI
             return dgProductCells;
         }
 
+        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
+        {
+            //Getting the name of the user from the Login Window and fill it into a string variable;
+            string loggedUser = WinLogin.loggedIn;
+
+            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
+            //Then, fill the result into the userCUL;
+            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
+
+            int userId = userCUL.Id;
+
+            return userId;
+        }
+
+        private DataTable GetLastInventoryAdjustment()
+        {
+            //int specificRowIndex = 0, invoiceNo;
+
+            DataTable dataTable = inventoryAdjustmentDAL.Search();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
+
+            return dataTable;
+        }
+
+        private void RevertOldAmountInStock()
+        {
+            int initialRowIndex = 0;
+            int colProductId = 0;
+            int colProductAmount = 5;
+            decimal productAmountFromDB;
+
+
+            DataTable dataTableProduct = new DataTable();
+
+            for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
+            {
+                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
+
+                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
+
+                productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
+
+                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
+
+                productDAL.UpdateAmountInStock(productCUL);
+            }
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string[,] dgNewProductCells = new string[,] { };
@@ -536,7 +583,7 @@ namespace GUI
                 int inventoryAdjustmentId = Convert.ToInt32(lblIventoryAdjustmentId.Content);
                 int userId = GetUserId();
 
-                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableLastInvoice = GetLastInventoryAdjustment();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
