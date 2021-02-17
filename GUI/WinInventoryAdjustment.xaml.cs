@@ -36,6 +36,9 @@ namespace GUI
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         PointOfSaleDetailCUL pointOfSaleDetailCUL = new PointOfSaleDetailCUL();
         InventoryAdjustmentDAL inventoryAdjustmentDAL = new InventoryAdjustmentDAL();
+        InventoryAdjustmentCUL inventoryAdjustmentCUL = new InventoryAdjustmentCUL();
+        //InventoryAdjustmentDetailDAL inventoryAdjustmentDetailDAL = new InventoryAdjustmentDetailDAL();
+        InventoryAdjustmentDetailCUL inventoryAdjustmentDetailCUL = new InventoryAdjustmentDetailCUL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
         PaymentDAL paymentDAL = new PaymentDAL();
@@ -46,6 +49,8 @@ namespace GUI
         UnitCUL unitCUL = new UnitCUL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        string[,] dgOldProductCells = new string[,] { };
+        int oldItemsRowCount;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -502,10 +507,10 @@ namespace GUI
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
-            if (isDgEqual == false && cboPaymentType.SelectedIndex != -1 && cboCustomer.SelectedIndex != -1 && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
+            if (isDgEqual == false)
             {
 
-                int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
+                int inventoryAdjustmentId = Convert.ToInt32(lblIventoryAdjustmentId.Content);
                 int userId = GetUserId();
 
                 DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
@@ -513,17 +518,11 @@ namespace GUI
                 DataTable dataTableUnit = new DataTable();
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
-                pointOfSaleCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
-                pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
-                pointOfSaleCUL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
-                pointOfSaleCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
-                pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-                pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
-                pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
-                pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
-                pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
-                pointOfSaleCUL.AddedDate = DateTime.Now;
-                pointOfSaleCUL.AddedBy = userId;
+                inventoryAdjustmentCUL.Id = inventoryAdjustmentId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                inventoryAdjustmentCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
+                inventoryAdjustmentCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                inventoryAdjustmentCUL.AddedDate = DateTime.Now;
+                inventoryAdjustmentCUL.AddedBy = userId;
 
                 #region TABLE POS DETAILS SAVING SECTION
 
@@ -548,7 +547,7 @@ namespace GUI
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
-                        pointOfSaleDetailDAL.Delete(invoiceId);
+                        pointOfSaleDetailDAL.Delete(inventoryAdjustmentId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
@@ -570,15 +569,12 @@ namespace GUI
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    pointOfSaleDetailCUL.ProductId = productId;
-                    pointOfSaleDetailCUL.InvoiceNo = invoiceId;
-                    pointOfSaleDetailCUL.AddedDate = dateTime;
-                    pointOfSaleDetailCUL.AddedBy = addedBy;
-                    pointOfSaleDetailCUL.ProductRate = productRate;
-                    pointOfSaleDetailCUL.ProductUnitId = unitId;
-                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
-                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
-                    pointOfSaleDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+                    inventoryAdjustmentDetailCUL.ProductId = productId;
+                    inventoryAdjustmentDetailCUL.InventoryAdjustmentId = inventoryAdjustmentId;
+                    inventoryAdjustmentDetailCUL.AddedDate = dateTime;
+                    inventoryAdjustmentDetailCUL.AddedBy = addedBy;
+                    inventoryAdjustmentDetailCUL.ProductUnitId = unitId;
+                    inventoryAdjustmentDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
 
 
                     productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.

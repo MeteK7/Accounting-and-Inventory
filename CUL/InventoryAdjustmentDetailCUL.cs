@@ -12,6 +12,8 @@ namespace KabaAccounting.CUL
         public int InventoryAdjustmentId { get; set; }
         public int ProductId { get; set; }
         public int ProductUnitId { get; set; }
-        public int ProductAmount { get; set; }
+        public decimal ProductAmount { get; set; }
+        public DateTime AddedDate { get; set; }
+        public int AddedBy { get; set; }
     }
 }
