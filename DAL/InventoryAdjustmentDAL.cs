@@ -14,7 +14,7 @@ namespace KabaAccounting.DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
-        #region Search
+        #region SEARCH METHOD
         public DataTable Search(int inventoryAdjustmentId = 0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -88,6 +88,52 @@ namespace KabaAccounting.DAL
                 {
                     isSuccess = false;
                 }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return isSuccess;
+        }
+        #endregion
+
+        #region UPDATE METHOD
+        public bool Update(InventoryAdjustmentCUL inventoryAdjustmentCUL)
+        {
+            bool isSuccess = false;
+
+            SqlConnection conn = new SqlConnection(connString);
+
+            try
+            {
+                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, total_product_amount=@total_product_amount, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+                cmd.Parameters.AddWithValue("total_product_amount", inventoryAdjustmentCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("grand_total", inventoryAdjustmentCUL.GrandTotal);
+                cmd.Parameters.AddWithValue("added_date", inventoryAdjustmentCUL.AddedDate);
+                cmd.Parameters.AddWithValue("added_by", inventoryAdjustmentCUL.AddedBy);
+                cmd.Parameters.AddWithValue("id", inventoryAdjustmentCUL.Id);//Do you really need to update the ID?
+
+
+                conn.Open();
+
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    isSuccess = true;
+                }
+                else
+                {
+                    isSuccess = false;
+                }
+
             }
             catch (Exception ex)
             {
