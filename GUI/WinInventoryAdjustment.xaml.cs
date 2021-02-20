@@ -648,15 +648,13 @@ namespace GUI
                     inventoryAdjustmentDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
 
 
+                    isSuccessDetail = inventoryAdjustmentDetailDAL.Insert(inventoryAdjustmentDetailCUL);
+
+                    #region TABLE PRODUCT INVENTORY ADJUSTMENT SECTION
                     productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
-
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
-
-                    productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
-
+                    productCUL.AmountInStock = Convert.ToDecimal(cells[cellProductAmount]);
                     productDAL.UpdateAmountInStock(productCUL);
-
-                    isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
+                    #endregion
                 }
                 #endregion
 
