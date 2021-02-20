@@ -37,7 +37,7 @@ namespace GUI
         PointOfSaleDetailCUL pointOfSaleDetailCUL = new PointOfSaleDetailCUL();
         InventoryAdjustmentDAL inventoryAdjustmentDAL = new InventoryAdjustmentDAL();
         InventoryAdjustmentCUL inventoryAdjustmentCUL = new InventoryAdjustmentCUL();
-        //InventoryAdjustmentDetailDAL inventoryAdjustmentDetailDAL = new InventoryAdjustmentDetailDAL();
+        InventoryAdjustmentDetailDAL inventoryAdjustmentDetailDAL = new InventoryAdjustmentDetailDAL();
         InventoryAdjustmentDetailCUL inventoryAdjustmentDetailCUL = new InventoryAdjustmentDetailCUL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
@@ -612,12 +612,12 @@ namespace GUI
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_inventory_adjustment_detailed at once.
                     {
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
-                        pointOfSaleDetailDAL.Delete(inventoryAdjustmentId);
+                        inventoryAdjustmentDAL.Delete(inventoryAdjustmentId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
