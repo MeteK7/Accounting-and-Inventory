@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using DAL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -617,7 +618,7 @@ namespace GUI
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
-                        inventoryAdjustmentDAL.Delete(inventoryAdjustmentId);
+                        inventoryAdjustmentDetailDAL.Delete(inventoryAdjustmentId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
