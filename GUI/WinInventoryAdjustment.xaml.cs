@@ -602,12 +602,10 @@ namespace GUI
                 int cellUnit = 2, cellProductAmount = 5;
                 int productId;
                 int unitId;
-                decimal productOldAmountInStock;
                 int initialRowIndex = 0;
                 int cellLength = 7;
-                int addedBy = userId;
                 string[] cells = new string[cellLength];
-                DateTime dateTime = DateTime.Now;
+                bool isSuccessProductAmount = false;
                 bool isSuccessDetail = false;
                 bool isSuccess = false;
 
@@ -642,8 +640,6 @@ namespace GUI
 
                     inventoryAdjustmentDetailCUL.ProductId = productId;
                     inventoryAdjustmentDetailCUL.InventoryAdjustmentId = inventoryAdjustmentId;
-                    inventoryAdjustmentDetailCUL.AddedDate = dateTime;
-                    inventoryAdjustmentDetailCUL.AddedBy = addedBy;
                     inventoryAdjustmentDetailCUL.ProductUnitId = unitId;
                     inventoryAdjustmentDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
 
@@ -653,7 +649,7 @@ namespace GUI
                     #region TABLE PRODUCT INVENTORY ADJUSTMENT SECTION
                     productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
                     productCUL.AmountInStock = Convert.ToDecimal(cells[cellProductAmount]);
-                    productDAL.UpdateAmountInStock(productCUL);
+                    isSuccessProductAmount = productDAL.UpdateAmountInStock(productCUL);
                     #endregion
                 }
                 #endregion
@@ -673,7 +669,7 @@ namespace GUI
 
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessDetail == true && isSuccessProductAmount==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     ClearBasketTextBox();
                     ClearInventoryAdjustmentDataGrid();

@@ -335,8 +335,9 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region Update Amount in Stock
-        public void UpdateAmountInStock(ProductCUL product)
+        public bool UpdateAmountInStock(ProductCUL product)
         {
+            bool isSuccessProductAmount = false;
             SqlConnection conn = new SqlConnection(connString);
 
             try
@@ -351,6 +352,15 @@ namespace KabaAccounting.DAL
 
                 int rows = cmd.ExecuteNonQuery();
 
+                if (rows > 0)
+                {
+                    isSuccessProductAmount = true;
+                }
+                else
+                {
+                    isSuccessProductAmount = false;
+                }
+
             }
             catch (Exception ex)
             {
@@ -361,6 +371,8 @@ namespace KabaAccounting.DAL
             {
                 conn.Close();
             }
+
+            return isSuccessProductAmount;
         }
         #endregion
     }
