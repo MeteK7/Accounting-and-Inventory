@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -99,6 +100,41 @@ namespace DAL
             }
 
             return isSuccess;
+        }
+        #endregion
+
+        #region GETTING THE ROW INFORMATION OF A TABLE BY USING INVENTORY ADJUSTMENT ID.
+        public DataTable Search(int inventoryAdjustmentId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_inventory_adjustment_detailed WHERE invoice_no= " + inventoryAdjustmentId + "";//SQL query to get the last id of rows in the table.
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
         }
         #endregion
     }

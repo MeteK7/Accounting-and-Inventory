@@ -64,41 +64,41 @@ namespace GUI
             txtStaffPosition.Text = WinLogin.loggedInPosition;
         }
 
-        private void LoadPastInventoryAdjustmentPage(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
+        private void LoadPastInventoryAdjustmentPage(int inventoryAdjustmentId = 0, int invoiceArrow = -1)//Optional parameter
         {
             int firstRowIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productSalePrice, productAmount, productTotalCostPrice, productTotalSalePrice;
 
-            if (invoiceNo == 0)
+            if (inventoryAdjustmentId == 0)
             {
-                invoiceNo = GetLastInventoryAdjustmentId();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                inventoryAdjustmentId = GetLastInventoryAdjustmentId();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (inventoryAdjustmentId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePos = inventoryAdjustmentDAL.Search(invoiceNo);
-                DataTable dataTablePosDetail = inventoryAdjustmentDetailDAL.Search(invoiceNo);
+                DataTable dataTableInventoryAdjustment = inventoryAdjustmentDAL.Search(inventoryAdjustmentId);
+                DataTable dataTableInventoryAdjustmentDetail = inventoryAdjustmentDetailDAL.Search(inventoryAdjustmentId);
                 DataTable dataTableUnitInfo;
                 DataTable dataTableProduct;
 
-                if (dataTablePosDetail.Rows.Count != 0)
+                if (dataTableInventoryAdjustmentDetail.Rows.Count != 0)
                 {
                     #region LOADING THE PRODUCT DATA GRID
 
-                    for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                    for (int currentRow = firstRowIndex; currentRow < dataTableInventoryAdjustmentDetail.Rows.Count; currentRow++)
                     {
-                        lblIventoryAdjustmentId.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+                        lblIventoryAdjustmentId.Content = dataTableInventoryAdjustment.Rows[firstRowIndex]["id"].ToString();
 
-                        productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
-                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
+                        productId = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_id"].ToString();
+                        productUnitId = Convert.ToInt32(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCostPrice = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
-                        productSalePrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
-                        productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
+                        productCostPrice = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_cost_price"].ToString();
+                        productSalePrice = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_sale_price"].ToString();
+                        productAmount = dataTableInventoryAdjustmentDetail.Rows[currentRow]["amount"].ToString();
                         productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
                         productTotalSalePrice = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
 
@@ -113,25 +113,25 @@ namespace GUI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketAmount.Text = dataTablePos.Rows[firstRowIndex]["total_product_amount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
+                    txtBasketAmount.Text = dataTableInventoryAdjustment.Rows[firstRowIndex]["total_product_amount"].ToString();
+                    txtBasketGrandTotal.Text = dataTableInventoryAdjustment.Rows[firstRowIndex]["grand_total"].ToString();
 
                     #endregion
                 }
-                else if (dataTablePosDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTableInventoryAdjustmentDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        invoiceNo = invoiceNo - 1;
+                        inventoryAdjustmentId = inventoryAdjustmentId - 1;
                     }
                     else
                     {
-                        invoiceNo = invoiceNo + 1;
+                        inventoryAdjustmentId = inventoryAdjustmentId + 1;
                     }
 
                     if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInventoryAdjustmentPage(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
+                        LoadPastInventoryAdjustmentPage(inventoryAdjustmentId, invoiceArrow);//Call the method again to get the new past invoice.
                     }
 
                 }

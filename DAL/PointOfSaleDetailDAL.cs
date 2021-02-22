@@ -233,7 +233,7 @@ namespace KabaAccounting.DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";//SQL query to get the last id of rows in te table.
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
