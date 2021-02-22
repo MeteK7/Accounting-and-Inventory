@@ -22,11 +22,11 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (id, inventory_adjustment_id, product_id, product_unit_id, product_amount_in_stock) VALUES (@id, @inventory_adjustment_id, @product_id, @product_unit_id, @product_amount_in_stock)";
+                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (/*id,*/ inventory_adjustment_id, product_id, product_unit_id, product_amount_in_stock) VALUES (/*@id,*/ @inventory_adjustment_id, @product_id, @product_unit_id, @product_amount_in_stock)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", inventoryAdjustmentDetailCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                //cmd.Parameters.AddWithValue("@id", inventoryAdjustmentDetailCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@inventory_adjustment_id", inventoryAdjustmentDetailCUL.InventoryAdjustmentId);
                 cmd.Parameters.AddWithValue("@product_id", inventoryAdjustmentDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", inventoryAdjustmentDetailCUL.ProductUnitId);

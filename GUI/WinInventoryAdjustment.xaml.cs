@@ -77,8 +77,8 @@ namespace GUI
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);
-                DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+                DataTable dataTablePos = inventoryAdjustmentDAL.Search(invoiceNo);
+                DataTable dataTablePosDetail = inventoryAdjustmentDetailDAL.Search(invoiceNo);
                 DataTable dataTableUnitInfo;
                 DataTable dataTableProduct;
 
@@ -671,8 +671,8 @@ namespace GUI
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
                 if (isSuccess == true && isSuccessDetail == true && isSuccessProductAmount==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
-                    ClearBasketTextBox();
-                    ClearInventoryAdjustmentDataGrid();
+                    //ClearBasketTextBox();
+                    //ClearInventoryAdjustmentDataGrid();
                     ClearProductEntranceTextBox();
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
