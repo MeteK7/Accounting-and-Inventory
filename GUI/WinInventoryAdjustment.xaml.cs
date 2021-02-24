@@ -136,7 +136,18 @@ namespace GUI
 
                 }
             }
+            else
+            {
+                FirstTimeRun();//This method is called when it is the first time of using this program.
+            }
 
+        }
+
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
         private void ClearProductEntranceTextBox()
