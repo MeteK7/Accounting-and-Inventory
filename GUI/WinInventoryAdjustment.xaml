@@ -302,7 +302,7 @@
                 <TextBox x:Name="txtProductUnit" HorizontalAlignment="Left" Height="23" Margin="349,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" IsReadOnly="True"/>
-                <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductAmount_TextChanged"/>
+                <TextBox x:Name="txtProductAmountInReal" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductAmountInReal_TextChanged"/>
                 <TextBox x:Name="txtProductAmountInStock" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductAmountDifference" HorizontalAlignment="Left" Height="23" Margin="736,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="23" Margin="852,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
@@ -330,7 +330,7 @@
                         <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="50"/>
                         <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price" Width="70"/>
                         <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price" Width="70"/>
-                        <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
+                        <DataGridTextColumn Binding="{Binding AmountInReal}" ClipboardContentBinding="{x:Null}" Header="Amount in Real"/>
                         <DataGridTextColumn Binding="{Binding AmountInStock}" ClipboardContentBinding="{x:Null}" Header="Amount in Stock"/>
                         <DataGridTextColumn Binding="{Binding AmountDifference}" ClipboardContentBinding="{x:Null}" Header="Amount Difference"/>
                         <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="T. Cost Price"/>

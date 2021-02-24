@@ -23,15 +23,18 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (/*id,*/ inventory_adjustment_id, product_id, product_unit_id, product_amount_in_stock) VALUES (/*@id,*/ @inventory_adjustment_id, @product_id, @product_unit_id, @product_amount_in_stock)";
+                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (/*id,*/ inventory_adjustment_id, product_id, product_unit_id, product_amount_in_real, product_amount_in_stock, product_cost_price, product_sale_price) VALUES (/*@id,*/ @inventory_adjustment_id, @product_id, @product_unit_id, @product_amount_in_real, @product_amount_in_stock, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                //cmd.Parameters.AddWithValue("@id", inventoryAdjustmentDetailCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                //cmd.Parameters.AddWithValue("@id", inventoryAdjustmentDetailCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing inventory adjustment page and creates a new one.
                 cmd.Parameters.AddWithValue("@inventory_adjustment_id", inventoryAdjustmentDetailCUL.InventoryAdjustmentId);
                 cmd.Parameters.AddWithValue("@product_id", inventoryAdjustmentDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", inventoryAdjustmentDetailCUL.ProductUnitId);
-                cmd.Parameters.AddWithValue("@product_amount_in_stock", inventoryAdjustmentDetailCUL.ProductAmount);
+                cmd.Parameters.AddWithValue("@product_amount_in_real", inventoryAdjustmentDetailCUL.ProductAmountInReal);
+                cmd.Parameters.AddWithValue("@product_amount_in_stock", inventoryAdjustmentDetailCUL.ProductAmountInStock);
+                cmd.Parameters.AddWithValue("@product_cost_price", inventoryAdjustmentDetailCUL.ProductCostPrice);
+                cmd.Parameters.AddWithValue("@product_sale_price", inventoryAdjustmentDetailCUL.ProductSalePrice);
 
                 conn.Open();
 
@@ -110,7 +113,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_inventory_adjustment_detailed WHERE invoice_no= " + inventoryAdjustmentId + "";//SQL query to get the last id of rows in the table.
+                String sqlQuery = "SELECT * FROM tbl_inventory_adjustment_detailed WHERE inventory_adjustment_id= " + inventoryAdjustmentId + "";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
