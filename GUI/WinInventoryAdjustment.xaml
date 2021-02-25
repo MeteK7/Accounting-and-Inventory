@@ -286,7 +286,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="10,152,250,616" Padding="0">
+        <GroupBox Header="PRODUCT" Margin="10,152,214,616" Padding="0">
             <Grid Margin="10,0,-2,3">
                 <Label x:Name="lblProductBarcode" Content="Id / Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
@@ -327,9 +327,9 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="150" />
                         <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="300"/>
-                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="50"/>
-                        <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price" Width="70"/>
-                        <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price" Width="70"/>
+                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="35"/>
+                        <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price" Width="65"/>
+                        <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price" Width="65"/>
                         <DataGridTextColumn Binding="{Binding AmountInReal}" ClipboardContentBinding="{x:Null}" Header="Amount in Real"/>
                         <DataGridTextColumn Binding="{Binding AmountInStock}" ClipboardContentBinding="{x:Null}" Header="Amount in Stock"/>
                         <DataGridTextColumn Binding="{Binding AmountDifference}" ClipboardContentBinding="{x:Null}" Header="Amount Difference"/>
@@ -365,7 +365,7 @@
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" HorizontalContentAlignment="Left"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="118" Margin="0,34,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
+        <GroupBox Header="Menu" Height="118" Margin="0,34,214,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1141">
             <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnNew_Click">
                     <Button.Background>

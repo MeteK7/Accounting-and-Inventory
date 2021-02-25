@@ -67,7 +67,8 @@ namespace GUI
         private void LoadPastInventoryAdjustmentPage(int inventoryAdjustmentId = 0, int invoiceArrow = -1)//Optional parameter
         {
             int firstRowIndex = 0, productUnitId;
-            string productId, productName, productUnitName, productCostPrice, productSalePrice, productAmountInReal, productAmountInStock, productTotalCostPrice, productTotalSalePrice;
+            string productId, productName, productUnitName;
+            decimal productCostPrice, productSalePrice, productAmountInReal, productAmountInStock, productAmountDifference, productTotalCostPrice, productTotalSalePrice;
 
             if (inventoryAdjustmentId == 0)
             {
@@ -96,18 +97,19 @@ namespace GUI
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCostPrice = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_cost_price"].ToString();
-                        productSalePrice = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_sale_price"].ToString();
-                        productAmountInStock = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_stock"].ToString();
-                        productAmountInReal = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_real"].ToString();
-                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmountInReal)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
-                        productTotalSalePrice = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmountInReal)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
+                        productCostPrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_cost_price"]);
+                        productSalePrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_sale_price"]);
+                        productAmountInReal = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_real"]);
+                        productAmountInStock = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_stock"]);
+                        productAmountDifference = productAmountInReal - productAmountInStock;//There is already a same formula in the method named "txtProductAmountInReal_TextChanged"!!!.
+                        productTotalCostPrice = productCostPrice * productAmountInReal;//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalSalePrice = productSalePrice * productAmountInReal;//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
-                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, AmountInReal = productAmountInReal, AmountInStock = productAmountInStock, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
+                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, AmountInReal = productAmountInReal, AmountInStock = productAmountInStock, AmountDifference= productAmountDifference, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
                     }
                     #endregion
 
