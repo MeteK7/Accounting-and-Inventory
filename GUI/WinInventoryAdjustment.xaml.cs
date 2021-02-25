@@ -705,5 +705,37 @@ namespace GUI
                 }
             }
         }
+
+        private void btnDeleteDataGridRow_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedRow = dgProducts.SelectedItem;
+            int selectedRowIndex = dgProducts.SelectedIndex;
+
+            if (selectedRow != null)
+            {
+                SubstractBasket(selectedRowIndex);
+
+                dgProducts.Items.Remove(selectedRow);
+            }
+        }
+
+        private void SubstractBasket(int selectedRowIndex)
+        {
+            DataGridRow dataGridRow;
+            TextBlock tbAmountInRealCell;
+            TextBlock tbTotalPriceCell;
+            int colProductAmountInReal = 5;
+            int colProductTotalSalePrice = 9;
+
+            dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
+
+            tbAmountInRealCell = dgProducts.Columns[colProductAmountInReal].GetCellContent(dataGridRow) as TextBlock;
+
+            tbTotalPriceCell = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+
+            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbAmountInRealCell.Text)).ToString();
+
+            txtBasketGrandTotal.Text = ((Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(tbTotalPriceCell)).ToString();
+        }
     }
 }
