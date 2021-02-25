@@ -591,27 +591,27 @@ namespace GUI
         private void SubstractBasket(int selectedRowIndex)
         {
             DataGridRow dataGridRow;
-            TextBlock tbTotalCostCell;
-            TextBlock tbAmountCell;
-            TextBlock tbTotalPriceCell;
-            int productTotalCostCol = 6;
-            int productAmountCol = 5;
-            int productTotalPriceCol = 7;
+            TextBlock tbCellTotalCost;
+            TextBlock tbCellAmount;
+            TextBlock tbCellTotalPrice;
+            int colProductTotalCost = 6;
+            int colProductAmount = 5;
+            int colProductTotalPrice = 7;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbAmountCell = dgProducts.Columns[productAmountCol].GetCellContent(dataGridRow) as TextBlock;
+            tbCellAmount = dgProducts.Columns[colProductAmount].GetCellContent(dataGridRow) as TextBlock;
 
-            tbTotalCostCell = dgProducts.Columns[productTotalCostCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbCellTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
-            tbTotalPriceCell = dgProducts.Columns[productTotalPriceCol].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbCellTotalPrice = dgProducts.Columns[colProductTotalPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
 
-            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbAmountCell.Text)).ToString();
+            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbCellAmount.Text)).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbTotalCostCell.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbTotalPriceCell.Text)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbCellTotalPrice.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
@@ -792,7 +792,7 @@ namespace GUI
             }
         }
 
-        private void btnDeleteListRow_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteDataGridRow_Click(object sender, RoutedEventArgs e)
         {
             var selectedRow = dgProducts.SelectedItem;
             int selectedRowIndex = dgProducts.SelectedIndex;
