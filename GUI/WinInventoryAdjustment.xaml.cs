@@ -214,7 +214,7 @@ namespace GUI
             btnSave.IsEnabled = true;
             btnCancel.IsEnabled = true;
             btnEdit.IsEnabled = false;
-            btnDelete.IsEnabled = false;
+            btnDeleteRecord.IsEnabled = false;
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
@@ -253,7 +253,7 @@ namespace GUI
         {
             btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
             btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
-            btnDelete.IsEnabled = true;
+            btnDeleteRecord.IsEnabled = true;
             btnPrev.IsEnabled = true;
             btnNext.IsEnabled = true;
         }
@@ -646,6 +646,36 @@ namespace GUI
             }
         }
 
+        private void BtnDeleteRecord_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete this record, "+ WinLogin.loggedIn+"?", "Delete Record", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    int inventoryAdjustmentId = Convert.ToInt32(lblIventoryAdjustmentId.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+
+                    inventoryAdjustmentCUL.Id = inventoryAdjustmentId;//Assigning the invoice number into the Id in the pointofSaleCUL.
+                    inventoryAdjustmentDetailCUL.InventoryAdjustmentId = inventoryAdjustmentId;
+
+                    inventoryAdjustmentDAL.Delete(inventoryAdjustmentCUL);
+                    inventoryAdjustmentDetailDAL.Delete(inventoryAdjustmentId);
+
+                    DisableTools();
+                    ClearProductEntranceTextBox();
+                    ClearInventoryAdjustmentDataGrid();
+                    LoadPastInventoryAdjustmentPage();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
+
         private void txtProductAmountInReal_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtProductAmountInReal.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
@@ -706,7 +736,7 @@ namespace GUI
             }
         }
 
-        private void btnDeleteDataGridRow_Click(object sender, RoutedEventArgs e)
+        private void BtnDeleteDataGridRow_Click(object sender, RoutedEventArgs e)
         {
             var selectedRow = dgProducts.SelectedItem;
             int selectedRowIndex = dgProducts.SelectedIndex;
