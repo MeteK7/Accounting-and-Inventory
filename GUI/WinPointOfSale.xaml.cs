@@ -233,15 +233,15 @@ namespace GUI
             int colLength = 8;
             string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowNo = 0; rowNo < rowLength; rowNo++)
+            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
             {
-                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowIndex);
 
                 for (int colNo = 0; colNo < colLength; colNo++)
                 {
                     TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
 
-                    dgProductCells[rowNo, colNo] = tbCellContent.Text;
+                    dgProductCells[rowIndex, colNo] = tbCellContent.Text;
 
                     //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
                 }
@@ -366,8 +366,10 @@ namespace GUI
                     pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
                     pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
                     pointOfSaleDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+                    
+                    isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
-
+                    #region PRODUCT AMOUNT UPDATE
                     productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
 
                     productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
@@ -375,8 +377,8 @@ namespace GUI
                     productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
 
                     productDAL.UpdateAmountInStock(productCUL);
+                    #endregion
 
-                    isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
                 }
                 #endregion
 
