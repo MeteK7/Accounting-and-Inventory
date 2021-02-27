@@ -74,16 +74,16 @@
                 <DataGridTextColumn Binding="{Binding BarcodeWholesale}" ClipboardContentBinding="{x:Null}" Header="Barcode Wholesale"/>
                 <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
                 <DataGridTextColumn Binding="{Binding CategoryName}" ClipboardContentBinding="{x:Null}" Header="Category"/>
-                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description"/>
+                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" MaxWidth="0"/>
                 <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
                 <DataGridTextColumn Binding="{Binding AmountInUnitWholesale}" ClipboardContentBinding="{x:Null}" Header="Amount in Unit"/>
                 <DataGridTextColumn Binding="{Binding AmountInStock}" ClipboardContentBinding="{x:Null}" Header="Amount in Stock"/>
                 <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price"/>
                 <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price"/>
-                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date"/>
                 <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By"/>
-                <DataGridTextColumn Binding="{Binding UnitNameRetail}" ClipboardContentBinding="{x:Null}" Header="Unit Retail"/>
-                <DataGridTextColumn Binding="{Binding UnitNameWholesale}" ClipboardContentBinding="{x:Null}" Header="Unit Wholesale"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date"/>
+                <DataGridTextColumn Binding="{Binding UnitNameRetail}" ClipboardContentBinding="{x:Null}" Header="Unit Retail" MaxWidth="0"/>
+                <DataGridTextColumn Binding="{Binding UnitNameWholesale}" ClipboardContentBinding="{x:Null}" Header="Unit Wholesale" MaxWidth="0"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnProductAdd" Content="ADD" HorizontalAlignment="Left" Margin="363,609,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnProductAdd_Click">

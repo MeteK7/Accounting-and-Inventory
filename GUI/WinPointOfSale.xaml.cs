@@ -471,12 +471,12 @@ namespace GUI
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail"]);
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale"]);
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
                 }
 
                 txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database

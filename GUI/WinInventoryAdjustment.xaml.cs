@@ -296,12 +296,12 @@ namespace GUI
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail_id"]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale_id"]);
                 }
 
                 DataTable dataTableProductUnit = unitDAL.GetUnitInfoById(productUnitId);//Datatable for finding the unit name by unit id.

@@ -113,17 +113,17 @@ namespace GUI
             object row = dtgProducts.SelectedItem;
             int selectedRow = dtgProducts.SelectedIndex, rowId=0, rowBarcodeRetail=1, rowBarcodeWholesale=2, rowProductName=3,rowProductCategory=4, rowProductDescription=5, rowPrAmountInUnWhol=6, rowPrCostPriceRet=8,rowPrSalePriceRet=9,rowProductUnitRet=12,rowProductUnitWhol=13;
 
-            txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductBarcodeWholesale.Text = (dtgProducts.Columns[rowBarcodeWholesale].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductName.Text = (dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            cboProductCategory.Text = (dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductDescription.Text = (dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductAmountInUnitWholesale.Text = (dtgProducts.Columns[rowPrAmountInUnWhol].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductCostPriceRetail.Text = (dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            txtProductSalePriceRetail.Text = (dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            cboProductUnitRetail.Text = (dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
-            cboProductUnitWholesale.Text = (dtgProducts.Columns[rowProductUnitWhol].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;
+            txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;
+            txtProductBarcodeWholesale.Text = (dtgProducts.Columns[rowBarcodeWholesale].GetCellContent(row) as TextBlock).Text;
+            txtProductName.Text = (dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock).Text;
+            cboProductCategory.Text = (dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock).Text;
+            txtProductDescription.Text = (dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock).Text;//ANOTHER METHOD: (dtgProducts.SelectedCells[rowProductDescription].Column.GetCellContent(row) as TextBlock).Text;
+            txtProductAmountInUnitWholesale.Text = (dtgProducts.Columns[rowPrAmountInUnWhol].GetCellContent(row) as TextBlock).Text;
+            txtProductCostPriceRetail.Text = (dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock).Text;
+            txtProductSalePriceRetail.Text = (dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock).Text;
+            cboProductUnitRetail.Text = (dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock).Text;
+            cboProductUnitWholesale.Text = (dtgProducts.Columns[rowProductUnitWhol].GetCellContent(row) as TextBlock).Text;
             txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
         }
@@ -251,7 +251,7 @@ namespace GUI
             productCUL.Name = txtProductName.Text;
             productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productCUL.Description = txtProductDescription.Text;
-            productCUL.Rating = 0;
+            productCUL.Rating = initialAmount;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
             productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)

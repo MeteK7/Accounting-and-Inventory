@@ -57,7 +57,7 @@ namespace KabaAccounting.DAL
             SqlConnection conn = new SqlConnection(connString);
             try
             {
-                String sqlQuery = "INSERT INTO tbl_products (name, category_id, description, rating, barcode_retail, barcode_wholesale, amount_in_unit, amount_in_stock, costprice, saleprice, unit_retail, unit_wholesale, added_date, added_by) VALUES (@name, @category_id, @description, @rating, @barcode_retail, @barcode_wholesale, @amount_in_unit, @amount_in_stock, @costprice, @saleprice, @unit_retail, @unit_wholesale, @added_date, @added_by)";
+                String sqlQuery = "INSERT INTO tbl_products (name, category_id, description, rating, barcode_retail, barcode_wholesale, amount_in_unit, amount_in_stock, costprice, saleprice, unit_retail_id, unit_wholesale_id, added_date, added_by) VALUES (@name, @category_id, @description, @rating, @barcode_retail, @barcode_wholesale, @amount_in_unit, @amount_in_stock, @costprice, @saleprice, @unit_retail_id, @unit_wholesale_id, @added_date, @added_by)";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
@@ -70,8 +70,8 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@amount_in_stock", product.AmountInStock);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
-                cmd.Parameters.AddWithValue("@unit_retail", product.UnitRetail);
-                cmd.Parameters.AddWithValue("@unit_wholesale", product.UnitWholesale);
+                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
+                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesale);
                 cmd.Parameters.AddWithValue("@added_date", product.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", product.AddedBy);
 
@@ -112,7 +112,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sql = "UPDATE tbl_products SET name=@name, category_id=@category_id, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, amount_in_unit=@amount_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail=@unit_retail, unit_wholesale=@unit_wholesale, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sql = "UPDATE tbl_products SET name=@name, category_id=@category_id, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, amount_in_unit=@amount_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail_id=@unit_retail_id, unit_wholesale_id=@unit_wholesale_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
@@ -124,8 +124,8 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@amount_in_unit", product.AmountInUnit);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
-                cmd.Parameters.AddWithValue("@unit_retail", product.UnitRetail);
-                cmd.Parameters.AddWithValue("@unit_wholesale", product.UnitWholesale);
+                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
+                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesale);
                 cmd.Parameters.AddWithValue("@added_date", product.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", product.AddedBy);
                 cmd.Parameters.AddWithValue("@id", product.Id); //Do you REALLY need to update an ID? You have already the ID in the query above.
