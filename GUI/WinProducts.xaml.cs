@@ -1,6 +1,7 @@
 ﻿using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace GUI
         private void RefreshProductDataGrid()
         {
             int firstRowIndex = 0, productId, categoryId, unitRetailId, unitWholesaleId, addedById;
-            string productName, categoryName, amountInUnitWholesale, amountInStock, costPrice, salePrice, unitRetailName, unitWholesaleName, addedDate, addedByUsername;
+            string productName, categoryName, unitNameRetail, unitNameWholesale, description, amountInUnitWholesale, amountInStock, costPrice, salePrice, unitRetailName, unitWholesaleName, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
             DataTable dataTable = productDAL.SelectAllOrByKeyword();
             DataTable dataTableCategoryInfo;
             DataTable dataTableUnitInfo;
@@ -70,19 +71,23 @@ namespace GUI
                 dataTableCategoryInfo = categoryDAL.GetCategoryInfoById(categoryId);
                 categoryName = dataTableCategoryInfo.Rows[firstRowIndex]["Name"].ToString();
 
+                barcodeRetail = dataTable.Rows[currentRow]["barcode_retail"].ToString();
+                barcodeWholesale = dataTable.Rows[currentRow]["barcode_wholesale"].ToString();
                 productName = dataTable.Rows[currentRow]["name"].ToString();
+                description = dataTable.Rows[currentRow]["description"].ToString();
                 amountInUnitWholesale = dataTable.Rows[currentRow]["amount_in_unit"].ToString();
                 amountInStock = dataTable.Rows[currentRow]["amount_in_stock"].ToString();
                 costPrice = dataTable.Rows[currentRow]["costprice"].ToString();
                 salePrice = dataTable.Rows[currentRow]["saleprice"].ToString();
                 addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
-
+                unitNameRetail= dataTable.Rows[currentRow]["unit_retail_id"].ToString();
+                unitNameWholesale= dataTable.Rows[currentRow]["unit_wholesale_id"].ToString();
 
                 addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
                 addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
 
-                dtgProducts.Items.Add(new { Id = productId, Name = productName, CategoryName = categoryName, AmountInUnitWholesale = amountInUnitWholesale, AmountInStock = amountInStock, CostPrice = costPrice, SalePrice = salePrice, AddedDate = addedDate, AddedBy = addedByUsername });
+                dtgProducts.Items.Add(new { Id = productId, BarcodeRetail=barcodeRetail, BarcodeWholesale= barcodeWholesale, Name = productName, CategoryName = categoryName, Description = description, AmountInUnitWholesale = amountInUnitWholesale, AmountInStock = amountInStock, CostPrice = costPrice, SalePrice = salePrice, AddedDate = addedDate, AddedBy = addedByUsername, UnitNameRetail = unitNameRetail, UnitNameWholesale = unitNameWholesale });
             }
             #endregion
         }
@@ -99,7 +104,7 @@ namespace GUI
             txtProductSalePriceRetail.Text = "";
             cboProductUnitWholesale.SelectedIndex = -1;
             txtProductBarcodeWholesale.Text = "";
-            txtProductAmount.Text = "";
+            txtProductAmountInUnitWholesale.Text = "";
             txtProductCostPriceWholesale.Text = "";
             txtProductSalePriceWholesale.Text = "";
             txtProductSearch.Text = "";
@@ -109,21 +114,20 @@ namespace GUI
         {
             //Getting the index of a particular row and fill the text boxes with the related columns of the row.
 
-            //int rowIndex = dtgCategories.SelectedIndex;
+            DataRowView drv = (DataRowView)dtgProducts.SelectedItem; //SOMEHOW, THIS CODE AND THE FOLLOWINGS ARE NO LONGER WORKING AFTER BINDING SPECIAL NAMES FOR EACH COLUMNS IN THE DATAGRID:/
 
-            DataRowView drv = (DataRowView)dtgProducts.SelectedItem;
 
             txtProductId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtProductName.Text = (drv["name"]).ToString();//You could also define the column name from your table.
-            cboProductCategory.SelectedValue = (drv[2]).ToString();
-            txtProductDescription.Text = (drv[3]).ToString();
-            txtProductBarcodeRetail.Text = (drv[5]).ToString();
-            txtProductBarcodeWholesale.Text = (drv[6]).ToString();
-            txtProductAmount.Text = (drv[7]).ToString();
-            txtProductCostPriceRetail.Text = (drv[9]).ToString();
-            txtProductSalePriceRetail.Text = (drv[10]).ToString();
-            cboProductUnitRetail.SelectedValue = (drv[11]);
-            cboProductUnitWholesale.SelectedValue = (drv[12]);
+            txtProductBarcodeRetail.Text = (drv[1]).ToString();
+            txtProductBarcodeWholesale.Text = (drv[2]).ToString();
+            txtProductName.Text = (drv[3]).ToString();//You could also define the column name.
+            cboProductCategory.SelectedValue = (drv[4]).ToString();
+            txtProductDescription.Text = (drv[5]).ToString();
+            txtProductAmountInUnitWholesale.Text = (drv[6]).ToString();
+            txtProductCostPriceRetail.Text = (drv[8]).ToString();
+            txtProductSalePriceRetail.Text = (drv[9]).ToString();
+            cboProductUnitRetail.SelectedValue = (drv[12]);
+            cboProductUnitWholesale.SelectedValue = (drv[13]);
             txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
         }
@@ -132,7 +136,7 @@ namespace GUI
         {
             if (txtProductCostPriceRetail.Text != "")
             {
-                int amount = Convert.ToInt32(txtProductAmount.Text);
+                int amount = Convert.ToInt32(txtProductAmountInUnitWholesale.Text);
                 double costPriceRetail = Convert.ToDouble(txtProductCostPriceRetail.Text);
 
                 return amount * costPriceRetail;
@@ -148,7 +152,7 @@ namespace GUI
         {
             if (txtProductSalePriceRetail.Text != "")
             {
-                int amount = Convert.ToInt32(txtProductAmount.Text);
+                int amount = Convert.ToInt32(txtProductAmountInUnitWholesale.Text);
                 double salePriceRetail = Convert.ToDouble(txtProductSalePriceRetail.Text);
 
                 return salePriceRetail * amount;
@@ -254,7 +258,7 @@ namespace GUI
             productCUL.Rating = 0;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
-            productCUL.AmountInUnit = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)
             productCUL.AmountInStock = Convert.ToDecimal(initialAmount);//Amount in stock is always 0 while recording a new product.
             productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
             productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
@@ -288,7 +292,7 @@ namespace GUI
             productCUL.Description = txtProductDescription.Text;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
-            productCUL.AmountInUnit = int.Parse(txtProductAmount.Text);//You can also use ===> Convert.ToInt32(txtProductAmount.Text)
+            productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)
             productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
             productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
             productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
@@ -329,9 +333,9 @@ namespace GUI
             }
         }
 
-        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtProductAmountInUnitWholesale_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmount.Text != "")
+            if (txtProductAmountInUnitWholesale.Text != "")
             {
                 txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
                 txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
@@ -345,7 +349,7 @@ namespace GUI
 
         private void txtProductCostPriceRetail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmount.Text != "")
+            if (txtProductAmountInUnitWholesale.Text != "")
             {
                 txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             }
@@ -353,7 +357,7 @@ namespace GUI
 
         private void txtProductSalePriceRetail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmount.Text != "")
+            if (txtProductAmountInUnitWholesale.Text != "")
             {
                 txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
             }
