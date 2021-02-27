@@ -497,7 +497,7 @@ namespace GUI
         {
             int initialRowIndex = 0;
             int colProductId = 0;
-            int colProductAmount = 5;
+            int colProductAmountDifference = 7;
             decimal productAmountFromDB;
 
 
@@ -509,7 +509,7 @@ namespace GUI
 
                 productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
 
-                productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
+                productCUL.AmountInStock = productAmountFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmountDifference]);//Revert the amount in stock.
 
                 productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
 

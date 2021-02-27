@@ -41,11 +41,50 @@ namespace GUI
 
         private void RefreshProductDataGrid()
         {
-            //Refreshing Data Grid View
+            int firstRowIndex = 0, productId, categoryId, unitRetailId, unitWholesaleId, addedById;
+            string productName, categoryName, amountInUnitWholesale, amountInStock, costPrice, salePrice, unitRetailName, unitWholesaleName, addedDate, addedByUsername;
             DataTable dataTable = productDAL.SelectAllOrByKeyword();
-            dtgProducts.ItemsSource = dataTable.DefaultView;
+            DataTable dataTableCategoryInfo;
+            DataTable dataTableUnitInfo;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
             dtgProducts.AutoGenerateColumns = true;
             dtgProducts.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                productId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                categoryId = Convert.ToInt32(dataTable.Rows[currentRow]["category_id"]);
+                unitRetailId = Convert.ToInt32(dataTable.Rows[currentRow]["unit_retail_id"]);
+                unitWholesaleId = Convert.ToInt32(dataTable.Rows[currentRow]["unit_wholesale_id"]);
+
+                dataTableUnitInfo = unitDAL.GetUnitInfoById(unitRetailId);
+                unitRetailName = dataTableUnitInfo.Rows[firstRowIndex]["Name"].ToString();
+
+                dataTableUnitInfo = unitDAL.GetUnitInfoById(unitWholesaleId);
+                unitWholesaleName = dataTableUnitInfo.Rows[firstRowIndex]["Name"].ToString();
+
+                dataTableCategoryInfo = categoryDAL.GetCategoryInfoById(categoryId);
+                categoryName = dataTableCategoryInfo.Rows[firstRowIndex]["Name"].ToString();
+
+                productName = dataTable.Rows[currentRow]["name"].ToString();
+                amountInUnitWholesale = dataTable.Rows[currentRow]["amount_in_unit"].ToString();
+                amountInStock = dataTable.Rows[currentRow]["amount_in_stock"].ToString();
+                costPrice = dataTable.Rows[currentRow]["costprice"].ToString();
+                salePrice = dataTable.Rows[currentRow]["saleprice"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+
+
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgProducts.Items.Add(new { Id = productId, Name = productName, CategoryName = categoryName, AmountInUnitWholesale = amountInUnitWholesale, AmountInStock = amountInStock, CostPrice = costPrice, SalePrice = salePrice, AddedDate = addedDate, AddedBy = addedByUsername });
+            }
+            #endregion
         }
 
         private void ClearProductTextBox()
