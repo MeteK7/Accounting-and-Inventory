@@ -773,6 +773,7 @@ namespace GUI
             {
                 case MessageBoxResult.Yes:
 
+                    #region DELETE INVOICE
                     int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
                     pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
@@ -780,12 +781,22 @@ namespace GUI
 
                     pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
                     pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
+                    #endregion
 
+                    #region REVERT THE STOCK
+                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    RevertOldAmountInStock();
+                    #endregion
+
+                    #region PREPARE TO THE LAST PAGE
                     DisableTools();
                     ClearProductEntranceTextBox();
                     ClearPointOfSaleDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
+                    #endregion
+
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
