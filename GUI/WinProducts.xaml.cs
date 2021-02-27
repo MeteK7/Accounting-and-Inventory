@@ -26,7 +26,7 @@ namespace GUI
         public WinProducts()
         {
             InitializeComponent();
-            RefreshProductDataGrid();
+            LoadProductDataGrid();
             PopulateCboUnits();
         }
 
@@ -39,8 +39,12 @@ namespace GUI
         {
             this.Close();
         }
+        private void ClearProductsDataGrid()
+        {
+            dtgProducts.Items.Clear();
+        }
 
-        private void RefreshProductDataGrid()
+        private void LoadProductDataGrid()
         {
             int firstRowIndex = 0, productId, categoryId, unitRetailId, unitWholesaleId, addedById;
             string productName, categoryName, unitNameRetail, unitNameWholesale, description, amountInUnitWholesale, amountInStock, costPrice, salePrice, unitRetailName, unitWholesaleName, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
@@ -194,7 +198,7 @@ namespace GUI
             else
             {
                 //Show all products from the database
-                RefreshProductDataGrid();
+                LoadProductDataGrid();
             }
         }
 
@@ -244,18 +248,18 @@ namespace GUI
 
             return userId;
         }
-        private void btnProductAdd_Click(object sender, RoutedEventArgs e)
+
+        private void CheckButtonType(string btnType)
         {
-            int initialAmount = 0;
+            bool isSuccess;
+            string message;
 
             productCUL.Name = txtProductName.Text;
             productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
             productCUL.Description = txtProductDescription.Text;
-            productCUL.Rating = initialAmount;
             productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
             productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
             productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)
-            productCUL.AmountInStock = Convert.ToDecimal(initialAmount);//Amount in stock is always 0 while recording a new product.
             productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
             productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
             productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
@@ -263,13 +267,41 @@ namespace GUI
             productCUL.AddedDate = DateTime.Now;
             productCUL.AddedBy = GetUserId();
 
-            bool isSuccess = productDAL.Insert(productCUL);
+            #region BUTTON CHECKING PART
+            if (btnType == "Add")
+            {
+                int initialAmount = 0;
+                productCUL.Rating = initialAmount;
+                productCUL.AmountInStock = Convert.ToDecimal(initialAmount);//Amount in stock is always 0 while recording a new product.
+
+                isSuccess = productDAL.Insert(productCUL);
+                message = "Product has been added successfully.";
+            }
+            else
+            {
+                productCUL.Id = Convert.ToInt32(txtProductId.Text);
+
+                if (btnType == "Update")
+                {
+                    isSuccess = productDAL.Update(productCUL);
+                    message = "Product has been updated successfully.";
+                }
+
+                else
+                {
+                    isSuccess = productDAL.Delete(productCUL);
+                    message = "Product has been deleted successfully.";
+                }
+            }
+
+            #endregion
 
             if (isSuccess == true)
             {
-                MessageBox.Show("Product has been added successfully.");
+                MessageBox.Show(message);
+                ClearProductsDataGrid();
                 ClearProductTextBox();
-                RefreshProductDataGrid();
+                LoadProductDataGrid();
             }
 
             else
@@ -277,56 +309,19 @@ namespace GUI
                 MessageBox.Show("Something went wrong :(");
             }
         }
+        private void btnProductAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CheckButtonType("Add");
+        }
 
         private void btnProductUpdate_Click(object sender, RoutedEventArgs e)
         {
-            //Getting values from the WinProducts
-
-            productCUL.Id = Convert.ToInt32(txtProductId.Text);
-            productCUL.Name = txtProductName.Text;
-            productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
-            productCUL.Description = txtProductDescription.Text;
-            productCUL.BarcodeRetail = txtProductBarcodeRetail.Text;
-            productCUL.BarcodeWholesale = txtProductBarcodeWholesale.Text;
-            productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)
-            productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
-            productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
-            productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
-            productCUL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
-            productCUL.AddedDate = DateTime.Now;
-            productCUL.AddedBy = GetUserId();
-
-            //Updating Data into the database
-            bool isSuccess = productDAL.Update(productCUL);
-
-            if (isSuccess == true)
-            {
-                MessageBox.Show("Product successfully updated");
-                ClearProductTextBox();
-                RefreshProductDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Failed to update product");
-            }
+            CheckButtonType("Update");
         }
 
         private void btnProductDelete_Click(object sender, RoutedEventArgs e)
         {
-            productCUL.Id = Convert.ToInt32(txtProductId.Text);
-
-            bool isSuccess = productDAL.Delete(productCUL);
-
-            if (isSuccess == true)
-            {
-                MessageBox.Show("Product has been deleted successfully.");
-                ClearProductTextBox();
-                RefreshProductDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong:/");
-            }
+            CheckButtonType("Delete");
         }
 
         private void txtProductAmountInUnitWholesale_TextChanged(object sender, TextChangedEventArgs e)

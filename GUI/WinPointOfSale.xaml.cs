@@ -427,7 +427,7 @@ namespace GUI
             txtBasketGrandTotal.Text = "0";
         }
 
-        private void ClearPointOfSaleDataGrid()
+        private void ClearProductsDataGrid()
         {
             dgProducts.Items.Clear();
         }
@@ -696,7 +696,7 @@ namespace GUI
         private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
             ClearBasketTextBox();
-            ClearPointOfSaleDataGrid();
+            ClearProductsDataGrid();
 
             int invoiceNo, increment = 1;
 
@@ -754,7 +754,7 @@ namespace GUI
                 case MessageBoxResult.Yes:
                     DisableTools();
                     ClearProductEntranceTextBox();
-                    ClearPointOfSaleDataGrid();
+                    ClearProductsDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
                     break;
@@ -774,7 +774,7 @@ namespace GUI
 
             if (currentInvoiceNo != firstInvoiceNo)
             {
-                ClearPointOfSaleDataGrid();
+                ClearProductsDataGrid();
                 int prevInvoice = Convert.ToInt32(lblInvoiceNo.Content) - 1;
                 invoiceArrow = 0;//0 means customer has clicked the previous button.
                 LoadPastInvoice(prevInvoice, invoiceArrow);
@@ -787,7 +787,7 @@ namespace GUI
 
             if (currentInvoiceNo != lastInvoiceNo)
             {
-                ClearPointOfSaleDataGrid();
+                ClearProductsDataGrid();
                 int nextInvoice = Convert.ToInt32(lblInvoiceNo.Content) + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
@@ -833,7 +833,7 @@ namespace GUI
                     #region PREPARE TO THE LAST PAGE
                     DisableTools();
                     ClearProductEntranceTextBox();
-                    ClearPointOfSaleDataGrid();
+                    ClearProductsDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
                     #endregion
