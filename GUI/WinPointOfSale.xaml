@@ -415,7 +415,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnEdit_Click" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEditRecord" Content="EDIT" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnEditRecord_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -429,7 +429,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnDelete_Click" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDeleteRecord" Content="DELETE" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnDeleteRecord_Click" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>

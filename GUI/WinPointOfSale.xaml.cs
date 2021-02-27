@@ -136,6 +136,8 @@ namespace GUI
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnEditRecord.IsEnabled = false;//There cannot be any editable records for the first run.
+            btnDeleteRecord.IsEnabled = false;//There cannot be any deletible records for the first run.
             btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
@@ -164,8 +166,8 @@ namespace GUI
         private void EnableButtonsOnClickSaveCancel()
         {
             btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
-            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
-            btnDelete.IsEnabled = true;
+            btnEditRecord.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnDeleteRecord.IsEnabled = true;
             btnPrev.IsEnabled = true;
             btnNext.IsEnabled = true;
         }
@@ -192,8 +194,8 @@ namespace GUI
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnCancel.IsEnabled = true;
-            btnEdit.IsEnabled = false;
-            btnDelete.IsEnabled = false;
+            btnEditRecord.IsEnabled = false;
+            btnDeleteRecord.IsEnabled = false;
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
@@ -738,7 +740,7 @@ namespace GUI
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
@@ -807,7 +809,7 @@ namespace GUI
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
             switch (result)

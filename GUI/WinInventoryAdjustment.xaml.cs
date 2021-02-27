@@ -149,6 +149,8 @@ namespace GUI
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnEditRecord.IsEnabled = false;//There cannot be any editable records for the first run.
+            btnDeleteRecord.IsEnabled = false;//There cannot be any deletible records for the first run.
             btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
@@ -213,7 +215,7 @@ namespace GUI
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnCancel.IsEnabled = true;
-            btnEdit.IsEnabled = false;
+            btnEditRecord.IsEnabled = false;
             btnDeleteRecord.IsEnabled = false;
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
@@ -252,7 +254,7 @@ namespace GUI
         private void EnableButtonsOnClickSaveCancel()
         {
             btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
-            btnEdit.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnEditRecord.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
             btnDeleteRecord.IsEnabled = true;
             btnPrev.IsEnabled = true;
             btnNext.IsEnabled = true;
@@ -565,7 +567,7 @@ namespace GUI
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_inventory_adjustment_detailed at once.
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEditRecord, then edit the specific invoice's products in tbl_inventory_adjustment_detailed at once.
                     {
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
@@ -613,7 +615,7 @@ namespace GUI
 
                 userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
-                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEditRecord, then update the specific invoice information in tbl_pos at once.
                 {
                     isSuccess = inventoryAdjustmentDAL.Update(inventoryAdjustmentCUL);
                 }

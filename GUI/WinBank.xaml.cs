@@ -25,7 +25,7 @@ namespace GUI
         public WinBank()
         {
             InitializeComponent();
-            RefreshBankDataGrid();
+            LoadBankDataGrid();
         }
 
         BankCUL bankCUL = new BankCUL();
@@ -44,7 +44,7 @@ namespace GUI
             {
                 MessageBox.Show("New bank inserted successfully.");
                 ClearBankTextBox();
-                RefreshBankDataGrid();
+                LoadBankDataGrid();
             }
             else
             {
@@ -65,7 +65,7 @@ namespace GUI
             {
                 MessageBox.Show("Bank successfully updated");
                 ClearBankTextBox();
-                RefreshBankDataGrid();
+                LoadBankDataGrid();
             }
             else
             {
@@ -83,7 +83,7 @@ namespace GUI
             {
                 MessageBox.Show("Bank has been deleted successfully.");
                 ClearBankTextBox();
-                RefreshBankDataGrid();
+                LoadBankDataGrid();
             }
             else
             {
@@ -91,7 +91,7 @@ namespace GUI
             }
         }
 
-        private void RefreshBankDataGrid()
+        private void LoadBankDataGrid()
         {
             //Refreshing Data Grid View
             DataTable dataTable = bankDAL.Select();
@@ -123,10 +123,6 @@ namespace GUI
 
         private void DtgBanksIndexChanged()
         {
-            //Getting the index of a particular row and fill the text boxes with the related columns of the row.
-
-            //int rowIndex = dtgCategories.SelectedIndex;
-
             DataRowView drv = (DataRowView)dtgBanks.SelectedItem;
 
             txtBankId.Text = (drv[0]).ToString();//Selecting the specific row
@@ -166,7 +162,7 @@ namespace GUI
             else
             {
                 //Show all banks from the database
-                RefreshBankDataGrid();
+                LoadBankDataGrid();
             }
         }
 
