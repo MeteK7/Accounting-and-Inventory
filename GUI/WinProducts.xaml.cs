@@ -108,66 +108,24 @@ namespace GUI
             txtProductSearch.Text = "";
         }
 
-        private void DtgProductsIndexChanged()
+        private void DtgProductsIndexChanged()//Getting the index of a particular row and fill the text boxes with the related columns of the row.
         {
-            //Getting the index of a particular row and fill the text boxes with the related columns of the row.
-
+            object row = dtgProducts.SelectedItem;
             int selectedRow = dtgProducts.SelectedIndex, rowId=0, rowBarcodeRetail=1, rowBarcodeWholesale=2, rowProductName=3,rowProductCategory=4, rowProductDescription=5, rowPrAmountInUnWhol=6, rowPrCostPriceRet=8,rowPrSalePriceRet=9,rowProductUnitRet=12,rowProductUnitWhol=13;
-            TextBlock cellContent;
-            DataGridRow row = (DataGridRow)dtgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRow);
 
-            cellContent = dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock;
-            txtProductId.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock;
-            txtProductBarcodeRetail.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowBarcodeWholesale].GetCellContent(row) as TextBlock;
-            txtProductBarcodeWholesale.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock;
-            txtProductName.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock;
-            cboProductCategory.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock;
-            txtProductDescription.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowPrAmountInUnWhol].GetCellContent(row) as TextBlock;
-            txtProductAmountInUnitWholesale.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock;
-            txtProductCostPriceRetail.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock;
-            txtProductSalePriceRetail.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock;
-            cboProductUnitRetail.Text = cellContent.Text;//Selecting the specific row
-
-            cellContent = dtgProducts.Columns[rowProductUnitWhol].GetCellContent(row) as TextBlock;
-            cboProductUnitWholesale.Text = cellContent.Text;//Selecting the specific row
-
+            txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductBarcodeWholesale.Text = (dtgProducts.Columns[rowBarcodeWholesale].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductName.Text = (dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            cboProductCategory.Text = (dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductDescription.Text = (dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductAmountInUnitWholesale.Text = (dtgProducts.Columns[rowPrAmountInUnWhol].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductCostPriceRetail.Text = (dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            txtProductSalePriceRetail.Text = (dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            cboProductUnitRetail.Text = (dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
+            cboProductUnitWholesale.Text = (dtgProducts.Columns[rowProductUnitWhol].GetCellContent(row) as TextBlock).Text;//Selecting the specific row
             txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
-
-            //DataRowView drv = (DataRowView)dtgProducts.SelectedItem; //SOMEHOW, THIS CODE AND THE FOLLOWINGS ARE NO LONGER WORKING AFTER BINDING SPECIAL NAMES FOR EACH COLUMNS IN THE DATAGRID:/
-
-
-            //txtProductId.Text = (drv[0]).ToString();//Selecting the specific row
-            //txtProductBarcodeRetail.Text = (drv[1]).ToString();
-            //txtProductBarcodeWholesale.Text = (drv[2]).ToString();
-            //txtProductName.Text = (drv[3]).ToString();//You could also define the column name.
-            //cboProductCategory.SelectedValue = (drv[4]).ToString();
-            //txtProductDescription.Text = (drv[5]).ToString();
-            //txtProductAmountInUnitWholesale.Text = (drv[6]).ToString();
-            //txtProductCostPriceRetail.Text = (drv[8]).ToString();
-            //txtProductSalePriceRetail.Text = (drv[9]).ToString();
-            //cboProductUnitRetail.SelectedValue = (drv[12]);
-            //cboProductUnitWholesale.SelectedValue = (drv[13]);
-            //txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
-            //txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
         }
 
         private double CalculateTotalCostPrice()
