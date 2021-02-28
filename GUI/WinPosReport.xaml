@@ -89,7 +89,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Label x:Name="lblTopProducts" Content="TOP 20 PRODUCTS" HorizontalAlignment="Left" Margin="40,350,0,0" VerticalAlignment="Top" Height="51" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
-        <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="393" Margin="40,419,0,0" VerticalAlignment="Top" Width="586">
+        <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="393" Margin="40,419,0,0" VerticalAlignment="Top" Width="586" IsEnabled="False">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
             </DataGrid.Background>
