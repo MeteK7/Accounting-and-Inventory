@@ -55,5 +55,10 @@ namespace GUI
 
             lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
         }
+
+        private void LoadDataGrid()
+        {
+
+        }
     }
 }

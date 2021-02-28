@@ -13,7 +13,7 @@ namespace DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
-        #region Insert Data in Database
+        #region INSERT METHOD
         public bool Insert(PosReportCUL posReportCUL)
         {
             bool isSuccess = false;
