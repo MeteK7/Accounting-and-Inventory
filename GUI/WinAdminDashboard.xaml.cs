@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CUL;
+using DAL;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +23,27 @@ namespace GUI
     /// </summary>
     public partial class WinAdminDashboard : Window
     {
+        PosReportDAL posReportDAL = new PosReportDAL();
+        PosReportCUL posReportCUL = new PosReportCUL();
         public WinAdminDashboard()
         {
             InitializeComponent();
             lblLoggedInUser.Content = WinLogin.loggedIn;
             StartClock();
+            GenerateRecordDate();
+        }
+
+        private void GenerateRecordDate()
+        {
+            string dateToday = DateTime.Now.ToString("MM/dd/yyyy");
+
+            DataTable dateTableReportDate = posReportDAL.CheckReportExistance();
+
+            if (dateTableReportDate.Columns["sale_date"].ToString() != dateToday)
+            {
+                posReportCUL.SaleDate =dateToday;
+                posReportDAL.Insert(posReportCUL);
+            }
         }
 
         private void StartClock()

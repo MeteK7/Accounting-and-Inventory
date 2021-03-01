@@ -9,6 +9,6 @@ namespace CUL
     public class PosReportCUL
     {
         public int Id { get; set; }
-        public DateTime SaleDate { get; set; }
+        public string SaleDate { get; set; }
     }
 }

@@ -15,31 +15,19 @@ namespace DAL
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
         #region INSERT METHOD
-        public bool Insert(PosReportCUL posReportCUL)
+        public void Insert(PosReportCUL posReportCUL)
         {
-            bool isSuccess = false;
             SqlConnection conn = new SqlConnection(connString);
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_report (id, sale_date) VALUES (@id, @sale_date)";
+                String sqlQuery = "INSERT INTO tbl_pos_report (sale_date) VALUES (@sale_date)";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", posReportCUL.Id);
                 cmd.Parameters.AddWithValue("@sale_date", posReportCUL.SaleDate);
 
                 conn.Open();
 
                 int rows = cmd.ExecuteNonQuery();
-
-                //If the query is executed successfully, then the value of rows will be greater than 0. Otherwise, it will be less than 0.
-                if (rows > 0)
-                {
-                    isSuccess = true;
-                }
-                else
-                {
-                    isSuccess = false;
-                }
             }
 
             catch (Exception ex)
@@ -51,8 +39,6 @@ namespace DAL
             {
                 conn.Close();
             }
-
-            return isSuccess;
         }
         #endregion
 
@@ -91,5 +77,39 @@ namespace DAL
         }
         #endregion
 
+        #region CHECK RECORD EXISTANCE
+        public DataTable CheckReportExistance()
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT TOP 1 * FROM tbl_pos_report ORDER BY id DESC";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
     }
 }
