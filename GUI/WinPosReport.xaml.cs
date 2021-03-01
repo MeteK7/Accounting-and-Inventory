@@ -28,6 +28,8 @@ namespace GUI
         ProductCUL productCUL = new ProductCUL();
         PosReportDAL posReportDAL = new PosReportDAL();
         PosReportDetailDAL posReportDetailDAL = new PosReportDetailDAL();
+        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
+        PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
 
         public WinPosReport()
         {
@@ -45,18 +47,18 @@ namespace GUI
         {
             bool cash = true, credit = false;
 
-            lblCashSales.Content = productDAL.CountPaymentTypeByToday(cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
+            lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
 
-            lblCreditSales.Content = productDAL.CountPaymentTypeByToday(credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
+            lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
 
-            DataTable dataTableProduct = productDAL.FetchReportByToday();
+            DataTable dataTablePosToday = pointOfSaleDAL.FetchReportByToday();
 
-            for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
+            for (int rowIndex = 0; rowIndex < dataTablePosToday.Rows.Count; rowIndex++)
             {
-                lblCostVar.Content = Convert.ToDecimal(lblCostVar.Content) + Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["cost_total"]);
-                lblRevenueVar.Content = Convert.ToDecimal(lblRevenueVar.Content) + Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["grand_total"]);
+                lblCostVar.Content = Convert.ToDecimal(lblCostVar.Content) + Convert.ToDecimal(dataTablePosToday.Rows[rowIndex]["cost_total"]);
+                lblRevenueVar.Content = Convert.ToDecimal(lblRevenueVar.Content) + Convert.ToDecimal(dataTablePosToday.Rows[rowIndex]["grand_total"]);
             }
 
             lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
@@ -65,27 +67,32 @@ namespace GUI
         private void LoadDataGrid()
         {
             string productId;
-            int rowIndex = 0;
+            int initialIndex = 0;
 
             lvwTopProducts.Items.Clear();
 
-            DataTable dateTimePosReport = posReportDAL.FetchIdByDate(DateTime.Now.ToString("MM/dd/yyyy"));
-            DataTable dataTablePosReportDetail = posReportDetailDAL.SearchBySaleDateId(Convert.ToInt32(dateTimePosReport.Rows[rowIndex]["id"]));
+            DataTable dataTablePosToday = pointOfSaleDAL.FetchReportByToday();
+            DataTable dataTablePosDetailToday;
             DataTable dataTableProduct;
 
-            for (rowIndex = 0; rowIndex < dataTablePosReportDetail.Rows.Count; rowIndex++)
+            for (int posIndex = 0; posIndex < dataTablePosToday.Rows.Count; posIndex++)
             {
-                productId = dataTablePosReportDetail.Rows[rowIndex]["product_id"].ToString();
-                dataTableProduct = productDAL.SearchById(productId);
+                dataTablePosDetailToday = pointOfSaleDetailDAL.Search(Convert.ToInt32(dataTablePosToday.Rows[posIndex]["id"]));
 
-                lvwTopProducts.Items.Add(
-                    new PosReportDetailCUL()
-                    {
-                        SaleDateId = Convert.ToInt32(dataTablePosReportDetail.Rows[rowIndex]["report_id"]),
-                        ProductId = Convert.ToInt32(dataTablePosReportDetail.Rows[rowIndex]["product_id"]),
-                        ProductName= dataTableProduct.Rows[rowIndex]["name"].ToString(),
-                        ProductAmountSold = Convert.ToDecimal(dataTablePosReportDetail.Rows[rowIndex]["product_amount_sold"]),
-                    });
+                for (int posDetailIndex = 0; posDetailIndex < dataTablePosDetailToday.Rows.Count; posDetailIndex++)
+                {
+                    productId = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
+                    dataTableProduct = productDAL.SearchById(productId);
+
+                    lvwTopProducts.Items.Add(
+                        new PosReportDetailCUL()
+                        {
+                            InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
+                            //ProductId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]),
+                            ProductName = dataTableProduct.Rows[initialIndex]["name"].ToString(),
+                            ProductAmountSold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]),
+                        });
+                }
             }
         }
     }

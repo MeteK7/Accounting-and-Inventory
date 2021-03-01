@@ -61,7 +61,7 @@ namespace GUI
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePos = pointOfSaleDAL.Search(invoiceNo);
+                DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceNo);
                 DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
                 DataTable dataTableUnitInfo;
                 DataTable dataTableProduct;
@@ -297,7 +297,7 @@ namespace GUI
                 int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
                 int userId = GetUserId();
 
-                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableLastInvoice = GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
@@ -361,7 +361,7 @@ namespace GUI
 
                     pointOfSaleDetailCUL.ProductId = productId;
                     pointOfSaleDetailCUL.InvoiceNo = invoiceId;
-                    pointOfSaleDetailCUL.AddedDate = dateTime;
+                    //pointOfSaleDetailCUL.AddedDate = dateTime;
                     pointOfSaleDetailCUL.AddedBy = addedBy;
                     pointOfSaleDetailCUL.ProductRate = productRate;
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
@@ -707,11 +707,11 @@ namespace GUI
             lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
-        private DataTable GetLastInvoice()
+        private DataTable GetLastInvoiceInfo()
         {
             //int specificRowIndex = 0, invoiceNo;
 
-            DataTable dataTable = pointOfSaleDAL.Search();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
+            DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
 
             return dataTable;
         }
@@ -720,7 +720,7 @@ namespace GUI
         {
             int specificRowIndex = 0, invoiceNo;
 
-            DataTable dataTable = pointOfSaleDAL.Search();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
+            DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
 
             if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
             {

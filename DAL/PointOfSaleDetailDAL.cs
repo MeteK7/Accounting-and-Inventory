@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (/*id,*/ product_id, invoice_no, product_unit_id, added_date, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (/*@id,*/ @product_id, @invoice_no, @product_unit_id, @added_date, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (/*id,*/ product_id, invoice_no, product_unit_id, /*added_date,*/ added_by, rate, amount, product_cost_price, product_sale_price) VALUES (/*@id,*/ @product_id, @invoice_no, @product_unit_id, /*@added_date,*/ @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -62,7 +62,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfSaleDetailCUL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfSaleDetailCUL.ProductUnitId);
-                cmd.Parameters.AddWithValue("@added_date", pointOfSaleDetailCUL.AddedDate);
+                //cmd.Parameters.AddWithValue("@added_date", pointOfSaleDetailCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailCUL.ProductRate);
                 cmd.Parameters.AddWithValue("@amount", pointOfSaleDetailCUL.ProductAmount);
@@ -233,7 +233,7 @@ namespace KabaAccounting.DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";//SQL query to get the last id of rows in the table.
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {

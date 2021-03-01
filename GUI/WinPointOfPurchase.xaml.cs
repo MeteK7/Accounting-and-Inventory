@@ -377,7 +377,7 @@ namespace GUI
                     //pointOfPurchaseDetailCUL.Id = newInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
                     pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo;
-                    pointOfPurchaseDetailCUL.AddedDate = dateTime;
+                    //pointOfPurchaseDetailCUL.AddedDate = dateTime;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;

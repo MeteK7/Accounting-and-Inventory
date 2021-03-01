@@ -1,5 +1,6 @@
 ﻿using CUL;
 using DAL;
+using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,26 +26,27 @@ namespace GUI
     {
         PosReportDAL posReportDAL = new PosReportDAL();
         PosReportCUL posReportCUL = new PosReportCUL();
+        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         public WinAdminDashboard()
         {
             InitializeComponent();
             lblLoggedInUser.Content = WinLogin.loggedIn;
             StartClock();
-            GenerateRecordDate();
+            //GenerateRecordDate();
         }
 
-        private void GenerateRecordDate()
-        {
-            string dateToday = DateTime.Now.ToString("MM/dd/yyyy");
+        //private void GenerateRecordDate()
+        //{
+        //    string dateToday = DateTime.Now.ToString("MM/dd/yyyy");
 
-            DataTable dateTableReportDate = posReportDAL.CheckReportExistance();
+        //    DataTable dateTableReportDate = pointOfSaleDAL.CheckReportExistance();
 
-            if (dateTableReportDate.Columns["sale_date"].ToString() != dateToday)
-            {
-                posReportCUL.SaleDate =dateToday;
-                posReportDAL.Insert(posReportCUL);
-            }
-        }
+        //    if (dateTableReportDate.Columns["sale_date"].ToString() != dateToday)
+        //    {
+        //        posReportCUL.SaleDate =dateToday;
+        //        posReportDAL.Insert(posReportCUL);
+        //    }
+        //}
 
         private void StartClock()
         {

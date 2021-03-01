@@ -192,8 +192,84 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
+        #region COUNT BY DAY METHOD
+        public int CountPaymentTypeByToday(bool cashOrCredit)
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            int counter = 0;
+            string sqlQuery;
+
+            try
+            {
+                if (cashOrCredit == true)//Get the cash sales for today if the cashOrCredit boolean variable is true
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=1";//This query counts the records from the beginning of the day to the rest of the day.
+
+                }
+                else//Get the credit sales for today if the cashOrCredit boolean variable is false
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=2";//This query counts the records from the beginning of the day to the rest of the day.
+                }
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read(); // read first row
+                    counter = sqlDataReader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return counter;
+        }
+        #endregion
+
+        #region FETCH BY TODAY METHOD
+        public DataTable FetchReportByToday()
+        {
+            //Creating database connection
+            SqlConnection conn = new SqlConnection(connString);
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                //Writing SQL Query to get all the datas from database
+                string sqlQuery = "Select * FROM tbl_pos WHERE added_date>Convert(date, getdate())";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                conn.Open();
+
+                //Adding the value from dataAdapter into the dataTable.
+                dataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
+
+
         #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
-        public DataTable Search(int invoiceNo=0)//Optional parameter
+        public DataTable GetByIdOrLastId(int invoiceNo=0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -231,6 +307,41 @@ namespace KabaAccounting.DAL
                     finally
                     {
                         conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region CHECK RECORD EXISTANCE
+        public DataTable CheckReportExistance()
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT TOP 1 * FROM tbl_pos ORDER BY id DESC";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
                     }
                     return dataTable;
                 }

@@ -8,6 +8,7 @@ namespace CUL
 {
     public class PosReportDetailCUL
     {
+        public int InvoiceId { get; set; }
         public int SaleDateId { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }//Filled by ProductDAL.
