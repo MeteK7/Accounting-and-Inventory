@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,41 @@ namespace DAL
     public class PosReportDetailDAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+
+        #region SEARCH BY TODAY METHOD
+        public DataTable SearchBySaleDateId(int saleDateId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "Select * FROM tbl_pos_report_detailed WHERE sale_date_id= " + saleDateId + "";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
 
         #region INSERT METHOD
         public bool Insert(PosReportDetailCUL posReportDetailCUL)
@@ -26,7 +62,7 @@ namespace DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@report_id", posReportDetailCUL.ReportId);
+                cmd.Parameters.AddWithValue("@report_id", posReportDetailCUL.SaleDateId);
                 cmd.Parameters.AddWithValue("@product_id", posReportDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_amount_sold", posReportDetailCUL.ProductAmountSold);
 

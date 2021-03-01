@@ -1,4 +1,6 @@
-﻿using KabaAccounting.CUL;
+﻿using CUL;
+using DAL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -24,10 +26,14 @@ namespace GUI
     {
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
+        PosReportDAL posReportDAL = new PosReportDAL();
+        PosReportDetailDAL posReportDetailDAL = new PosReportDetailDAL();
+
         public WinPosReport()
         {
             InitializeComponent();
             LoadRectangles();
+            LoadDataGrid();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -58,7 +64,29 @@ namespace GUI
 
         private void LoadDataGrid()
         {
+            string productId;
+            int rowIndex = 0;
 
+            lvwTopProducts.Items.Clear();
+
+            DataTable dateTimePosReport = posReportDAL.FetchIdByDate(DateTime.Now.ToString("MM/dd/yyyy"));
+            DataTable dataTablePosReportDetail = posReportDetailDAL.SearchBySaleDateId(Convert.ToInt32(dateTimePosReport.Rows[rowIndex]["id"]));
+            DataTable dataTableProduct;
+
+            for (rowIndex = 0; rowIndex < dataTablePosReportDetail.Rows.Count; rowIndex++)
+            {
+                productId = dataTablePosReportDetail.Rows[rowIndex]["product_id"].ToString();
+                dataTableProduct = productDAL.SearchById(productId);
+
+                lvwTopProducts.Items.Add(
+                    new PosReportDetailCUL()
+                    {
+                        SaleDateId = Convert.ToInt32(dataTablePosReportDetail.Rows[rowIndex]["report_id"]),
+                        ProductId = Convert.ToInt32(dataTablePosReportDetail.Rows[rowIndex]["product_id"]),
+                        ProductName= dataTableProduct.Rows[rowIndex]["name"].ToString(),
+                        ProductAmountSold = Convert.ToDecimal(dataTablePosReportDetail.Rows[rowIndex]["product_amount_sold"]),
+                    });
+            }
         }
     }
 }
