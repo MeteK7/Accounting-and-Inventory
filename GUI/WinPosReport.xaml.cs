@@ -3,6 +3,7 @@ using DAL;
 using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -68,6 +69,8 @@ namespace GUI
         {
             string productId;
             int initialIndex = 0;
+            bool addNew = true;
+            IEnumerable items;
 
             lvwTopProducts.Items.Clear();
 
@@ -81,17 +84,37 @@ namespace GUI
 
                 for (int posDetailIndex = 0; posDetailIndex < dataTablePosDetailToday.Rows.Count; posDetailIndex++)
                 {
-                    productId = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
-                    dataTableProduct = productDAL.SearchById(productId);
+                    addNew = true;
+                    items = this.lvwTopProducts.Items;
 
-                    lvwTopProducts.Items.Add(
-                        new PosReportDetailCUL()
+
+                    foreach (PosReportDetailCUL product in items)
+                    {
+                        MessageBox.Show(product.ProductId.ToString());
+                        string temp = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
+                        MessageBox.Show(temp);
+                        if (product.ProductId==Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]))
                         {
-                            InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
-                            //ProductId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]),
-                            ProductName = dataTableProduct.Rows[initialIndex]["name"].ToString(),
-                            ProductAmountSold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]),
-                        });
+                            product.ProductAmountSold += Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]);
+                            addNew = false;
+                            break;
+                        }
+                    }
+
+                    if (addNew == true)
+                    {
+                        productId = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
+                        dataTableProduct = productDAL.SearchById(productId);
+
+                        lvwTopProducts.Items.Add(
+                            new PosReportDetailCUL()
+                            {
+                                //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
+                                ProductId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]),
+                                ProductName = dataTableProduct.Rows[initialIndex]["name"].ToString(),
+                                ProductAmountSold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]),
+                            });
+                    }
                 }
             }
         }
