@@ -90,9 +90,9 @@ namespace GUI
 
                     foreach (PosReportDetailCUL product in items)
                     {
-                        MessageBox.Show(product.ProductId.ToString());
+                        //MessageBox.Show(product.ProductId.ToString());
                         string temp = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
-                        MessageBox.Show(temp);
+                        //MessageBox.Show(temp);
                         if (product.ProductId==Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]))
                         {
                             product.ProductAmountSold += Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]);
