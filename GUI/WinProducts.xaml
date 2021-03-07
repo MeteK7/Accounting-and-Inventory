@@ -30,11 +30,19 @@
             </Button>
         </DockPanel>
         <Label x:Name="lblProductId" Content="Product ID" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" Width="86"/>
-        <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="26" Margin="100,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" IsReadOnly="True"/>
+        <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="26" Margin="100,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" IsReadOnly="True">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.6"/>
+            </TextBox.Background>
+        </TextBox>
         <Label x:Name="lblProductCategory" Content="Category" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="85"/>
         <ComboBox x:Name="cboProductCategory" HorizontalAlignment="Left" Margin="100,92,0,0" VerticalAlignment="Top" Width="212" Height="26" Loaded="cboProductCategory_Loaded"/>
         <Label x:Name="lblProductDescription" Content="Description" HorizontalAlignment="Left" Margin="9,134,0,0" VerticalAlignment="Top" Width="86"/>
-        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="310" Margin="100,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212"/>
+        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="310" Margin="100,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.6"/>
+            </TextBox.Background>
+        </TextBox>
         <TabControl x:Name="tabProductSalesType" HorizontalAlignment="Left" Height="276" Margin="10,449,0,0" VerticalAlignment="Top" Width="302">
             <TabItem x:Name="tabItemRetail" Header="Retail">
                 <Grid Background="#FFE5E5E5">
@@ -66,8 +74,15 @@
             </TabItem>
         </TabControl>
         <Label x:Name="lblProductSearch" Content="Product Search" HorizontalAlignment="Left" Margin="317,51,0,0" VerticalAlignment="Top" Width="102"/>
-        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="424,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="623" TextChanged="txtProductSearch_TextChanged"/>
+        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="424,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="623" TextChanged="txtProductSearch_TextChanged">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.6"/>
+            </TextBox.Background>
+        </TextBox>
         <DataGrid x:Name="dtgProducts" HorizontalAlignment="Left" Height="573" Margin="317,92,0,0" VerticalAlignment="Top" Width="730" KeyUp="dtgProducts_KeyUp" KeyDown="dtgProducts_KeyDown" MouseLeftButtonUp="dtgProducts_MouseLeftButtonUp">
+            <DataGrid.Background>
+                <SolidColorBrush Color="#FFF0F0F0" Opacity="0.6"/>
+            </DataGrid.Background>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
                 <DataGridTextColumn Binding="{Binding BarcodeRetail}" ClipboardContentBinding="{x:Null}" Header="Barcode Retail"/>

@@ -30,11 +30,23 @@
             </Button>
         </DockPanel>
         <Label x:Name="lblCategoryId" Content="Category ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="137,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True"/>
+        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="137,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.7"/>
+            </TextBox.Background>
+        </TextBox>
         <Label x:Name="lblTitle" Content="Title" HorizontalAlignment="Left" Margin="21,92,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="138,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="138,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.7"/>
+            </TextBox.Background>
+        </TextBox>
         <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="21,133,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="143" Margin="138,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="143" Margin="138,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.7"/>
+            </TextBox.Background>
+        </TextBox>
         <Button x:Name="btnCategoryAdd" Content="ADD" HorizontalAlignment="Left" Margin="138,518,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF00ADED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnCategoryAdd_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/plus (3).png" Stretch="Uniform">
@@ -77,9 +89,17 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <DataGrid x:Name="dtgCategories" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" MouseLeftButtonUp="dtgCategories_MouseLeftButtonUp" KeyUp="dtgCategories_KeyUp" KeyDown="dtgCategories_KeyDown"/>
+        <DataGrid x:Name="dtgCategories" HorizontalAlignment="Left" Height="412" Margin="363,92,0,0" VerticalAlignment="Top" Width="460" MouseLeftButtonUp="dtgCategories_MouseLeftButtonUp" KeyUp="dtgCategories_KeyUp" KeyDown="dtgCategories_KeyDown">
+            <DataGrid.Background>
+                <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
+            </DataGrid.Background>
+        </DataGrid>
         <Label x:Name="lblCategorySearch" Content="Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="84" Foreground="White"/>
-        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtCategorySearch_TextChanged"/>
+        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtCategorySearch_TextChanged">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.7"/>
+            </TextBox.Background>
+        </TextBox>
 
     </Grid>
 </Window>

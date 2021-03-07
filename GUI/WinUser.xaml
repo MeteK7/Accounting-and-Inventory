@@ -104,7 +104,11 @@
             </DataGrid.Background>
         </DataGrid>
         <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="423,51,0,0" VerticalAlignment="Top" Width="84" Height="32"/>
-        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="32" Margin="512,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" TextChanged="txtUserSearch_TextChanged"/>
+        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="32" Margin="512,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" TextChanged="txtUserSearch_TextChanged">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.77"/>
+            </TextBox.Background>
+        </TextBox>
         <Button x:Name="btnUserAdd" Content="ADD" HorizontalAlignment="Left" Margin="423,647,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnUserAdd_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/add-user.png" Stretch="Uniform">
