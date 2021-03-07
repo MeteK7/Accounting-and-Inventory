@@ -60,13 +60,13 @@ namespace GUI
                         }
                         break;
 
-                    case "User":
-                        {
-                            this.Hide();
-                            WinUserDashboard winUser = new WinUserDashboard();
-                            winUser.Show();
-                        }
-                        break;
+                    //case "User":
+                    //    {
+                    //        this.Hide();
+                    //        WinUserDashboard winUser = new WinUserDashboard();
+                    //        winUser.Show();
+                    //    }
+                    //    break;
 
                     default:
                         MessageBox.Show("Invalid User Type.");

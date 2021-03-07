@@ -46,9 +46,6 @@
     <Compile Update="WinUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="WinUserDashboard.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="WinAdminDashboard.xaml">
@@ -88,9 +85,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinUser.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WinUserDashboard.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

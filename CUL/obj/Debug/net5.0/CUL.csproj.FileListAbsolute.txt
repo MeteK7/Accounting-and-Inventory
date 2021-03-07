@@ -2,7 +2,6 @@ C:\Lessons\C# Programs\KabaAccounting\CUL\bin\Debug\net5.0\CUL.deps.json
 C:\Lessons\C# Programs\KabaAccounting\CUL\bin\Debug\net5.0\CUL.dll
 C:\Lessons\C# Programs\KabaAccounting\CUL\bin\Debug\net5.0\ref\CUL.dll
 C:\Lessons\C# Programs\KabaAccounting\CUL\bin\Debug\net5.0\CUL.pdb
-C:\Lessons\C# Programs\KabaAccounting\CUL\obj\Debug\net5.0\CUL.csprojAssemblyReference.cache
 C:\Lessons\C# Programs\KabaAccounting\CUL\obj\Debug\net5.0\CUL.GeneratedMSBuildEditorConfig.editorconfig
 C:\Lessons\C# Programs\KabaAccounting\CUL\obj\Debug\net5.0\CUL.AssemblyInfoInputs.cache
 C:\Lessons\C# Programs\KabaAccounting\CUL\obj\Debug\net5.0\CUL.AssemblyInfo.cs

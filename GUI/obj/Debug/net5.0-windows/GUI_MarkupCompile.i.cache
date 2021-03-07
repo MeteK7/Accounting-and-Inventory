@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\Lessons\C# Programs\KabaAccounting\GUI\App.xaml
-142116640114
+13-1585893191
 
-181174387180
+171444716027
 207974370011
-WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinInventoryAdjustment.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;WinUserDashboard.xaml;
+WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinInventoryAdjustment.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;
 
-False
+True
 
