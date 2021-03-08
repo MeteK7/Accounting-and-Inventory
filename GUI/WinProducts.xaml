@@ -58,22 +58,7 @@
                 <SolidColorBrush Color="White" Opacity="0.4"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblProductCategory" Content="Category" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox x:Name="cboProductCategory" HorizontalAlignment="Left" Margin="90,92,0,0" VerticalAlignment="Top" Width="222" Height="26" Loaded="cboProductCategory_Loaded" Opacity="0.8">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1" Opacity="1">
-                    <GradientStop Color="#FFF0F0F0"/>
-                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
-        </ComboBox>
-        <Label x:Name="lblProductDescription" Content="Description" HorizontalAlignment="Left" Margin="9,134,0,0" VerticalAlignment="Top" Width="76"/>
-        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="310" Margin="90,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222">
-            <TextBox.Background>
-                <SolidColorBrush Color="White" Opacity="0.4"/>
-            </TextBox.Background>
-        </TextBox>
-        <TabControl x:Name="tabProductSalesType" HorizontalAlignment="Left" Height="266" Margin="10,449,0,0" VerticalAlignment="Top" Width="302">
+        <TabControl x:Name="tabProductSalesType" HorizontalAlignment="Left" Height="266" Margin="9,92,0,0" VerticalAlignment="Top" Width="302">
             <TabControl.Background>
                 <SolidColorBrush Color="White" Opacity="0.4"/>
             </TabControl.Background>
@@ -118,7 +103,7 @@
                 <SolidColorBrush Color="White" Opacity="0.4"/>
             </TextBox.Background>
         </TextBox>
-        <DataGrid x:Name="dtgProducts" HorizontalAlignment="Left" Height="623" Margin="317,0,0,0" VerticalAlignment="Center" Width="730" KeyUp="dtgProducts_KeyUp" KeyDown="dtgProducts_KeyDown" MouseLeftButtonUp="dtgProducts_MouseLeftButtonUp">
+        <DataGrid x:Name="dtgProducts" HorizontalAlignment="Left" Height="623" Margin="317,0,0,0" VerticalAlignment="Center" Width="730" KeyUp="dtgProducts_KeyUp" KeyDown="dtgProducts_KeyDown" MouseLeftButtonUp="dtgProducts_MouseLeftButtonUp" Opacity="0.7">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.4"/>
             </DataGrid.Background>
@@ -182,5 +167,20 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
+        <Label x:Name="lblProductCategory" Content="Category" HorizontalAlignment="Left" Margin="9,368,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="cboProductCategory" HorizontalAlignment="Left" Margin="90,368,0,0" VerticalAlignment="Top" Width="221" Height="26" Loaded="cboProductCategory_Loaded" Opacity="0.8">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" Opacity="1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <Label x:Name="lblProductDescription" Content="Description" HorizontalAlignment="Left" Margin="9,405,0,0" VerticalAlignment="Top" Width="76"/>
+        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="310" Margin="90,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.4"/>
+            </TextBox.Background>
+        </TextBox>
     </Grid>
 </Window>
