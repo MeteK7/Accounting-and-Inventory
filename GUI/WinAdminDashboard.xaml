@@ -574,7 +574,7 @@
                     <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="700,0,0,0"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Height="25">
+            <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
