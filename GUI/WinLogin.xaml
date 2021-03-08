@@ -35,7 +35,7 @@
             <ImageBrush ImageSource="/Images/Backgrounds/login-background.jpg"/>
         </Border.Background>
         <Grid Margin="0.2,0.2,-1.2,-1.2">
-            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,3,3,0" Height="51" Width="54" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,3,3,0" Height="51" Width="51" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
                 </Button.BorderBrush>

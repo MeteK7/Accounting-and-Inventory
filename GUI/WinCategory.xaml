@@ -6,13 +6,36 @@
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="WinCategories" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/Backgrounds/abstract_2.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="CATEGORIES" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
                 </Button.BorderBrush>
@@ -29,25 +52,25 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblCategoryId" Content="Category ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="137,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" IsReadOnly="True">
+        <Label x:Name="lblCategoryId" Content="Category ID" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" Width="90" Foreground="White"/>
+        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="104,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" IsReadOnly="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblTitle" Content="Title" HorizontalAlignment="Left" Margin="21,92,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="138,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178">
+        <Label x:Name="lblTitle" Content="Title" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="89" Foreground="White"/>
+        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="104,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="21,133,0,0" VerticalAlignment="Top" Width="111" Foreground="White"/>
-        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="143" Margin="138,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True">
+        <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="89" Foreground="White"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="370" Margin="104,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <Button x:Name="btnCategoryAdd" Content="ADD" HorizontalAlignment="Left" Margin="138,518,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF00ADED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnCategoryAdd_Click">
+        <Button x:Name="btnCategoryAdd" Content="ADD" HorizontalAlignment="Left" Margin="363,518,0,0" VerticalAlignment="Top" Width="114" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF00ADED" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnCategoryAdd_Click" BorderBrush="#FF31F7B8">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/plus (3).png" Stretch="Uniform">
                     <ImageBrush.RelativeTransform>
@@ -61,7 +84,7 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="btnCategoryUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="363,518,0,0" VerticalAlignment="Top" Width="179" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnCategoryUpdate_Click">
+        <Button x:Name="btnCategoryUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="536,518,0,0" VerticalAlignment="Top" Width="114" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnCategoryUpdate_Click" HorizontalContentAlignment="Left" BorderBrush="#FF2CBF0C">
             <Button.Background>
                 <ImageBrush Stretch="Uniform" ImageSource="/Images/Buttons/refresh.png">
                     <ImageBrush.RelativeTransform>
@@ -75,7 +98,7 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="btnCategoryDelete" Content="DELETE" HorizontalAlignment="Left" Margin="644,518,0,0" VerticalAlignment="Top" Width="179" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnCategoryDelete_Click">
+        <Button x:Name="btnCategoryDelete" Content="DELETE" HorizontalAlignment="Left" Margin="709,518,0,0" VerticalAlignment="Top" Width="114" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnCategoryDelete_Click" HorizontalContentAlignment="Left" BorderBrush="Red">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/trash.png" Stretch="Uniform">
                     <ImageBrush.RelativeTransform>
@@ -94,8 +117,8 @@
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
             </DataGrid.Background>
         </DataGrid>
-        <Label x:Name="lblCategorySearch" Content="Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="84" Foreground="White"/>
-        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="452,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="txtCategorySearch_TextChanged">
+        <Label x:Name="lblCategorySearch" Content="Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="57" Foreground="White"/>
+        <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="425,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="398" TextChanged="txtCategorySearch_TextChanged">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
