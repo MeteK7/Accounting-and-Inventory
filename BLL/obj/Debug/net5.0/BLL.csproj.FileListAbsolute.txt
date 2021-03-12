@@ -9,3 +9,4 @@ C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompil
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.dll
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\ref\BLL.dll
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.pdb
+C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.csprojAssemblyReference.cache

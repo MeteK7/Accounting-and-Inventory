@@ -52,20 +52,20 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblCategoryId" Content="Category ID" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" Width="90" Foreground="White"/>
-        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="104,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" IsReadOnly="True">
+        <Label x:Name="lblCategoryId" Content="Category ID" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" Width="77" Foreground="White"/>
+        <TextBox x:Name="txtCategoryId" HorizontalAlignment="Left" Height="26" Margin="91,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" IsReadOnly="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblTitle" Content="Title" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="89" Foreground="White"/>
-        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="104,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236">
+        <Label x:Name="lblTitle" Content="Title" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="76" Foreground="White"/>
+        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="26" Margin="91,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="89" Foreground="White"/>
-        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="370" Margin="104,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True">
+        <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="76" Foreground="White"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Height="370" Margin="91,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>

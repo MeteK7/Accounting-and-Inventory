@@ -52,17 +52,17 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblId" Content="ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="79"/>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="26" Margin="104,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" IsReadOnly="True"/>
-        <Label x:Name="lblType" Content="Type" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="77"/>
-        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" Margin="104,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
-        <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="104,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
-        <Label x:Name="lblContact" Content="Contact" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="26" Margin="104,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
-        <Label x:Name="lblAddress" Content="Address" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="249" Margin="104,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True">
+        <Label x:Name="lblId" Content="ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="67"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="26" Margin="92,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" IsReadOnly="True"/>
+        <Label x:Name="lblType" Content="Type" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" Margin="92,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
+        <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="92,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
+        <Label x:Name="lblContact" Content="Contact" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="26" Margin="92,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208"/>
+        <Label x:Name="lblAddress" Content="Address" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="65"/>
+        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="249" Margin="92,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="208" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>

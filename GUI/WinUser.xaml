@@ -6,6 +6,29 @@
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="Users" Height="712.227" Width="1013.155" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/Backgrounds/user-background.jpg" Stretch="UniformToFill">
             <ImageBrush.RelativeTransform>
@@ -21,7 +44,7 @@
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="USERS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
                 </Button.BorderBrush>
@@ -98,13 +121,13 @@
             </TextBox.Background>
         </TextBox>
 
-        <DataGrid x:Name="dtgUsers" HorizontalAlignment="Left" Height="507" Margin="423,101,0,0" VerticalAlignment="Top" Width="555" MouseLeftButtonUp="dtgUsers_MouseLeftButtonUp" KeyDown="dtgUsers_KeyDown" KeyUp="dtgUsers_KeyUp">
+        <DataGrid x:Name="dtgUsers" HorizontalAlignment="Left" Height="507" Margin="376,101,0,0" VerticalAlignment="Top" Width="602" MouseLeftButtonUp="dtgUsers_MouseLeftButtonUp" KeyDown="dtgUsers_KeyDown" KeyUp="dtgUsers_KeyUp">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.77"/>
             </DataGrid.Background>
         </DataGrid>
-        <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="423,51,0,0" VerticalAlignment="Top" Width="84" Height="32"/>
-        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="32" Margin="512,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" TextChanged="txtUserSearch_TextChanged">
+        <Label x:Name="lblUserSearch" Content="User Search" HorizontalAlignment="Left" Margin="376,51,0,0" VerticalAlignment="Top" Width="73" Height="32"/>
+        <TextBox x:Name="txtUserSearch" HorizontalAlignment="Left" Height="32" Margin="454,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="524" TextChanged="txtUserSearch_TextChanged">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.77"/>
             </TextBox.Background>

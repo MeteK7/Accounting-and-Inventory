@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
+    
+<Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">
                 <Setter.Value>
@@ -51,33 +52,33 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblId" Content="ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="26" Margin="104,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" IsReadOnly="True" Opacity="0.77">
+        <Label x:Name="lblId" Content="ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="68" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="26" Margin="93,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" IsReadOnly="True" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblType" Content="Type" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="77" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="77" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" Margin="104,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Opacity="0.77">
+        <Label x:Name="lblType" Content="Type" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" Margin="93,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="77" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="104,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
+        <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="93,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblContact" Content="Contact" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="77" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="26" Margin="104,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
+        <Label x:Name="lblContact" Content="Contact" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="26" Margin="93,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblAddress" Content="Address" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="77" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="249" Margin="104,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True" Opacity="0.77">
+        <Label x:Name="lblAddress" Content="Address" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="249" Margin="93,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>

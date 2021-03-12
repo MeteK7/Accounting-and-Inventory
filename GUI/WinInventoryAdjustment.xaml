@@ -366,7 +366,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="118" Margin="0,34,214,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1141">
-            <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
+            <Grid x:Name="___No_Name_" Margin="0,0,-2,0" Height="94">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform">
