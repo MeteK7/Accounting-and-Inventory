@@ -13,3 +13,18 @@ C:\Lessons\C# Programs\KabaAccounting\DAL\obj\Debug\net5.0\DAL.csproj.CopyComple
 C:\Lessons\C# Programs\KabaAccounting\DAL\obj\Debug\net5.0\DAL.dll
 C:\Lessons\C# Programs\KabaAccounting\DAL\obj\Debug\net5.0\ref\DAL.dll
 C:\Lessons\C# Programs\KabaAccounting\DAL\obj\Debug\net5.0\DAL.pdb
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.deps.json
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\ref\DAL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.pdb
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.pdb
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csprojAssemblyReference.cache
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfoInputs.cache
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfo.cs
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.CoreCompileInputs.cache
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.CopyComplete
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\ref\DAL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.pdb
