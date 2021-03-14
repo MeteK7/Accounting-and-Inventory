@@ -73,6 +73,7 @@
     <None Remove="Images\Buttons\delete.png" />
     <None Remove="Images\Buttons\deletecart.png" />
     <None Remove="Images\Buttons\delivery.png" />
+    <None Remove="Images\Buttons\deposit.png" />
     <None Remove="Images\Buttons\edit.png" />
     <None Remove="Images\Buttons\error.png" />
     <None Remove="Images\Buttons\file-management.png" />
@@ -85,6 +86,7 @@
     <None Remove="Images\Buttons\inventory.png" />
     <None Remove="Images\Buttons\login-button-png-18036.png" />
     <None Remove="Images\Buttons\maths.png" />
+    <None Remove="Images\Buttons\money-bag.png" />
     <None Remove="Images\Buttons\next.png" />
     <None Remove="Images\Buttons\payment-terminal.png" />
     <None Remove="Images\Buttons\physical-inventory.png" />
@@ -189,6 +191,7 @@
     <Resource Include="Images\Buttons\delete.png" />
     <Resource Include="Images\Buttons\deletecart.png" />
     <Resource Include="Images\Buttons\delivery.png" />
+    <Resource Include="Images\Buttons\deposit.png" />
     <Resource Include="Images\Buttons\edit.png" />
     <Resource Include="Images\Buttons\error.png" />
     <Resource Include="Images\Buttons\file-management.png" />
@@ -201,6 +204,7 @@
     <Resource Include="Images\Buttons\inventory.png" />
     <Resource Include="Images\Buttons\login-button-png-18036.png" />
     <Resource Include="Images\Buttons\maths.png" />
+    <Resource Include="Images\Buttons\money-bag.png" />
     <Resource Include="Images\Buttons\next.png" />
     <Resource Include="Images\Buttons\payment-terminal.png" />
     <Resource Include="Images\Buttons\physical-inventory.png" />
