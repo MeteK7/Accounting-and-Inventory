@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\CUL.csproj": {}
+    "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {}
   },
   "projects": {
-    "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\CUL.csproj": {
+    "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\CUL.csproj",
+        "projectUniqueName": "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
         "projectName": "CUL",
-        "projectPath": "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\CUL.csproj",
-        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
-        "outputPath": "C:\\Lessons\\C# Programs\\KabaAccounting\\CUL\\obj\\",
+        "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "packagesPath": "C:\\Users\\LAB\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "E:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LAB\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

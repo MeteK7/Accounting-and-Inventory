@@ -375,7 +375,7 @@
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="42" Width="42" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,3,3.6,22.2">
+                    <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="67" Width="66" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click" HorizontalAlignment="Left" Margin="937,0,0,0">
                         <Button.BorderBrush>
                             <SolidColorBrush Color="#FF707070" Opacity="0"/>
                         </Button.BorderBrush>
@@ -461,7 +461,6 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Label x:Name="lblExit" Content="EXIT" HorizontalAlignment="Right" Margin="0,0,-0.4,0.2" VerticalAlignment="Bottom" Width="51" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemAccounts" Header="ACCOUNTS" HorizontalContentAlignment="Stretch" Width="165" Height="25">

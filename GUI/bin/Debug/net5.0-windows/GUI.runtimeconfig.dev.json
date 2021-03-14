@@ -1,9 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\MeteK\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\MeteK\\.nuget\\packages",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "C:\\Users\\LAB\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\LAB\\.nuget\\packages",
+      "E:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ]
   }
 }

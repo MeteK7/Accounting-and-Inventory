@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Lessons\C# Programs\KabaAccounting\GUI\obj\Debug\net5.0-windows\
+E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\
 GUI
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Lessons\C# Programs\KabaAccounting\GUI\App.xaml
-13-1585893191
+E:\Projects\Kaba-Accounting-and-Inventory\GUI\App.xaml
+132100180414
 
-151730251248
-207974370011
+15-1671097723
+207-1612070955
 WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinInventoryAdjustment.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;
 
 False
