@@ -606,9 +606,9 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="302,0,0,0"/>
-                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="377,0,0,0"/>
-                    <Button Content="Button" HorizontalAlignment="Left" Width="75" Margin="452,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="126" Margin="259,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="126" Margin="385,0,0,0"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Width="126" Margin="511,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemPortal" Header="PORTAL" HorizontalContentAlignment="Stretch" Height="25" Margin="0,-1,-90,1">
