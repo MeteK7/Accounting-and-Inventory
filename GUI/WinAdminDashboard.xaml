@@ -496,7 +496,20 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnAssets" Content="Assests" HorizontalAlignment="Left" Width="133" Margin="229,0,0,0"/>
+                    <Button x:Name="btnAssets" Content="Assets" HorizontalAlignment="Left" Width="133" Margin="229,0,0,0" VerticalContentAlignment="Bottom">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/asset-management.png">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.4" CenterX="0.5" ScaleX="0.55" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.4" CenterX="0.5" AngleY="0"/>
+                                        <RotateTransform CenterY="0.4" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25">
