@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>

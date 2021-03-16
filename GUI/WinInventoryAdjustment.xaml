@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+        Height="875.8" Width="1373.107" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
