@@ -52,6 +52,7 @@
     <None Remove="Images\Buttons\add-to-cart.png" />
     <None Remove="Images\Buttons\add-user.png" />
     <None Remove="Images\Buttons\analysis.png" />
+    <None Remove="Images\Buttons\asset-management.png" />
     <None Remove="Images\Buttons\back.png" />
     <None Remove="Images\Buttons\backup-1.png" />
     <None Remove="Images\Buttons\backup.png" />
@@ -102,6 +103,7 @@
     <None Remove="Images\Buttons\refresh.png" />
     <None Remove="Images\Buttons\report-arrow.png" />
     <None Remove="Images\Buttons\reports.png" />
+    <None Remove="Images\Buttons\safe-box.png" />
     <None Remove="Images\Buttons\save.png" />
     <None Remove="Images\Buttons\spreadsheet-app.png" />
     <None Remove="Images\Buttons\supplier.png" />
@@ -170,6 +172,7 @@
     <Resource Include="Images\Buttons\add-to-cart.png" />
     <Resource Include="Images\Buttons\add-user.png" />
     <Resource Include="Images\Buttons\analysis.png" />
+    <Resource Include="Images\Buttons\asset-management.png" />
     <Resource Include="Images\Buttons\back.png" />
     <Resource Include="Images\Buttons\backup-1.png" />
     <Resource Include="Images\Buttons\backup.png" />
@@ -220,6 +223,7 @@
     <Resource Include="Images\Buttons\refresh.png" />
     <Resource Include="Images\Buttons\report-arrow.png" />
     <Resource Include="Images\Buttons\reports.png" />
+    <Resource Include="Images\Buttons\safe-box.png" />
     <Resource Include="Images\Buttons\save.png" />
     <Resource Include="Images\Buttons\spreadsheet-app.png" />
     <Resource Include="Images\Buttons\supplier.png" />
