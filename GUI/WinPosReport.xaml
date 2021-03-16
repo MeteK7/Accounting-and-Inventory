@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d" Height="861" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="861" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">

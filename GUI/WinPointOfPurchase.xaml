@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="875.8" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -267,7 +267,7 @@
         <ImageBrush ImageSource="/Images/Backgrounds/red-hand-printed.jpg"/>
     </Window.Background>
     <Grid>
-        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="POINT OF PURCHASE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
