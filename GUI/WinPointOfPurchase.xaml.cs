@@ -57,7 +57,7 @@ namespace GUI
 
             if (invoiceId == 0)//If the ID is 0 came from the optional parameter, that means user just clicked the pop button to open it.
             {
-                dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                dataTableLastInvoice = SearchByInvoiceId();//Getting the last invoice id and assign it to the variable called invoiceId.
 
                 if (dataTableLastInvoice.Rows.Count != 0)
                 {
@@ -300,15 +300,35 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
             if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboPaymentType.SelectedIndex != -1 && cboSupplier.SelectedIndex != -1)
             {
+                int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
                 int userId = GetUserId();
+                int initialIndex = 0;
 
-                int newInvoiceId = 1, firstRowIndex = 0;//New invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
-                DataTable dataTableLastInvoice = GetLastInvoice();//Getting the last invoice number and assign it to the variable called invoiceId.
+                int currentInvoiceId = 1, firstRowIndex = 0;//Current invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
+                DataTable dataTableLastInvoice = SearchByInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
-                //Getting the values from the POS Window and fill them into the pointOfPurchaseCUL.
+
+                //If there is a row in the datatable, then fetch the id of the invoice. Otherwise, it is the first run and keep the default value.
+                if (userClickedNewOrEdit == 0 && dataTableLastInvoice.Rows.Count != 0)
+                {
+                    currentInvoiceId = currentInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
+                }
+
+                /*ONLY ELSE MAY BE MORE SUITABLE!!!*/
+                else if (userClickedNewOrEdit == 1)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
+                {
+                    int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+
+                    DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
+                    currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
+                }
+
+
+                //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
+                pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboSupplier.SelectedValue);
@@ -323,12 +343,11 @@ namespace GUI
 
                 #region TABLE POS DETAILS SAVING SECTION
 
-                int userClickedNewOrEdit = btnNewOrEdit;
+                
                 int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
                 int productId;
                 int unitId;
                 decimal productOldAmountInStock;
-                int initialRowIndex = 0;
                 int cellLength = 6;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
@@ -343,7 +362,7 @@ namespace GUI
                     {
                         RevertOldAmountInStock();//Reverting the old products' amount in stock.
 
-                        //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Invoice Number property in the SQL Query. So that we can erase all the products which have the specific invoice number.
+                        //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
                         pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
@@ -359,24 +378,17 @@ namespace GUI
                         cells[colNo] = cellContent.Text;
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] contains the product barcode.
-                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] contains the product barcode.
+                    productId = Convert.ToInt32(dataTableProduct.Rows[initialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[0] contains the product barcode.
-                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
-
-                    //Run only at the beginning. Otherwise, it will increase the newInvoiceId respectively for all goods which must have the same invoiceId.
-                    //If there is a row in the datatable, then fetch the id of the invoice. Otherwise, it is the first run and keep the default value.
-                    if (rowNo == initialRowIndex && dataTableLastInvoice.Rows.Count != 0)
-                    {
-                        newInvoiceId = newInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
-                    }
+                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
 
-                    //pointOfPurchaseDetailCUL.Id = newInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
+                    pointOfPurchaseDetailCUL.Id = currentInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
-                    pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo;
+                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo;
                     //pointOfPurchaseDetailCUL.AddedDate = dateTime;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
@@ -387,7 +399,7 @@ namespace GUI
 
                     productCUL.Id = productId;
 
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
 
                     productCUL.AmountInStock = productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
 
@@ -671,7 +683,7 @@ namespace GUI
             //txtInvoiceNo.Text = invoiceNo.ToString();//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
-        private DataTable GetLastInvoice()
+        private DataTable SearchByInvoiceId()
         {
             //int specificRowIndex = 0, invoiceNo;
 
@@ -740,7 +752,7 @@ namespace GUI
             DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
             currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id by using invoice no.
 
-            DataTable dataTableLastInvoice = GetLastInvoice();
+            DataTable dataTableLastInvoice = SearchByInvoiceId();
             lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[voidInvoiceId]["id"]);//Getting the last invoice id.
 
 
@@ -777,7 +789,7 @@ namespace GUI
                     int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
                     pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
-                    pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo;
+                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo; REFACTOR THIS CODE!!!
 
                     pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
                     pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);

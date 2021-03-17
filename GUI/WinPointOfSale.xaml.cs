@@ -302,7 +302,7 @@ namespace GUI
                 DataTable dataTableUnit = new DataTable();
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
-                pointOfSaleCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                pointOfSaleCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);
                 pointOfSaleCUL.CustomerId = Convert.ToInt32(cboCustomer.SelectedValue);
                 pointOfSaleCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
