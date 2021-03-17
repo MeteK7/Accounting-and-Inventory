@@ -51,7 +51,7 @@ namespace GUI
             userCUL.AddedDate = DateTime.Now;
 
             //Getting username of the logged in user
-            string loggedUser = WinLogin.loggedIn;
+            string loggedUser = WinLogin.loggedInUserName;
 
             //Getting ID of the user who is logged in
             UserCUL userAddedBy = userDAL.GetIdFromUsername(loggedUser);

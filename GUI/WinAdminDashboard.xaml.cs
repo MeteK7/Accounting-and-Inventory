@@ -24,29 +24,46 @@ namespace GUI
     /// </summary>
     public partial class WinAdminDashboard : Window
     {
-        PosReportDAL posReportDAL = new PosReportDAL();
-        PosReportCUL posReportCUL = new PosReportCUL();
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
-        public WinAdminDashboard()
+        public static string _loggedInUserName;
+        public static string _loggedInUserType;
+
+        public WinAdminDashboard(string loggedInUserName, string loggedInUserType)
         {
             InitializeComponent();
-            lblLoggedInUser.Content = WinLogin.loggedIn;
+
+            _loggedInUserName = loggedInUserName;
+            _loggedInUserType = loggedInUserType;
+
+            lblLoggedInUser.Content = _loggedInUserName;
+
             StartClock();
-            //GenerateRecordDate();
+            Authorization();//Permissions of control according to the user authorization.
         }
 
-        //private void GenerateRecordDate()
-        //{
-        //    string dateToday = DateTime.Now.ToString("MM/dd/yyyy");
+        private void Authorization()
+        {
+            if (_loggedInUserType=="User")
+            {
+                #region SERVICES
+                btnFileManagement.Visibility = Visibility.Hidden;
+                btnSysPref.Visibility = Visibility.Hidden;
+                btnBackup.Visibility = Visibility.Hidden;
+                btnUser.Visibility =Visibility.Hidden;
+                #endregion
 
-        //    DataTable dateTableReportDate = pointOfSaleDAL.CheckReportExistance();
+                #region PORTAL
+                btnBank.Visibility = Visibility.Hidden;
+                btnSupplier.Visibility = Visibility.Hidden;
+                btnCustomer.Visibility = Visibility.Hidden;
+                btnCategory.Visibility = Visibility.Hidden;
+                #endregion
+            }
 
-        //    if (dateTableReportDate.Columns["sale_date"].ToString() != dateToday)
-        //    {
-        //        posReportCUL.SaleDate =dateToday;
-        //        posReportDAL.Insert(posReportCUL);
-        //    }
-        //}
+            else
+            {
+                lblUserType.Content = "[ADMIN]";
+            }
+        }
 
         private void StartClock()
         {

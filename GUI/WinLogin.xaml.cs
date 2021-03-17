@@ -27,8 +27,8 @@ namespace GUI
         }
         LoginCUL loginCUL = new LoginCUL();
         LoginDAL loginDAL = new LoginDAL();
-        public static string loggedIn;
-        public static string loggedInPosition;
+        public static string loggedInUserName;
+        public static string loggedInUserType;
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -47,31 +47,35 @@ namespace GUI
             {
                 //Login Successful
                 MessageBox.Show("Login Successful");
-                loggedIn = loginCUL.Username;
-                loggedInPosition = loginCUL.UserType;
+                loggedInUserName = loginCUL.Username;
+                loggedInUserType = loginCUL.UserType;
 
-                switch (loginCUL.UserType)
-                {
-                    case "Admin":
-                        {
-                            this.Hide();
-                            WinAdminDashboard winAdmin = new WinAdminDashboard();
-                            winAdmin.Show();
-                        }
-                        break;
+                this.Hide();
+                WinAdminDashboard winAdmin = new WinAdminDashboard(loggedInUserName, loggedInUserType);
+                winAdmin.Show();
 
-                    //case "User":
-                    //    {
-                    //        this.Hide();
-                    //        WinUserDashboard winUser = new WinUserDashboard();
-                    //        winUser.Show();
-                    //    }
-                    //    break;
+                //switch (loginCUL.UserType)
+                //{
+                //    case "Admin":
+                //        {
+                //            this.Hide();
+                //            WinAdminDashboard winAdmin = new WinAdminDashboard();
+                //            winAdmin.Show();
+                //        }
+                //        break;
 
-                    default:
-                        MessageBox.Show("Invalid User Type.");
-                        break;
-                }
+                //    case "User":
+                //        {
+                //            this.Hide();
+                //            WinUserDashboard winUser = new WinUserDashboard();
+                //            winUser.Show();
+                //        }
+                //        break;
+
+                //    default:
+                //        MessageBox.Show("Invalid User Type.");
+                //        break;
+                //}
             }
             else
             {
