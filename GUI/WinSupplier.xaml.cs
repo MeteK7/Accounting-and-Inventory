@@ -114,7 +114,7 @@ namespace GUI
         private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
         {
             //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedIn;
+            string loggedUser = WinLogin.loggedInUserName;
 
             //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
             //Then, fill the result into the userCUL;

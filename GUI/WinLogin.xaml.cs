@@ -51,7 +51,7 @@ namespace GUI
                 loggedInUserType = loginCUL.UserType;
 
                 this.Hide();
-                WinAdminDashboard winAdmin = new WinAdminDashboard();
+                WinAdminDashboard winAdmin = new WinAdminDashboard(loggedInUserName, loggedInUserType);
                 winAdmin.Show();
 
                 //switch (loginCUL.UserType)

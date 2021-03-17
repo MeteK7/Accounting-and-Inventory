@@ -24,15 +24,18 @@ namespace GUI
     /// </summary>
     public partial class WinAdminDashboard : Window
     {
-        PosReportDAL posReportDAL = new PosReportDAL();
-        PosReportCUL posReportCUL = new PosReportCUL();
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
-        public WinAdminDashboard()
+        public static string _loggedInUserName;
+        public static string _loggedInUserType;
+
+        public WinAdminDashboard(string loggedInUserName, string loggedInUserType)
         {
             InitializeComponent();
-            lblLoggedInUser.Content = WinLogin.loggedIn;
             StartClock();
-            //GenerateRecordDate();
+            
+            _loggedInUserName = loggedInUserName;
+            _loggedInUserType = loggedInUserType;
+
+            lblLoggedInUser.Content = _loggedInUserName;
         }
 
         //private void GenerateRecordDate()
