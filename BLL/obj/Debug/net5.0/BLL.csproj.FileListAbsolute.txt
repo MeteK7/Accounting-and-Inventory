@@ -10,14 +10,3 @@ C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.dll
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\ref\BLL.dll
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.pdb
 C:\Lessons\C# Programs\KabaAccounting\BLL\obj\Debug\net5.0\BLL.csprojAssemblyReference.cache
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.deps.json
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.dll
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\ref\BLL.dll
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.pdb
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfo.cs
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
-E:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
