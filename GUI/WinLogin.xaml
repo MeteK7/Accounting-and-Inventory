@@ -53,7 +53,7 @@
                     <ImageBrush ImageSource="/Images/actions/entry_2.png" Stretch="Uniform"/>
                 </Label.Background>
             </Label>
-            <Label x:Name="lblLogin" Content="LOGIN" Height="64" DockPanel.Dock="Top" Width="136" Margin="171,197,166,372" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Source Serif Pro ExtraLight" Foreground="White"/>
+            <Label x:Name="lblLogin" Content="LOGIN" Height="64" DockPanel.Dock="Top" Width="136" Margin="171,197,166,372" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="PMingLiU-ExtB" Foreground="White" FontWeight="Bold"/>
             <Label x:Name="lblUserName" Content="Username:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,275,0,329" Foreground="White"/>
             <Border BorderBrush="Black"  CornerRadius="5" BorderThickness="1" HorizontalAlignment="Left" Height="31" Margin="97,304,0,0" VerticalAlignment="Top" Width="277" Background="White">
                 <TextBox x:Name="txtUserName" Height="31" TextWrapping="Wrap" Width="277" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-1" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0"/>
