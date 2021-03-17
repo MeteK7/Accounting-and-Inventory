@@ -11,7 +11,6 @@ namespace KabaAccounting.CUL
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int ProductUnitId { get; set; }
-        public int InvoiceNo { get; set; }
         public decimal ProductRate { get; set; }
         public decimal ProductAmount { get; set; }
         public decimal ProductCostPrice { get; set; }
