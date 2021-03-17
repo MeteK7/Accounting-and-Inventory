@@ -304,6 +304,7 @@ namespace GUI
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
                 int userId = GetUserId();
                 int initialIndex = 0;
+                bool isSuccess = false;
 
                 int currentInvoiceId = 1, firstRowIndex = 0;//Current invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
                 DataTable dataTableLastInvoice = SearchByInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceId.
@@ -326,7 +327,7 @@ namespace GUI
                     currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
                 }
 
-
+                #region #region TABLE POP SAVING SECTION
                 //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
                 pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
@@ -341,9 +342,24 @@ namespace GUI
                 pointOfPurchaseCUL.AddedDate = DateTime.Now;
                 pointOfPurchaseCUL.AddedBy = userId;
 
-                #region TABLE POS DETAILS SAVING SECTION
+                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
-                
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pop at once.
+                {
+                    isSuccess = pointOfPurchaseDAL.Update(pointOfPurchaseCUL);
+                }
+
+                else
+                {
+                    //Creating a Boolean variable to insert data into the database.
+                    isSuccess = pointOfPurchaseDAL.Insert(pointOfPurchaseCUL);
+                }
+                #endregion
+
+
+                #region TABLE POP DETAILS SAVING SECTION
+
+
                 int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
                 int productId;
                 int unitId;
@@ -353,7 +369,6 @@ namespace GUI
                 string[] cells = new string[cellLength];
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false;
-                bool isSuccess = false;
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
@@ -385,11 +400,8 @@ namespace GUI
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[0] contains the product barcode.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-
                     pointOfPurchaseDetailCUL.Id = currentInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
-                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo;
-                    //pointOfPurchaseDetailCUL.AddedDate = dateTime;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
@@ -408,19 +420,6 @@ namespace GUI
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
                 }
                 #endregion
-
-                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
-
-                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pop at once.
-                {
-                    isSuccess = pointOfPurchaseDAL.Update(pointOfPurchaseCUL);
-                }
-
-                else
-                {
-                    //Creating a Boolean variable to insert data into the database.
-                    isSuccess = pointOfPurchaseDAL.Insert(pointOfPurchaseCUL);
-                }
 
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
