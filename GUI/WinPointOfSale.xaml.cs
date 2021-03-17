@@ -145,7 +145,7 @@ namespace GUI
         private void FillStaffInformations()
         {
             txtStaffName.Text = WinLogin.loggedIn;
-            txtStaffPosition.Text = WinLogin.loggedInPosition;
+            txtStaffPosition.Text = WinLogin.loggedInUserType;
         }
 
         private void RefreshProductDataGrid()

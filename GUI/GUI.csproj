@@ -15,6 +15,7 @@
     <None Remove="Images\Backgrounds\2324673.jpg" />
     <None Remove="Images\Backgrounds\7419107.jpg" />
     <None Remove="Images\Backgrounds\abstract-blue-line-wave.jpg" />
+    <None Remove="Images\Backgrounds\abstract-dotted.jpg" />
     <None Remove="Images\Backgrounds\abstract-green.jpg" />
     <None Remove="Images\Backgrounds\abstract-white-shapes-background.jpg" />
     <None Remove="Images\Backgrounds\abstract_2.png" />
@@ -22,7 +23,6 @@
     <None Remove="Images\Backgrounds\avatar.png" />
     <None Remove="Images\Backgrounds\background-2.jpg" />
     <None Remove="Images\Backgrounds\background-abstract.jpg" />
-    <None Remove="Images\Backgrounds\background.jpg" />
     <None Remove="Images\Backgrounds\bank.jpg" />
     <None Remove="Images\Backgrounds\black-hexagonal.jpg" />
     <None Remove="Images\Backgrounds\bokeh-background.jpg" />
@@ -142,7 +142,7 @@
     <Resource Include="Images\Backgrounds\avatar.png" />
     <Resource Include="Images\Backgrounds\background-2.jpg" />
     <Resource Include="Images\Backgrounds\background-abstract.jpg" />
-    <Resource Include="Images\Backgrounds\background.jpg" />
+    <Resource Include="Images\Backgrounds\abstract-dotted.jpg" />
     <Resource Include="Images\Backgrounds\bank.jpg" />
     <Resource Include="Images\Backgrounds\black-hexagonal.jpg" />
     <Resource Include="Images\Backgrounds\bokeh-background.jpg" />
