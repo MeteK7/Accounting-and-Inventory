@@ -58,7 +58,7 @@ namespace KabaAccounting.DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);
+                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);//No incremental value in the database because there can be multiple goods with the same invoice id.
                 cmd.Parameters.AddWithValue("@product_id", pointOfPurchaseDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);

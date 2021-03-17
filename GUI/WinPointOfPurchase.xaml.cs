@@ -283,6 +283,15 @@ namespace GUI
             }
         }
 
+        private int GetInvoiceIdByNo()
+        {
+            int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+
+            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
+            int currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
+            return currentInvoiceId;
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string[,] dgNewProductCells = new string[,] { };
@@ -321,13 +330,10 @@ namespace GUI
                 /*ONLY ELSE MAY BE MORE SUITABLE!!!*/
                 else if (userClickedNewOrEdit == 1)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
                 {
-                    int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
-
-                    DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
-                    currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
+                    currentInvoiceId = GetInvoiceIdByNo();
                 }
 
-                #region #region TABLE POP SAVING SECTION
+                #region TABLE POP SAVING SECTION
                 //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
                 pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
@@ -358,8 +364,6 @@ namespace GUI
 
 
                 #region TABLE POP DETAILS SAVING SECTION
-
-
                 int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
                 int productId;
                 int unitId;
@@ -730,10 +734,9 @@ namespace GUI
         int invoiceArrow;
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int voidInvoiceId = 0, firstInvoiceId = 1, currentInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+            int  firstInvoiceId = 1, currentInvoiceId;
 
-            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
-            currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);
+            currentInvoiceId = GetInvoiceIdByNo();
 
             if (currentInvoiceId != firstInvoiceId)
             {
@@ -746,10 +749,9 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int voidInvoiceId = 0, lastInvoiceId, currentInvoiceId, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+            int voidInvoiceId = 0, lastInvoiceId, currentInvoiceId;
 
-            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
-            currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id by using invoice no.
+            currentInvoiceId = GetInvoiceIdByNo();
 
             DataTable dataTableLastInvoice = SearchByInvoiceId();
             lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[voidInvoiceId]["id"]);//Getting the last invoice id.
