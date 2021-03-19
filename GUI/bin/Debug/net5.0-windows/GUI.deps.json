@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "GUI/1.0.0": {
         "dependencies": {
+          "BLL": "1.0.0",
           "CUL": "1.0.0",
           "DAL": "1.0.0",
           "Microsoft.Extensions.DependencyInjection": "5.0.1"
@@ -230,6 +231,15 @@
           "System.Drawing.Common": "5.0.0"
         }
       },
+      "BLL/1.0.0": {
+        "dependencies": {
+          "DAL": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "5.0.1"
+        },
+        "runtime": {
+          "BLL.dll": {}
+        }
+      },
       "CUL/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "5.0.1"
@@ -434,6 +444,11 @@
       "sha512": "sha512-c1ho9WU9ZxMZawML+ssPKZfdnrg/OjR3pe0m9v8230z3acqphwvPJqzAkH54xRYm5ntZHGG1EPP3sux9H3qSPg==",
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
+    },
+    "BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "CUL/1.0.0": {
       "type": "project",
