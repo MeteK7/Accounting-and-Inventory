@@ -1,4 +1,4 @@
-﻿using BLL.Interfaces;
+﻿using BLL;
 using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
@@ -36,11 +36,10 @@ namespace GUI
         CustomerCUL customerCUL = new CustomerCUL();
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
-        IPointOfSaleBLL _pointOfSaleBLL;
+        PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
 
-        public WinPointOfSale(/*IPointOfSaleBLL pointOfSaleBLL*/)
+        public WinPointOfSale()
         {
-            //_pointOfSaleBLL = pointOfSaleBLL;
             InitializeComponent();
             DisableTools();
             FillStaffInformations();
@@ -323,13 +322,13 @@ namespace GUI
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
-                    isSuccess = _pointOfSaleBLL.UpdatePOS(pointOfSaleCUL);
+                    isSuccess = pointOfSaleBLL.UpdatePOS(pointOfSaleCUL);
                 }
 
                 else
                 {
                     //Creating a Boolean variable to insert data into the database.
-                    isSuccess = _pointOfSaleBLL.InsertPOS(pointOfSaleCUL);
+                    isSuccess = pointOfSaleBLL.InsertPOS(pointOfSaleCUL);
                 }
                 #endregion
 

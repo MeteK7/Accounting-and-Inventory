@@ -1,5 +1,4 @@
-﻿using BLL.Interfaces;
-using KabaAccounting.CUL;
+﻿using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -10,16 +9,9 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class PointOfSaleBLL: IPointOfSaleBLL
+    public class PointOfSaleBLL
     {
-        UnitDAL unitDAL = new UnitDAL();
-        UnitCUL unitCUL = new UnitCUL();
-        ProductDAL productDAL = new ProductDAL();
-        ProductCUL productCUL = new ProductCUL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
-        PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
-        PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
-        PointOfSaleDetailCUL pointOfSaleDetailCUL = new PointOfSaleDetailCUL();
 
         public bool InsertPOS(PointOfSaleCUL pointOfSaleCUL)
         {
