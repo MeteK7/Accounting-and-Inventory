@@ -468,7 +468,7 @@
                     </Button.Background>
                 </Button>
                 <Label x:Name="lblPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="107"/>
-                <ComboBox x:Name="cboPaymentType" HorizontalAlignment="Left" Margin="778,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboPaymentType_Loaded"/>
+                <ComboBox x:FieldModifier="public"  x:Name="cboPaymentType" HorizontalAlignment="Left" Margin="778,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboPaymentType_Loaded"/>
                 <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="107"/>
                 <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="778,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
 
