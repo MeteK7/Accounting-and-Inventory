@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL.Interfaces;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,6 @@ namespace GUI
     /// </summary>
     public partial class WinPointOfSale : Window
     {
-        public WinPointOfSale()
-        {
-            InitializeComponent();
-            DisableTools();
-            FillStaffInformations();
-            LoadPastInvoice();
-        }
-
         UserDAL userDAL = new UserDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
@@ -43,6 +36,16 @@ namespace GUI
         CustomerCUL customerCUL = new CustomerCUL();
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
+        IPointOfSaleBLL _pointOfSaleBLL;
+
+        public WinPointOfSale(/*IPointOfSaleBLL pointOfSaleBLL*/)
+        {
+            //_pointOfSaleBLL = pointOfSaleBLL;
+            InitializeComponent();
+            DisableTools();
+            FillStaffInformations();
+            LoadPastInvoice();
+        }
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
@@ -320,13 +323,13 @@ namespace GUI
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
-                    isSuccess = pointOfSaleDAL.Update(pointOfSaleCUL);
+                    isSuccess = _pointOfSaleBLL.UpdatePOS(pointOfSaleCUL);
                 }
 
                 else
                 {
                     //Creating a Boolean variable to insert data into the database.
-                    isSuccess = pointOfSaleDAL.Insert(pointOfSaleCUL);
+                    isSuccess = _pointOfSaleBLL.InsertPOS(pointOfSaleCUL);
                 }
                 #endregion
 

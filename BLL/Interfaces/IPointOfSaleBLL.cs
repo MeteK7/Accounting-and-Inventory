@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KabaAccounting.CUL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace BLL.Interfaces
 {
     public interface IPointOfSaleBLL
     {
-        public void LoadPastInvoice(int invoiceNo = 0, int invoiceArrow = -1);
+        public bool InsertPOS(PointOfSaleCUL pointOfSaleCUL);
+        public bool UpdatePOS(PointOfSaleCUL pointOfSaleCUL);
     }
 }

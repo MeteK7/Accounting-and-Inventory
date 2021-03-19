@@ -351,6 +351,20 @@
           }
         }
       },
+      "BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "DAL": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "5.0.1"
+        },
+        "compile": {
+          "bin/placeholder/BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BLL.dll": {}
+        }
+      },
       "CUL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -1101,6 +1115,11 @@
         "version.txt"
       ]
     },
+    "BLL/1.0.0": {
+      "type": "project",
+      "path": "../BLL/BLL.csproj",
+      "msbuildProject": "../BLL/BLL.csproj"
+    },
     "CUL/1.0.0": {
       "type": "project",
       "path": "../CUL/CUL.csproj",
@@ -1114,6 +1133,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0-windows7.0": [
+      "BLL >= 1.0.0",
       "CUL >= 1.0.0",
       "DAL >= 1.0.0",
       "Microsoft.Extensions.DependencyInjection >= 5.0.1"
@@ -1151,6 +1171,9 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
+            "E:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
+              "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
+            },
             "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
               "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
             },
