@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,13 @@ namespace GUI
         BankCUL bankCUL = new BankCUL();
         BankDAL bankDAL = new BankDAL();
         UserDAL userDAL = new UserDAL();
+        UserBLL userBLL = new UserBLL();
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             bankCUL.Name = txtBankName.Text;
             bankCUL.AddedDate = DateTime.Now;
-            bankCUL.AddedBy = GetUserId();
+            bankCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
 
             bool isSuccess = bankDAL.Insert(bankCUL);
 
@@ -57,7 +59,7 @@ namespace GUI
             bankCUL.Id = Convert.ToInt32(txtBankId.Text);
             bankCUL.Name = txtBankName.Text;
             bankCUL.AddedDate = DateTime.Now;
-            bankCUL.AddedBy = GetUserId();
+            bankCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
 
             bool isSuccess = bankDAL.Update(bankCUL);
 
@@ -105,20 +107,6 @@ namespace GUI
             txtBankId.Text = "";
             txtBankName.Text = "";
             txtBankSearch.Text = "";
-        }
-
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
-        {
-            //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedInUserName;
-
-            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
-            //Then, fill the result into the userCUL;
-            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
-
-            int userId = userCUL.Id;
-
-            return userId;
         }
 
         private void DtgBanksIndexChanged()

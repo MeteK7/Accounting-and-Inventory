@@ -90,8 +90,10 @@ E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\win-x86\native\sni.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\BLL.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\CUL.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\DAL.dll
+E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\BLL.pdb
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\CUL.pdb
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\DAL.pdb
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csprojAssemblyReference.cache
@@ -134,5 +136,3 @@ E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\ref\GUI.dll
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.pdb
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.genruntimeconfig.cache
-E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\BLL.dll
-E:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\BLL.pdb

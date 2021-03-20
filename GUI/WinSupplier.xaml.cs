@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace GUI
         SupplierDAL supplierDAL = new SupplierDAL();
 
         UserDAL userDAL = new UserDAL();
+        UserBLL userBLL = new UserBLL();
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -47,7 +49,7 @@ namespace GUI
             supplierCUL.Contact = txtContact.Text;
             supplierCUL.Address = txtAddress.Text;
             supplierCUL.AddedDate = DateTime.Now;
-            supplierCUL.AddedBy = GetUserId();
+            supplierCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
 
 
             //Creating a Boolean variable to insert data into the database.
@@ -76,7 +78,7 @@ namespace GUI
             supplierCUL.Contact = txtContact.Text;
             supplierCUL.Address = txtAddress.Text;
             supplierCUL.AddedDate = DateTime.Now;
-            supplierCUL.AddedBy = GetUserId();
+            supplierCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
 
             //Updating Data into the database
             bool isSuccess = supplierDAL.Update(supplierCUL);
@@ -109,20 +111,6 @@ namespace GUI
             {
                 MessageBox.Show("Something went wrong:/");
             }
-        }
-
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
-        {
-            //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedInUserName;
-
-            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
-            //Then, fill the result into the userCUL;
-            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
-
-            int userId = userCUL.Id;
-
-            return userId;
         }
 
         private void RefreshSupplierDataGrid()//Try to modify it by creating an optional parameter.
