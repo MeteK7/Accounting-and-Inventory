@@ -44,7 +44,7 @@ namespace BLL
 
                 productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
 
-                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
+                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);//Getting the product id in order to fix the amount of specific product in the db by id.
 
                 productDAL.UpdateAmountInStock(productCUL);
             }
