@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace GUI
         }
 
         UserDAL userDAL = new UserDAL();
+        UserBLL userBLL = new UserBLL();
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
         PointOfPurchaseCUL pointOfPurchaseCUL = new PointOfPurchaseCUL();
         PointOfPurchaseDetailDAL pointOfPurchaseDetailDAL = new PointOfPurchaseDetailDAL();
@@ -216,20 +218,6 @@ namespace GUI
             txtInvoiceNo.Text = "";
         }
 
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
-        {
-            //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedInUserName;
-
-            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
-            //Then, fill the result into the userCUL;
-            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
-
-            int userId = userCUL.Id;
-
-            return userId;
-        }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -311,7 +299,7 @@ namespace GUI
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
-                int userId = GetUserId();
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 int initialIndex = 0;
                 bool isSuccess = false;
 

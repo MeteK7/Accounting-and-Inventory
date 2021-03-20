@@ -30,10 +30,9 @@ namespace GUI
         }
 
         CategoryDAL categoryDAL = new CategoryDAL();
-        ProductCUL productCUL = new ProductCUL();
         ProductDAL productDAL = new ProductDAL();
 
-        string searchBy; //Fix the naming!!!
+        string searchBy=null; //Fix the naming!!!
         int initialCboIndex=-1;
         bool canLoadListView = true;
 

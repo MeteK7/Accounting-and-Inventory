@@ -37,6 +37,7 @@ namespace GUI
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
         PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
+        UserBLL userBLL = new UserBLL();
 
         public WinPointOfSale()
         {
@@ -212,20 +213,6 @@ namespace GUI
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
         }
 
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this to prevent repeatings!!!.
-        {
-            //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedInUserName;
-
-            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
-            //Then, fill the result into the userCUL;
-            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
-
-            int userId = userCUL.Id;
-
-            return userId;
-        }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -297,7 +284,7 @@ namespace GUI
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
-                int userId = GetUserId();
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
                 DataTable dataTableLastInvoice = GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.

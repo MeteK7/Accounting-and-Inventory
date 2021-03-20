@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections;
@@ -35,6 +36,7 @@ namespace GUI
         CategoryDAL categoryDAL = new CategoryDAL();
         UserDAL userDAL = new UserDAL();
         UnitDAL unitDAL = new UnitDAL();
+        UserBLL userBLL = new UserBLL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -47,7 +49,7 @@ namespace GUI
         private void LoadProductDataGrid()
         {
             int firstRowIndex = 0, productId, categoryId, unitRetailId, unitWholesaleId, addedById;
-            string productName, categoryName, unitNameRetail, unitNameWholesale, description, amountInUnitWholesale, amountInStock, costPrice, salePrice, unitRetailName, unitWholesaleName, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
+            string productName, categoryName, unitNameRetail, unitNameWholesale, description, amountInUnitWholesale, amountInStock, costPrice, salePrice, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
             DataTable dataTable = productDAL.SelectAllOrByKeyword();
             DataTable dataTableCategoryInfo;
             DataTable dataTableUnitInfo;
@@ -235,20 +237,6 @@ namespace GUI
             cboProductUnitWholesale.SelectedValuePath = "id";
         }
 
-        private int GetUserId()//You used this method in WinProducts, as well. You can Make an external class just for this!!!.
-        {
-            //Getting the name of the user from the Login Window and fill it into a string variable;
-            string loggedUser = WinLogin.loggedInUserName;
-
-            //Calling the method named GetIdFromUsername in the userDAL and sending the variable loggedUser as a parameter into it.
-            //Then, fill the result into the userCUL;
-            UserCUL userCUL = userDAL.GetIdFromUsername(loggedUser);
-
-            int userId = userCUL.Id;
-
-            return userId;
-        }
-
         private void CheckButtonType(string btnType)
         {
             bool isSuccess;
@@ -265,7 +253,7 @@ namespace GUI
             productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
             productCUL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
             productCUL.AddedDate = DateTime.Now;
-            productCUL.AddedBy = GetUserId();
+            productCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
 
             #region BUTTON CHECKING PART
             if (btnType == "Add")
