@@ -49,7 +49,11 @@ namespace GUI
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        int oldItemsRowCount;
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private void LoadPastInvoice(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
         {
@@ -213,12 +217,7 @@ namespace GUI
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
+        private string[,] GetDataGridContent()
         {
             int rowLength = dgProducts.Items.Count;
             int colLength = 8;
@@ -239,30 +238,6 @@ namespace GUI
             }
 
             return dgProductCells;
-        }
-
-        private void RevertOldAmountInStock()
-        {
-            int initialRowIndex = 0;
-            int colProductId = 0;
-            int colProductAmount = 5;
-            decimal productAmountFromDB;
-
-
-            DataTable dataTableProduct = new DataTable();
-
-            for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
-            {
-                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
-
-                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
-
-                productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
-
-                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
-
-                productDAL.UpdateAmountInStock(productCUL);
-            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -337,7 +312,7 @@ namespace GUI
                 {
                     if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        RevertOldAmountInStock();//Reverting the old products' amount in stock.
+                        pointOfSaleBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count);//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -733,9 +708,48 @@ namespace GUI
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
             btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
-            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
+        }
+
+        private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    #region DELETE INVOICE
+                    int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+
+                    pointOfSaleCUL.Id = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
+                    pointOfSaleDetailCUL.Id = invoiceNo;
+
+                    pointOfSaleDAL.Delete(pointOfSaleCUL);
+                    pointOfSaleDetailDAL.Delete(invoiceNo);
+                    #endregion
+
+                    #region REVERT THE STOCK
+                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    pointOfSaleBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count);
+                    #endregion
+
+                    #region PREPARE TO THE LAST PAGE
+                    DisableTools();
+                    ClearProductEntranceTextBox();
+                    ClearProductsDataGrid();
+                    LoadPastInvoice();
+                    EnableButtonsOnClickSaveCancel();
+                    #endregion
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -796,47 +810,6 @@ namespace GUI
                 SubstractBasket(selectedRowIndex);
 
                 dgProducts.Items.Remove(selectedRow);
-            }
-        }
-
-        private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-
-                    #region DELETE INVOICE
-                    int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
-
-                    pointOfSaleCUL.Id = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
-                    pointOfSaleDetailCUL.Id = invoiceNo;
-
-                    pointOfSaleDAL.Delete(pointOfSaleCUL);
-                    pointOfSaleDetailDAL.Delete(invoiceNo);
-                    #endregion
-
-                    #region REVERT THE STOCK
-                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
-                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    RevertOldAmountInStock();
-                    #endregion
-
-                    #region PREPARE TO THE LAST PAGE
-                    DisableTools();
-                    ClearProductEntranceTextBox();
-                    ClearProductsDataGrid();
-                    LoadPastInvoice();
-                    EnableButtonsOnClickSaveCancel();
-                    #endregion
-
-                    break;
-                case MessageBoxResult.No:
-                    MessageBox.Show("Enjoy!", "Enjoy");
-                    break;
-                case MessageBoxResult.Cancel:
-                    MessageBox.Show("Nevermind then...", "KABA Accounting");
-                    break;
             }
         }
 
