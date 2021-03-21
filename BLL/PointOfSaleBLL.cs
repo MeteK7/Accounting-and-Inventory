@@ -12,9 +12,6 @@ namespace BLL
     public class PointOfSaleBLL
     {
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
-        ProductDAL productDAL = new ProductDAL();
-        ProductCUL productCUL = new ProductCUL();
-
 
         public bool InsertPOS(PointOfSaleCUL pointOfSaleCUL)
         {
@@ -24,30 +21,6 @@ namespace BLL
         public bool UpdatePOS(PointOfSaleCUL pointOfSaleCUL)
         {
             return pointOfSaleDAL.Update(pointOfSaleCUL);
-        }
-
-        public void RevertOldAmountInStock(string[,] dgOldProductCells, int oldItemsRowCount)
-        {
-            int initialRowIndex = 0;
-            int colProductId = 0;
-            int colProductAmount = 5;
-            decimal productAmountFromDB;
-
-
-            DataTable dataTableProduct = new DataTable();
-
-            for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
-            {
-                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
-
-                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
-
-                productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Revert the amount in stock.
-
-                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);//Getting the product id in order to fix the amount of specific product in the db by id.
-
-                productDAL.UpdateAmountInStock(productCUL);
-            }
         }
 
         public DataTable GetLastInvoiceInfo()

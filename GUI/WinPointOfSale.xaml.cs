@@ -38,6 +38,7 @@ namespace GUI
         UnitCUL unitCUL = new UnitCUL();
         PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
         UserBLL userBLL = new UserBLL();
+        ProductBLL productBLL = new ProductBLL();
 
         public WinPointOfSale()
         {
@@ -50,7 +51,7 @@ namespace GUI
         int invoiceArrow;
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-
+        string calledBy = "POS";
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -312,7 +313,7 @@ namespace GUI
                 {
                     if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        pointOfSaleBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count);//Reverting the old products' amount in stock.
+                        productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count,calledBy);//Reverting the old products' amount in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -693,7 +694,7 @@ namespace GUI
 
                     #region REVERT THE STOCK
                     dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    pointOfSaleBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count);
+                    productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count,calledBy);
                     #endregion
 
                     #region PREPARE TO THE LAST PAGE
