@@ -47,6 +47,7 @@ namespace GUI
             LoadPastInvoice();
         }
 
+        int invoiceArrow;
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
 
@@ -62,7 +63,7 @@ namespace GUI
 
             if (invoiceNo == 0)
             {
-                invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
@@ -262,7 +263,7 @@ namespace GUI
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
-                DataTable dataTableLastInvoice = GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableLastInvoice = pointOfSaleBLL.GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
@@ -293,7 +294,6 @@ namespace GUI
                     isSuccess = pointOfSaleBLL.InsertPOS(pointOfSaleCUL);
                 }
                 #endregion
-
 
                 #region TABLE POS DETAILS SAVING SECTION
                 int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
@@ -349,19 +349,17 @@ namespace GUI
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT AMOUNT UPDATE
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
-
                     productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
 
                     productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
 
                     productDAL.UpdateAmountInStock(productCUL);
                     #endregion
 
                 }
                 #endregion
-
-
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
                 if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
@@ -462,17 +460,7 @@ namespace GUI
                 txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
             }
 
-            //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
-            //{
-            //    if (verifyBarcode!=true)
-            //    {
-            //        MessageBox.Show("You have entered a wrong barcode");
-            //    }
-            //}
-
-
-            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            
+            /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
             Note: I just checked the btnProductAdd to know if there was a product entry before or not.
                   If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
             else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
@@ -480,7 +468,6 @@ namespace GUI
                 ClearProductEntranceTextBox();
             }
         }
-
 
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
@@ -584,6 +571,7 @@ namespace GUI
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
+
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {
             ClearProductEntranceTextBox();
@@ -667,35 +655,9 @@ namespace GUI
 
             int invoiceNo, increment = 1;
 
-            invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
-        }
-
-        private DataTable GetLastInvoiceInfo()
-        {
-            //int specificRowIndex = 0, invoiceNo;
-
-            DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
-
-            return dataTable;
-        }
-
-        private int GetLastInvoiceNumber()
-        {
-            int specificRowIndex = 0, invoiceNo;
-
-            DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
-
-            if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
-            {
-                invoiceNo = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
-            }
-            else//If there is no any invoice number, that means it is the first sale. So, assing invoiceNo with 0;
-            {
-                invoiceNo = 0;
-            }
-            return invoiceNo;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -714,7 +676,7 @@ namespace GUI
 
         private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice?", "Delete Invoice", MessageBoxButton.YesNoCancel);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -754,7 +716,7 @@ namespace GUI
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the invoice, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the invoice?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -773,7 +735,6 @@ namespace GUI
             }
         }
 
-        int invoiceArrow;
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
             int firstInvoiceNo = 0, currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
@@ -789,7 +750,7 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceNo = GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
+            int lastInvoiceNo = pointOfSaleBLL.GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
 
             if (currentInvoiceNo != lastInvoiceNo)
             {
