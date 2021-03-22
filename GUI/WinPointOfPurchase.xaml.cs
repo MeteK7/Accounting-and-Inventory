@@ -376,19 +376,24 @@ namespace GUI
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
-                    pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
+                    pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
                     pointOfPurchaseDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
 
+                    isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
-                    productCUL.Id = productId;
-
+                    #region PRODUCT AMOUNT UPDATE
                     productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
-
+                    
                     productCUL.AmountInStock = productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
 
-                    productDAL.UpdateAmountInStock(productCUL);
+                    if (chkUpdateProductCosts.IsChecked==true)
+                        productCUL.CostPrice = Convert.ToDecimal(cells[cellCostPrice]);
 
-                    isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
+                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
+
+                    productDAL.UpdateAmountInStock(productCUL);
+                    #endregion
+
                 }
                 #endregion
 
@@ -856,6 +861,5 @@ namespace GUI
                 }
             }
         }
-
     }
 }

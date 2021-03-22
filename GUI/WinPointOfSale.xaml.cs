@@ -354,7 +354,7 @@ namespace GUI
 
                     productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
 
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
+                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
 
                     productDAL.UpdateAmountInStock(productCUL);
                     #endregion
