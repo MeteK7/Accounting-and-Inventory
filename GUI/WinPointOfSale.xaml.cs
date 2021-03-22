@@ -775,6 +775,7 @@ namespace GUI
             }
         }
 
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
         private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtProductAmount.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
@@ -782,41 +783,41 @@ namespace GUI
                 if (txtProductAmount.Text != "")
                 {
                     decimal number;
-                    string textProductAmount = txtProductAmount.Text;
+                    string productAmount = txtProductAmount.Text;
 
-                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
+                    char lastCharacter = char.Parse(productAmount.Substring(productAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
 
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
-                    if (decimal.TryParse(textProductAmount, out number) && result == true)
+                    if (decimal.TryParse(productAmount, out number) && result == true)
                     {
                         DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         int rowIndex = 0;
-                        decimal productAmount;
                         string productSalePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
 
                         if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
                         {
                             /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
                             So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
-                            productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
+                            productAmount = Convert.ToInt32(txtProductAmount.Text).ToString();
                             txtProductAmount.Text = productAmount.ToString();
                         }
                         else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
                         {
-                            productAmount = Convert.ToDecimal(txtProductAmount.Text);
+                            productAmount = Convert.ToDecimal(txtProductAmount.Text).ToString();
                         }
 
-                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * productAmount).ToString();
+                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)).ToString();
+
+                        btnProductAdd.IsEnabled = true;
                     }
 
                     else//Reverting the amount to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
-                        txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
-                        btnProductAdd.IsEnabled = true;
+                        this.txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
                     }
                 }
 

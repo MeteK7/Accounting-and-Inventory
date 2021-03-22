@@ -182,6 +182,7 @@ namespace GUI
         {
             DisableProductEntranceButtons();
             dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
+            chkUpdateProductCosts.IsEnabled = false;
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
@@ -215,6 +216,7 @@ namespace GUI
             txtProductAmount.IsEnabled = true;
             txtProductTotalCostPrice.IsEnabled = true;
             txtInvoiceNo.IsEnabled = true;
+            chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
             txtInvoiceNo.Text = "";
@@ -393,7 +395,6 @@ namespace GUI
 
                     productDAL.UpdateAmountInStock(productCUL);
                     #endregion
-
                 }
                 #endregion
 
@@ -808,52 +809,94 @@ namespace GUI
             }
         }
 
-        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)/*----THIS IS NOT A PRODUCTIVE CODE----*/
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
+        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtProductAmount.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
             {
                 if (txtProductAmount.Text != "")
                 {
                     decimal number;
-                    string textProductAmount = txtProductAmount.Text;
+                    string productAmount = txtProductAmount.Text;
 
-                    char lastCharacter = char.Parse(textProductAmount.Substring(textProductAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
+                    char lastCharacter = char.Parse(productAmount.Substring(productAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
 
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
-                    if (decimal.TryParse(textProductAmount, out number) && result == true)
+                    if (decimal.TryParse(productAmount, out number) && result == true)
                     {
                         DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
-                        int rowIndex = 0;
-                        decimal productAmount;
-                        string productCostPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                        string productCostPrice = txtProductCostPrice.Text;
 
                         if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
                         {
                             /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
                             So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
-                            productAmount = Convert.ToInt32(Convert.ToDecimal(txtProductAmount.Text));
+                            productAmount = Convert.ToInt32(txtProductAmount.Text).ToString();
                             txtProductAmount.Text = productAmount.ToString();
                         }
                         else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
                         {
-                            productAmount = Convert.ToDecimal(txtProductAmount.Text);
+                            productAmount = Convert.ToDecimal(txtProductAmount.Text).ToString();
                         }
 
-                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
+                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();
+
+                        btnProductAdd.IsEnabled = true;
                     }
 
                     else//Reverting the amount to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
-                        txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
-                        btnProductAdd.IsEnabled = true;
+                        txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".  
                     }
                 }
 
                 /* If the user left the txtProductAmount as empty, wait for him to enter a new value and block the btnProductAdd. 
+                   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+                else
+                {
+                    btnProductAdd.IsEnabled = false;
+                }
+            }
+        }
+
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
+        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductCostPrice.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
+            {
+                if (txtProductCostPrice.Text != "")
+                {
+                    decimal number;
+                    string productCostPrice = txtProductCostPrice.Text;
+                    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
+                    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+
+                    if (decimal.TryParse(productCostPrice, out number) && result == true)
+                    {
+                        decimal productAmount= Convert.ToDecimal(txtProductAmount.Text);
+
+                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
+
+                        btnProductAdd.IsEnabled = true;
+                    }
+
+                    else//Reverting the amount to the default value.
+                    {
+                        MessageBox.Show("Please enter a valid number");
+
+                        using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
+                        {
+                            int rowIndex = 0;
+                            txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
+                        }
+                    }
+                }
+
+                /* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
                    Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
                 else
                 {
