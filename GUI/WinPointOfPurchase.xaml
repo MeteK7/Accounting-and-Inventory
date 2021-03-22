@@ -301,7 +301,7 @@
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="424,40,0,0" VerticalAlignment="Top" Width="55"/>
-                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
+                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductCostPrice_TextChanged"/>
                 <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductAmount_TextChanged"/>
                 <TextBox x:Name="txtProductTotalCostPrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
@@ -314,6 +314,7 @@
                         <ImageBrush ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
+                <Label Content="Label" HorizontalAlignment="Left" Margin="1012,58,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
@@ -473,6 +474,11 @@
                 <Label x:Name="lblSupplierId" Content="Supplier" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="107"/>
                 <ComboBox x:Name="cboSupplier" HorizontalAlignment="Left" Margin="778,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboSupplier_Loaded"/>
 
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Controls" Margin="1128,265,10,438">
+            <Grid>
+                <CheckBox x:Name="chkUpdateProductCosts" Content="Update Product Costs" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="142"/>
             </Grid>
         </GroupBox>
 
