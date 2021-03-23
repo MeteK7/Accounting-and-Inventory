@@ -51,6 +51,132 @@ namespace GUI
         string[,] dgOldProductCells = new string[,] { };
         string calledBy= "POP";
         int oldItemsRowCount;
+        int invoiceArrow;
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnProductClear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearProductEntranceTextBox();
+
+        }
+
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
+        }
+
+        private void FillStaffInformations()
+        {
+            txtStaffName.Text = WinLogin.loggedInUserName;
+            txtStaffPosition.Text = WinLogin.loggedInUserType;
+        }
+
+        private void RefreshProductDataGrid()
+        {
+            //Refreshing Data Grid View
+            DataTable dataTable = productDAL.SelectAllOrByKeyword();
+            dgProducts.ItemsSource = dataTable.DefaultView;
+            dgProducts.AutoGenerateColumns = true;
+            dgProducts.CanUserAddRows = false;
+        }
+
+        private void DisableProductEntranceButtons()
+        {
+            btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
+            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
+            btnEditRecord.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnDeleteRecord.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        private void DisableTools()
+        {
+            DisableProductEntranceButtons();
+            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
+            chkUpdateProductCosts.IsEnabled = false;
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
+            btnPrint.IsEnabled = false;
+            cboPaymentType.IsEnabled = false;
+            cboSupplier.IsEnabled = false;
+            cboProductUnit.IsEnabled = false;
+            txtProductId.IsEnabled = false;
+            txtProductName.IsEnabled = false;
+            txtProductCostPrice.IsEnabled = false;
+            txtProductAmount.IsEnabled = false;
+            txtProductTotalCostPrice.IsEnabled = false;
+            txtInvoiceNo.IsEnabled = false;
+        }
+
+        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
+        {
+            btnNew.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnCancel.IsEnabled = true;
+            btnEditRecord.IsEnabled = false;
+            btnDeleteRecord.IsEnabled = false;
+            btnPrint.IsEnabled = true;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboPaymentType.IsEnabled = true;
+            cboSupplier.IsEnabled = true;
+            cboProductUnit.IsEnabled = true;
+            txtProductId.IsEnabled = true;
+            txtProductName.IsEnabled = true;
+            txtProductCostPrice.IsEnabled = true;
+            txtProductAmount.IsEnabled = true;
+            txtProductTotalCostPrice.IsEnabled = true;
+            txtInvoiceNo.IsEnabled = true;
+            chkUpdateProductCosts.IsEnabled = true;
+            dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
+            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            txtInvoiceNo.Text = "";
+        }
+
+        private void ClearProductsDataGrid()
+        {
+            dgProducts.Items.Clear();
+        }
+
+        private void ClearBasketTextBox()
+        {
+            txtBasketAmount.Text = "0";
+            txtBasketCostTotal.Text = "0";
+            txtBasketSubTotal.Text = "0";
+            txtBasketVat.Text = "0";
+            txtBasketDiscount.Text = "0";
+            txtBasketGrandTotal.Text = "0";
+        }
+
+        private void ClearProductEntranceTextBox()
+        {
+            txtProductId.Text = "";
+            txtProductName.Text = "";
+            cboProductUnit.SelectedIndex = -1;
+            txtProductCostPrice.Text = "";
+            txtProductAmount.Text = "";
+            txtProductTotalCostPrice.Text = "";
+            Keyboard.Focus(txtProductId); // set keyboard focus
+            DisableProductEntranceButtons();
+        }
+
+        private void LoadNewInvoice()
+        {
+            ClearBasketTextBox();
+            ClearProductsDataGrid();
+        }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
@@ -141,92 +267,6 @@ namespace GUI
             }
         }
 
-        private void FirstTimeRun()
-        {
-            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
-            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
-            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
-        }
-
-        private void FillStaffInformations()
-        {
-            txtStaffName.Text = WinLogin.loggedInUserName;
-            txtStaffPosition.Text = WinLogin.loggedInUserType;
-        }
-
-        private void RefreshProductDataGrid()
-        {
-            //Refreshing Data Grid View
-            DataTable dataTable = productDAL.SelectAllOrByKeyword();
-            dgProducts.ItemsSource = dataTable.DefaultView;
-            dgProducts.AutoGenerateColumns = true;
-            dgProducts.CanUserAddRows = false;
-        }
-
-        private void DisableProductEntranceButtons()
-        {
-            btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
-            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
-        }
-
-        private void EnableButtonsOnClickSaveCancel()
-        {
-            btnNew.IsEnabled = true;//If the products are saved successfully, enable the new button to be able to add new products.
-            btnEditRecord.IsEnabled = true;//If the products are saved successfully, enable the edit button to be able to edit an existing invoice.
-            btnDeleteRecord.IsEnabled = true;
-            btnPrev.IsEnabled = true;
-            btnNext.IsEnabled = true;
-        }
-
-        private void DisableTools()
-        {
-            DisableProductEntranceButtons();
-            dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
-            chkUpdateProductCosts.IsEnabled = false;
-            btnSave.IsEnabled = false;
-            btnCancel.IsEnabled = false;
-            btnPrint.IsEnabled = false;
-            cboPaymentType.IsEnabled = false;
-            cboSupplier.IsEnabled = false;
-            cboProductUnit.IsEnabled = false;
-            txtProductId.IsEnabled = false;
-            txtProductName.IsEnabled = false;
-            txtProductCostPrice.IsEnabled = false;
-            txtProductAmount.IsEnabled = false;
-            txtProductTotalCostPrice.IsEnabled = false;
-            txtInvoiceNo.IsEnabled = false;
-        }
-
-        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
-        {
-            btnNew.IsEnabled = false;
-            btnSave.IsEnabled = true;
-            btnCancel.IsEnabled = true;
-            btnEditRecord.IsEnabled = false;
-            btnDeleteRecord.IsEnabled = false;
-            btnPrint.IsEnabled = true;
-            btnPrev.IsEnabled = false;
-            btnNext.IsEnabled = false;
-            cboPaymentType.IsEnabled = true;
-            cboSupplier.IsEnabled = true;
-            cboProductUnit.IsEnabled = true;
-            txtProductId.IsEnabled = true;
-            txtProductName.IsEnabled = true;
-            txtProductCostPrice.IsEnabled = true;
-            txtProductAmount.IsEnabled = true;
-            txtProductTotalCostPrice.IsEnabled = true;
-            txtInvoiceNo.IsEnabled = true;
-            chkUpdateProductCosts.IsEnabled = true;
-            dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
-            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
-            txtInvoiceNo.Text = "";
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
             int rowLength = dgProducts.Items.Count;
@@ -251,7 +291,6 @@ namespace GUI
             return dgProductCells;
         }
 
-
         private int GetInvoiceIdByNo()
         {
             int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
@@ -259,6 +298,15 @@ namespace GUI
             DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
             int currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
             return currentInvoiceId;
+        }
+
+        private DataTable SearchByInvoiceId()
+        {
+            //int specificRowIndex = 0, invoiceNo;
+
+            DataTable dataTable = pointOfPurchaseDAL.SearchByInvoiceId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
+
+            return dataTable;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -420,101 +468,6 @@ namespace GUI
             }
         }
 
-        private void ClearBasketTextBox()
-        {
-            txtBasketAmount.Text = "0";
-            txtBasketCostTotal.Text = "0";
-            txtBasketSubTotal.Text = "0";
-            txtBasketVat.Text = "0";
-            txtBasketDiscount.Text = "0";
-            txtBasketGrandTotal.Text = "0";
-        }
-
-        private void ClearProductsDataGrid()
-        {
-            dgProducts.Items.Clear();
-        }
-
-        private void ClearProductEntranceTextBox()
-        {
-            txtProductId.Text = "";
-            txtProductName.Text = "";
-            cboProductUnit.SelectedIndex = -1;
-            txtProductCostPrice.Text = "";
-            txtProductAmount.Text = "";
-            txtProductTotalCostPrice.Text = "";
-            Keyboard.Focus(txtProductId); // set keyboard focus
-            DisableProductEntranceButtons();
-        }
-
-        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
-        {
-            int number;
-
-            DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-
-            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
-            {
-                int productAmount = 1;
-                int rowIndex = 0;
-                int productId;
-                int productUnit = 0;
-                string productBarcodeRetail/*, productBarcodeWholesale*/;
-                string costPrice;
-
-                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
-
-
-                productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
-                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
-                //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
-
-
-                if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
-                {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
-                }
-
-                else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
-                {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
-                }
-
-                txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
-
-                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
-
-                cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
-                cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
-
-                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-
-                txtProductCostPrice.Text = costPrice;
-                txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalCostPrice.Text = (Convert.ToDecimal(costPrice) * productAmount).ToString();
-            }
-
-            //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
-            //{
-            //    if (verifyBarcode!=true)
-            //    {
-            //        MessageBox.Show("You have entered a wrong barcode");
-            //    }
-            //}
-
-
-            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            
-            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
-                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
-            else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
-            {
-                ClearProductEntranceTextBox();
-            }
-        }
-
-
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
@@ -611,12 +564,6 @@ namespace GUI
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
-        private void btnProductClear_Click(object sender, RoutedEventArgs e)
-        {
-            ClearProductEntranceTextBox();
-
-        }
-
         private void cboPaymentType_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
@@ -647,39 +594,10 @@ namespace GUI
             cboSupplier.SelectedValuePath = "id";
         }
 
-        private void LoadNewInvoice()
-        {
-            ClearBasketTextBox();
-            ClearProductsDataGrid();
-
-            //int invoiceNo, increment = 1;
-
-            //invoiceNo = GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
-            //invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            //txtInvoiceNo.Text = invoiceNo.ToString();//Assigning invoiceNo to the content of the InvoiceNo Label.
-        }
-
-        private DataTable SearchByInvoiceId()
-        {
-            //int specificRowIndex = 0, invoiceNo;
-
-            DataTable dataTable = pointOfPurchaseDAL.SearchByInvoiceId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
-
-            return dataTable;
-        }
-
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            ModifyToolsOnClickBtnNewOrEdit();
-        }
-
-        private void btnEditRecord_Click(object sender, RoutedEventArgs e)
-        {
-            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
-            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
-            dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
@@ -704,7 +622,55 @@ namespace GUI
             }
         }
 
-        int invoiceArrow;
+        private void btnEditRecord_Click(object sender, RoutedEventArgs e)
+        {
+            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+            dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+            ModifyToolsOnClickBtnNewOrEdit();
+        }
+
+        private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    #region DELETE INVOICE
+                    int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+
+                    pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
+                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo; REFACTOR THIS CODE!!!
+
+                    pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
+                    pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
+                    #endregion
+
+                    #region REVERT THE STOCK
+                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);
+                    #endregion
+
+                    #region PREPARE TO THE LAST PAGE
+                    DisableTools();
+                    ClearProductEntranceTextBox();
+                    ClearProductsDataGrid();
+                    LoadPastInvoice();
+                    EnableButtonsOnClickSaveCancel();
+                    #endregion
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
+
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
             int  firstInvoiceId = 1, currentInvoiceId;
@@ -752,60 +718,70 @@ namespace GUI
             }
         }
 
-        private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
+        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice, you piece of shit?", "Delete Invoice", MessageBoxButton.YesNoCancel);
-            switch (result)
+            int number;
+
+            DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+
+            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
             {
-                case MessageBoxResult.Yes:
+                int productAmount = 1;
+                int rowIndex = 0;
+                int productId;
+                int productUnit = 0;
+                string productBarcodeRetail/*, productBarcodeWholesale*/;
+                string costPrice;
 
-                    #region DELETE INVOICE
-                    int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
+                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
-                    pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
-                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo; REFACTOR THIS CODE!!!
 
-                    pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
-                    pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
-                    #endregion
+                productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
+                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
+                //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
 
-                    #region REVERT THE STOCK
-                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
-                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);
-                    #endregion
 
-                    #region PREPARE TO THE LAST PAGE
-                    DisableTools();
-                    ClearProductEntranceTextBox();
-                    ClearProductsDataGrid();
-                    LoadPastInvoice();
-                    EnableButtonsOnClickSaveCancel();
-                    #endregion
+                if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
+                {
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
+                }
 
-                    break;
-                case MessageBoxResult.No:
-                    MessageBox.Show("Enjoy!", "Enjoy");
-                    break;
-                case MessageBoxResult.Cancel:
-                    MessageBox.Show("Nevermind then...", "KABA Accounting");
-                    break;
+                else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
+                {
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
+                }
+
+                txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
+
+                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+
+                cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
+                cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
+
+                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+
+                txtProductCostPrice.Text = costPrice;
+                txtProductAmount.Text = productAmount.ToString();
+                txtProductTotalCostPrice.Text = (Convert.ToDecimal(costPrice) * productAmount).ToString();
             }
-        }
 
-        private void txtInvoiceNo_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtInvoiceNo.Text == "0")
-            {
-                txtInvoiceNo.Text = "";
-            }
-        }
+            //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
+            //{
+            //    if (verifyBarcode!=true)
+            //    {
+            //        MessageBox.Show("You have entered a wrong barcode");
+            //    }
+            //}
 
-        private void txtInvoiceNo_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtInvoiceNo.Text == "" || !Int32.TryParse(txtInvoiceNo.Text, out int value))//The code will work if the text is empty or does NOT contain a numeric value.
+
+            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            
+            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+            else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
             {
-                txtInvoiceNo.Text = "0";
+                ClearProductEntranceTextBox();
             }
         }
 
@@ -902,6 +878,22 @@ namespace GUI
                 {
                     btnProductAdd.IsEnabled = false;
                 }
+            }
+        }
+
+        private void txtInvoiceNo_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtInvoiceNo.Text == "0")
+            {
+                txtInvoiceNo.Text = "";
+            }
+        }
+
+        private void txtInvoiceNo_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtInvoiceNo.Text == "" || !Int32.TryParse(txtInvoiceNo.Text, out int value))//The code will work if the text is empty or does NOT contain a numeric value.
+            {
+                txtInvoiceNo.Text = "0";
             }
         }
     }
