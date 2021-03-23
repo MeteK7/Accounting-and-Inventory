@@ -194,14 +194,14 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE USING INVOICE NO
-        public DataTable SearchByInvoiceId(int invoiceId = 0)//Optional parameter
+        public DataTable GetByInvoiceId(int invoiceId = 0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dataTable = new DataTable();
                 String sql;
 
-                if (invoiceId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
+                if (invoiceId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last record using the following query.
                 {
                     sql = "SELECT * FROM tbl_pop WHERE id=(SELECT max(id) FROM tbl_pop)";
                     //sql = "SELECT * FROM tbl_pop WHERE id=IDENT_CURRENT('tbl_pop')";//SQL query to get the last id of rows in the table.

@@ -37,6 +37,7 @@ namespace GUI
         PointOfPurchaseCUL pointOfPurchaseCUL = new PointOfPurchaseCUL();
         PointOfPurchaseDetailDAL pointOfPurchaseDetailDAL = new PointOfPurchaseDetailDAL();
         PointOfPurchaseDetailCUL pointOfPurchaseDetailCUL = new PointOfPurchaseDetailCUL();
+        PointOfPurchaseBLL pointOfPurchaseBLL = new PointOfPurchaseBLL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
         PaymentDAL paymentDAL = new PaymentDAL();
@@ -181,13 +182,12 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
         {
-            DataTable dataTableLastInvoice;
             int firstRowIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productAmount, productTotalCostPrice;
 
             if (invoiceId == 0)//If the ID is 0 came from the optional parameter, that means user just clicked the pop button to open it.
             {
-                dataTableLastInvoice = SearchByInvoiceId();//Getting the last invoice id and assign it to the variable called invoiceId.
+                DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice id and assign it to the variable called invoiceId.
 
                 if (dataTableLastInvoice.Rows.Count != 0)
                 {
@@ -198,7 +198,7 @@ namespace GUI
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePop = pointOfPurchaseDAL.SearchByInvoiceId(invoiceId);
+                DataTable dataTablePop = pointOfPurchaseDAL.GetByInvoiceId(invoiceId);
                 DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                 DataTable dataTableUnitInfo;
                 DataTable dataTableProduct;
@@ -291,24 +291,6 @@ namespace GUI
             return dgProductCells;
         }
 
-        private int GetInvoiceIdByNo()
-        {
-            int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
-
-            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
-            int currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
-            return currentInvoiceId;
-        }
-
-        private DataTable SearchByInvoiceId()
-        {
-            //int specificRowIndex = 0, invoiceNo;
-
-            DataTable dataTable = pointOfPurchaseDAL.SearchByInvoiceId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
-
-            return dataTable;
-        }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string[,] dgNewProductCells = new string[,] { };
@@ -327,13 +309,13 @@ namespace GUI
             if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboPaymentType.SelectedIndex != -1 && cboSupplier.SelectedIndex != -1)
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
-                int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 int initialIndex = 0;
                 bool isSuccess = false;
 
                 int currentInvoiceId = 1, firstRowIndex = 0;//Current invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
-                DataTable dataTableLastInvoice = SearchByInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
@@ -347,7 +329,7 @@ namespace GUI
                 /*ONLY ELSE MAY BE MORE SUITABLE!!!*/
                 else if (userClickedNewOrEdit == 1)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
                 {
-                    currentInvoiceId = GetInvoiceIdByNo();
+                    currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
                 }
 
                 #region TABLE POP SAVING SECTION
@@ -638,7 +620,7 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region DELETE INVOICE
-                    int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                    int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
                     pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
                     //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo; REFACTOR THIS CODE!!!
@@ -675,7 +657,7 @@ namespace GUI
         {
             int  firstInvoiceId = 1, currentInvoiceId;
 
-            currentInvoiceId = GetInvoiceIdByNo();
+            currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
 
             if (currentInvoiceId != firstInvoiceId)
             {
@@ -690,9 +672,9 @@ namespace GUI
         {
             int voidInvoiceId = 0, lastInvoiceId, currentInvoiceId;
 
-            currentInvoiceId = GetInvoiceIdByNo();
+            currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
 
-            DataTable dataTableLastInvoice = SearchByInvoiceId();
+            DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();
             lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[voidInvoiceId]["id"]);//Getting the last invoice id.
 
 
@@ -766,17 +748,7 @@ namespace GUI
                 txtProductTotalCostPrice.Text = (Convert.ToDecimal(costPrice) * productAmount).ToString();
             }
 
-            //if (Keyboard.IsKeyDown(Key.Tab))//PLEASE TRY TO TRIG THE TAB BUTTON!!!
-            //{
-            //    if (verifyBarcode!=true)
-            //    {
-            //        MessageBox.Show("You have entered a wrong barcode");
-            //    }
-            //}
-
-
-            /*If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            
+            /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
             Note: I just checked the btnProductAdd to know if there was a product entry before or not.
                   If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
             else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
