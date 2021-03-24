@@ -53,6 +53,15 @@
                 </Button.Background>
             </Button>
         </DockPanel>
+        <GroupBox Header="Menu" Margin="10,34,10,584">
+            <Grid>
+                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="111,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="212,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="313,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="414,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>

@@ -17,7 +17,7 @@
         <ImageBrush x:Key="ButtonReports" ImageSource="/Images/Buttons/spreadsheet-app.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonDailySummary" ImageSource="/Images/Buttons/calendar.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonAssets" ImageSource="/Images/Buttons/asset-management.png" Stretch="Uniform"></ImageBrush>
-        <ImageBrush x:Key="ButtonDeposits" ImageSource="/Images/Buttons/safe-box.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonDeposit" ImageSource="/Images/Buttons/safe-box.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPop" ImageSource="/Images/Buttons/edit.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPopReports" ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPos" ImageSource="/Images/Buttons/printer.png" Stretch="Uniform"></ImageBrush>
@@ -226,8 +226,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="Button" x:Key="ButtonDepositsStyle">
-            <Setter Property="Background" Value="{StaticResource ButtonDeposits}"></Setter>
+        <Style TargetType="Button" x:Key="ButtonDepositStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonDeposit}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -610,7 +610,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonDepositsStyle}" Content="Deposits" HorizontalAlignment="Left" Margin="346,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom">
+                    <Button x:Name="btnDeposit" Style="{StaticResource ButtonDepositStyle}" Content="Deposit" HorizontalAlignment="Left" Margin="346,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnDeposit_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/safe-box.png">
                                 <ImageBrush.RelativeTransform>
@@ -719,7 +719,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" Click="Button_Click">
+                    <Button x:Name="btnInvAdjustment" Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" Click="btnInvAdjustment_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/checklist.png">
                                 <ImageBrush.RelativeTransform>
