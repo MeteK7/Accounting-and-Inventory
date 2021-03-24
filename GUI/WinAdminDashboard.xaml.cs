@@ -147,10 +147,16 @@ namespace GUI
             winPhyInventory.Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnInvAdjustment_Click(object sender, RoutedEventArgs e)
         {
             WinInventoryAdjustment winInventoryAdjustment = new WinInventoryAdjustment();
             winInventoryAdjustment.Show();
+        }
+
+        private void btnDeposit_Click(object sender, RoutedEventArgs e)
+        {
+            WinDeposit winDeposit = new WinDeposit();
+            winDeposit.Show();
         }
     }
 }
