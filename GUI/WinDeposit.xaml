@@ -53,13 +53,25 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="Menu" Margin="10,34,10,584">
+        <GroupBox Header="Menu" Margin="10,34,261,610">
             <Grid>
-                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
-                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="111,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
-                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="212,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
-                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="313,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
-                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="414,0,0,0" VerticalAlignment="Center" Height="81" Width="96"/>
+                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="111,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="212,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="313,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="414,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Entrance" Margin="10,162,261,476">
+            <Grid>
+                <Label x:Name="lblBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="44"/>
+                <Label x:Name="lblBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="156"/>
+                <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Width="344"/>
+                <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" Height="30"/>
+                <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="220,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" Height="30"/>
+                <ComboBox x:Name="cboBankName" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" Width="156" Height="30"/>
+                <Label x:Name="lblAmount" Content="Amount" HorizontalAlignment="Left" Margin="569,10,0,0" VerticalAlignment="Top" Width="74"/>
+                <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="569,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
             </Grid>
         </GroupBox>
 
