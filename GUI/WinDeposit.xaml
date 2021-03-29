@@ -55,25 +55,92 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,261,610">
             <Grid>
-                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
-                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="111,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
-                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="212,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
-                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="313,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
-                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="414,0,0,0" VerticalAlignment="Center" Height="61" Width="61"/>
+                <Button x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/add-file.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.3" CenterX="0.6" ScaleX="0.65" ScaleY="0.7"/>
+                                    <SkewTransform CenterY="0.3" CenterX="0.6" AngleY="0"/>
+                                    <RotateTransform CenterY="0.3" CenterX="0.6"/>
+                                    <TranslateTransform X="0"/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-save.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.3" CenterX="0.5" ScaleX="0.65" ScaleY="0.7"/>
+                                    <SkewTransform CenterY="0.3" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.3" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-cancel.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.3" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
+                                    <SkewTransform CenterY="0.3" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.3" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnEdit" Content="EDIT" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/edit-file.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.4" CenterX="0.7" ScaleX="0.7" ScaleY="0.7"/>
+                                    <SkewTransform CenterY="0.4" CenterX="0.7"/>
+                                    <RotateTransform CenterY="0.4" CenterX="0.7"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/recycle-bin.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.4" CenterX="0.5" ScaleX="0.7" ScaleY="0.65"/>
+                                    <SkewTransform CenterY="0.4" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.4" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
             </Grid>
         </GroupBox>
         <GroupBox Header="Entrance" Margin="10,162,261,476">
             <Grid>
                 <Label x:Name="lblBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="44"/>
-                <Label x:Name="lblBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="156"/>
-                <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Width="344"/>
+                <Label x:Name="lblBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="141"/>
+                <Label x:Name="lblAccountNumber" Content="Account Number" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="322,11,0,0" VerticalAlignment="Top" Width="344"/>
+                <Label x:Name="lblAmount" Content="Amount" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="74"/>
                 <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" Height="30"/>
-                <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="220,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" Height="30"/>
-                <ComboBox x:Name="cboBankName" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" Width="156" Height="30"/>
-                <Label x:Name="lblAmount" Content="Amount" HorizontalAlignment="Left" Margin="569,10,0,0" VerticalAlignment="Top" Width="74"/>
-                <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="569,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
-                <Button x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="648,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
-                <Button x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="682,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
+                <ComboBox x:Name="cboBankName" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" Width="141" Height="30"/>
+                <ComboBox x:Name="cboAccountNumber" HorizontalAlignment="Left" Margin="205,42,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
+                <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="322,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" Height="30"/>
+                <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="671,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
+                <Button x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
+                <Button x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="784,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Deposits" Margin="10,282,261,10">
