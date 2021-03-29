@@ -72,26 +72,10 @@
                 <ComboBox x:Name="cboBankName" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" Width="156" Height="30"/>
                 <Label x:Name="lblAmount" Content="Amount" HorizontalAlignment="Left" Margin="569,10,0,0" VerticalAlignment="Top" Width="74"/>
                 <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="569,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
-                <Button x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="648,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
-                <Button x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="682,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Deposits" Margin="10,282,261,10">
-            <DataGrid x:Name="dgDeposits">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="80" />
-                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="Bank Name" Width="150"/>
-                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="445"/>
-                    <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount" Width="100"/>
-                    <DataGridTemplateColumn Header="Delete">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Name="btnDeleteDataGridRow" Content="Delete" Click="btnDeleteDataGridRow_Click"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            <DataGrid x:Name="dgDeposits"/>
         </GroupBox>
 
     </Grid>
