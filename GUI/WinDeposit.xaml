@@ -74,6 +74,9 @@
                 <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="569,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
             </Grid>
         </GroupBox>
+        <GroupBox Header="Deposits" Margin="10,282,261,10">
+            <DataGrid x:Name="dgDeposits"/>
+        </GroupBox>
 
     </Grid>
 </Window>
