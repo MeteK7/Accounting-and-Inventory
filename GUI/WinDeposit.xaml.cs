@@ -25,6 +25,7 @@ namespace GUI
         public WinDeposit()
         {
             InitializeComponent();
+            DisableTools();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -38,27 +39,38 @@ namespace GUI
             DataTable dataTable = bankDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboBankName.ItemsSource = dataTable.DefaultView;
+            cboEntranceBankName.ItemsSource = dataTable.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboBankName.DisplayMemberPath = "name";
+            cboEntranceBankName.DisplayMemberPath = "name";
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboBankName.SelectedValuePath = "id";
+            cboEntranceBankName.SelectedValuePath = "id";
         }
 
         private void txtId_KeyUp(object sender, KeyEventArgs e)
         {
             int number, rowIndex = 0;
 
-            DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtId.Text));
+            DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtEntranceBankId.Text));
 
-            cboBankName.SelectedValue = dtBank.Rows[rowIndex]["id"];
+            cboEntranceBankName.SelectedValue = dtBank.Rows[rowIndex]["id"];
         }
 
         private void cboBankName_KeyUp(object sender, KeyEventArgs e)
         {
-            txtId.Text = cboBankName.SelectedValue.ToString();
+            txtEntranceBankId.Text = cboEntranceBankName.SelectedValue.ToString();
+        }
+
+        private void DisableTools()
+        {
+            txtEntranceBankId.IsEnabled = false;
+            txtEntranceDescription.IsEnabled = false;
+            txtEntranceAmount.IsEnabled = false;
+            cboEntranceBankName.IsEnabled = false;
+            cboEntranceAccountNumber.IsEnabled = false;
+            btnEntranceEnter.IsEnabled = false;
+            btnEntranceClear.IsEnabled = false;
         }
     }
 }
