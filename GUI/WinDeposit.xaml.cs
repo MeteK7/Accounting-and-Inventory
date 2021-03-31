@@ -47,6 +47,18 @@ namespace GUI
             cboBankName.SelectedValuePath = "id";
         }
 
+        private void txtId_KeyUp(object sender, KeyEventArgs e)
+        {
+            int number, rowIndex = 0;
 
+            DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtId.Text));
+
+            cboBankName.SelectedValue = dtBank.Rows[rowIndex]["id"];
+        }
+
+        private void cboBankName_KeyUp(object sender, KeyEventArgs e)
+        {
+            txtId.Text = cboBankName.SelectedValue.ToString();
+        }
     }
 }
