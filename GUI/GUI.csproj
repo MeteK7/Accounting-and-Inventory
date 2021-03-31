@@ -48,6 +48,7 @@
     <None Remove="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
     <None Remove="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <None Remove="Images\Backgrounds\wooden-floor-background.jpg" />
+    <None Remove="Images\Buttons\add-file.png" />
     <None Remove="Images\Buttons\add-product.png" />
     <None Remove="Images\Buttons\add-to-cart.png" />
     <None Remove="Images\Buttons\add-user.png" />
@@ -58,6 +59,8 @@
     <None Remove="Images\Buttons\backup.png" />
     <None Remove="Images\Buttons\bank.png" />
     <None Remove="Images\Buttons\barcode.png" />
+    <None Remove="Images\Buttons\btn-cancel.png" />
+    <None Remove="Images\Buttons\btn-save.png" />
     <None Remove="Images\Buttons\calendar.png" />
     <None Remove="Images\Buttons\cancel.png" />
     <None Remove="Images\Buttons\cash.png" />
@@ -75,6 +78,7 @@
     <None Remove="Images\Buttons\deletecart.png" />
     <None Remove="Images\Buttons\delivery.png" />
     <None Remove="Images\Buttons\deposit.png" />
+    <None Remove="Images\Buttons\edit-file.png" />
     <None Remove="Images\Buttons\edit.png" />
     <None Remove="Images\Buttons\error.png" />
     <None Remove="Images\Buttons\file-management.png" />
@@ -100,6 +104,7 @@
     <None Remove="Images\Buttons\printer_colorful.png" />
     <None Remove="Images\Buttons\processing.png" />
     <None Remove="Images\Buttons\qr-code.png" />
+    <None Remove="Images\Buttons\recycle-bin.png" />
     <None Remove="Images\Buttons\refresh.png" />
     <None Remove="Images\Buttons\report-arrow.png" />
     <None Remove="Images\Buttons\reports.png" />
@@ -169,6 +174,7 @@
     <Resource Include="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
     <Resource Include="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <Resource Include="Images\Backgrounds\wooden-floor-background.jpg" />
+    <Resource Include="Images\Buttons\add-file.png" />
     <Resource Include="Images\Buttons\add-product.png" />
     <Resource Include="Images\Buttons\add-to-cart.png" />
     <Resource Include="Images\Buttons\add-user.png" />
@@ -179,6 +185,8 @@
     <Resource Include="Images\Buttons\backup.png" />
     <Resource Include="Images\Buttons\bank.png" />
     <Resource Include="Images\Buttons\barcode.png" />
+    <Resource Include="Images\Buttons\btn-cancel.png" />
+    <Resource Include="Images\Buttons\btn-save.png" />
     <Resource Include="Images\Buttons\calendar.png" />
     <Resource Include="Images\Buttons\cancel.png" />
     <Resource Include="Images\Buttons\cash.png" />
@@ -196,6 +204,7 @@
     <Resource Include="Images\Buttons\deletecart.png" />
     <Resource Include="Images\Buttons\delivery.png" />
     <Resource Include="Images\Buttons\deposit.png" />
+    <Resource Include="Images\Buttons\edit-file.png" />
     <Resource Include="Images\Buttons\edit.png" />
     <Resource Include="Images\Buttons\error.png" />
     <Resource Include="Images\Buttons\file-management.png" />
@@ -221,6 +230,7 @@
     <Resource Include="Images\Buttons\printer_colorful.png" />
     <Resource Include="Images\Buttons\processing.png" />
     <Resource Include="Images\Buttons\qr-code.png" />
+    <Resource Include="Images\Buttons\recycle-bin.png" />
     <Resource Include="Images\Buttons\refresh.png" />
     <Resource Include="Images\Buttons\report-arrow.png" />
     <Resource Include="Images\Buttons\reports.png" />
