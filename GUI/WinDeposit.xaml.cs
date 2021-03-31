@@ -46,5 +46,7 @@ namespace GUI
             //SelectedValuePath helps to store values like a hidden field.
             cboBankName.SelectedValuePath = "id";
         }
+
+
     }
 }
