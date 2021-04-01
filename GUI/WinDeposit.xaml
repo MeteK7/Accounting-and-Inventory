@@ -215,7 +215,9 @@
             </DataGrid>
         </GroupBox>
         <GroupBox Header="Deposit Number" Margin="892,34,10,610">
-            <Grid/>
+            <Grid>
+                <Label x:Name="lblDepositNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
+            </Grid>
         </GroupBox>
         <GroupBox Header="Staff Informations" Margin="892,137,10,501">
             <Grid>
