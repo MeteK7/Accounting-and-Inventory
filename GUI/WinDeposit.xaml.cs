@@ -104,27 +104,34 @@ namespace GUI
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            EnableTools();
+            ModifyToolsOnClickBtnMenuNew();
         }
         private void DisableTools()
         {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
+            cboMenuAccountNumber.IsEnabled = false;
             txtEntranceBankId.IsEnabled = false;
             txtEntranceDescription.IsEnabled = false;
             txtEntranceAmount.IsEnabled = false;
             cboEntranceBankName.IsEnabled = false;
-            cboEntranceAccountNumber.IsEnabled = false;
             btnEntranceEnter.IsEnabled = false;
             btnEntranceClear.IsEnabled = false;
             dgDeposits.IsEnabled = false;
         }
 
-        private void EnableTools()
+        private void ModifyToolsOnClickBtnMenuNew()
         {
+            btnMenuEdit.IsEnabled = false;//Edit button should be disabled while entering a new deposit.
+            btnMenuDelete.IsEnabled = false;//Delete button should be disabled while entering a new deposit.
+            
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
             txtEntranceBankId.IsEnabled = true;
             txtEntranceDescription.IsEnabled = true;
             txtEntranceAmount.IsEnabled = true;
             cboEntranceBankName.IsEnabled = true;
-            cboEntranceAccountNumber.IsEnabled = true;
+            cboMenuAccountNumber.IsEnabled = true;
             btnEntranceEnter.IsEnabled = true;
             btnEntranceClear.IsEnabled = true;
             dgDeposits.IsEnabled = true;
@@ -136,7 +143,6 @@ namespace GUI
             txtEntranceDescription.Text = "";
             txtEntranceAmount.Text = "";
             cboEntranceBankName.Text = "";
-            cboEntranceAccountNumber.Text = "";
         }
 
     }
