@@ -482,7 +482,7 @@ namespace GUI
             }
 
             dgProducts.UpdateLayout();
-            rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
+            //rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
 
             PopulateBasket();
 

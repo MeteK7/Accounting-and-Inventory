@@ -9,9 +9,55 @@
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonEntranceEnter" ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonEntranceClear" ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"></ImageBrush>
 
         <Style TargetType="Button" x:Key="ButtonCloseStyle">
             <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonEntranceEnterStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonEntranceEnter}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonEntranceClearStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonEntranceClear}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -55,7 +101,7 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,261,610">
             <Grid>
-                <Button x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
@@ -125,30 +171,38 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
+                <Label x:Name="lblMenuAccountNumber" Content="Account Number" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <ComboBox x:Name="cboMenuAccountNumber" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Entrance" Margin="10,162,261,476">
+        <GroupBox Header="Entrance" Margin="10,137,261,501">
             <Grid>
-                <Label x:Name="lblEntranceBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="44"/>
-                <Label x:Name="lblEntranceBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="141"/>
-                <Label x:Name="lblEntranceAccountNumber" Content="Account Number" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top" Width="112"/>
-                <Label x:Name="lblEntranceDescription" Content="Description" HorizontalAlignment="Left" Margin="322,11,0,0" VerticalAlignment="Top" Width="344"/>
+                <Label x:Name="lblEntranceBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="73"/>
+                <Label x:Name="lblEntranceBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <Label x:Name="lblEntranceDescription" Content="Description" HorizontalAlignment="Left" Margin="205,11,0,0" VerticalAlignment="Top" Width="461"/>
                 <Label x:Name="lblEntranceAmount" Content="Amount" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="74"/>
-                <TextBox x:Name="txtEntranceBankId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" Height="30" KeyUp="txtId_KeyUp"/>
-                <ComboBox x:Name="cboEntranceBankName" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" Width="141" Height="30" Loaded="cboBankName_Loaded" KeyUp="cboBankName_KeyUp"/>
-                <ComboBox x:Name="cboEntranceAccountNumber" HorizontalAlignment="Left" Margin="205,42,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
-                <TextBox x:Name="txtEntranceDescription" HorizontalAlignment="Left" Margin="322,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" Height="30"/>
+                <TextBox x:Name="txtEntranceBankId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" Height="30" KeyUp="txtId_KeyUp"/>
+                <ComboBox x:Name="cboEntranceBankName" HorizontalAlignment="Left" Margin="88,41,0,0" VerticalAlignment="Top" Width="112" Height="30" Loaded="cboBankName_Loaded" KeyUp="cboBankName_KeyUp"/>
+                <TextBox x:Name="txtEntranceDescription" HorizontalAlignment="Left" Margin="205,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" Height="30"/>
                 <TextBox x:Name="txtEntranceAmount" HorizontalAlignment="Left" Margin="671,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
-                <Button x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
-                <Button x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="784,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
+                <Button Style="{StaticResource ButtonEntranceEnterStyle}" x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29" BorderBrush="White" Click="btnEntranceEnter_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/add-product.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ButtonEntranceClearStyle}" x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="784,42,0,0" VerticalAlignment="Top" Height="29" Width="29" BorderBrush="White">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/clear-product.png"/>
+                    </Button.Background>
+                </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Deposits" Margin="10,282,261,10">
+        <GroupBox Header="Deposits" Margin="10,246,261,10">
             <DataGrid x:Name="dgDeposits">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="80" />
-                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="Bank Name" Width="150"/>
-                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="445"/>
+                    <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="50" />
+                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="Bank Name" Width="190"/>
+                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="430"/>
                     <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount" Width="100"/>
                     <DataGridTemplateColumn Header="Delete">
                         <DataGridTemplateColumn.CellTemplate>
