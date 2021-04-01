@@ -99,7 +99,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="Menu" Margin="10,34,261,610">
+        <GroupBox Header="Menu" Margin="10,34,219,610">
             <Grid>
                 <Button x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
@@ -175,7 +175,7 @@
                 <ComboBox x:Name="cboMenuAccountNumber" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Entrance" Margin="10,137,261,501">
+        <GroupBox Header="Entrance" Margin="10,137,219,501">
             <Grid>
                 <Label x:Name="lblEntranceBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="73"/>
                 <Label x:Name="lblEntranceBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="112"/>
@@ -197,7 +197,7 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Deposits" Margin="10,246,261,10">
+        <GroupBox Header="Deposits" Margin="10,246,219,10">
             <DataGrid x:Name="dgDeposits">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="50" />
@@ -214,16 +214,21 @@
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-        <GroupBox Header="Deposit Number" Margin="850,34,10,610">
+        <GroupBox Header="Deposit Number" Margin="892,34,10,610">
             <Grid/>
         </GroupBox>
-        <GroupBox Header="Staff Informations" Margin="850,137,10,501">
-            <Grid/>
+        <GroupBox Header="Staff Informations" Margin="892,137,10,501">
+            <Grid>
+                <Label x:Name="lblStaffPosition" Content="Position" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58"/>
+                <Label x:Name="lblStaffName" Content="Label" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58"/>
+                <TextBox x:Name="txtStaffPosition" HorizontalAlignment="Left" Height="26" Margin="73,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" IsReadOnly="True"/>
+                <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="73,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" IsReadOnly="True"/>
+            </Grid>
         </GroupBox>
-        <GroupBox Header="Summary" Margin="850,489,10,10">
+        <GroupBox Header="Summary" Margin="892,489,10,10">
             <Grid>
                 <Label x:Name="lblTotal" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
-                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" Height="26"/>
+                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" Height="26"/>
             </Grid>
         </GroupBox>
 

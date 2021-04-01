@@ -1,4 +1,5 @@
-﻿using KabaAccounting.DAL;
+﻿using KabaAccounting.CUL;
+using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,7 @@ namespace GUI
         public WinDeposit()
         {
             InitializeComponent();
+            LoadUserInformations();
             DisableTools();
         }
 
@@ -130,6 +132,13 @@ namespace GUI
         {
             ModifyToolsOnClickBtnMenuNew();
         }
+
+        private void LoadUserInformations()
+        {
+            txtStaffName.Text = WinLogin.loggedInUserName;
+            txtStaffPosition.Text = WinLogin.loggedInUserType;
+        }
+
         private void DisableTools()
         {
             btnMenuSave.IsEnabled = false;

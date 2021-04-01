@@ -44,7 +44,7 @@ namespace GUI
         {
             InitializeComponent();
             DisableTools();
-            FillStaffInformations();
+            LoadUserInformations();
             LoadPastInvoice();
         }
 
@@ -73,7 +73,7 @@ namespace GUI
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
-        private void FillStaffInformations()
+        private void LoadUserInformations()
         {
             txtStaffName.Text = WinLogin.loggedInUserName;
             txtStaffPosition.Text = WinLogin.loggedInUserType;
