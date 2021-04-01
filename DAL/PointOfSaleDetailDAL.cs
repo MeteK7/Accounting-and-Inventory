@@ -231,7 +231,7 @@ namespace KabaAccounting.DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE invoice_no= " + invoiceNo + "";
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE id= " + invoiceNo + "";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
