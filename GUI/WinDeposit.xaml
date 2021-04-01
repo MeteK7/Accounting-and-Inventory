@@ -184,7 +184,7 @@
                 <TextBox x:Name="txtEntranceBankId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" Height="30" KeyUp="txtId_KeyUp"/>
                 <ComboBox x:Name="cboEntranceBankName" HorizontalAlignment="Left" Margin="88,41,0,0" VerticalAlignment="Top" Width="112" Height="30" Loaded="cboBankName_Loaded" KeyUp="cboBankName_KeyUp"/>
                 <TextBox x:Name="txtEntranceDescription" HorizontalAlignment="Left" Margin="205,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" Height="30"/>
-                <TextBox x:Name="txtEntranceAmount" HorizontalAlignment="Left" Margin="671,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
+                <TextBox x:Name="txtEntranceAmount" HorizontalAlignment="Left" Margin="671,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30" KeyUp="txtEntranceAmount_KeyUp"/>
                 <Button Style="{StaticResource ButtonEntranceEnterStyle}" x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29" BorderBrush="White" Click="btnEntranceEnter_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png"/>
@@ -213,6 +213,18 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+        </GroupBox>
+        <GroupBox Header="Deposit Number" Margin="850,34,10,610">
+            <Grid/>
+        </GroupBox>
+        <GroupBox Header="Staff Informations" Margin="850,137,10,501">
+            <Grid/>
+        </GroupBox>
+        <GroupBox Header="Summary" Margin="850,489,10,10">
+            <Grid>
+                <Label x:Name="lblTotal" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
+                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" Height="26"/>
+            </Grid>
         </GroupBox>
 
     </Grid>
