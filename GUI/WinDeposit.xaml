@@ -9,9 +9,55 @@
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonEntranceEnter" ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonEntranceClear" ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"></ImageBrush>
 
         <Style TargetType="Button" x:Key="ButtonCloseStyle">
             <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonEntranceEnterStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonEntranceEnter}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonEntranceClearStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonEntranceClear}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -139,8 +185,16 @@
                 <ComboBox x:Name="cboEntranceAccountNumber" HorizontalAlignment="Left" Margin="205,42,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
                 <TextBox x:Name="txtEntranceDescription" HorizontalAlignment="Left" Margin="322,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" Height="30"/>
                 <TextBox x:Name="txtEntranceAmount" HorizontalAlignment="Left" Margin="671,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Height="30"/>
-                <Button x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
-                <Button x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="784,42,0,0" VerticalAlignment="Top" Height="29" Width="29"/>
+                <Button Style="{StaticResource ButtonEntranceEnterStyle}" x:Name="btnEntranceEnter" Content="" HorizontalAlignment="Left" Margin="750,42,0,0" VerticalAlignment="Top" Height="29" Width="29" BorderBrush="White" Click="btnEntranceEnter_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/add-product.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ButtonEntranceClearStyle}" x:Name="btnEntranceClear" Content="" HorizontalAlignment="Left" Margin="784,42,0,0" VerticalAlignment="Top" Height="29" Width="29" BorderBrush="White">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/clear-product.png"/>
+                    </Button.Background>
+                </Button>
             </Grid>
         </GroupBox>
         <GroupBox Header="Deposits" Margin="10,282,261,10">
