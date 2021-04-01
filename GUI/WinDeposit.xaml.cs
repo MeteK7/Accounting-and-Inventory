@@ -62,17 +62,6 @@ namespace GUI
             txtEntranceBankId.Text = cboEntranceBankName.SelectedValue.ToString();
         }
 
-        private void DisableTools()
-        {
-            txtEntranceBankId.IsEnabled = false;
-            txtEntranceDescription.IsEnabled = false;
-            txtEntranceAmount.IsEnabled = false;
-            cboEntranceBankName.IsEnabled = false;
-            cboEntranceAccountNumber.IsEnabled = false;
-            btnEntranceEnter.IsEnabled = false;
-            btnEntranceClear.IsEnabled = false;
-        }
-
         private void btnEntranceEnter_Click(object sender, RoutedEventArgs e)
         {
             bool addNewProductLine = true;
@@ -112,6 +101,35 @@ namespace GUI
             ClearEntrance();
         }
 
+
+        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
+        {
+            EnableTools();
+        }
+        private void DisableTools()
+        {
+            txtEntranceBankId.IsEnabled = false;
+            txtEntranceDescription.IsEnabled = false;
+            txtEntranceAmount.IsEnabled = false;
+            cboEntranceBankName.IsEnabled = false;
+            cboEntranceAccountNumber.IsEnabled = false;
+            btnEntranceEnter.IsEnabled = false;
+            btnEntranceClear.IsEnabled = false;
+            dgDeposits.IsEnabled = false;
+        }
+
+        private void EnableTools()
+        {
+            txtEntranceBankId.IsEnabled = true;
+            txtEntranceDescription.IsEnabled = true;
+            txtEntranceAmount.IsEnabled = true;
+            cboEntranceBankName.IsEnabled = true;
+            cboEntranceAccountNumber.IsEnabled = true;
+            btnEntranceEnter.IsEnabled = true;
+            btnEntranceClear.IsEnabled = true;
+            dgDeposits.IsEnabled = true;
+        }
+
         private void ClearEntrance()
         {
             txtEntranceBankId.Text = "";
@@ -120,5 +138,6 @@ namespace GUI
             cboEntranceBankName.Text = "";
             cboEntranceAccountNumber.Text = "";
         }
+
     }
 }

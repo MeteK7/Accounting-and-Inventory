@@ -101,7 +101,7 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,261,610">
             <Grid>
-                <Button x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
