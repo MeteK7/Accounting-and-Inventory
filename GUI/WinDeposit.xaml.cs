@@ -98,6 +98,8 @@ namespace GUI
 
             dgDeposits.UpdateLayout();
 
+            PopulateSummary();
+
             ClearEntrance();
         }
 
@@ -145,5 +147,11 @@ namespace GUI
             cboEntranceBankName.Text = "";
         }
 
+        private void PopulateSummary()
+        {
+            decimal amount = Convert.ToDecimal(txtEntranceAmount.Text);
+
+            txtTotal.Text = (Convert.ToDecimal(txtTotal.Text) + amount).ToString();
+        }
     }
 }
