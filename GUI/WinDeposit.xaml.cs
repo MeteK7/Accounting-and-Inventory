@@ -81,45 +81,50 @@ namespace GUI
 
         private void btnEntranceEnter_Click(object sender, RoutedEventArgs e)
         {
-            bool addNewProductLine = true;
-            int colId = 0, colAmount=3;
-            int amount = 0;
-            int rowQuntity = dgDeposits.Items.Count;
-
-            for (int i = 0; i < rowQuntity; i++)
+            if (txtEntranceBankId.Text != "" && txtEntranceAmount.Text != "")
             {
-                DataGridRow row = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(i);
+                bool addNewProductLine = true;
+                int colId = 0, colAmount = 3;
+                int amount = 0;
+                int rowQuntity = dgDeposits.Items.Count;
 
-                TextBlock barcodeCellContent = dgDeposits.Columns[colId].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
-
-                if (barcodeCellContent.Text == txtEntranceBankId.Text)
+                for (int i = 0; i < rowQuntity; i++)
                 {
-                    if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    DataGridRow row = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(i);
+
+                    TextBlock barcodeCellContent = dgDeposits.Columns[colId].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+
+                    if (barcodeCellContent.Text == txtEntranceBankId.Text)
                     {
-                        TextBlock tbCellAmountContent = dgDeposits.Columns[colAmount].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            TextBlock tbCellAmountContent = dgDeposits.Columns[colAmount].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
 
-                        amount = Convert.ToInt32(tbCellAmountContent.Text);
-                        amount += Convert.ToInt32(txtEntranceAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
+                            amount = Convert.ToInt32(tbCellAmountContent.Text);
+                            amount += Convert.ToInt32(txtEntranceAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
 
-                        tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        addNewProductLine = false;
-                        break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
+                            tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
+                            addNewProductLine = false;
+                            break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
+                        }
                     }
                 }
+
+                if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
+                {
+                    dgDeposits.Items.Add(new { Id = txtEntranceBankId.Text, BankName = cboEntranceBankName.Text, Description = txtEntranceDescription.Text, Amount = txtEntranceAmount.Text });
+                }
+
+                dgDeposits.UpdateLayout();
+
+                PopulateSummary();
+
+                ClearEntrance();
             }
 
-            if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
-            {
-                dgDeposits.Items.Add(new { Id = txtEntranceBankId.Text, BankName = cboEntranceBankName.Text, Description = txtEntranceDescription.Text, Amount = txtEntranceAmount.Text});
-            }
-
-            dgDeposits.UpdateLayout();
-
-            PopulateSummary();
-
-            ClearEntrance();
+            else
+                MessageBox.Show("You have a missing part!");
         }
-
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
@@ -146,11 +151,13 @@ namespace GUI
             
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
+            cboMenuAccountNumber.IsEnabled = true;
             txtEntranceBankId.IsEnabled = true;
             txtEntranceDescription.IsEnabled = true;
             txtEntranceAmount.IsEnabled = true;
             cboEntranceBankName.IsEnabled = true;
-            cboMenuAccountNumber.IsEnabled = true;
+            btnEntranceEnter.IsEnabled = true;
+            btnEntranceClear.IsEnabled = true;
             dgDeposits.IsEnabled = true;
         }
 
