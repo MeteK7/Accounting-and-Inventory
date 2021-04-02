@@ -63,6 +63,7 @@
     <None Remove="Images\Buttons\btn-save.png" />
     <None Remove="Images\Buttons\calendar.png" />
     <None Remove="Images\Buttons\cancel.png" />
+    <None Remove="Images\Buttons\cancellation.png" />
     <None Remove="Images\Buttons\cash.png" />
     <None Remove="Images\Buttons\category.png" />
     <None Remove="Images\Buttons\chart.png" />
@@ -82,6 +83,7 @@
     <None Remove="Images\Buttons\edit.png" />
     <None Remove="Images\Buttons\error.png" />
     <None Remove="Images\Buttons\file-management.png" />
+    <None Remove="Images\Buttons\file-trash.png" />
     <None Remove="Images\Buttons\floppy-disk.png" />
     <None Remove="Images\Buttons\gnumeric.png" />
     <None Remove="Images\Buttons\inventory (1).png" />
@@ -189,6 +191,7 @@
     <Resource Include="Images\Buttons\btn-save.png" />
     <Resource Include="Images\Buttons\calendar.png" />
     <Resource Include="Images\Buttons\cancel.png" />
+    <Resource Include="Images\Buttons\cancellation.png" />
     <Resource Include="Images\Buttons\cash.png" />
     <Resource Include="Images\Buttons\category.png" />
     <Resource Include="Images\Buttons\chart.png" />
@@ -208,6 +211,7 @@
     <Resource Include="Images\Buttons\edit.png" />
     <Resource Include="Images\Buttons\error.png" />
     <Resource Include="Images\Buttons\file-management.png" />
+    <Resource Include="Images\Buttons\file-trash.png" />
     <Resource Include="Images\Buttons\floppy-disk.png" />
     <Resource Include="Images\Buttons\gnumeric.png" />
     <Resource Include="Images\Buttons\inventory (1).png" />
