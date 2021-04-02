@@ -34,6 +34,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -56,6 +57,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -78,6 +80,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -100,6 +103,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -122,6 +126,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -144,6 +149,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -166,6 +172,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -188,6 +195,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -210,6 +218,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -232,6 +241,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -254,6 +264,7 @@
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="BorderBrush" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
                                 <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
