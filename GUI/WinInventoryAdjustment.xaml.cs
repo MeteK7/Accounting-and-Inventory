@@ -62,8 +62,8 @@ namespace GUI
 
         private void FillStaffInformations()
         {
-            txtStaffName.Text = WinLogin.loggedInUserName;
-            txtStaffPosition.Text = WinLogin.loggedInUserType;
+            txtUsername.Text = WinLogin.loggedInUserName;
+            txtUserType.Text = WinLogin.loggedInUserType;
         }
 
         private void LoadPastInventoryAdjustmentPage(int inventoryAdjustmentId = 0, int invoiceArrow = -1)//Optional parameter

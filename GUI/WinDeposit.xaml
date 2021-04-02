@@ -219,12 +219,12 @@
                 <Label x:Name="lblDepositNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Staff Informations" Margin="892,137,10,501">
+        <GroupBox Header="User Informations" Margin="892,137,10,501">
             <Grid>
-                <Label x:Name="lblStaffPosition" Content="Position" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58"/>
-                <Label x:Name="lblStaffName" Content="Label" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58"/>
-                <TextBox x:Name="txtStaffPosition" HorizontalAlignment="Left" Height="26" Margin="73,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" IsReadOnly="True"/>
-                <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="73,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" IsReadOnly="True"/>
+                <Label x:Name="lblUserPosition" Content="Position" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <Label x:Name="lblUsername" Content="Username" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="78,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
+                <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="78,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Summary" Margin="892,489,10,10">
