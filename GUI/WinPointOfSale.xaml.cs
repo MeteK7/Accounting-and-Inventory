@@ -75,8 +75,8 @@ namespace GUI
 
         private void LoadUserInformations()
         {
-            txtStaffName.Text = WinLogin.loggedInUserName;
-            txtStaffPosition.Text = WinLogin.loggedInUserType;
+            txtUsername.Text = WinLogin.loggedInUserName;
+            txtUserType.Text = WinLogin.loggedInUserType;
         }
 
         private void RefreshProductDataGrid()

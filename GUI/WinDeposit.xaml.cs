@@ -52,7 +52,7 @@ namespace GUI
 
         private void txtId_KeyUp(object sender, KeyEventArgs e)
         {
-            int number, rowIndex = 0;
+            int rowIndex = 0;
 
             DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtEntranceBankId.Text));
 
@@ -135,8 +135,8 @@ namespace GUI
 
         private void LoadUserInformations()
         {
-            txtStaffName.Text = WinLogin.loggedInUserName;
-            txtStaffPosition.Text = WinLogin.loggedInUserType;
+            txtUsername.Text = WinLogin.loggedInUserName;
+            txtUserType.Text = WinLogin.loggedInUserType;
         }
 
         private void DisableTools()

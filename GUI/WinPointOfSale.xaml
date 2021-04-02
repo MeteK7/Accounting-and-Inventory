@@ -347,12 +347,12 @@
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Label x:Name="lblInvoiceNo" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
-        <GroupBox Header="Staff Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
-                <Label x:Name="lblStaffPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
-                <Label x:Name="lblStaffName" Content="Label" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
-                <TextBox x:Name="txtStaffPosition" HorizontalAlignment="Left" Height="26" Margin="90,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
-                <TextBox x:Name="txtStaffName" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
+                <Label x:Name="lblUserPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <Label x:Name="lblUsername" Content="Username" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="90,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
+                <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Basket Informations" Height="250" Margin="0,608,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
