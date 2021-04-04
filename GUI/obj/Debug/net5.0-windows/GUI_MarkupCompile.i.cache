@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 E:\Projects\Kaba-Accounting-and-Inventory\GUI\App.xaml
-142021575767
+15-866204712
 
-18-1651143191
+19447005303
 208-1920741986
-WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinDeposit.xaml;WinInventoryAdjustment.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;
+WinAccount.xaml;WinAdminDashboard.xaml;WinBank.xaml;WinCategory.xaml;WinCustomer.xaml;WinDeposit.xaml;WinInventoryAdjustment.xaml;WinLogin.xaml;WinPhyInventory.xaml;WinPointOfPurchase.xaml;WinPointOfSale.xaml;WinPosReport.xaml;WinProducts.xaml;WinSupplier.xaml;WinUser.xaml;
 
 False
 
