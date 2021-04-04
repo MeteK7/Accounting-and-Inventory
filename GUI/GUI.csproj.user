@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="WinAccount.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinAdminDashboard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -51,6 +54,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="WinAccount.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="WinAdminDashboard.xaml">
       <SubType>Designer</SubType>
     </Page>
