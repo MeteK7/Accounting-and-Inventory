@@ -60,19 +60,19 @@
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <DataGrid x:Name="dtgAccounts" HorizontalAlignment="Left" Height="390" Margin="222,92,0,0" VerticalAlignment="Top" Width="437">
+        <DataGrid x:Name="dtgAccounts" HorizontalAlignment="Left" Height="390" Margin="222,92,0,0" VerticalAlignment="Top" Width="437" KeyUp="dtgAccounts_KeyUp" MouseLeftButtonUp="dtgAccounts_MouseLeftButtonUp" KeyDown="dtgAccounts_KeyDown">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>
         </DataGrid>
         <Label x:Name="lblAccountSearch" Content="SEARCH" HorizontalAlignment="Left" Margin="222,53,0,0" Width="62" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="txtAccountSearch" HorizontalAlignment="Left" Height="26" Margin="285,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" VerticalContentAlignment="Center">
+        <TextBox x:Name="txtAccountSearch" HorizontalAlignment="Left" Height="26" Margin="285,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" VerticalContentAlignment="Center" TextChanged="txtAccountSearch_TextChanged">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Button x:Name="btnAdd" Content="ADD" HorizontalAlignment="Left" Margin="16,433,0,0" VerticalAlignment="Top" Width="60" Height="49" BorderBrush="#FF0068FF" Foreground="#FF000CFF"/>
-        <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="77,433,0,0" VerticalAlignment="Top" Width="60" Height="49" Foreground="#FF00C512" BorderBrush="#FF1B9300"/>
-        <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="145,433,0,0" VerticalAlignment="Top" Width="57" Height="49" Foreground="Red" BorderBrush="Red"/>
+        <Button x:Name="btnAdd" Content="ADD" HorizontalAlignment="Left" Margin="16,433,0,0" VerticalAlignment="Top" Width="60" Height="49" BorderBrush="#FF0068FF" Foreground="#FF000CFF" Click="btnAdd_Click"/>
+        <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="77,433,0,0" VerticalAlignment="Top" Width="60" Height="49" Foreground="#FF00C512" BorderBrush="#FF1B9300" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="145,433,0,0" VerticalAlignment="Top" Width="57" Height="49" Foreground="Red" BorderBrush="Red" Click="btnDelete_Click"/>
     </Grid>
 </Window>

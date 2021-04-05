@@ -1,5 +1,9 @@
-﻿using System;
+﻿using BLL;
+using CUL;
+using DAL;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +28,131 @@ namespace GUI
             InitializeComponent();
         }
 
+        AccountCUL accountCUL = new AccountCUL();
+        AccountDAL accountDAL = new AccountDAL();
+        UserBLL userBLL = new UserBLL();
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            accountCUL.Name = txtAccountName.Text;
+            accountCUL.AddedDate = DateTime.Now;
+            accountCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
+
+            bool isSuccess = accountDAL.Insert(accountCUL);
+
+            if (isSuccess == true)
+            {
+                MessageBox.Show("New account has been inserted successfully.");
+                ClearAccountTextBox();
+                LoadAccountDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong :(");
+            }
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            accountCUL.Id = Convert.ToInt32(txtAccountId.Text);
+            accountCUL.Name = txtAccountName.Text;
+            accountCUL.AddedDate = DateTime.Now;
+            accountCUL.AddedBy = userBLL.GetUserId(WinLogin.loggedInUserName);
+
+            bool isSuccess = accountDAL.Update(accountCUL);
+
+            if (isSuccess == true)
+            {
+                MessageBox.Show("The account is successfully updated.");
+                ClearAccountTextBox();
+                LoadAccountDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Failed to update the account.");
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            accountCUL.Id = Convert.ToInt32(txtAccountId.Text);
+
+            bool isSuccess = accountDAL.Delete(accountCUL);
+
+            if (isSuccess == true)
+            {
+                MessageBox.Show("Bank has been deleted successfully.");
+                ClearAccountTextBox();
+                LoadAccountDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong :/");
+            }
+        }
+
+        private void LoadAccountDataGrid()
+        {
+            //Refreshing Data Grid View
+            DataTable dataTable = accountDAL.Select();
+            dtgAccounts.ItemsSource = dataTable.DefaultView;
+            dtgAccounts.AutoGenerateColumns = true;
+            dtgAccounts.CanUserAddRows = false;
+        }
+
+        private void ClearAccountTextBox()
+        {
+            txtAccountId.Text = "";
+            txtAccountName.Text = "";
+            txtAccountSearch.Text = "";
+        }
+
+        private void DtgAccountsIndexChanged()
+        {
+            DataRowView drv = (DataRowView)dtgAccounts.SelectedItem;
+
+            txtAccountId.Text = (drv[0]).ToString();//Selecting the specific row
+            txtAccountName.Text = (drv["name"]).ToString();//You can also define the column name from your table like here.
+        }
+        private void dtgAccounts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DtgAccountsIndexChanged();
+        }
+
+        private void dtgAccounts_KeyUp(object sender, KeyEventArgs e)
+        {
+            DtgAccountsIndexChanged();
+        }
+        private void dtgAccounts_KeyDown(object sender, KeyEventArgs e)
+        {
+            DtgAccountsIndexChanged();
+        }
+
+        private void txtAccountSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Get Keyword from Text box
+            string keyword = txtAccountSearch.Text;
+
+            //Check if the keyword has value or not
+
+            if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshAccountDataGrid method!!! */
+            {
+                //Show account informations based on the keyword
+                DataTable dataTable = accountDAL.Search(keyword);
+                dtgAccounts.ItemsSource = dataTable.DefaultView;
+                dtgAccounts.AutoGenerateColumns = true;
+                dtgAccounts.CanUserAddRows = false;
+            }
+            else
+            {
+                //Show all banks from the database
+                LoadAccountDataGrid();
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace GUI
 
             if (isSuccess == true)
             {
-                MessageBox.Show("New bank inserted successfully.");
+                MessageBox.Show("New bank has been inserted successfully.");
                 ClearBankTextBox();
                 LoadBankDataGrid();
             }
@@ -65,13 +65,13 @@ namespace GUI
 
             if (isSuccess == true)
             {
-                MessageBox.Show("Bank successfully updated");
+                MessageBox.Show("The bank is successfully updated.");
                 ClearBankTextBox();
                 LoadBankDataGrid();
             }
             else
             {
-                MessageBox.Show("Failed to update bank.");
+                MessageBox.Show("Failed to update the bank.");
             }
         }
 
@@ -89,7 +89,7 @@ namespace GUI
             }
             else
             {
-                MessageBox.Show("Something went wrong:/");
+                MessageBox.Show("Something went wrong :/");
             }
         }
 
