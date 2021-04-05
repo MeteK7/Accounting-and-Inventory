@@ -23,6 +23,7 @@
         <ImageBrush x:Key="ButtonPos" ImageSource="/Images/Buttons/printer.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPosReports" ImageSource="/Images/Buttons/back.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonBank" ImageSource="/Images/Buttons/bank.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonAccount" ImageSource="/Images/Buttons/calculations.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonSupplier" ImageSource="/Images/Buttons/supplier.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonCustomer" ImageSource="/Images/Buttons/customers.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonProduct" ImageSource="/Images/Buttons/qr-code.png" Stretch="Uniform"></ImageBrush>
@@ -424,6 +425,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ButtonAccountStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource ButtonAccount}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="Button" x:Key="ButtonCategoryStyle">
             <Setter Property="Background" Value="{StaticResource ButtonCategory}"></Setter>
             <Setter Property="Template">
@@ -799,7 +822,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonCategoryStyle}" x:Name="btnCategory" Content="CATEGORIES" Margin="460,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonCategoryStyle}" x:Name="btnCategory" Content="CATEGORIES" Margin="574,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/category.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -807,6 +830,20 @@
                                         <ScaleTransform CenterY="0.35" CenterX="0.5" ScaleX="0.75" ScaleY="0.75"/>
                                         <SkewTransform CenterY="0.35" CenterX="0.5"/>
                                         <RotateTransform CenterY="0.35" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ImageBrush.RelativeTransform>
+                            </ImageBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ButtonAccountStyle}" x:Name="btnAccount" Content="ACCOUNTS" Width="114" HorizontalAlignment="Left" Margin="460,0,0,0" VerticalContentAlignment="Bottom" Click="btnAccount_Click" Foreground="Black">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Images/Buttons/calculations.png" Stretch="Uniform">
+                                <ImageBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.2" CenterX="0.5" ScaleX="0.7" ScaleY="0.75"/>
+                                        <SkewTransform CenterY="0.2" CenterX="0.5"/>
+                                        <RotateTransform CenterY="0.2" CenterX="0.5"/>
                                         <TranslateTransform/>
                                     </TransformGroup>
                                 </ImageBrush.RelativeTransform>

@@ -158,5 +158,11 @@ namespace GUI
             WinDeposit winDeposit = new WinDeposit();
             winDeposit.Show();
         }
+
+        private void btnAccount_Click(object sender, RoutedEventArgs e)
+        {
+            WinAccount winAccount = new WinAccount();
+            winAccount.Show();
+        }
     }
 }
