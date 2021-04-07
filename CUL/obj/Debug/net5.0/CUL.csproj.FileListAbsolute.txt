@@ -21,3 +21,15 @@ E:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.CoreCo
 E:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
 E:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
 E:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.deps.json
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.dll
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\bin\Debug\net5.0\ref\CUL.dll
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.pdb
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csprojAssemblyReference.cache
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.GeneratedMSBuildEditorConfig.editorconfig
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.AssemblyInfoInputs.cache
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.AssemblyInfo.cs
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.CoreCompileInputs.cache
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
+F:\Projects\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb

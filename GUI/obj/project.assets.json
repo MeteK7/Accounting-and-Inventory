@@ -1140,23 +1140,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LAB\\.nuget\\packages\\": {},
-    "E:\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "projectUniqueName": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
       "projectName": "GUI",
-      "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
-      "packagesPath": "C:\\Users\\LAB\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\obj\\",
+      "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "E:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\LAB\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1171,14 +1171,14 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "E:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
-              "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
+            "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
+              "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
             },
-            "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
-              "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
+            "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
+              "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
             },
-            "E:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
-              "projectPath": "E:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
+            "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
+              "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
             }
           }
         }

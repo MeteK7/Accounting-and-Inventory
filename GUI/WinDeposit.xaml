@@ -297,8 +297,8 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblMenuAccountNumber" Content="Account Number" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboMenuAccountNumber" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
+                <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuAccount_Loaded"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Entrance" Margin="10,137,219,501">
