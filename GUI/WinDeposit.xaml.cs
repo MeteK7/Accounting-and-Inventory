@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using DAL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace GUI
     public partial class WinDeposit : Window
     {
         BankDAL bankDAL = new BankDAL();
+        AccountDAL accountDAL = new AccountDAL();
         public WinDeposit()
         {
             InitializeComponent();
@@ -143,7 +145,7 @@ namespace GUI
         {
             btnMenuSave.IsEnabled = false;
             btnMenuCancel.IsEnabled = false;
-            cboMenuAccountNumber.IsEnabled = false;
+            cboMenuAccount.IsEnabled = false;
             txtEntranceBankId.IsEnabled = false;
             txtEntranceDescription.IsEnabled = false;
             txtEntranceAmount.IsEnabled = false;
@@ -160,7 +162,7 @@ namespace GUI
             
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
-            cboMenuAccountNumber.IsEnabled = true;
+            cboMenuAccount.IsEnabled = true;
             txtEntranceBankId.IsEnabled = true;
             txtEntranceDescription.IsEnabled = true;
             txtEntranceAmount.IsEnabled = true;
@@ -183,6 +185,21 @@ namespace GUI
             decimal amount = Convert.ToDecimal(txtEntranceAmount.Text);
 
             txtTotal.Text = (Convert.ToDecimal(txtTotal.Text) + amount).ToString();
+        }
+
+        private void cboMenuAccount_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = accountDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuAccount.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuAccount.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuAccount.SelectedValuePath = "id";
         }
     }
 }
