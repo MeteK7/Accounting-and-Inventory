@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
@@ -39,6 +40,7 @@ namespace GUI
         PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
         UserBLL userBLL = new UserBLL();
         ProductBLL productBLL = new ProductBLL();
+        AccountDAL accountDAL = new AccountDAL();
 
         public WinPointOfSale()
         {
@@ -564,7 +566,17 @@ namespace GUI
 
         private void cboMenuAccount_Loaded(object sender, RoutedEventArgs e)
         {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = accountDAL.Select();
 
+            //Specifying Items Source for product combobox
+            cboMenuAccount.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuAccount.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuAccount.SelectedValuePath = "id";
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
