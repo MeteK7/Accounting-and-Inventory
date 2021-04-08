@@ -478,11 +478,12 @@
                         <ImageBrush ImageSource="/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="107"/>
-                <ComboBox x:FieldModifier="public"  x:Name="cboPaymentType" HorizontalAlignment="Left" Margin="778,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboPaymentType_Loaded"/>
-                <Label x:Name="lblCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,41,0,0" VerticalAlignment="Top" Width="107"/>
-                <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="778,41,0,0" VerticalAlignment="Top" Width="120" Height="26" Loaded="cboCustomer_Loaded"/>
-
+                <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="101" Height="25" FontSize="11"/>
+                <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuPaymentType_Loaded"/>
+                <Label x:Name="lblMenuCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
+                <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuCustomer_Loaded"/>
+                <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
+                <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuAccount_Loaded"/>
             </Grid>
         </GroupBox>
 
