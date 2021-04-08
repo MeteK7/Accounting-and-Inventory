@@ -110,8 +110,8 @@ namespace GUI
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
-            cboPaymentType.IsEnabled = false;
-            cboSupplier.IsEnabled = false;
+            cboMenuPaymentType.IsEnabled = false;
+            cboMenuSupplier.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
@@ -131,8 +131,8 @@ namespace GUI
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            cboPaymentType.IsEnabled = true;
-            cboSupplier.IsEnabled = true;
+            cboMenuPaymentType.IsEnabled = true;
+            cboMenuSupplier.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
@@ -142,7 +142,7 @@ namespace GUI
             txtInvoiceNo.IsEnabled = true;
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
-            cboSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
             txtInvoiceNo.Text = "";
         }
 
@@ -209,8 +209,8 @@ namespace GUI
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
                     {
-                        cboPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                        cboSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
+                        cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                        cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
                         txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
@@ -306,7 +306,7 @@ namespace GUI
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboPaymentType.SelectedIndex != -1 && cboSupplier.SelectedIndex != -1)
+            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != -1 && cboMenuSupplier.SelectedIndex != -1)
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
@@ -336,8 +336,8 @@ namespace GUI
                 //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
                 pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
-                pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
-                pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboSupplier.SelectedValue);
+                pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
+                pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
                 pointOfPurchaseCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
@@ -546,34 +546,39 @@ namespace GUI
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
-        private void cboPaymentType_Loaded(object sender, RoutedEventArgs e)
+        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = paymentDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboPaymentType.ItemsSource = dataTable.DefaultView;
+            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboPaymentType.DisplayMemberPath = "payment_type";
+            cboMenuPaymentType.DisplayMemberPath = "payment_type";
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboPaymentType.SelectedValuePath = "id";
+            cboMenuPaymentType.SelectedValuePath = "id";
         }
 
-        private void cboSupplier_Loaded(object sender, RoutedEventArgs e)
+        private void cboMenuSupplier_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = supplierDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboSupplier.ItemsSource = dataTable.DefaultView;
+            cboMenuSupplier.ItemsSource = dataTable.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboSupplier.DisplayMemberPath = "name";
+            cboMenuSupplier.DisplayMemberPath = "name";
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboSupplier.SelectedValuePath = "id";
+            cboMenuSupplier.SelectedValuePath = "id";
+        }
+
+        private void cboMenuAccount_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)

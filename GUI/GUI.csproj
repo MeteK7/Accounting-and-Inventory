@@ -29,6 +29,7 @@
     <None Remove="Images\Backgrounds\business-analysis.jpg" />
     <None Remove="Images\Backgrounds\clouds.jpg" />
     <None Remove="Images\Backgrounds\customer.png" />
+    <None Remove="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <None Remove="Images\Backgrounds\key.png" />
     <None Remove="Images\Backgrounds\light-blur.jpg" />
     <None Remove="Images\Backgrounds\login-background.jpg" />
@@ -158,6 +159,7 @@
     <Resource Include="Images\Backgrounds\business-analysis.jpg" />
     <Resource Include="Images\Backgrounds\clouds.jpg" />
     <Resource Include="Images\Backgrounds\customer.png" />
+    <Resource Include="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <Resource Include="Images\Backgrounds\key.png" />
     <Resource Include="Images\Backgrounds\light-blur.jpg" />
     <Resource Include="Images\Backgrounds\login-background.jpg" />
