@@ -211,7 +211,7 @@ namespace GUI
                     {
                         cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                         cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of customer.
-                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of customer.
+                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                         lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
 
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();

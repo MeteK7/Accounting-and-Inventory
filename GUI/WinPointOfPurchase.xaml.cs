@@ -214,7 +214,7 @@ namespace GUI
                     {
                         cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                         cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
-                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of supplier.
+                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                         txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
