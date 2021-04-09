@@ -135,6 +135,7 @@ namespace GUI
             btnNext.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = true;
             cboMenuSupplier.IsEnabled = true;
+            cboMenuAccount.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
@@ -144,7 +145,7 @@ namespace GUI
             txtInvoiceNo.IsEnabled = true;
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
-            cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
             txtInvoiceNo.Text = "";
         }
 
@@ -213,6 +214,7 @@ namespace GUI
                     {
                         cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                         cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
+                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of supplier.
                         txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
@@ -295,6 +297,7 @@ namespace GUI
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            int emptyIndex = -1;
             string[,] dgNewProductCells = new string[,] { };
 
             dgNewProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
@@ -308,7 +311,7 @@ namespace GUI
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != -1 && cboMenuSupplier.SelectedIndex != -1)
+            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuSupplier.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex)
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
@@ -340,6 +343,7 @@ namespace GUI
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
+                pointOfPurchaseCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
                 pointOfPurchaseCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
