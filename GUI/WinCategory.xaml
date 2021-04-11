@@ -30,7 +30,7 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Images/Backgrounds/abstract_2.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="/Images/Backgrounds/background-2.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
