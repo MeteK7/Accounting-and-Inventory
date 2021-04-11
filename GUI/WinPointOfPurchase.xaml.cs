@@ -114,6 +114,7 @@ namespace GUI
             btnPrint.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = false;
             cboMenuSupplier.IsEnabled = false;
+            cboMenuAccount.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
