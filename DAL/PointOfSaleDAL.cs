@@ -269,7 +269,6 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-
         #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
         public DataTable GetByIdOrLastId(int invoiceNo=0)//Optional parameter
         {
