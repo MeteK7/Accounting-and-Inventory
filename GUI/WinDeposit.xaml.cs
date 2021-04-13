@@ -58,29 +58,19 @@ namespace GUI
 
             DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtEntranceBankId.Text));
 
-            cboEntranceBankName.SelectedValue = dtBank.Rows[rowIndex]["id"];
+            if (dtBank.Rows.Count!=rowIndex)//If there is a data in the db, there cannot be a datatable with index of 0.
+            {
+                cboEntranceBankName.SelectedValue = Convert.ToInt32(dtBank.Rows[rowIndex]["id"]);
+            }
+            else
+            {
+                MessageBox.Show("There is no such item!");
+            }
         }
 
         private void cboBankName_KeyUp(object sender, KeyEventArgs e)
         {
             txtEntranceBankId.Text = cboEntranceBankName.SelectedValue.ToString();
-        }
-
-        private void txtEntranceAmount_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (txtEntranceAmount.Text!="")
-            {
-                string amount = txtEntranceAmount.Text;
-                char lastCharacter = char.Parse(amount.Substring(amount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
-                bool isValidAmount = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
-                bool isNumeric = int.TryParse(amount, out _);
-
-                if (isNumeric != true && isValidAmount != true)
-                {
-                    MessageBox.Show("Please enter a valid number");
-                    txtEntranceAmount.Text = "";
-                }
-            }
         }
 
         private void btnEntranceEnter_Click(object sender, RoutedEventArgs e)
@@ -200,6 +190,24 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAccount.SelectedValuePath = "id";
+        }
+
+        private void txtEntranceAmount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtEntranceAmount.Text != "")
+            {
+                string amount = txtEntranceAmount.Text;
+                char lastCharacter = char.Parse(amount.Substring(amount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
+                bool isValidAmount = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+                bool isNumeric = int.TryParse(amount, out _);
+
+                if (isNumeric != true && isValidAmount != true)
+                {
+                    MessageBox.Show("Please enter a valid number");
+                    txtEntranceAmount.Text = "";
+                    //Keyboard.Focus(txtEntranceAmount); // set keyboard focus
+                }
+            }
         }
     }
 }
