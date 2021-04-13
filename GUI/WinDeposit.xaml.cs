@@ -1,4 +1,6 @@
-﻿using DAL;
+﻿using BLL;
+using CUL;
+using DAL;
 using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
@@ -23,6 +25,9 @@ namespace GUI
     /// </summary>
     public partial class WinDeposit : Window
     {
+        DepositBLL depositBLL = new DepositBLL();
+        DepositCUL depositCUL = new DepositCUL();
+        UserBLL userBLL = new UserBLL();
         BankDAL bankDAL = new BankDAL();
         AccountDAL accountDAL = new AccountDAL();
         public WinDeposit()
@@ -31,6 +36,10 @@ namespace GUI
             LoadUserInformations();
             DisableTools();
         }
+
+        int depositArrow;
+        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        string[,] dgOldProductCells = new string[,] { };
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -174,7 +183,7 @@ namespace GUI
         {
             decimal amount = Convert.ToDecimal(txtEntranceAmount.Text);
 
-            txtTotal.Text = (Convert.ToDecimal(txtTotal.Text) + amount).ToString();
+            txtTotalAmount.Text = (Convert.ToDecimal(txtTotalAmount.Text) + amount).ToString();
         }
 
         private string[,] GetDataGridContent()
@@ -228,6 +237,142 @@ namespace GUI
                     txtEntranceAmount.Text = "";
                     //Keyboard.Focus(txtEntranceAmount); // set keyboard focus
                 }
+            }
+        }
+
+        private void btnMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            int emptyIndex = -1;
+            string[,] dgNewProductCells = new string[,] { };
+
+            dgNewProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+
+            #region Comparing two multidimensional arrays
+            bool isDgEqual =
+            dgOldProductCells.Rank == dgNewProductCells.Rank &&
+            Enumerable.Range(0, dgOldProductCells.Rank).All(dimension => dgOldProductCells.GetLength(dimension) == dgNewProductCells.GetLength(dimension)) &&
+            dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
+            #endregion
+
+            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
+            //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
+            if (isDgEqual == false &&  cboMenuAccount.SelectedIndex != emptyIndex)
+            {
+                int userClickedNewOrEdit = btnNewOrEdit;
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false;
+
+                DataTable dataTableLastInvoice = depositBLL.GetLastDepositInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
+
+                #region TABLE DEPOSIT SAVING SECTION
+                //Getting the values from the POS Window and fill them into the depositCUL.
+                depositCUL.Id = Convert.ToInt32(lblDepositNumber.Content);
+                depositCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
+                depositCUL.BankId = Convert.ToInt32(cboMenuBank.SelectedValue);
+                depositCUL.Amount = Convert.ToDecimal(txtTotalAmount.Text);
+                depositCUL.AddedDate = DateTime.Now;
+                depositCUL.AddedBy = userId;
+
+                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+
+                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                {
+                    isSuccess = depositBLL.UpdateDeposit(depositCUL);
+                }
+
+                else
+                {
+                    //Creating a Boolean variable to insert data into the database.
+                    isSuccess = depositBLL.InsertDeposit(depositCUL);
+                }
+                #endregion
+
+                #region TABLE DEPOSIT DETAILS SAVING SECTION
+                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
+                int productId;
+                int unitId;
+                decimal productOldAmountInStock;
+                int initialRowIndex = 0;
+                int cellLength = 7;
+                int addedBy = userId;
+                string[] cells = new string[cellLength];
+                DateTime dateTime = DateTime.Now;
+                bool isSuccessDetail = false;
+                int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
+                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+                {
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
+                    {
+                        productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
+
+                        //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
+                        pointOfSaleDetailDAL.Delete(invoiceId);
+
+                        //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
+                        userClickedNewOrEdit = 2;
+                    }
+
+                    DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+
+                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    {
+                        TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;
+
+                        cells[colNo] = cellContent.Text;
+                    }
+
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+
+
+                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
+                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
+
+                    depositDetailCUL.Id = invoiceId;
+                    depositDetailCUL.ProductId = productId;
+                    depositDetailCUL.AddedBy = addedBy;
+                    depositDetailCUL.ProductRate = productRate;
+                    depositDetailCUL.ProductUnitId = unitId;
+                    depositDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
+                    depositDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
+                    depositDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+
+                    isSuccessDetail = pointOfSaleDetailDAL.Insert(depositDetailCUL);
+
+                    #region PRODUCT AMOUNT UPDATE
+                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+
+                    productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
+
+                    productDAL.UpdateAmountInStock(productCUL);
+                    #endregion
+
+                }
+                #endregion
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    //ClearBasketTextBox();
+                    //ClearPointOfSaleDataGrid();
+                    ClearProductEntranceTextBox();
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
+            }
+
+            else
+            {
+                MessageBox.Show("You have a missing part or you are trying to save the same things!");
             }
         }
     }

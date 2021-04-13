@@ -241,7 +241,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-save.png">
                             <ImageBrush.RelativeTransform>
@@ -299,6 +299,8 @@
                 </Button>
                 <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
                 <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuAccount_Loaded"/>
+                <Label x:Name="lblMenuBank" Content="Bank" HorizontalAlignment="Left" Margin="340,39,0,0" VerticalAlignment="Top" Width="112"/>
+                <ComboBox x:Name="cboMenuBank" HorizontalAlignment="Left" Margin="457,39,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuBank_Loaded"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Entrance" Margin="10,137,219,501">
@@ -355,8 +357,8 @@
         </GroupBox>
         <GroupBox Header="Summary" Margin="892,489,10,10">
             <Grid>
-                <Label x:Name="lblTotal" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
-                <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" Height="26"/>
+                <Label x:Name="lblTotalAmount" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
+                <TextBox x:Name="txtTotalAmount" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" Height="26"/>
             </Grid>
         </GroupBox>
 

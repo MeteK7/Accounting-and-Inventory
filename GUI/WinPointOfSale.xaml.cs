@@ -25,6 +25,7 @@ namespace GUI
     public partial class WinPointOfSale : Window
     {
         UserDAL userDAL = new UserDAL();
+        UserBLL userBLL = new UserBLL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
@@ -38,7 +39,7 @@ namespace GUI
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
         PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
-        UserBLL userBLL = new UserBLL();
+        
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
 
