@@ -58,7 +58,14 @@ namespace GUI
 
             DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtEntranceBankId.Text));
 
-            cboEntranceBankName.SelectedValue = dtBank.Rows[rowIndex]["id"];
+            if (dtBank.Rows.Count!=rowIndex)//If there is a data in the db, there cannot be a datatable with index of 0.
+            {
+                cboEntranceBankName.SelectedValue = Convert.ToInt32(dtBank.Rows[rowIndex]["id"]);
+            }
+            else
+            {
+                MessageBox.Show("There is no such item!");
+            }
         }
 
         private void cboBankName_KeyUp(object sender, KeyEventArgs e)
