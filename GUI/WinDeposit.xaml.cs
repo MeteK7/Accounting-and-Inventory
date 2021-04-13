@@ -66,23 +66,6 @@ namespace GUI
             txtEntranceBankId.Text = cboEntranceBankName.SelectedValue.ToString();
         }
 
-        private void txtEntranceAmount_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (txtEntranceAmount.Text!="")
-            {
-                string amount = txtEntranceAmount.Text;
-                char lastCharacter = char.Parse(amount.Substring(amount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
-                bool isValidAmount = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
-                bool isNumeric = int.TryParse(amount, out _);
-
-                if (isNumeric != true && isValidAmount != true)
-                {
-                    MessageBox.Show("Please enter a valid number");
-                    txtEntranceAmount.Text = "";
-                }
-            }
-        }
-
         private void btnEntranceEnter_Click(object sender, RoutedEventArgs e)
         {
             if (txtEntranceBankId.Text != "" && txtEntranceAmount.Text != "")
@@ -200,6 +183,24 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAccount.SelectedValuePath = "id";
+        }
+
+        private void txtEntranceAmount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtEntranceAmount.Text != "")
+            {
+                string amount = txtEntranceAmount.Text;
+                char lastCharacter = char.Parse(amount.Substring(amount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
+                bool isValidAmount = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+                bool isNumeric = int.TryParse(amount, out _);
+
+                if (isNumeric != true && isValidAmount != true)
+                {
+                    MessageBox.Show("Please enter a valid number");
+                    txtEntranceAmount.Text = "";
+                    //Keyboard.Focus(txtEntranceAmount); // set keyboard focus
+                }
+            }
         }
     }
 }
