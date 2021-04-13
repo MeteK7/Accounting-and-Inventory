@@ -177,6 +177,27 @@ namespace GUI
             txtTotal.Text = (Convert.ToDecimal(txtTotal.Text) + amount).ToString();
         }
 
+        private string[,] GetDataGridContent()
+        {
+            int rowLength = dgDeposits.Items.Count;
+            int colLength = 8;
+            string[,] dgProductCells = new string[rowLength, colLength];
+
+            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            {
+                DataGridRow dgRow = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+
+                for (int colNo = 0; colNo < colLength; colNo++)
+                {
+                    TextBlock tbCellContent = dgDeposits.Columns[colNo].GetCellContent(dgRow) as TextBlock;
+
+                    dgProductCells[rowIndex, colNo] = tbCellContent.Text;
+                }
+            }
+
+            return dgProductCells;
+        }
+
         private void cboMenuAccount_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database

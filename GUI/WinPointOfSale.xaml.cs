@@ -308,7 +308,7 @@ namespace GUI
             dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
             #endregion
 
-            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
+            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
             if (isDgEqual == false && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuCustomer.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
             {
