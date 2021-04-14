@@ -27,6 +27,7 @@ namespace GUI
     {
         DepositBLL depositBLL = new DepositBLL();
         DepositCUL depositCUL = new DepositCUL();
+        DepositDetailCUL depositDetailCUL = new DepositDetailCUL();
         UserBLL userBLL = new UserBLL();
         BankDAL bankDAL = new BankDAL();
         AccountDAL accountDAL = new AccountDAL();
@@ -290,7 +291,7 @@ namespace GUI
                 #endregion
 
                 #region TABLE DEPOSIT DETAILS SAVING SECTION
-                int cellBankName = 1, cellDescription = 2, cellAmount = 3;
+                int cellBankId = 0, cellDescription = 2, cellAmount = 3;
                 int colLength = 4;
                 string[] cells = new string[colLength];
                 DateTime dateTime = DateTime.Now;
@@ -317,9 +318,9 @@ namespace GUI
                     }
 
                     depositDetailCUL.Id = depositId;
-                    depositDetailCUL.BankName = cells[cellBankName];
+                    depositDetailCUL.BankId = cells[cellBankId];
                     depositDetailCUL.Description = cells[cellDescription];
-                    depositDetailCUL.Amount = cells[cellAmount];
+                    depositDetailCUL.Amount = Convert.ToDecimal(cells[cellAmount]);
 
                     isSuccessDetail = depositDetailDAL.Insert(depositDetailCUL);
                 }
