@@ -157,6 +157,23 @@ namespace GUI
             dgDeposits.IsEnabled = false;
         }
 
+        private void ClearDepositEntrance()
+        {
+            txtEntranceBankId.Text = "";
+            cboEntranceBankName.SelectedItem = "";
+            txtEntranceDescription.Text = "";
+            txtEntranceAmount.Text = "";
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;//If the deposits are saved successfully, enable the new button to be able to add new products.
+            btnMenuEdit.IsEnabled = true;//If the deposits are saved successfully, enable the edit button to be able to edit an existing invoice.
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
         private void ModifyToolsOnClickBtnMenuNew()
         {
             btnMenuEdit.IsEnabled = false;//Edit button should be disabled while entering a new deposit.

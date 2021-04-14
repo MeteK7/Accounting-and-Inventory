@@ -299,6 +299,8 @@
                 </Button>
                 <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
                 <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuAccount_Loaded"/>
+                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,7,0,0" VerticalAlignment="Top" Height="32" Width="71"/>
+                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,7,0,0" VerticalAlignment="Top" Height="32" Width="70" RenderTransformOrigin="0.729,0.517"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Entrance" Margin="10,137,219,501">
