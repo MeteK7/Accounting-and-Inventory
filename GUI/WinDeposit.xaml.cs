@@ -259,6 +259,7 @@ namespace GUI
             if (isDgEqual == false &&  cboMenuAccount.SelectedIndex != emptyIndex)
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
+                int depositId = Convert.ToInt32(lblDepositNumber.Content);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
@@ -268,10 +269,9 @@ namespace GUI
 
                 #region TABLE DEPOSIT SAVING SECTION
                 //Getting the values from the POS Window and fill them into the depositCUL.
-                depositCUL.Id = Convert.ToInt32(lblDepositNumber.Content);
+                depositCUL.Id = Convert.ToInt32(depositId);
                 depositCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
-                depositCUL.BankId = Convert.ToInt32(cboMenuBank.SelectedValue);
-                depositCUL.Amount = Convert.ToDecimal(txtTotalAmount.Text);
+                depositCUL.TotalAmount = Convert.ToDecimal(txtTotalAmount.Text);
                 depositCUL.AddedDate = DateTime.Now;
                 depositCUL.AddedBy = userId;
 
@@ -290,68 +290,38 @@ namespace GUI
                 #endregion
 
                 #region TABLE DEPOSIT DETAILS SAVING SECTION
-                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
-                int productId;
-                int unitId;
-                decimal productOldAmountInStock;
-                int initialRowIndex = 0;
-                int cellLength = 7;
-                int addedBy = userId;
-                string[] cells = new string[cellLength];
+                int cellBankName = 1, cellDescription = 2, cellAmount = 3;
+                int colLength = 4;
+                string[] cells = new string[colLength];
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false;
-                int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
-                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+                for (int rowNo = 0; rowNo < dgDeposits.Items.Count; rowNo++)
                 {
                     if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
-
-                        //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
-                        pointOfSaleDetailDAL.Delete(invoiceId);
+                        //We are sending deposit id as a parameter to the "Delete" Method. So that we can erase all the entrances which have the specific deposit id.
+                        depositDAL.Delete(depositId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
                     }
 
-                    DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+                    DataGridRow row = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    for (int colNo = 0; colNo < colLength; colNo++)
                     {
-                        TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;
+                        TextBlock cellContent = dgDeposits.Columns[colNo].GetCellContent(row) as TextBlock;
 
                         cells[colNo] = cellContent.Text;
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
-                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+                    depositDetailCUL.Id = depositId;
+                    depositDetailCUL.BankName = cells[cellBankName];
+                    depositDetailCUL.Description = cells[cellDescription];
+                    depositDetailCUL.Amount = cells[cellAmount];
 
-
-                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
-                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
-
-                    depositDetailCUL.Id = invoiceId;
-                    depositDetailCUL.ProductId = productId;
-                    depositDetailCUL.AddedBy = addedBy;
-                    depositDetailCUL.ProductRate = productRate;
-                    depositDetailCUL.ProductUnitId = unitId;
-                    depositDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
-                    depositDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
-                    depositDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
-
-                    isSuccessDetail = pointOfSaleDetailDAL.Insert(depositDetailCUL);
-
-                    #region PRODUCT AMOUNT UPDATE
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
-
-                    productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
-
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
-
-                    productDAL.UpdateAmountInStock(productCUL);
-                    #endregion
-
+                    isSuccessDetail = depositDetailDAL.Insert(depositDetailCUL);
                 }
                 #endregion
 
@@ -360,7 +330,7 @@ namespace GUI
                 {
                     //ClearBasketTextBox();
                     //ClearPointOfSaleDataGrid();
-                    ClearProductEntranceTextBox();
+                    ClearDepositEntrance();
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
                 }

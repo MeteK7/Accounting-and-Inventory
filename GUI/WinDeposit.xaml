@@ -299,8 +299,6 @@
                 </Button>
                 <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
                 <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuAccount_Loaded"/>
-                <Label x:Name="lblMenuBank" Content="Bank" HorizontalAlignment="Left" Margin="340,39,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboMenuBank" HorizontalAlignment="Left" Margin="457,39,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuBank_Loaded"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Entrance" Margin="10,137,219,501">
