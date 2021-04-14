@@ -53,14 +53,13 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_deposit (id, account_id, description, amount, added_date, added_by) VALUES (@id, @account_id, @description, @amount, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_deposit (id, account_id, total_amount, added_date, added_by) VALUES (@id, @account_id, @total_amount, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", depositCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@account_id", depositCUL.AccountId);
-                cmd.Parameters.AddWithValue("@description", depositCUL.Description);
-                cmd.Parameters.AddWithValue("@amount", depositCUL.TotalAmount);
+                cmd.Parameters.AddWithValue("@total_amount", depositCUL.TotalAmount);
                 cmd.Parameters.AddWithValue("@added_date", depositCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", depositCUL.AddedBy);
 
@@ -98,14 +97,13 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_deposit SET id=@id, account_id=@account_id, description=@decription, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_deposit SET id=@id, account_id=@account_id, total_amount=@total_amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("id", depositCUL.Id);
                 cmd.Parameters.AddWithValue("account_id", depositCUL.AccountId);
-                cmd.Parameters.AddWithValue("description", depositCUL.Description);
-                cmd.Parameters.AddWithValue("amount", depositCUL.TotalAmount);
+                cmd.Parameters.AddWithValue("total_amount", depositCUL.TotalAmount);
                 cmd.Parameters.AddWithValue("added_date", depositCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", depositCUL.AddedBy);
 

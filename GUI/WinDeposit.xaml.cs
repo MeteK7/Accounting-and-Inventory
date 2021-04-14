@@ -26,7 +26,9 @@ namespace GUI
     public partial class WinDeposit : Window
     {
         DepositBLL depositBLL = new DepositBLL();
+        DepositDAL depositDAL = new DepositDAL();
         DepositCUL depositCUL = new DepositCUL();
+        DepositDetailDAL depositDetailDAL = new DepositDetailDAL();
         DepositDetailCUL depositDetailCUL = new DepositDetailCUL();
         UserBLL userBLL = new UserBLL();
         BankDAL bankDAL = new BankDAL();
@@ -255,7 +257,7 @@ namespace GUI
             dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
             #endregion
 
-            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
+            //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY VALID IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
             if (isDgEqual == false &&  cboMenuAccount.SelectedIndex != emptyIndex)
             {
@@ -276,7 +278,7 @@ namespace GUI
                 depositCUL.AddedDate = DateTime.Now;
                 depositCUL.AddedBy = userId;
 
-                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+                //userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
@@ -299,10 +301,10 @@ namespace GUI
 
                 for (int rowNo = 0; rowNo < dgDeposits.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
+                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific deposit's items in tbl_deposit_detailed at once.
                     {
                         //We are sending deposit id as a parameter to the "Delete" Method. So that we can erase all the entrances which have the specific deposit id.
-                        depositDAL.Delete(depositId);
+                        depositDetailDAL.Delete(depositId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;

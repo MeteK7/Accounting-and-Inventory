@@ -24,7 +24,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "SELECT * FROM tbl_deposit_detail";
+                string sqlQuery = "SELECT * FROM tbl_deposit_detailed";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
@@ -53,7 +53,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_deposit_detail (id, bank_id, description, amount) VALUES (@id, @bank_id, @description, @amount)";
+                string sqlQuery = "INSERT INTO tbl_deposit_detailed (id, bank_id, description, amount) VALUES (@id, @bank_id, @description, @amount)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -96,7 +96,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_deposit_detail SET id=@id, bank_id=@bank_id, description=@decription, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_deposit_detailed SET id=@id, bank_id=@bank_id, description=@decription, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -132,7 +132,7 @@ namespace DAL
         #endregion
 
         #region DELETE METHOD
-        public bool Delete(DepositDetailCUL depositDetailCUL)
+        public bool Delete(int id)
         {
             //Create a Boolean variable and set its value to false.
             bool isSuccess = false;
@@ -142,12 +142,12 @@ namespace DAL
             try
             {
                 //SQL Query to Delete from the Database
-                string sqlQuery = "DELETE FROM tbl_deposit_detail WHERE id=@id";
+                string sqlQuery = "DELETE FROM tbl_deposit_detailed WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@id", depositDetailCUL.Id);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 //Opening the SQL connection
                 conn.Open();
