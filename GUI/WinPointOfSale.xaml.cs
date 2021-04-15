@@ -318,7 +318,7 @@ namespace GUI
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
-                DataTable dataTableLastInvoice = pointOfSaleBLL.GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
+                //DataTable dataTableLastInvoice = pointOfSaleBLL.GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 

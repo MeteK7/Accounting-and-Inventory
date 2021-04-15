@@ -177,5 +177,51 @@ namespace DAL
             return isSuccess;
         }
         #endregion
+
+        #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
+        public DataTable GetByIdOrLastId(int depositId = 0)//Optional parameter
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+                String sql;
+
+                if (depositId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
+                {
+                    sql = "SELECT * FROM tbl_deposit WHERE id=(SELECT max(id) FROM tbl_deposit)";
+                    //sql = "SELECT * FROM tbl_deposit WHERE id=IDENT_CURRENT('tbl_deposit')";//SQL query to get the last id of rows in the table.
+                }
+
+                else
+                {
+                    sql = "SELECT * FROM tbl_deposit WHERE id=" + depositId + "";
+                }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    try
+                    {
+                        /*cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;*/
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
     }
 }

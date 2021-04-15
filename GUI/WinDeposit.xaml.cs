@@ -132,8 +132,22 @@ namespace GUI
                 MessageBox.Show("You have a missing part!");
         }
 
+        private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
+        {
+            ClearBasket();
+            ClearDepositsDataGrid();
+
+            int depositId, increment = 1;
+
+            depositId = depositBLL.GetLastDepositId();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            depositId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblDepositNumber.Content = depositId;//Assigning invoiceNo to the content of the InvoiceNo Label.
+        }
+
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
+            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            LoadNewInvoice();
             ModifyToolsOnClickBtnMenuNew();
         }
 
@@ -209,7 +223,7 @@ namespace GUI
         private string[,] GetDataGridContent()
         {
             int rowLength = dgDeposits.Items.Count;
-            int colLength = 8;
+            int colLength = 4;
             string[,] dgProductCells = new string[rowLength, colLength];
 
             for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
@@ -283,7 +297,7 @@ namespace GUI
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
-                DataTable dataTableLastInvoice = depositBLL.GetLastDepositInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
+                //DataTable dataTableLastDeposit = depositBLL.GetLastDepositInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
 
