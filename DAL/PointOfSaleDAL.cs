@@ -280,7 +280,7 @@ namespace KabaAccounting.DAL
                 if (invoiceNo==0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
                 {
                     sql = "SELECT * FROM tbl_pos WHERE id=(SELECT max(id) FROM tbl_pos)";
-                    //sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in te table.
+                    //sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in the table.
                 }
 
                 else
