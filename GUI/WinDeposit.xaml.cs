@@ -131,10 +131,18 @@ namespace GUI
             else
                 MessageBox.Show("You have a missing part!");
         }
+        private void ClearSummary()
+        {
+            txtSummaryTotalAmount.Text = "0";
+        }
 
+        private void ClearDepositsDataGrid()
+        {
+            dgDeposits.Items.Clear();
+        }
         private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
-            ClearBasket();
+            ClearSummary();
             ClearDepositsDataGrid();
 
             int depositId, increment = 1;
@@ -217,7 +225,7 @@ namespace GUI
         {
             decimal amount = Convert.ToDecimal(txtEntranceAmount.Text);
 
-            txtTotalAmount.Text = (Convert.ToDecimal(txtTotalAmount.Text) + amount).ToString();
+            txtSummaryTotalAmount.Text = (Convert.ToDecimal(txtSummaryTotalAmount.Text) + amount).ToString();
         }
 
         private string[,] GetDataGridContent()
@@ -305,7 +313,7 @@ namespace GUI
                 //Getting the values from the POS Window and fill them into the depositCUL.
                 depositCUL.Id = Convert.ToInt32(depositId);
                 depositCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
-                depositCUL.TotalAmount = Convert.ToDecimal(txtTotalAmount.Text);
+                depositCUL.TotalAmount = Convert.ToDecimal(txtSummaryTotalAmount.Text);
                 depositCUL.AddedDate = DateTime.Now;
                 depositCUL.AddedBy = userId;
 
