@@ -206,7 +206,7 @@ namespace GUI
 
                 if (dataTablePosDetail.Rows.Count != 0)
                 {
-                    #region LOADING THE PRODUCT DATA GRID
+                   
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
@@ -214,7 +214,8 @@ namespace GUI
                         cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of customer.
                         cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                         lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-
+                        
+                        #region LOADING THE PRODUCT DATA GRID
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
 
@@ -232,8 +233,8 @@ namespace GUI
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
+                        #endregion
                     }
-                    #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
@@ -269,7 +270,6 @@ namespace GUI
             {
                 FirstTimeRun();//This method is called when it is the first time of using this program.
             }
-
         }
 
         private string[,] GetDataGridContent()
