@@ -168,8 +168,8 @@ namespace GUI
 
         private void LoadPastRecord(int depositId = 0, int depositArrow = -1)
         {
-            int firstRowIndex = 0;
-            string bankId, bankName, depositDescription, depositAmount, depositTotalAmount;
+            int firstRowIndex = 0, bankId;
+            string bankName, depositDescription, depositAmount, depositTotalAmount;
 
             if (depositId == 0)
             {
@@ -180,7 +180,7 @@ namespace GUI
             if (depositId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTableDeposit = depositDAL.GetByIdOrLastId(depositId);
-                DataTable dataTableDepositDetail = depositDetailDAL.Search(depositId);
+                DataTable dataTableDepositDetail = depositDetailDAL.SearchById(depositId);
                 DataTable dataTableBankInfo;
 
                 if (dataTableDepositDetail.Rows.Count != 0)
@@ -191,9 +191,9 @@ namespace GUI
                     #region LOADING THE DEPOSIT DATA GRID
                     for (int currentRow = firstRowIndex; currentRow < dataTableDepositDetail.Rows.Count; currentRow++)
                     {
-                        bankId = dataTableDepositDetail.Rows[currentRow]["bank_id"].ToString();
+                        bankId = Convert.ToInt32(dataTableDepositDetail.Rows[currentRow]["bank_id"]);
 
-                        dataTableBankInfo = bankDAL.GetBankInfoById(bankId);//Getting the bank name by bank id.
+                        dataTableBankInfo = bankDAL.SearchById(bankId);//Getting the bank name by bank id.
                         bankName = dataTableBankInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one bank name of a specific id.
                         
                         depositDescription= dataTableDepositDetail.Rows[currentRow]["description"].ToString();
@@ -220,7 +220,7 @@ namespace GUI
 
                     if (depositArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInvoice(depositId, depositArrow);//Call the method again to get the new past invoice.
+                        LoadPastRecord(depositId, depositArrow);//Call the method again to get the new past invoice.
                     }
 
                 }
