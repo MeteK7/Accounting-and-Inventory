@@ -200,12 +200,13 @@ namespace GUI
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceNo);
-                DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
-                DataTable dataTableUnitInfo;
-                DataTable dataTableProduct;
 
-                if (dataTablePosDetail.Rows.Count != 0)
+                if (dataTablePos.Rows.Count != 0)
                 {
+                    DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+                    DataTable dataTableUnitInfo;
+                    DataTable dataTableProduct;
+
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
                         cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
@@ -246,7 +247,7 @@ namespace GUI
 
                     #endregion
                 }
-                else if (dataTablePosDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePos.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {

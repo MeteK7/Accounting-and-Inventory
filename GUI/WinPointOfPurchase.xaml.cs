@@ -203,12 +203,13 @@ namespace GUI
             if (invoiceId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePop = pointOfPurchaseDAL.GetByInvoiceId(invoiceId);
-                DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
-                DataTable dataTableUnitInfo;
-                DataTable dataTableProduct;
 
-                if (dataTablePopDetail.Rows.Count != 0)
+                if (dataTablePop.Rows.Count != 0)
                 {
+                    DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
+                    DataTable dataTableUnitInfo;
+                    DataTable dataTableProduct;
+
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                     cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
                     cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
@@ -249,7 +250,7 @@ namespace GUI
 
                     #endregion
                 }
-                else if (dataTablePopDetail.Rows.Count == 0)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePop.Rows.Count == 0)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
