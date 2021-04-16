@@ -209,16 +209,15 @@ namespace GUI
 
                 if (dataTablePopDetail.Rows.Count != 0)
                 {
-                    
+                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                    cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
+                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
+                    txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
+                    #region LOADING THE PRODUCT DATA GRID
                     for (int currentRow = firstRowIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
                     {
-                        cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                        cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
-                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
-                        txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
                         
-                        #region LOADING THE PRODUCT DATA GRID
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePopDetail.Rows[currentRow]["product_unit_id"]);
 
@@ -234,8 +233,9 @@ namespace GUI
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice });
-                        #endregion
+                        
                     }
+                    #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 

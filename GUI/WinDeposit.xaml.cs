@@ -169,7 +169,7 @@ namespace GUI
         private void LoadPastRecord(int depositId = 0, int depositArrow = -1)
         {
             int firstRowIndex = 0, bankId;
-            string bankName, depositDescription, depositAmount, depositTotalAmount;
+            string bankName, depositDescription, depositAmount;
 
             if (depositId == 0)
             {
@@ -180,11 +180,12 @@ namespace GUI
             if (depositId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTableDeposit = depositDAL.GetByIdOrLastId(depositId);
-                DataTable dataTableDepositDetail = depositDetailDAL.SearchById(depositId);
-                DataTable dataTableBankInfo;
 
-                if (dataTableDepositDetail.Rows.Count != 0)
+                if (dataTableDeposit.Rows.Count != 0)
                 {
+                    DataTable dataTableDepositDetail = depositDetailDAL.SearchById(depositId);
+                    DataTable dataTableBankInfo;
+
                     cboMenuAccount.SelectedValue = Convert.ToInt32(dataTableDeposit.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                     lblDepositNumber.Content = dataTableDeposit.Rows[firstRowIndex]["id"].ToString();
 
@@ -207,7 +208,8 @@ namespace GUI
                     txtSummaryTotalAmount.Text = dataTableDeposit.Rows[firstRowIndex]["total_amount"].ToString();
                     #endregion
                 }
-                else if (dataTableDepositDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+
+                else if (dataTableDeposit.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (depositArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
@@ -230,6 +232,14 @@ namespace GUI
                 FirstTimeRun();//This method is called when it is the first time of using this program.
             }
         }
+
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
+        }
+
         private void DisableTools()
         {
             btnMenuSave.IsEnabled = false;

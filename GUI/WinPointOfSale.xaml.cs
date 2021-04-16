@@ -206,8 +206,6 @@ namespace GUI
 
                 if (dataTablePosDetail.Rows.Count != 0)
                 {
-                   
-
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
                         cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
