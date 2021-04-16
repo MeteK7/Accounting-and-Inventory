@@ -37,6 +37,7 @@ namespace GUI
         {
             InitializeComponent();
             LoadUserInformations();
+            LoadPastRecord();
             DisableTools();
         }
 
@@ -163,6 +164,80 @@ namespace GUI
         {
             txtUsername.Text = WinLogin.loggedInUserName;
             txtUserType.Text = WinLogin.loggedInUserType;
+        }
+
+        private void LoadPastRecord(int depositId = 0, int depositArrow = -1)
+        {
+            int firstRowIndex = 0, bankId;
+            string bankName, depositDescription, depositAmount;
+
+            if (depositId == 0)
+            {
+                depositId = depositBLL.GetLastDepositId();//Getting the last deposit id and assign it to the variable called depositId.
+            }
+
+            /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
+            if (depositId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            {
+                DataTable dataTableDeposit = depositDAL.GetByIdOrLastId(depositId);
+
+                if (dataTableDeposit.Rows.Count != 0)
+                {
+                    DataTable dataTableDepositDetail = depositDetailDAL.SearchById(depositId);
+                    DataTable dataTableBankInfo;
+
+                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTableDeposit.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
+                    lblDepositNumber.Content = dataTableDeposit.Rows[firstRowIndex]["id"].ToString();
+
+                    #region LOADING THE DEPOSIT DATA GRID
+                    for (int currentRow = firstRowIndex; currentRow < dataTableDepositDetail.Rows.Count; currentRow++)
+                    {
+                        bankId = Convert.ToInt32(dataTableDepositDetail.Rows[currentRow]["bank_id"]);
+
+                        dataTableBankInfo = bankDAL.SearchById(bankId);//Getting the bank name by bank id.
+                        bankName = dataTableBankInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one bank name of a specific id.
+                        
+                        depositDescription= dataTableDepositDetail.Rows[currentRow]["description"].ToString();
+                        depositAmount = dataTableDepositDetail.Rows[currentRow]["amount"].ToString();
+
+                        dgDeposits.Items.Add(new { BankId = bankId, BankName = bankName, Description = depositDescription, Amount = depositAmount});
+                    }
+                    #endregion
+
+                    #region FILLING THE PREVIOUS SUMMARY INFORMATIONS
+                    txtSummaryTotalAmount.Text = dataTableDeposit.Rows[firstRowIndex]["total_amount"].ToString();
+                    #endregion
+                }
+
+                else if (dataTableDeposit.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                {
+                    if (depositArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
+                    {
+                        depositId = depositId - 1;
+                    }
+                    else
+                    {
+                        depositId = depositId + 1;
+                    }
+
+                    if (depositArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    {
+                        LoadPastRecord(depositId, depositArrow);//Call the method again to get the new past invoice.
+                    }
+
+                }
+            }
+            else
+            {
+                FirstTimeRun();//This method is called when it is the first time of using this program.
+            }
+        }
+
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
         private void DisableTools()

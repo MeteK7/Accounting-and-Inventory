@@ -175,7 +175,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region SEARCH METHOD
+        #region SEARCH METHOD BY KEYWORD
         public DataTable Search(string keyword)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
@@ -201,7 +201,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region SEARCH METHOD
+        #region SEARCH METHOD BY ID
         public DataTable SearchById(int id)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database

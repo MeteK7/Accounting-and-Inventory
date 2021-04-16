@@ -200,13 +200,12 @@ namespace GUI
             if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceNo);
-                DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
-                DataTable dataTableUnitInfo;
-                DataTable dataTableProduct;
 
-                if (dataTablePosDetail.Rows.Count != 0)
+                if (dataTablePos.Rows.Count != 0)
                 {
-                    #region LOADING THE PRODUCT DATA GRID
+                    DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+                    DataTable dataTableUnitInfo;
+                    DataTable dataTableProduct;
 
                     for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
@@ -214,7 +213,8 @@ namespace GUI
                         cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of customer.
                         cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                         lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-
+                        
+                        #region LOADING THE PRODUCT DATA GRID
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
 
@@ -232,8 +232,8 @@ namespace GUI
                         productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
+                        #endregion
                     }
-                    #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
@@ -247,7 +247,7 @@ namespace GUI
 
                     #endregion
                 }
-                else if (dataTablePosDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePos.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
@@ -269,7 +269,6 @@ namespace GUI
             {
                 FirstTimeRun();//This method is called when it is the first time of using this program.
             }
-
         }
 
         private string[,] GetDataGridContent()
