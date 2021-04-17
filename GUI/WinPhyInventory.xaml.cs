@@ -1,4 +1,5 @@
-﻿using KabaAccounting.CUL;
+﻿using BLL;
+using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace GUI
             InitializeComponent();
             LoadLvwPhysicalInventory();
         }
-
+        CategoryBLL categoryBLL = new CategoryBLL();
         CategoryDAL categoryDAL = new CategoryDAL();
         ProductDAL productDAL = new ProductDAL();
 
@@ -41,20 +42,6 @@ namespace GUI
             this.Close();
         }
 
-        private string ConvertCategoryIdIntoName(DataTable dataTableProduct, int rowIndex)
-        {
-            DataTable dataTableCategory;
-
-            int categoryId;
-            int rowFirstIndex = 0;
-            string categoryName;
-
-            categoryId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["category_id"]);//Getting the category id first to find its name.
-            dataTableCategory = categoryDAL.GetCategoryInfoById(categoryId);//Getting all of the category infos by using id.
-            categoryName = dataTableCategory.Rows[rowFirstIndex]["name"].ToString();//Fetching the name of the category from dataTableCategory. Index is always zero since we are dealing with a unique category only.
-
-            return categoryName;
-        }
         private void LoadLvwPhysicalInventory(string searchBy=null, string keyword=null)
         {
             lvwPhyInventory.Items.Clear();
@@ -78,7 +65,7 @@ namespace GUI
                     {
                         Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
                         Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
-                        CategoryName = ConvertCategoryIdIntoName(dataTableProduct, rowIndex),
+                        CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
                         Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
                         AmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]),
                         CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
