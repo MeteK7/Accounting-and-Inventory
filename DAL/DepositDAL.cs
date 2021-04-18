@@ -134,7 +134,7 @@ namespace DAL
         #endregion
 
         #region DELETE METHOD
-        public bool Delete(DepositCUL depositCUL)
+        public bool Delete(int depositId)
         {
             //Create a Boolean variable and set its value to false.
             bool isSuccess = false;
@@ -149,7 +149,7 @@ namespace DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@id", depositCUL.Id);
+                cmd.Parameters.AddWithValue("@id", depositId);
 
                 //Opening the SQL connection
                 conn.Open();
