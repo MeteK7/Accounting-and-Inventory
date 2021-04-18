@@ -255,7 +255,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancellation.png">
                             <ImageBrush.RelativeTransform>

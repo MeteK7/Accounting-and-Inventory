@@ -462,5 +462,26 @@ namespace GUI
                 MessageBox.Show("You have a missing part or you are trying to save the same things!");
             }
         }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the invoice?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    ClearDepositEntrance();
+                    ClearDepositsDataGrid();
+                    LoadPastRecord();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
     }
 }
