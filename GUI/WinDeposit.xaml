@@ -255,7 +255,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancellation.png">
                             <ImageBrush.RelativeTransform>
@@ -269,7 +269,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="EDIT" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="EDIT" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuEdit_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit-file.png">
                             <ImageBrush.RelativeTransform>
@@ -283,7 +283,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/file-trash.png">
                             <ImageBrush.RelativeTransform>

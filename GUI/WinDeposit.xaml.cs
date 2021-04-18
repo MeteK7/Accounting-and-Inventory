@@ -157,7 +157,7 @@ namespace GUI
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            ModifyToolsOnClickBtnMenuNew();
+            ToolsOnClickBtnNewEdit();
         }
 
         private void LoadUserInformations()
@@ -271,7 +271,7 @@ namespace GUI
             btnNext.IsEnabled = true;
         }
 
-        private void ModifyToolsOnClickBtnMenuNew()
+        private void ToolsOnClickBtnNewEdit()
         {
             btnMenuEdit.IsEnabled = false;//Edit button should be disabled while entering a new deposit.
             btnMenuDelete.IsEnabled = false;//Delete button should be disabled while entering a new deposit.
@@ -460,6 +460,66 @@ namespace GUI
             else
             {
                 MessageBox.Show("You have a missing part or you are trying to save the same things!");
+            }
+        }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the deposit?", "Cancel Deposit", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    ClearDepositEntrance();
+                    ClearDepositsDataGrid();
+                    LoadPastRecord();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
+
+        private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
+        {
+            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+            ToolsOnClickBtnNewEdit();
+        }
+
+        private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the invoice?", "Delete Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    #region DELETE DEPOSIT
+                    int depositId = Convert.ToInt32(lblDepositNumber.Content);
+
+                    depositDAL.Delete(depositId);
+                    depositDetailDAL.Delete(depositId);
+                    #endregion
+
+                    #region PREPARE TO THE LAST PAGE
+                    DisableTools();
+                    ClearDepositEntrance();
+                    ClearDepositsDataGrid();
+                    LoadPastRecord();
+                    EnableButtonsOnClickSaveCancel();
+                    #endregion
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
             }
         }
     }
