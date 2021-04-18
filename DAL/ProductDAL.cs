@@ -50,7 +50,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Insert Data in Database
+        #region INSERT METHOD
         public bool Insert(ProductCUL product)
         {
             bool isSuccess = false;
@@ -104,7 +104,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Update data in Database
+        #region UPDATE METHOD
         public bool Update(ProductCUL product)
         {
             bool isSuccess = false;
@@ -158,7 +158,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Delete Data from Database
+        #region DELETE METHOD
         public bool Delete(ProductCUL product)
         {
             bool isSuccess = false;
@@ -199,7 +199,7 @@ namespace KabaAccounting.DAL
         #endregion
 
         //YOU MAY WISH TO ERASE THIS CODE BLOCK!!!
-        #region Search Specific Product By Id or Barcode
+        #region SEARCH BY ID METHOD
         public DataTable SearchProductByIdBarcode(string keyword)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
@@ -259,7 +259,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Update Amount in Stock
+        #region UPDATE AMOUNT IN STOCK METHOD
         public bool UpdateAmountInStock(ProductCUL product)
         {
             bool isSuccessProductAmount = false;

@@ -33,6 +33,7 @@ namespace GUI
 
         ProductCUL productCUL = new ProductCUL();
         ProductDAL productDAL = new ProductDAL();
+        CategoryBLL categoryBLL = new CategoryBLL();
         CategoryDAL categoryDAL = new CategoryDAL();
         UserDAL userDAL = new UserDAL();
         UnitDAL unitDAL = new UnitDAL();
@@ -191,11 +192,24 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshCategoryDataGrid method!!! */
             {
+                dtgProducts.Items.Clear();
+
                 //Show category informations based on the keyword
-                DataTable dataTable = productDAL.SelectAllOrByKeyword(keyword);
-                dtgProducts.ItemsSource = dataTable.DefaultView;
-                dtgProducts.AutoGenerateColumns = true;
-                dtgProducts.CanUserAddRows = false;
+                DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(keyword:keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+
+                for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
+                {
+                    dtgProducts.Items.Add(
+                        new ProductCUL()
+                        {
+                            Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
+                            BarcodeRetail = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString(),
+                            BarcodeWholesale = dataTableProduct.Rows[rowIndex]["barcode_wholesale"].ToString(),
+                            Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
+                            CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
+                            Description = dataTableProduct.Rows[rowIndex].ToString()
+                        }); ;
+                }
             }
             else
             {
