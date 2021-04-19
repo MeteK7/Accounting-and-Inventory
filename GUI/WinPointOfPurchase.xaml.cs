@@ -390,7 +390,7 @@ namespace GUI
                         productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
-                        pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
+                        pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         userClickedNewOrEdit = 2;
@@ -644,10 +644,10 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region DELETE INVOICE
-                    int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+                    int currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
 
-                    pointOfPurchaseDAL.Delete(invoiceNo);
-                    pointOfPurchaseDetailDAL.Delete(invoiceNo);
+                    pointOfPurchaseDAL.Delete(currentInvoiceId);
+                    pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
                     #endregion
 
                     #region REVERT THE STOCK
