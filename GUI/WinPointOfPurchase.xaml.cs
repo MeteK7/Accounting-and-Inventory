@@ -645,9 +645,10 @@ namespace GUI
 
                     #region DELETE INVOICE
                     int currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
-
-                    pointOfPurchaseDAL.Delete(currentInvoiceId);
+                    
                     pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
+                    pointOfPurchaseDAL.Delete(currentInvoiceId);
+                    
                     #endregion
 
                     #region REVERT THE STOCK

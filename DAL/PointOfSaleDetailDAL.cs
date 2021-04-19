@@ -143,7 +143,7 @@ namespace KabaAccounting.DAL
         #endregion*/
 
         #region DELETE METHOD
-        public bool Delete(int invoiceNo)
+        public bool Delete(int invoiceId)
         {
             //Create a Boolean variable and set its value to false.
             bool isSuccess = false;
@@ -153,12 +153,12 @@ namespace KabaAccounting.DAL
             try
             {
                 //SQL Query to Delete from the Database
-                string sqlQuery = "DELETE FROM tbl_pos_detailed WHERE invoice_no=@invoice_no";
+                string sqlQuery = "DELETE FROM tbl_pos_detailed WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@invoice_no", invoiceNo);
+                cmd.Parameters.AddWithValue("@id", invoiceId);
 
                 //Opening the SQL connection
                 conn.Open();
