@@ -646,11 +646,8 @@ namespace GUI
                     #region DELETE INVOICE
                     int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
-                    pointOfPurchaseCUL.InvoiceNo = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
-                    //pointOfPurchaseDetailCUL.InvoiceNo = invoiceNo; REFACTOR THIS CODE!!!
-
-                    pointOfPurchaseDAL.Delete(pointOfPurchaseCUL);
-                    pointOfPurchaseDetailDAL.Delete(pointOfPurchaseDetailCUL);
+                    pointOfPurchaseDAL.Delete(invoiceNo);
+                    pointOfPurchaseDetailDAL.Delete(invoiceNo);
                     #endregion
 
                     #region REVERT THE STOCK
