@@ -632,7 +632,7 @@ namespace GUI
                     pointOfSaleCUL.Id = invoiceNo;//Assigning the invoice number into the Id in the pointofSaleCUL.
                     pointOfSaleDetailCUL.Id = invoiceNo;
 
-                    pointOfSaleDAL.Delete(pointOfSaleCUL);
+                    pointOfSaleDAL.Delete(invoiceNo);
                     pointOfSaleDetailDAL.Delete(invoiceNo);
                     #endregion
 
