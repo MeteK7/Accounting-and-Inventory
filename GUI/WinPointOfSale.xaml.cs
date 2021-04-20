@@ -627,10 +627,10 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region DELETE INVOICE
-                    int invoiceNo = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                    int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
-                    pointOfSaleDetailDAL.Delete(invoiceNo);
-                    pointOfSaleDAL.Delete(invoiceNo);
+                    pointOfSaleDetailDAL.Delete(invoiceId);
+                    pointOfSaleDAL.Delete(invoiceId);
                     
                     #endregion
 
