@@ -369,7 +369,7 @@ namespace GUI
 
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeRetail.Text);
 
-            if (dtProduct != null)
+            if (dtProduct.Rows.Count!= initialAmount)
             {
                 string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
 
@@ -382,9 +382,10 @@ namespace GUI
         private void PromptBarcodeWholesale()
         {
             int initialAmount = 0;
+
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeWholesale.Text);
 
-            if (dtProduct != null)
+            if (dtProduct.Rows.Count != initialAmount)
             {
                 string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
 
