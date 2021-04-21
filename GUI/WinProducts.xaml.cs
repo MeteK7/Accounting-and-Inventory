@@ -363,10 +363,10 @@ namespace GUI
             }
         }
 
-        private void txtProductBarcodeRetail_KeyUp(object sender, KeyEventArgs e)
-        
+        private void PromptBarcodeRetail()
         {
             int initialAmount = 0;
+
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeRetail.Text);
 
             if (dtProduct != null)
@@ -379,7 +379,7 @@ namespace GUI
             }
         }
 
-        private void txtProductBarcodeWholesale_KeyUp(object sender, KeyEventArgs e)
+        private void PromptBarcodeWholesale()
         {
             int initialAmount = 0;
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeWholesale.Text);
@@ -391,6 +391,22 @@ namespace GUI
                 MessageBox.Show(message);
 
                 txtProductBarcodeWholesale.Text = "";
+            }
+        }
+
+        private void txtProductBarcodeRetail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PromptBarcodeRetail();
+            }
+        }
+
+        private void txtProductBarcodeWholesale_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PromptBarcodeWholesale();
             }
         }
     }
