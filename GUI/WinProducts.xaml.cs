@@ -363,13 +363,13 @@ namespace GUI
             }
         }
 
-        private void txtProductBarcodeRetail_KeyUp(object sender, KeyEventArgs e)
-        
+        private void PromptBarcodeRetail()
         {
             int initialAmount = 0;
+
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeRetail.Text);
 
-            if (dtProduct != null)
+            if (dtProduct.Rows.Count!= initialAmount)
             {
                 string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
 
@@ -379,18 +379,35 @@ namespace GUI
             }
         }
 
-        private void txtProductBarcodeWholesale_KeyUp(object sender, KeyEventArgs e)
+        private void PromptBarcodeWholesale()
         {
             int initialAmount = 0;
+
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeWholesale.Text);
 
-            if (dtProduct != null)
+            if (dtProduct.Rows.Count != initialAmount)
             {
                 string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
 
                 MessageBox.Show(message);
 
                 txtProductBarcodeWholesale.Text = "";
+            }
+        }
+
+        private void txtProductBarcodeRetail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PromptBarcodeRetail();
+            }
+        }
+
+        private void txtProductBarcodeWholesale_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PromptBarcodeWholesale();
             }
         }
     }

@@ -70,7 +70,7 @@
                     <Label x:Name="lblProductUnitRetail" Content="Unit" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <ComboBox x:Name="cboProductUnitRetail" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="166" Height="27" Opacity="0.75"/>
                     <Label x:Name="lblProductBarcodeRetail" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
-                    <TextBox x:Name="txtProductBarcodeRetail" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyUp="txtProductBarcodeRetail_KeyUp"/>
+                    <TextBox x:Name="txtProductBarcodeRetail" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeRetail_KeyDown"/>
                     <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75"/>
                     <Label x:Name="lblProductCostPriceRetail" Content="Cost Price" HorizontalAlignment="Left" Margin="7,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
@@ -87,7 +87,7 @@
                     <Label x:Name="lblProductUnitWholesale" Content="Unit" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <ComboBox x:Name="cboProductUnitWholesale" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="165" Height="27" Opacity="0.75"/>
                     <Label x:Name="lblProductBarcodeWholesale" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
-                    <TextBox x:Name="txtProductBarcodeWholesale" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyUp="txtProductBarcodeWholesale_KeyUp"/>
+                    <TextBox x:Name="txtProductBarcodeWholesale" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeWholesale_KeyDown"/>
                     <Label x:Name="lblProductAmount" Content="Amount in Unit" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductAmountInUnitWholesale" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductAmountInUnitWholesale_TextChanged" Opacity="0.75"/>
                     <Label x:Name="lblProductCostPriceWholesale" Content="Cost Price" HorizontalAlignment="Left" Margin="8,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
