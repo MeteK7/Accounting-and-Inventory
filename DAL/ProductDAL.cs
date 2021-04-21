@@ -206,7 +206,7 @@ namespace KabaAccounting.DAL
             DataTable dataTable = new DataTable();//To hold the data from database
             try
             {
-                String sql = "SELECT * FROM tbl_products WHERE barcode_retail='" + keyword + "' OR barcode_wholesale='"+ keyword + "' OR id="+ Convert.ToInt32(keyword) + "";//SQL query to search data from database 
+                String sql = "SELECT * FROM tbl_products WHERE barcode_retail='" + keyword + "' OR barcode_wholesale='"+ keyword + "' OR id="+ keyword + "";//SQL query to search data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection

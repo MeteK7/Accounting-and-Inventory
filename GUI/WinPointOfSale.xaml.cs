@@ -696,65 +696,6 @@ namespace GUI
             }
         }
 
-        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
-        {
-            int number;
-
-            DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-
-            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
-            {
-                int productAmount = 1;
-                int rowIndex = 0;
-                int productId;
-                int productUnit = 0;
-                string productBarcodeRetail/*, productBarcodeWholesale*/;
-                string costPrice, salePrice;
-
-                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
-
-
-                productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
-                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
-                //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
-
-
-                if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
-                {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
-                }
-
-                else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
-                {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
-                }
-
-                txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
-
-                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
-
-                cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
-                cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
-
-                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-                salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
-
-                txtProductCostPrice.Text = costPrice;
-                txtProductSalePrice.Text = salePrice;
-                txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
-            }
-
-            /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
-                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
-            else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
-            {
-                ClearProductEntranceTextBox();
-            }
-        }
-
         /*----THIS IS NOT AN EFFICIENT CODE----*/
         private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -806,6 +747,70 @@ namespace GUI
                 else
                 {
                     btnProductAdd.IsEnabled = false;
+                }
+            }
+        }
+
+        private void txtProductId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                long number;
+
+                DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+
+                if (txtProductId.Text != 0.ToString() && long.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+                {
+                    int productAmount = 1;
+                    int rowIndex = 0;
+                    int productId;
+                    int productUnit = 0;
+                    string productBarcodeRetail/*, productBarcodeWholesale*/;
+                    string costPrice, salePrice;
+
+                    btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
+                    btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
+
+
+                    productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
+                    productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
+                    //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
+
+
+                    if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
+                    {
+                        productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
+                    }
+
+                    else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
+                    {
+                        productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
+                    }
+
+                    txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
+
+                    DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+
+                    cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
+                    cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
+
+                    costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                    salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+
+                    txtProductCostPrice.Text = costPrice;
+                    txtProductSalePrice.Text = salePrice;
+                    txtProductAmount.Text = productAmount.ToString();
+                    txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
+
+                    btnProductAdd_Click(sender, e);
+                }
+
+                /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+                Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                      If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+                else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
+                {
+                    ClearProductEntranceTextBox();
                 }
             }
         }
