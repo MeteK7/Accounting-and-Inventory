@@ -1,6 +1,7 @@
 ﻿using BLL;
 using CUL;
 using DAL;
+using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,11 +27,13 @@ namespace GUI
         public WinAccount()
         {
             InitializeComponent();
+            LoadAccountDataGrid();
         }
 
         AccountCUL accountCUL = new AccountCUL();
         AccountDAL accountDAL = new AccountDAL();
         UserBLL userBLL = new UserBLL();
+        UserDAL userDAL = new UserDAL();
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -99,10 +102,35 @@ namespace GUI
         private void LoadAccountDataGrid()
         {
             //Refreshing Data Grid View
+            //DataTable dataTable = accountDAL.Select();
+            //dtgAccounts.ItemsSource = dataTable.DefaultView;
+            //dtgAccounts.AutoGenerateColumns = true;
+            //dtgAccounts.CanUserAddRows = false;
+
+            int firstRowIndex = 0, accountId, addedById;
+            string accountName, addedDate, addedByUsername;
             DataTable dataTable = accountDAL.Select();
-            dtgAccounts.ItemsSource = dataTable.DefaultView;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
             dtgAccounts.AutoGenerateColumns = true;
             dtgAccounts.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                accountId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                accountName = dataTable.Rows[currentRow]["name"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgAccounts.Items.Add(new { Id = accountId, Name = accountName, AddedDate = addedDate, AddedBy = addedByUsername});
+            }
+            #endregion
         }
 
         private void ClearAccountTextBox()
