@@ -67,6 +67,12 @@
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="125"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Label x:Name="lblAccountSearch" Content="SEARCH" HorizontalAlignment="Left" Margin="222,53,0,0" Width="62" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtAccountSearch" HorizontalAlignment="Left" Height="26" Margin="285,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" VerticalContentAlignment="Center" TextChanged="txtAccountSearch_TextChanged">
