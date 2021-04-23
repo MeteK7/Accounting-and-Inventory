@@ -38,8 +38,8 @@ namespace GUI
         CustomerCUL customerCUL = new CustomerCUL();
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
-        PointOfSaleBLL pointOfSaleBLL=new PointOfSaleBLL();
-        
+        PointOfSaleBLL pointOfSaleBLL = new PointOfSaleBLL();
+
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
 
@@ -213,7 +213,7 @@ namespace GUI
                         cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of customer.
                         cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                         lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
-                        
+
                         #region LOADING THE PRODUCT DATA GRID
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
@@ -440,23 +440,25 @@ namespace GUI
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
-            int barcodeColNo = 0;
+            int firstIndex = 0;
             //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
             //int priceColNo = 4;
             int amountColNo = 5;
             int totalCostColNo = 6;
             int totalPriceColNo = 7;
-            int amount = 0;
+            int amount;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
+            DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+            int productId = Convert.ToInt32(dtProduct.Rows[firstIndex]["id"]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
             for (int i = 0; i < rowQuntity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                TextBlock barcodeCellContent = dgProducts.Columns[barcodeColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                TextBlock barcodeCellContent = dgProducts.Columns[firstIndex].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
 
-                if (barcodeCellContent.Text == txtProductId.Text)
+                if (barcodeCellContent.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -485,7 +487,7 @@ namespace GUI
             {
                 decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
-                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
+                dgProducts.Items.Add(new { Id = productId, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
             }
 
             dgProducts.UpdateLayout();
@@ -631,12 +633,12 @@ namespace GUI
 
                     pointOfSaleDetailDAL.Delete(invoiceId);
                     pointOfSaleDAL.Delete(invoiceId);
-                    
+
                     #endregion
 
                     #region REVERT THE STOCK
                     dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count,calledBy);
+                    productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
 
                     #region PREPARE TO THE LAST PAGE
@@ -753,66 +755,83 @@ namespace GUI
 
         private void txtProductId_KeyDown(object sender, KeyEventArgs e)
         {
+
+        }
+
+        private void txtProductId_KeyUp(object sender, KeyEventArgs e)
+        {
+            string productIdFromUser = txtProductId.Text;
+            int firstIndex = 0;
+            long number;
+
+            DataTable dataTable = productDAL.SearchProductByIdBarcode(productIdFromUser);
+
             if (e.Key == Key.Enter)
             {
-                long number;
-
-                DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-
-                if (txtProductId.Text != 0.ToString() && long.TryParse(txtProductId.Text, out number) && dataTable.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+                if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
                 {
-                    int productAmount = 1;
-                    int rowIndex = 0;
-                    int productId;
-                    int productUnit = 0;
-                    string productBarcodeRetail/*, productBarcodeWholesale*/;
-                    string costPrice, salePrice;
-
-                    btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                    btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
-
-
-                    productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
-                    productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
-                    //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
-
-
-                    if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
-                    {
-                        productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
-                    }
-
-                    else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
-                    {
-                        productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
-                    }
-
-                    txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
-
-                    DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
-
-                    cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
-                    cboProductUnit.SelectedIndex = 0;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
-
-                    costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
-                    salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
-
-                    txtProductCostPrice.Text = costPrice;
-                    txtProductSalePrice.Text = salePrice;
-                    txtProductAmount.Text = productAmount.ToString();
-                    txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
-
                     btnProductAdd_Click(sender, e);
                 }
-
-                /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
-                Note: I just checked the btnProductAdd to know if there was a product entry before or not.
-                      If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
-                else if (txtProductId.Text == "" && btnProductAdd.IsEnabled == true)
+                else
                 {
-                    ClearProductEntranceTextBox();
+                    MessageBox.Show("You cannot enter because the Id/Barcode is wrong!");
                 }
             }
+
+            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dataTable.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
+            {
+                int productAmount = 1;
+                int rowIndex = firstIndex;
+                int productId;
+                int productUnit;
+                string productBarcodeRetail/*, productBarcodeWholesale*/;
+                string costPrice, salePrice;
+
+                btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
+                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
+
+
+                productId = Convert.ToInt32(dataTable.Rows[rowIndex]["id"]);
+                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
+                //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
+
+
+                if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
+                {
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
+                }
+
+                else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
+                {
+                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
+                }
+
+                txtProductName.Text = dataTable.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database
+
+                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+
+                cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex]["name"].ToString());//Populating the combobox with related unit names from dataTableUnit.
+                cboProductUnit.SelectedIndex = firstIndex;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
+
+                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                salePrice = dataTable.Rows[rowIndex]["saleprice"].ToString();
+
+                txtProductCostPrice.Text = costPrice;
+                txtProductSalePrice.Text = salePrice;
+                txtProductAmount.Text = productAmount.ToString();
+                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
+            }
+
+            /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
+            Note: I just checked the btnProductAdd to know if there was a product entry before or not.
+                  If the btnProductAdd is not enabled in the if block above once before, then no need to call the method ClearProductEntranceTextBox.*/
+            else if (productIdFromUser == "" && btnProductAdd.IsEnabled == true)
+            {
+                ClearProductEntranceTextBox();
+            }
+
+            else
+                DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
         }
     }
 }
