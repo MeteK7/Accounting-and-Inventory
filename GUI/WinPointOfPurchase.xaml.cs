@@ -857,7 +857,7 @@ namespace GUI
                 int productAmount = 1;
                 int rowIndex = firstIndex;
                 int productId;
-                int productUnit = firstIndex;
+                int productUnit;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
                 string costPrice;
 
