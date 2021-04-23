@@ -159,7 +159,6 @@ namespace GUI
         {
             txtBasketAmount.Text = "0";
             txtBasketCostTotal.Text = "0";
-            txtBasketSubTotal.Text = "0";
             txtBasketVat.Text = "0";
             txtBasketDiscount.Text = "0";
             txtBasketGrandTotal.Text = "0";
@@ -243,7 +242,6 @@ namespace GUI
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketAmount.Text = dataTablePop.Rows[firstRowIndex]["total_product_amount"].ToString();
                     txtBasketCostTotal.Text = dataTablePop.Rows[firstRowIndex]["cost_total"].ToString();
-                    txtBasketSubTotal.Text = dataTablePop.Rows[firstRowIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePop.Rows[firstRowIndex]["vat"].ToString();
                     txtBasketDiscount.Text = dataTablePop.Rows[firstRowIndex]["discount"].ToString();
                     txtBasketGrandTotal.Text = dataTablePop.Rows[firstRowIndex]["grand_total"].ToString();
@@ -349,7 +347,6 @@ namespace GUI
                 pointOfPurchaseCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
                 pointOfPurchaseCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-                pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
                 pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                 pointOfPurchaseCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
@@ -521,10 +518,7 @@ namespace GUI
 
             txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromTextEntry).ToString();
 
-            //You may think that it would be better to get the total cost price instead of multiplying the amount by unit cost price. However, the total cost price is updated only when the txtAmount is lost the focus.
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductTotalCostPrice.Text))).ToString();
-
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtProductTotalCostPrice.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void SubstractBasket(int selectedRowIndex)
@@ -532,10 +526,9 @@ namespace GUI
             DataGridRow dataGridRow;
             TextBlock tbCellTotalCost;
             TextBlock tbCellAmount;
-            TextBlock tbCellTotalPrice;
-            int colProductTotalCost = 6;
+           
             int colProductAmount = 5;
-            int colProductTotalPrice = 7;
+            int colProductTotalCost = 6;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
@@ -543,16 +536,12 @@ namespace GUI
 
             tbCellTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
-            tbCellTotalPrice = dgProducts.Columns[colProductTotalPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
-
 
             txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbCellAmount.Text)).ToString();
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbCellTotalPrice.Text)).ToString();
-
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
