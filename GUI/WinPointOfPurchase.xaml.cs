@@ -827,11 +827,6 @@ namespace GUI
             }
         }
 
-        private void txtProductId_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             string productIdFromUser = txtProductId.Text;
@@ -904,6 +899,16 @@ namespace GUI
 
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
+        }
+
+        private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number))
+            {
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+            }
+            else
+                txtBasketVat.Text = "";
         }
     }
 }
