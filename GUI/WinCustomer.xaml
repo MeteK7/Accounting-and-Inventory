@@ -71,6 +71,15 @@
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFC9C9C9" Opacity="0.7"/>
             </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="150"/>
+                <DataGridTextColumn Binding="{Binding Email}" ClipboardContentBinding="{x:Null}" Header="Email" Width="165"/>
+                <DataGridTextColumn Binding="{Binding Contact}" ClipboardContentBinding="{x:Null}" Header="Contact" Width="125"/>
+                <DataGridTextColumn Binding="{Binding Address}" ClipboardContentBinding="{x:Null}" Header="Address" Width="200"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="317,51,0,0" VerticalAlignment="Top" Width="53"/>
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="375,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="448" TextChanged="txtSearch_TextChanged"/>

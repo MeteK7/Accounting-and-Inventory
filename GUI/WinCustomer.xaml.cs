@@ -26,7 +26,7 @@ namespace GUI
         public WinCustomer()
         {
             InitializeComponent();
-            RefreshCustomerDataGrid();
+            LoadCustomerDataGrid();
         }
         CustomerCUL customerCUL = new CustomerCUL();
         CustomerDAL customerDAL = new CustomerDAL();
@@ -59,7 +59,7 @@ namespace GUI
             {
                 MessageBox.Show("New data inserted successfully.");
                 ClearCustomerTextBox();
-                RefreshCustomerDataGrid();
+                LoadCustomerDataGrid();
             }
             else
             {
@@ -86,7 +86,7 @@ namespace GUI
             {
                 MessageBox.Show("Data successfully updated.");
                 ClearCustomerTextBox();
-                RefreshCustomerDataGrid();
+                LoadCustomerDataGrid();
             }
             else
             {
@@ -104,7 +104,7 @@ namespace GUI
             {
                 MessageBox.Show("Data has been deleted successfully.");
                 ClearCustomerTextBox();
-                RefreshCustomerDataGrid();
+                LoadCustomerDataGrid();
             }
             else
             {
@@ -112,13 +112,40 @@ namespace GUI
             }
         }
 
-        private void RefreshCustomerDataGrid()//Try to modify it by creating an optional parameter.
+        private void LoadCustomerDataGrid()//Try to modify it by creating an optional parameter.
         {
             //Refreshing Data Grid View
+            //DataTable dataTable = customerDAL.Select();
+            //dtgCustomer.ItemsSource = dataTable.DefaultView;
+            //dtgCustomer.AutoGenerateColumns = true;
+            //dtgCustomer.CanUserAddRows = false;
+
+            int firstRowIndex = 0, customerId, addedById;
+            string customerName,customerEmail, customerContact,customerAddress, addedDate, addedByUsername;
             DataTable dataTable = customerDAL.Select();
-            dtgCustomer.ItemsSource = dataTable.DefaultView;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
             dtgCustomer.AutoGenerateColumns = true;
             dtgCustomer.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                customerId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                customerName = dataTable.Rows[currentRow]["name"].ToString();
+                customerEmail= dataTable.Rows[currentRow]["email"].ToString();
+                customerContact= dataTable.Rows[currentRow]["contact"].ToString();
+                customerAddress = dataTable.Rows[currentRow]["address"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgCustomer.Items.Add(new { Id = customerId, Name = customerName,Email=customerEmail,Contact=customerContact,Address=customerAddress, AddedDate = addedDate, AddedBy = addedByUsername });
+            }
+            #endregion
         }
 
         private void ClearCustomerTextBox()
@@ -180,7 +207,7 @@ namespace GUI
             else
             {
                 //Show all categories from the database
-                RefreshCustomerDataGrid();
+                LoadCustomerDataGrid();
             }
         }
     }

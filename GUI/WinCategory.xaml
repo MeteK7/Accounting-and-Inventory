@@ -116,6 +116,13 @@
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
             </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="90"/>
+                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="200"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="100"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="130"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Label x:Name="lblCategorySearch" Content="Search" HorizontalAlignment="Left" Margin="363,51,0,0" VerticalAlignment="Top" Width="57" Foreground="White"/>
         <TextBox x:Name="txtCategorySearch" HorizontalAlignment="Left" Height="26" Margin="425,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="398" TextChanged="txtCategorySearch_TextChanged">
