@@ -96,10 +96,35 @@ namespace GUI
         private void LoadBankDataGrid()
         {
             //Refreshing Data Grid View
+            //DataTable dataTable = bankDAL.Select();
+            //dtgBanks.ItemsSource = dataTable.DefaultView;
+            //dtgBanks.AutoGenerateColumns = true;
+            //dtgBanks.CanUserAddRows = false;
+
+            int firstRowIndex = 0, bankId, addedById;
+            string bankName, addedDate, addedByUsername;
             DataTable dataTable = bankDAL.Select();
-            dtgBanks.ItemsSource = dataTable.DefaultView;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
             dtgBanks.AutoGenerateColumns = true;
             dtgBanks.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                bankId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                bankName = dataTable.Rows[currentRow]["name"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgBanks.Items.Add(new { Id = bankId, Name = bankName, AddedDate = addedDate, AddedBy = addedByUsername });
+            }
+            #endregion
         }
 
         private void ClearBankTextBox()
