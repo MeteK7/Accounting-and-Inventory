@@ -26,7 +26,7 @@ namespace GUI
         public WinCategory()
         {
             InitializeComponent();
-            RefreshCategoryDataGrid();
+            LoadCategoryDataGrid();
         }
 
         CategoryCUL categoryCUL = new CategoryCUL();
@@ -56,7 +56,7 @@ namespace GUI
             {
                 MessageBox.Show("New Category inserted successfully.");
                 ClearCategoryTextBox();
-                RefreshCategoryDataGrid();
+                LoadCategoryDataGrid();
             }
             else
             {
@@ -81,7 +81,7 @@ namespace GUI
             {
                 MessageBox.Show("Category successfully updated");
                 ClearCategoryTextBox();
-                RefreshCategoryDataGrid();
+                LoadCategoryDataGrid();
             }
             else
             {
@@ -99,7 +99,7 @@ namespace GUI
             {
                 MessageBox.Show("Category has been deleted successfully.");
                 ClearCategoryTextBox();
-                RefreshCategoryDataGrid();
+                LoadCategoryDataGrid();
             }
             else
             {
@@ -107,13 +107,39 @@ namespace GUI
             }
         }
 
-        private void RefreshCategoryDataGrid()
+        private void LoadCategoryDataGrid()
         {
             //Refreshing Data Grid View
+            //DataTable dataTable = categoryDAL.Select();
+            //dtgCategories.ItemsSource = dataTable.DefaultView;
+            //dtgCategories.AutoGenerateColumns = true;
+            //dtgCategories.CanUserAddRows = false;
+
+            int firstRowIndex = 0, categoryId, addedById;
+            string categoryName,categoryDescription, addedDate, addedByUsername;
             DataTable dataTable = categoryDAL.Select();
-            dtgCategories.ItemsSource = dataTable.DefaultView;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
             dtgCategories.AutoGenerateColumns = true;
             dtgCategories.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                categoryId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                categoryName = dataTable.Rows[currentRow]["name"].ToString();
+                categoryDescription = dataTable.Rows[currentRow]["description"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgCategories.Items.Add(new { Id = categoryId, Name = categoryName, Description= categoryDescription, AddedDate = addedDate, AddedBy = addedByUsername });
+            }
+            #endregion
         }
 
         private void ClearCategoryTextBox()
@@ -170,7 +196,7 @@ namespace GUI
             else
             {
                 //Show all categories from the database
-                RefreshCategoryDataGrid();
+                LoadCategoryDataGrid();
             }
         }
     }

@@ -83,10 +83,19 @@
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <DataGrid x:Name="dgSupplier" HorizontalAlignment="Left" Height="412" Margin="321,92,0,0" VerticalAlignment="Top" Width="502" KeyUp="dgSupplier_KeyUp" KeyDown="dgSupplier_KeyDown" MouseLeftButtonUp="dgSupplier_MouseLeftButtonUp" MouseDown="dgSupplier_MouseDown" Opacity="0.77">
+        <DataGrid x:Name="dtgSupplier" HorizontalAlignment="Left" Height="412" Margin="321,92,0,0" VerticalAlignment="Top" Width="502" KeyUp="dtgSupplier_KeyUp" KeyDown="dtgSupplier_KeyDown" MouseLeftButtonUp="dtgSupplier_MouseLeftButtonUp" MouseDown="dtgSupplier_MouseDown" Opacity="0.77">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="150"/>
+                <DataGridTextColumn Binding="{Binding Email}" ClipboardContentBinding="{x:Null}" Header="Email" Width="165"/>
+                <DataGridTextColumn Binding="{Binding Contact}" ClipboardContentBinding="{x:Null}" Header="Contact" Width="125"/>
+                <DataGridTextColumn Binding="{Binding Address}" ClipboardContentBinding="{x:Null}" Header="Address" Width="200"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="321,51,0,0" VerticalAlignment="Top" Width="72" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="398,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" TextChanged="txtSearch_TextChanged" Opacity="0.77">

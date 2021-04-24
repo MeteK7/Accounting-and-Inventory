@@ -26,7 +26,7 @@ namespace GUI
         public WinSupplier()
         {
             InitializeComponent();
-            RefreshSupplierDataGrid();
+            LoadSupplierDataGrid();
         }
 
         SupplierCUL supplierCUL = new SupplierCUL();
@@ -60,7 +60,7 @@ namespace GUI
             {
                 MessageBox.Show("New data inserted successfully.");
                 ClearSupplierTextBox();
-                RefreshSupplierDataGrid();
+                LoadSupplierDataGrid();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace GUI
             {
                 MessageBox.Show("Data successfully updated.");
                 ClearSupplierTextBox();
-                RefreshSupplierDataGrid();
+                LoadSupplierDataGrid();
             }
             else
             {
@@ -105,7 +105,7 @@ namespace GUI
             {
                 MessageBox.Show("Data has been deleted successfully.");
                 ClearSupplierTextBox();
-                RefreshSupplierDataGrid();
+                LoadSupplierDataGrid();
             }
             else
             {
@@ -113,13 +113,40 @@ namespace GUI
             }
         }
 
-        private void RefreshSupplierDataGrid()//Try to modify it by creating an optional parameter.
+        private void LoadSupplierDataGrid()//Try to modify it by creating an optional parameter.
         {
             //Refreshing Data Grid View
+            //DataTable dataTable = supplierDAL.Select();
+            //dtgSupplier.ItemsSource = dataTable.DefaultView;
+            //dtgSupplier.AutoGenerateColumns = true;
+            //dtgSupplier.CanUserAddRows = false;
+
+            int firstRowIndex = 0, supplierId, addedById;
+            string supplierName, supplierEmail, supplierContact, supplierAddress, addedDate, addedByUsername;
             DataTable dataTable = supplierDAL.Select();
-            dgSupplier.ItemsSource = dataTable.DefaultView;
-            dgSupplier.AutoGenerateColumns = true;
-            dgSupplier.CanUserAddRows = false;
+            DataTable dataTableUserInfo;
+
+            //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
+            dtgSupplier.AutoGenerateColumns = true;
+            dtgSupplier.CanUserAddRows = false;
+
+            #region LOADING THE PRODUCT DATA GRID
+
+            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            {
+                supplierId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
+                supplierName = dataTable.Rows[currentRow]["name"].ToString();
+                supplierEmail = dataTable.Rows[currentRow]["email"].ToString();
+                supplierContact = dataTable.Rows[currentRow]["contact"].ToString();
+                supplierAddress = dataTable.Rows[currentRow]["address"].ToString();
+                addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
+                addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
+                dataTableUserInfo = userDAL.GetUserInfoById(addedById);
+                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+
+                dtgSupplier.Items.Add(new { Id = supplierId, Name = supplierName, Email = supplierEmail, Contact = supplierContact, Address = supplierAddress, AddedDate = addedDate, AddedBy = addedByUsername });
+            }
+            #endregion
         }
 
         private void ClearSupplierTextBox()
@@ -133,13 +160,13 @@ namespace GUI
 
         }
 
-        private void dgSupplierIndexChanged()
+        private void dtgSupplierIndexChanged()
         {
             //Getting the index of a particular row and fill the text boxes with the related columns of the row.
 
             //int rowIndex = dgCategories.SelectedIndex;
 
-            DataRowView drv = (DataRowView)dgSupplier.SelectedItem;
+            DataRowView drv = (DataRowView)dtgSupplier.SelectedItem;
             if (drv != null)
             {
                 txtId.Text = (drv[0]).ToString();//Selecting the specific row
@@ -151,19 +178,19 @@ namespace GUI
         }
 
 
-        private void dgSupplier_KeyUp(object sender, KeyEventArgs e)
+        private void dtgSupplier_KeyUp(object sender, KeyEventArgs e)
         {
-            dgSupplierIndexChanged();
+            dtgSupplierIndexChanged();
         }
 
-        private void dgSupplier_KeyDown(object sender, KeyEventArgs e)
+        private void dtgSupplier_KeyDown(object sender, KeyEventArgs e)
         {
-            dgSupplierIndexChanged();
+            dtgSupplierIndexChanged();
         }
 
-        private void dgSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void dtgSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dgSupplierIndexChanged();
+            dtgSupplierIndexChanged();
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -177,21 +204,21 @@ namespace GUI
             {
                 //Show category informations based on the keyword
                 DataTable dataTable = supplierDAL.Search(keyword);
-                dgSupplier.ItemsSource = dataTable.DefaultView;
-                dgSupplier.AutoGenerateColumns = true;
-                dgSupplier.CanUserAddRows = false;
+                dtgSupplier.ItemsSource = dataTable.DefaultView;
+                dtgSupplier.AutoGenerateColumns = true;
+                dtgSupplier.CanUserAddRows = false;
             }
             else
             {
                 //Show all categories from the database
-                RefreshSupplierDataGrid();
+                LoadSupplierDataGrid();
             }
         }
 
-        private void dgSupplier_MouseDown(object sender, MouseButtonEventArgs e)
+        private void dtgSupplier_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ClearSupplierTextBox();
-            dgSupplier.UnselectAll();
+            dtgSupplier.UnselectAll();
 
         }
     }
