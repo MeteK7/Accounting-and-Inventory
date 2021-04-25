@@ -49,6 +49,9 @@
     <Compile Update="WinProducts.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WinReceipt.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinSupplier.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +100,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinProducts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinReceipt.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinSupplier.xaml">
