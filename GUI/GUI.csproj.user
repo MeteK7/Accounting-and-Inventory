@@ -31,6 +31,9 @@
     <Compile Update="WinLogin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WinPayment.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinPhyInventory.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -44,6 +47,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="WinProducts.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WinReceipt.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="WinSupplier.xaml.cs">
@@ -78,6 +84,9 @@
     <Page Update="WinLogin.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="WinPayment.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="WinPhyInventory.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -91,6 +100,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinProducts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinReceipt.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinSupplier.xaml">

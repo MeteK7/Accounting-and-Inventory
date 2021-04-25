@@ -97,6 +97,7 @@
     <None Remove="Images\Buttons\maths.png" />
     <None Remove="Images\Buttons\money-bag.png" />
     <None Remove="Images\Buttons\next.png" />
+    <None Remove="Images\Buttons\pay.png" />
     <None Remove="Images\Buttons\payment-terminal.png" />
     <None Remove="Images\Buttons\physical-inventory.png" />
     <None Remove="Images\Buttons\plus (1).png" />
@@ -108,6 +109,7 @@
     <None Remove="Images\Buttons\printer_colorful.png" />
     <None Remove="Images\Buttons\processing.png" />
     <None Remove="Images\Buttons\qr-code.png" />
+    <None Remove="Images\Buttons\receipt.png" />
     <None Remove="Images\Buttons\recycle-bin.png" />
     <None Remove="Images\Buttons\refresh.png" />
     <None Remove="Images\Buttons\report-arrow.png" />
@@ -227,6 +229,7 @@
     <Resource Include="Images\Buttons\maths.png" />
     <Resource Include="Images\Buttons\money-bag.png" />
     <Resource Include="Images\Buttons\next.png" />
+    <Resource Include="Images\Buttons\pay.png" />
     <Resource Include="Images\Buttons\payment-terminal.png" />
     <Resource Include="Images\Buttons\physical-inventory.png" />
     <Resource Include="Images\Buttons\plus (1).png" />
@@ -238,6 +241,7 @@
     <Resource Include="Images\Buttons\printer_colorful.png" />
     <Resource Include="Images\Buttons\processing.png" />
     <Resource Include="Images\Buttons\qr-code.png" />
+    <Resource Include="Images\Buttons\receipt.png" />
     <Resource Include="Images\Buttons\recycle-bin.png" />
     <Resource Include="Images\Buttons\refresh.png" />
     <Resource Include="Images\Buttons\report-arrow.png" />
