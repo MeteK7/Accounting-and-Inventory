@@ -31,6 +31,9 @@
     <Compile Update="WinLogin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WinPayment.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinPhyInventory.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinLogin.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPayment.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinPhyInventory.xaml">

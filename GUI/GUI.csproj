@@ -97,6 +97,7 @@
     <None Remove="Images\Buttons\maths.png" />
     <None Remove="Images\Buttons\money-bag.png" />
     <None Remove="Images\Buttons\next.png" />
+    <None Remove="Images\Buttons\pay.png" />
     <None Remove="Images\Buttons\payment-terminal.png" />
     <None Remove="Images\Buttons\physical-inventory.png" />
     <None Remove="Images\Buttons\plus (1).png" />
@@ -227,6 +228,7 @@
     <Resource Include="Images\Buttons\maths.png" />
     <Resource Include="Images\Buttons\money-bag.png" />
     <Resource Include="Images\Buttons\next.png" />
+    <Resource Include="Images\Buttons\pay.png" />
     <Resource Include="Images\Buttons\payment-terminal.png" />
     <Resource Include="Images\Buttons\physical-inventory.png" />
     <Resource Include="Images\Buttons\plus (1).png" />

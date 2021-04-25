@@ -164,5 +164,11 @@ namespace GUI
             WinAccount winAccount = new WinAccount();
             winAccount.Show();
         }
+
+        private void btnPayment_Click(object sender, RoutedEventArgs e)
+        {
+            WinPayment winPayment = new WinPayment();
+            winPayment.Show();
+        }
     }
 }
