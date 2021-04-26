@@ -51,6 +51,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New account has been inserted successfully.");
+                dtgAccounts.Items.Clear();
                 ClearAccountTextBox();
                 LoadAccountDataGrid();
             }
@@ -72,6 +73,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("The account is successfully updated.");
+                dtgAccounts.Items.Clear();
                 ClearAccountTextBox();
                 LoadAccountDataGrid();
             }
@@ -90,6 +92,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Bank has been deleted successfully.");
+                dtgAccounts.Items.Clear();
                 ClearAccountTextBox();
                 LoadAccountDataGrid();
             }

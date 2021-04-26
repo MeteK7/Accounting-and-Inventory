@@ -58,6 +58,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New data inserted successfully.");
+                dtgCustomer.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }
@@ -85,6 +86,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data successfully updated.");
+                dtgCustomer.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }
@@ -103,6 +105,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data has been deleted successfully.");
+                dtgCustomer.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }

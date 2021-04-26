@@ -42,10 +42,6 @@ namespace GUI
         {
             this.Close();
         }
-        private void ClearProductsDataGrid()
-        {
-            dtgProducts.Items.Clear();
-        }
 
         private void LoadProductDataGrid()
         {
@@ -303,7 +299,7 @@ namespace GUI
                 if (isSuccess == true)
                 {
                     MessageBox.Show(message);
-                    ClearProductsDataGrid();
+                    dtgProducts.Items.Clear();
                     ClearProductTextBox();
                     LoadProductDataGrid();
                 }
