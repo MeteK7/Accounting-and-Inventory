@@ -45,6 +45,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New bank has been inserted successfully.");
+                dtgBanks.Items.Clear();
                 ClearBankTextBox();
                 LoadBankDataGrid();
             }
@@ -66,6 +67,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("The bank is successfully updated.");
+                dtgBanks.Items.Clear();
                 ClearBankTextBox();
                 LoadBankDataGrid();
             }
@@ -84,6 +86,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Bank has been deleted successfully.");
+                dtgBanks.Items.Clear();
                 ClearBankTextBox();
                 LoadBankDataGrid();
             }

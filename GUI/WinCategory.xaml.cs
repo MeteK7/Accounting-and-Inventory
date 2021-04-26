@@ -55,6 +55,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New Category inserted successfully.");
+                dtgCategories.Items.Clear();
                 ClearCategoryTextBox();
                 LoadCategoryDataGrid();
             }
@@ -80,6 +81,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Category successfully updated");
+                dtgCategories.Items.Clear();
                 ClearCategoryTextBox();
                 LoadCategoryDataGrid();
             }
@@ -98,6 +100,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Category has been deleted successfully.");
+                dtgCategories.Items.Clear();
                 ClearCategoryTextBox();
                 LoadCategoryDataGrid();
             }
