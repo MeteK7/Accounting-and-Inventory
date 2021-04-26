@@ -59,6 +59,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New data inserted successfully.");
+                dtgSupplier.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }
@@ -86,6 +87,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data successfully updated.");
+                dtgSupplier.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }
@@ -104,6 +106,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data has been deleted successfully.");
+                dtgSupplier.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }

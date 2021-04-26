@@ -531,8 +531,8 @@ namespace GUI
             TextBlock tbCellTotalCost;
             TextBlock tbCellAmount;
 
-            int colProductAmount = 5;
-            int colProductTotalCost = 6;
+            int colProductAmount = 4;
+            int colProductTotalCost = 5;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
