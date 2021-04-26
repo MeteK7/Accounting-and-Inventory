@@ -81,6 +81,7 @@
     <None Remove="Images\Buttons\deletecart.png" />
     <None Remove="Images\Buttons\delivery.png" />
     <None Remove="Images\Buttons\deposit.png" />
+    <None Remove="Images\Buttons\e-payment.png" />
     <None Remove="Images\Buttons\edit-file.png" />
     <None Remove="Images\Buttons\edit.png" />
     <None Remove="Images\Buttons\error.png" />
@@ -88,6 +89,7 @@
     <None Remove="Images\Buttons\file-trash.png" />
     <None Remove="Images\Buttons\floppy-disk.png" />
     <None Remove="Images\Buttons\gnumeric.png" />
+    <None Remove="Images\Buttons\graph-bar.png" />
     <None Remove="Images\Buttons\inventory (1).png" />
     <None Remove="Images\Buttons\inventory (2).png" />
     <None Remove="Images\Buttons\inventory (3).png" />
@@ -113,6 +115,7 @@
     <None Remove="Images\Buttons\recycle-bin.png" />
     <None Remove="Images\Buttons\refresh.png" />
     <None Remove="Images\Buttons\report-arrow.png" />
+    <None Remove="Images\Buttons\report.png" />
     <None Remove="Images\Buttons\reports.png" />
     <None Remove="Images\Buttons\safe-box.png" />
     <None Remove="Images\Buttons\save.png" />
@@ -213,6 +216,7 @@
     <Resource Include="Images\Buttons\deletecart.png" />
     <Resource Include="Images\Buttons\delivery.png" />
     <Resource Include="Images\Buttons\deposit.png" />
+    <Resource Include="Images\Buttons\e-payment.png" />
     <Resource Include="Images\Buttons\edit-file.png" />
     <Resource Include="Images\Buttons\edit.png" />
     <Resource Include="Images\Buttons\error.png" />
@@ -220,6 +224,7 @@
     <Resource Include="Images\Buttons\file-trash.png" />
     <Resource Include="Images\Buttons\floppy-disk.png" />
     <Resource Include="Images\Buttons\gnumeric.png" />
+    <Resource Include="Images\Buttons\graph-bar.png" />
     <Resource Include="Images\Buttons\inventory (1).png" />
     <Resource Include="Images\Buttons\inventory (2).png" />
     <Resource Include="Images\Buttons\inventory (3).png" />
@@ -245,6 +250,7 @@
     <Resource Include="Images\Buttons\recycle-bin.png" />
     <Resource Include="Images\Buttons\refresh.png" />
     <Resource Include="Images\Buttons\report-arrow.png" />
+    <Resource Include="Images\Buttons\report.png" />
     <Resource Include="Images\Buttons\reports.png" />
     <Resource Include="Images\Buttons\safe-box.png" />
     <Resource Include="Images\Buttons\save.png" />
