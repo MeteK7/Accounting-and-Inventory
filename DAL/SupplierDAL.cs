@@ -228,5 +228,31 @@ namespace KabaAccounting.DAL
             return dataTable;
         }
         #endregion
+
+        #region SEARCH BY ID METHOD
+        public DataTable SearchById(int id)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+
+            DataTable dataTable = new DataTable();//To hold the data from database
+            try
+            {
+                String sql = "SELECT * FROM tbl_supplier WHERE id=" + id + "";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
     }
 }

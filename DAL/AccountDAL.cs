@@ -200,7 +200,7 @@ namespace DAL
         }
         #endregion
 
-        #region SEARCH METHOD
+        #region SEARCH BY ID METHOD
         public DataTable SearchById(int id)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
