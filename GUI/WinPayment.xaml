@@ -294,9 +294,9 @@
                     </Button.Background>
                 </Button>
                 <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
+                <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
                 <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="340,39,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="457,39,0,0" VerticalAlignment="Top" Width="112" Height="29"/>
+                <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="457,39,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboTo_Loaded" SelectionChanged="cboTo_SelectionChanged"/>
                 <Label x:Name="lblBalanceFrom" Content="Balance:" HorizontalAlignment="Left" Margin="574,10,0,0" VerticalAlignment="Top" Width="119" Height="28"/>
                 <Label x:Name="lblBalanceTo" Content="Balance:" HorizontalAlignment="Left" Margin="574,39,0,0" VerticalAlignment="Top" Height="29" Width="119"/>
                 <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,7,0,0" VerticalAlignment="Top" Height="32" Width="71"/>
