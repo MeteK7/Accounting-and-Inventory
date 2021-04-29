@@ -27,6 +27,14 @@ namespace GUI
         public WinPayment()
         {
             InitializeComponent();
+            DisableTools();
+        }
+
+        public void DisableTools()
+        {
+            cboFrom.IsEnabled = false;
+            cboTo.IsEnabled = false;
+            txtAmountPayment.IsEnabled = false;
         }
 
         private void cboFrom_Loaded(object sender, RoutedEventArgs e)
