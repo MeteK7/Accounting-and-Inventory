@@ -24,9 +24,46 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+
+        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+
         public WinPayment()
         {
             InitializeComponent();
+            DisableTools();
+        }
+
+        public void DisableTools()
+        {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
+            cboFrom.IsEnabled = false;
+            cboTo.IsEnabled = false;
+            txtAmountPayment.IsEnabled = false;
+
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;
+            btnMenuEdit.IsEnabled = true;
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        public void ModifyToolsOnClickBtnNewEdit()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            btnMenuNew.IsEnabled = false;
+            btnMenuEdit.IsEnabled = false;
+            btnMenuDelete.IsEnabled = false;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmountPayment.IsEnabled = true;
         }
 
         private void cboFrom_Loaded(object sender, RoutedEventArgs e)
@@ -79,6 +116,31 @@ namespace GUI
             string balance = dtSupplier.Rows[rowIndex]["balance"].ToString();
 
             lblBalanceTo.Content = "Balance: " + balance;
+        }
+
+        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
+        {
+            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            ModifyToolsOnClickBtnNewEdit();
+        }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the payment page, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    //LoadPastPayment();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
     }
 }
