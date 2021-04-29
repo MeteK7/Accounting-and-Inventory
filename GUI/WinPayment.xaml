@@ -223,7 +223,7 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,219,610">
             <Grid>
-                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
@@ -251,7 +251,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancellation.png">
                             <ImageBrush.RelativeTransform>
@@ -293,14 +293,8 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
-                <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="340,39,0,0" VerticalAlignment="Top" Width="112"/>
-                <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="457,39,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboTo_Loaded" SelectionChanged="cboTo_SelectionChanged"/>
-                <Label x:Name="lblBalanceFrom" Content="Balance:" HorizontalAlignment="Left" Margin="574,10,0,0" VerticalAlignment="Top" Width="119" Height="28"/>
-                <Label x:Name="lblBalanceTo" Content="Balance:" HorizontalAlignment="Left" Margin="574,39,0,0" VerticalAlignment="Top" Height="29" Width="119"/>
-                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,7,0,0" VerticalAlignment="Top" Height="32" Width="71"/>
-                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,7,0,0" VerticalAlignment="Top" Height="32" Width="70" RenderTransformOrigin="0.729,0.517"/>
+                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,0,0,0" VerticalAlignment="Center" Height="61" Width="71"/>
+                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Payment Number" Margin="892,34,10,610">
@@ -308,6 +302,15 @@
                 <Label x:Name="lblPaymentNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
+        <Label x:Name="lblPaymentAmount" Content="PAYMENT AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="txtAmountPayment" HorizontalAlignment="Left" Margin="201,290,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
+        <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="70,174,0,0" VerticalAlignment="Top" Width="126"/>
+        <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="201,174,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
+        <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="70,236,0,0" VerticalAlignment="Top" Width="126"/>
+        <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="201,236,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboTo_Loaded" SelectionChanged="cboTo_SelectionChanged"/>
+        <Label x:Name="lblBalanceFrom" Content="Balance:" HorizontalAlignment="Left" Margin="483,175,0,0" VerticalAlignment="Top" Width="236" Height="28"/>
+        <Label x:Name="lblBalanceTo" Content="Balance:" HorizontalAlignment="Left" Margin="483,236,0,0" VerticalAlignment="Top" Height="29" Width="236"/>
+        <Label Content="UNDER CONSTRUCTION" HorizontalAlignment="Left" Margin="687,560,0,0" VerticalAlignment="Top" Width="354" Height="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="Red" FontSize="24" FontFamily="Constantia"/>
 
     </Grid>
 </Window>
