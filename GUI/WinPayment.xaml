@@ -223,7 +223,7 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,219,610">
             <Grid>
-                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
@@ -303,7 +303,7 @@
             </Grid>
         </GroupBox>
         <Label x:Name="lblPaymentAmount" Content="PAYMENT AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
-        <TextBox x:Name="txtAmountPayment" HorizontalAlignment="Left" Margin="201,290,0,0" Text="45656767" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
+        <TextBox x:Name="txtAmountPayment" HorizontalAlignment="Left" Margin="201,290,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
         <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="70,174,0,0" VerticalAlignment="Top" Width="126"/>
         <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="201,174,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
         <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="70,236,0,0" VerticalAlignment="Top" Width="126"/>

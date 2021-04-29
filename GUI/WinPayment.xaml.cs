@@ -24,6 +24,9 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+
+        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+
         public WinPayment()
         {
             InitializeComponent();
@@ -32,9 +35,21 @@ namespace GUI
 
         public void DisableTools()
         {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmountPayment.IsEnabled = false;
+
+        }
+
+        public void ModifyToolsOnClickBtnNewOrEdit()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            btnMenuNew.IsEnabled = false;
+            btnMenuEdit.IsEnabled = false;
+            btnMenuDelete.IsEnabled = false;
         }
 
         private void cboFrom_Loaded(object sender, RoutedEventArgs e)
@@ -87,6 +102,12 @@ namespace GUI
             string balance = dtSupplier.Rows[rowIndex]["balance"].ToString();
 
             lblBalanceTo.Content = "Balance: " + balance;
+        }
+
+        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
+        {
+            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            ModifyToolsOnClickBtnNewOrEdit();
         }
     }
 }
