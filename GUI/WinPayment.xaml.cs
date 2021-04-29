@@ -43,13 +43,27 @@ namespace GUI
 
         }
 
-        public void ModifyToolsOnClickBtnNewOrEdit()
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;
+            btnMenuEdit.IsEnabled = true;
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        public void ModifyToolsOnClickBtnNewEdit()
         {
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
             btnMenuNew.IsEnabled = false;
             btnMenuEdit.IsEnabled = false;
             btnMenuDelete.IsEnabled = false;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmountPayment.IsEnabled = true;
         }
 
         private void cboFrom_Loaded(object sender, RoutedEventArgs e)
@@ -107,7 +121,26 @@ namespace GUI
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
-            ModifyToolsOnClickBtnNewOrEdit();
+            ModifyToolsOnClickBtnNewEdit();
+        }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the payment page, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    //LoadPastPayment();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
     }
 }
