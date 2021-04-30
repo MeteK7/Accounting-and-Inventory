@@ -31,7 +31,7 @@
     <Compile Update="WinLogin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="WinPayment.xaml.cs">
+    <Compile Update="WinExpense.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="WinPhyInventory.xaml.cs">
@@ -84,7 +84,7 @@
     <Page Update="WinLogin.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WinPayment.xaml">
+    <Page Update="WinExpense.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinPhyInventory.xaml">
