@@ -39,7 +39,7 @@ namespace GUI
             btnMenuCancel.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
-            txtAmountPayment.IsEnabled = false;
+            txtAmount.IsEnabled = false;
 
         }
 
@@ -63,7 +63,7 @@ namespace GUI
             btnNext.IsEnabled = false;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
-            txtAmountPayment.IsEnabled = true;
+            txtAmount.IsEnabled = true;
         }
 
         private void cboFrom_Loaded(object sender, RoutedEventArgs e)

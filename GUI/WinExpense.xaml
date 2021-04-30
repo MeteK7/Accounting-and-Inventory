@@ -302,8 +302,8 @@
                 <Label x:Name="lblPaymentNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
-        <Label x:Name="lblPaymentAmount" Content="PAYMENT AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
-        <TextBox x:Name="txtAmountPayment" HorizontalAlignment="Left" Margin="201,290,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
+        <Label x:Name="lblAmount" Content="AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
+        <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="201,290,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
         <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="70,174,0,0" VerticalAlignment="Top" Width="126"/>
         <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="201,174,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
         <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="70,236,0,0" VerticalAlignment="Top" Width="126"/>
