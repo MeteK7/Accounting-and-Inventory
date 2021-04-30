@@ -18,16 +18,16 @@ using System.Windows.Shapes;
 namespace GUI
 {
     /// <summary>
-    /// Interaction logic for WinPayment.xaml
+    /// Interaction logic for WinExpense.xaml
     /// </summary>
-    public partial class WinPayment : Window
+    public partial class WinExpense : Window
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
 
-        public WinPayment()
+        public WinExpense()
         {
             InitializeComponent();
             DisableTools();
@@ -126,7 +126,7 @@ namespace GUI
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the payment page, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page, you piece of shit?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -141,6 +141,11 @@ namespace GUI
                     MessageBox.Show("Nevermind then...", "KABA Accounting");
                     break;
             }
+        }
+
+        private void btnMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

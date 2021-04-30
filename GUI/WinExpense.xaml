@@ -1,4 +1,4 @@
-﻿<Window x:Class="GUI.WinPayment"
+﻿<Window x:Class="GUI.WinExpense"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -203,7 +203,7 @@
     </Window.Resources>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="PAYMENTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="EXPENSES" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -237,7 +237,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-save.png">
                             <ImageBrush.RelativeTransform>
@@ -308,8 +308,8 @@
         <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="201,174,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
         <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="70,236,0,0" VerticalAlignment="Top" Width="126"/>
         <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="201,236,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboTo_Loaded" SelectionChanged="cboTo_SelectionChanged"/>
-        <Label x:Name="lblBalanceFrom" Content="Balance:" HorizontalAlignment="Left" Margin="483,175,0,0" VerticalAlignment="Top" Width="236" Height="28"/>
-        <Label x:Name="lblBalanceTo" Content="Balance:" HorizontalAlignment="Left" Margin="483,236,0,0" VerticalAlignment="Top" Height="29" Width="236"/>
+        <Label x:Name="lblBalanceFrom" Content="" HorizontalAlignment="Left" Margin="483,175,0,0" VerticalAlignment="Top" Width="236" Height="28" Foreground="Red"/>
+        <Label x:Name="lblBalanceTo" Content="" HorizontalAlignment="Left" Margin="483,236,0,0" VerticalAlignment="Top" Height="29" Width="236" Foreground="Red"/>
         <Label Content="UNDER CONSTRUCTION" HorizontalAlignment="Left" Margin="687,560,0,0" VerticalAlignment="Top" Width="354" Height="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="Red" FontSize="24" FontFamily="Constantia"/>
 
     </Grid>
