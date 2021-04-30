@@ -167,7 +167,7 @@ namespace GUI
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
-            WinPayment winPayment = new WinPayment();
+            WinExpense winPayment = new WinExpense();
             winPayment.Show();
         }
 
