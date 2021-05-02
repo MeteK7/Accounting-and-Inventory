@@ -28,6 +28,7 @@ namespace GUI
         SupplierDAL supplierDAL = new SupplierDAL();
         UserBLL userBLL = new UserBLL();
         ExpenseCUL expenseCUL = new ExpenseCUL();
+        ExpenseBLL expenseBLL = new ExpenseBLL();
 
         int clickedNewOrEdit, btnNew=0,btnEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
 
@@ -168,7 +169,7 @@ namespace GUI
 
                 if (clickedNewOrEdit==btnEdit)
                 {
-                    isSuccess = expenseBLL.Update(expenseCUL);
+                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
                 }
             }
         }

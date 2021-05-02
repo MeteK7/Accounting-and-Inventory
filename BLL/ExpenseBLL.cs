@@ -12,12 +12,12 @@ namespace BLL
     {
         ExpenseDAL expenseDAL = new ExpenseDAL();
 
-        public bool Update(ExpenseCUL expenseCUL)
+        public bool InsertExpense(ExpenseCUL expenseCUL)
         {
             return expenseDAL.Insert(expenseCUL);
         }
 
-        public bool Update(ExpenseCUL expenseCUL)
+        public bool UpdateExpense(ExpenseCUL expenseCUL)
         {
             return expenseDAL.Update(expenseCUL);
         }
