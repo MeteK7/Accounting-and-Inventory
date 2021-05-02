@@ -1,4 +1,6 @@
-﻿using DAL;
+﻿using BLL;
+using CUL;
+using DAL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
@@ -24,8 +26,11 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        UserBLL userBLL = new UserBLL();
+        ExpenseCUL expenseCUL = new ExpenseCUL();
+        ExpenseBLL expenseBLL = new ExpenseBLL();
 
-        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, btnNew=0,btnEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
 
         public WinExpense()
         {
@@ -120,7 +125,7 @@ namespace GUI
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            clickedNewOrEdit = btnNew;//0 stands for the user has entered the btnNew.
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -145,7 +150,28 @@ namespace GUI
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
-            
+            int emptyIndex = -1;
+
+            if (cboFrom.SelectedIndex!= emptyIndex && cboTo.SelectedIndex!= emptyIndex && txtAmount.Text!="")
+            {
+                int expenseId = Convert.ToInt32(lblExpenseNumber.Content); /*lblExpenseNumber stands for the expense id in the database.*/
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false;
+
+                #region ASSIGNING CUL SECTION
+                expenseCUL.Id = expenseId;
+                expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                expenseCUL.Amount =Convert.ToDecimal(txtAmount.Text);
+                expenseCUL.AddedBy = userId;
+                expenseCUL.AddedDate = DateTime.Now;
+                #endregion
+
+                if (clickedNewOrEdit==btnEdit)
+                {
+                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
+                }
+            }
         }
     }
 }
