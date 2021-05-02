@@ -312,14 +312,10 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
             if (isDgEqual == false && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuCustomer.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
             {
-                int userClickedNewOrEdit = btnNewOrEdit;
+                int userClickedNewOrEdit;
                 int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
-
-                //DataTable dataTableLastInvoice = pointOfSaleBLL.GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
-                DataTable dataTableProduct = new DataTable();
-                DataTable dataTableUnit = new DataTable();
 
                 #region TABLE POS SAVING SECTION
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
@@ -336,7 +332,7 @@ namespace GUI
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
 
-                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+                userClickedNewOrEdit = btnNewOrEdit;
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
@@ -362,6 +358,9 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false;
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {

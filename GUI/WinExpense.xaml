@@ -297,9 +297,9 @@
                 <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Payment Number" Margin="892,34,10,610">
+        <GroupBox Header="Expense Number" Margin="892,34,10,610">
             <Grid>
-                <Label x:Name="lblPaymentNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
+                <Label x:Name="lblExpenseNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
         <Label x:Name="lblAmount" Content="AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
