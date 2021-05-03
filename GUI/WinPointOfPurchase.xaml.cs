@@ -1,4 +1,5 @@
 ﻿using BLL;
+using CUL;
 using DAL;
 using KabaAccounting.CUL;
 using KabaAccounting.DAL;
@@ -34,6 +35,7 @@ namespace GUI
 
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
+        BankDAL bankDAL = new BankDAL();
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
         PointOfPurchaseCUL pointOfPurchaseCUL = new PointOfPurchaseCUL();
         PointOfPurchaseDetailDAL pointOfPurchaseDetailDAL = new PointOfPurchaseDetailDAL();
@@ -49,10 +51,11 @@ namespace GUI
         UnitCUL unitCUL = new UnitCUL();
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
+        AssetCUL assetCUL = new AssetCUL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POP";
+        string calledBy = "POP", account= "account",bank= "bank";
         int oldItemsRowCount;
         int invoiceArrow;
 
@@ -114,7 +117,7 @@ namespace GUI
             btnPrint.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = false;
             cboMenuSupplier.IsEnabled = false;
-            cboMenuAccount.IsEnabled = false;
+            cboMenuAsset.IsEnabled = false;
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
@@ -136,7 +139,7 @@ namespace GUI
             btnNext.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = true;
             cboMenuSupplier.IsEnabled = true;
-            cboMenuAccount.IsEnabled = true;
+            cboMenuAsset.IsEnabled = true;
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
@@ -211,7 +214,7 @@ namespace GUI
 
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                     cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
-                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
+                    cboMenuAsset.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                     txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
@@ -312,7 +315,7 @@ namespace GUI
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuSupplier.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex)
+            if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuSupplier.SelectedIndex != emptyIndex && cboMenuAsset.SelectedIndex != emptyIndex)
             {
                 int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
@@ -338,13 +341,25 @@ namespace GUI
                     currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
                 }
 
+                #region TABLE ASSET SAVING SECTION
+                assetCUL.AssetId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
+                assetCUL.Balance= Convert.ToDecimal(txtBasketGrandTotal.Text);
+
+                if (rbAccount.IsChecked==true)
+                    assetCUL.AssetType = "account";
+                
+                else
+                    assetCUL.AssetType = "bank";
+                
+                #endregion
+
                 #region TABLE POP SAVING SECTION
                 //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
                 pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                pointOfPurchaseCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
+                pointOfPurchaseCUL.AccountId = Convert.ToInt32(cboMenuAsset.SelectedValue);
                 pointOfPurchaseCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -548,7 +563,7 @@ namespace GUI
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
-        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
+        private void LoadCboMenuPaymentType()
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = paymentDAL.Select();
@@ -576,21 +591,6 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuSupplier.SelectedValuePath = "id";
-        }
-
-        private void cboMenuAccount_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dataTable = accountDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuAccount.ItemsSource = dataTable.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuAccount.DisplayMemberPath = "name";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuAccount.SelectedValuePath = "id";
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -909,6 +909,53 @@ namespace GUI
             }
             else
                 txtBasketVat.Text = "";
+        }
+
+        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuPaymentType.DisplayMemberPath = "payment_type";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuPaymentType.SelectedValuePath = "id";
+        }
+
+        private void LoadCboMenuAsset(string checkStatus)
+        {
+            DataTable dataTable;
+            if (checkStatus == account)
+                dataTable = accountDAL.Select();
+
+
+            else
+                dataTable = bankDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuAsset.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuAsset.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuAsset.SelectedValuePath = "id";
+        }
+
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            cboMenuPaymentType.ItemsSource = null;
+            LoadCboMenuAsset(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            cboMenuPaymentType.ItemsSource = null;
+            LoadCboMenuAsset(bank);
         }
     }
 }
