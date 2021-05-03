@@ -486,6 +486,7 @@
                 <ComboBox x:Name="cboMenuAsset" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
                 <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
                 <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
+                <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="26"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Controls" Margin="1128,265,10,438">
