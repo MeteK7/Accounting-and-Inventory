@@ -11,6 +11,6 @@ namespace CUL
         public int Id { get; set; }
         public int AssetId { get; set; }
         public string AssetType { get; set; }
-        public decimal Balance { get; set; }
+        public decimal AssetBalance { get; set; }
     }
 }

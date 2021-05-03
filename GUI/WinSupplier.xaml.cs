@@ -59,7 +59,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New data inserted successfully.");
-                dtgSupplier.Items.Clear();
+                dtgSuppliers.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }
@@ -87,7 +87,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data successfully updated.");
-                dtgSupplier.Items.Clear();
+                dtgSuppliers.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }
@@ -106,7 +106,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data has been deleted successfully.");
-                dtgSupplier.Items.Clear();
+                dtgSuppliers.Items.Clear();
                 ClearSupplierTextBox();
                 LoadSupplierDataGrid();
             }
@@ -130,8 +130,8 @@ namespace GUI
             DataTable dataTableUserInfo;
 
             //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
-            dtgSupplier.AutoGenerateColumns = true;
-            dtgSupplier.CanUserAddRows = false;
+            dtgSuppliers.AutoGenerateColumns = true;
+            dtgSuppliers.CanUserAddRows = false;
 
             #region LOADING THE PRODUCT DATA GRID
 
@@ -147,7 +147,7 @@ namespace GUI
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
                 addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
 
-                dtgSupplier.Items.Add(new { Id = supplierId, Name = supplierName, Email = supplierEmail, Contact = supplierContact, Address = supplierAddress, AddedDate = addedDate, AddedBy = addedByUsername });
+                dtgSuppliers.Items.Add(new { Id = supplierId, Name = supplierName, Email = supplierEmail, Contact = supplierContact, Address = supplierAddress, AddedDate = addedDate, AddedBy = addedByUsername });
             }
             #endregion
         }
@@ -165,19 +165,25 @@ namespace GUI
 
         private void dtgSupplierIndexChanged()
         {
-            //Getting the index of a particular row and fill the text boxes with the related columns of the row.
+            object row = dtgSuppliers.SelectedItem;
+            int colSupplierId = 0, colSupplierName = 1, colSupplierEmail = 2, colSupplierContact = 3, colSupplierAddress = 4;
 
-            //int rowIndex = dgCategories.SelectedIndex;
+            txtId.Text = (dtgSuppliers.Columns[colSupplierId].GetCellContent(row) as TextBlock).Text;
+            txtName.Text = (dtgSuppliers.Columns[colSupplierName].GetCellContent(row) as TextBlock).Text;
+            txtEmail.Text = (dtgSuppliers.Columns[colSupplierEmail].GetCellContent(row) as TextBlock).Text;
+            txtContact.Text = (dtgSuppliers.Columns[colSupplierContact].GetCellContent(row) as TextBlock).Text;
+            txtAddress.Text = (dtgSuppliers.Columns[colSupplierAddress].GetCellContent(row) as TextBlock).Text;
 
-            DataRowView drv = (DataRowView)dtgSupplier.SelectedItem;
-            if (drv != null)
-            {
-                txtId.Text = (drv[0]).ToString();//Selecting the specific row
-                txtName.Text = (drv[2]).ToString();
-                txtEmail.Text = (drv[3]).ToString();
-                txtContact.Text = (drv[4]).ToString();
-                txtAddress.Text = (drv[5]).ToString();
-            }
+
+            //DataRowView drv = (DataRowView)dtgSupplier.SelectedItem;
+            //if (drv != null)
+            //{
+            //    txtId.Text = (drv[0]).ToString();//Selecting the specific row
+            //    txtName.Text = (drv[2]).ToString();
+            //    txtEmail.Text = (drv[3]).ToString();
+            //    txtContact.Text = (drv[4]).ToString();
+            //    txtAddress.Text = (drv[5]).ToString();
+            //}
         }
 
 
@@ -207,9 +213,9 @@ namespace GUI
             {
                 //Show category informations based on the keyword
                 DataTable dataTable = supplierDAL.Search(keyword);
-                dtgSupplier.ItemsSource = dataTable.DefaultView;
-                dtgSupplier.AutoGenerateColumns = true;
-                dtgSupplier.CanUserAddRows = false;
+                dtgSuppliers.ItemsSource = dataTable.DefaultView;
+                dtgSuppliers.AutoGenerateColumns = true;
+                dtgSuppliers.CanUserAddRows = false;
             }
             else
             {
@@ -221,7 +227,7 @@ namespace GUI
         private void dtgSupplier_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ClearSupplierTextBox();
-            dtgSupplier.UnselectAll();
+            dtgSuppliers.UnselectAll();
 
         }
     }

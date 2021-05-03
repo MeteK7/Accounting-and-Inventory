@@ -156,7 +156,7 @@ namespace GUI {
         
         #line 86 "..\..\..\WinSupplier.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.DataGrid dtgSupplier;
+        internal System.Windows.Controls.DataGrid dtgSuppliers;
         
         #line default
         #line hidden
@@ -280,28 +280,28 @@ namespace GUI {
             this.txtAddress = ((System.Windows.Controls.TextBox)(target));
             return;
             case 15:
-            this.dtgSupplier = ((System.Windows.Controls.DataGrid)(target));
+            this.dtgSuppliers = ((System.Windows.Controls.DataGrid)(target));
             
             #line 86 "..\..\..\WinSupplier.xaml"
-            this.dtgSupplier.KeyUp += new System.Windows.Input.KeyEventHandler(this.dtgSupplier_KeyUp);
+            this.dtgSuppliers.KeyUp += new System.Windows.Input.KeyEventHandler(this.dtgSupplier_KeyUp);
             
             #line default
             #line hidden
             
             #line 86 "..\..\..\WinSupplier.xaml"
-            this.dtgSupplier.KeyDown += new System.Windows.Input.KeyEventHandler(this.dtgSupplier_KeyDown);
+            this.dtgSuppliers.KeyDown += new System.Windows.Input.KeyEventHandler(this.dtgSupplier_KeyDown);
             
             #line default
             #line hidden
             
             #line 86 "..\..\..\WinSupplier.xaml"
-            this.dtgSupplier.MouseLeftButtonUp += new System.Windows.Input.MouseButtonEventHandler(this.dtgSupplier_MouseLeftButtonUp);
+            this.dtgSuppliers.MouseLeftButtonUp += new System.Windows.Input.MouseButtonEventHandler(this.dtgSupplier_MouseLeftButtonUp);
             
             #line default
             #line hidden
             
             #line 86 "..\..\..\WinSupplier.xaml"
-            this.dtgSupplier.MouseDown += new System.Windows.Input.MouseButtonEventHandler(this.dtgSupplier_MouseDown);
+            this.dtgSuppliers.MouseDown += new System.Windows.Input.MouseButtonEventHandler(this.dtgSupplier_MouseDown);
             
             #line default
             #line hidden

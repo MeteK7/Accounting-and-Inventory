@@ -14,7 +14,6 @@ namespace DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
-
         #region SELECT METHOD
         public DataTable Select()
         {
@@ -102,6 +101,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("name", accountCUL.Name);
                 cmd.Parameters.AddWithValue("added_date", accountCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", accountCUL.AddedBy);
+                cmd.Parameters.AddWithValue("id", accountCUL.Id);
 
                 conn.Open();
 
