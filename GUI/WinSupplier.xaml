@@ -83,7 +83,7 @@
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <DataGrid x:Name="dtgSupplier" HorizontalAlignment="Left" Height="412" Margin="321,92,0,0" VerticalAlignment="Top" Width="502" KeyUp="dtgSupplier_KeyUp" KeyDown="dtgSupplier_KeyDown" MouseLeftButtonUp="dtgSupplier_MouseLeftButtonUp" MouseDown="dtgSupplier_MouseDown" Opacity="0.77">
+        <DataGrid x:Name="dtgSuppliers" HorizontalAlignment="Left" Height="412" Margin="321,92,0,0" VerticalAlignment="Top" Width="502" KeyUp="dtgSupplier_KeyUp" KeyDown="dtgSupplier_KeyDown" MouseLeftButtonUp="dtgSupplier_MouseLeftButtonUp" MouseDown="dtgSupplier_MouseDown" Opacity="0.77">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>

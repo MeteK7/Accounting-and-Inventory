@@ -145,10 +145,16 @@ namespace GUI
 
         private void DtgAccountsIndexChanged()
         {
-            DataRowView drv = (DataRowView)dtgAccounts.SelectedItem;
+            object row = dtgAccounts.SelectedItem;
+            int colAccountId = 0, colAccountName = 1;
 
-            txtAccountId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtAccountName.Text = (drv["name"]).ToString();//You can also define the column name from your table like here.
+            txtAccountId.Text = (dtgAccounts.Columns[colAccountId].GetCellContent(row) as TextBlock).Text;
+            txtAccountName.Text = (dtgAccounts.Columns[colAccountName].GetCellContent(row) as TextBlock).Text;
+
+            //DataRowView drv = (DataRowView)dtgAccounts.SelectedItem;
+
+            //txtAccountId.Text = (drv[0]).ToString();//Selecting the specific row
+            //txtAccountName.Text = (drv["name"]).ToString();//You can also define the column name from your table like here.
         }
         private void dtgAccounts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

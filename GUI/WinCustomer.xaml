@@ -67,7 +67,7 @@
                 <SolidColorBrush Color="White" Opacity="0.7"/>
             </TextBox.Background>
         </TextBox>
-        <DataGrid x:Name="dtgCustomer" HorizontalAlignment="Left" Height="412" Margin="317,92,0,0" VerticalAlignment="Top" Width="506" KeyUp="dtgCustomer_KeyUp" KeyDown="dtgCustomer_KeyDown" MouseLeftButtonUp="dtgCustomer_MouseLeftButtonUp">
+        <DataGrid x:Name="dtgCustomers" HorizontalAlignment="Left" Height="412" Margin="317,92,0,0" VerticalAlignment="Top" Width="506" KeyUp="dtgCustomer_KeyUp" KeyDown="dtgCustomer_KeyDown" MouseLeftButtonUp="dtgCustomer_MouseLeftButtonUp">
             <DataGrid.Background>
                 <SolidColorBrush Color="#FFC9C9C9" Opacity="0.7"/>
             </DataGrid.Background>

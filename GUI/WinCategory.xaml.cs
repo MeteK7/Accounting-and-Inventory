@@ -168,15 +168,19 @@ namespace GUI
 
         private void DtgCategoriesIndexChanged()
         {
-            //Getting the index of a particular row and fill the text boxes with the related columns of the row.
+            object row = dtgCategories.SelectedItem;
+            int rowCategoryId = 0, rowCategoryTitle = 1, rowCategoryDescription = 2;
 
-            //int rowIndex = dtgCategories.SelectedIndex;
+            txtCategoryId.Text = (dtgCategories.Columns[rowCategoryId].GetCellContent(row) as TextBlock).Text;
+            txtTitle.Text = (dtgCategories.Columns[rowCategoryTitle].GetCellContent(row) as TextBlock).Text;
+            txtDescription.Text = (dtgCategories.Columns[rowCategoryDescription].GetCellContent(row) as TextBlock).Text;
 
-            DataRowView drv = (DataRowView)dtgCategories.SelectedItem;
 
-            txtCategoryId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtTitle.Text = (drv["name"]).ToString();//You could also define the column name from your table.
-            txtDescription.Text = (drv[2]).ToString();
+            //DataRowView drv = (DataRowView)dtgCategories.SelectedItem;
+
+            //txtCategoryId.Text = (drv[0]).ToString();//Selecting the specific row
+            //txtTitle.Text = (drv["name"]).ToString();//You could also define the column name from your table.
+            //txtDescription.Text = (drv[2]).ToString();
         }
 
 

@@ -19,6 +19,7 @@ namespace KabaAccounting.CUL
         public decimal Vat { get; set; }
         public decimal Discount { get; set; }
         public decimal GrandTotal { get; set; }
+        public int AssetId { get; set; }
         public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
     }

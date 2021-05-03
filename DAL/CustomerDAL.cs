@@ -122,13 +122,13 @@ namespace KabaAccounting.DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing Values through parameter
-                cmd.Parameters.AddWithValue("@name", customerCUL.Name);
-                cmd.Parameters.AddWithValue("@email", customerCUL.Email);
-                cmd.Parameters.AddWithValue("@contact", customerCUL.Contact);
-                cmd.Parameters.AddWithValue("@address", customerCUL.Address);
-                cmd.Parameters.AddWithValue("@added_date", customerCUL.AddedDate);
-                cmd.Parameters.AddWithValue("@added_by", customerCUL.AddedBy);
-                cmd.Parameters.AddWithValue("@id", customerCUL.Id);
+                cmd.Parameters.AddWithValue("name", customerCUL.Name);
+                cmd.Parameters.AddWithValue("email", customerCUL.Email);
+                cmd.Parameters.AddWithValue("contact", customerCUL.Contact);
+                cmd.Parameters.AddWithValue("address", customerCUL.Address);
+                cmd.Parameters.AddWithValue("added_date", customerCUL.AddedDate);
+                cmd.Parameters.AddWithValue("added_by", customerCUL.AddedBy);
+                cmd.Parameters.AddWithValue("id", customerCUL.Id);
 
                 //Opening the database Connection
                 conn.Open();

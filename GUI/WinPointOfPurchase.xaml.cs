@@ -51,6 +51,7 @@ namespace GUI
         UnitCUL unitCUL = new UnitCUL();
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
+        AssetDAL assetDAL = new AssetDAL();
         AssetCUL assetCUL = new AssetCUL();
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
@@ -321,7 +322,17 @@ namespace GUI
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 int initialIndex = 0;
-                bool isSuccess = false;
+                bool isSuccess = false, isSuccessDetail = false,isSuccessAsset=false;
+                int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
+                int productId;
+                int unitId;
+                decimal productOldAmountInStock;
+                int cellLength = 6;
+                int addedBy = userId;
+                string[] cells = new string[cellLength];
+                DateTime dateTime = DateTime.Now;
+                int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
 
                 int currentInvoiceId = 1, firstRowIndex = 0;//Current invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
@@ -341,16 +352,17 @@ namespace GUI
                     currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
                 }
 
-                #region TABLE ASSET SAVING SECTION
+                #region TABLE ASSET UPDATING SECTION
                 assetCUL.AssetId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                assetCUL.Balance= Convert.ToDecimal(txtBasketGrandTotal.Text);
+                assetCUL.AssetBalance= Convert.ToDecimal(txtBasketGrandTotal.Text);
 
                 if (rbAccount.IsChecked==true)
-                    assetCUL.AssetType = "account";
+                    assetCUL.AssetType = account;
                 
                 else
-                    assetCUL.AssetType = "bank";
-                
+                    assetCUL.AssetType = bank;
+
+                isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
 
                 #region TABLE POP SAVING SECTION
@@ -365,6 +377,7 @@ namespace GUI
                 pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
                 pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                 pointOfPurchaseCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                pointOfPurchaseCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                 pointOfPurchaseCUL.AddedDate = DateTime.Now;
                 pointOfPurchaseCUL.AddedBy = userId;
 
@@ -384,16 +397,6 @@ namespace GUI
 
 
                 #region TABLE POP DETAILS SAVING SECTION
-                int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
-                int productId;
-                int unitId;
-                decimal productOldAmountInStock;
-                int cellLength = 6;
-                int addedBy = userId;
-                string[] cells = new string[cellLength];
-                DateTime dateTime = DateTime.Now;
-                bool isSuccessDetail = false;
-                int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {

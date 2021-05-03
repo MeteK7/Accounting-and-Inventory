@@ -139,10 +139,11 @@ namespace GUI
 
         private void DtgBanksIndexChanged()
         {
-            DataRowView drv = (DataRowView)dtgBanks.SelectedItem;
+            object row = dtgBanks.SelectedItem;
+            int colBankId = 0, colBankName = 1;
 
-            txtBankId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtBankName.Text = (drv["name"]).ToString();//You can also define the column name from your table like here.
+            txtBankId.Text = (dtgBanks.Columns[colBankId].GetCellContent(row) as TextBlock).Text;
+            txtBankName.Text = (dtgBanks.Columns[colBankName].GetCellContent(row) as TextBlock).Text;
         }
 
         private void dtgBanks_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
