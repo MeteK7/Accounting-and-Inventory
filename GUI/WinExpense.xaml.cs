@@ -33,7 +33,7 @@ namespace GUI
         AssetDAL assetDAL = new AssetDAL();
         BankDAL bankDAL = new BankDAL();
 
-        int clickedNewOrEdit, btnNew=0,btnEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, clickedNew=0,clickedEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string account = "account", bank = "bank", supplier = "supplier";
 
         public WinExpense()
@@ -61,7 +61,7 @@ namespace GUI
             btnNext.IsEnabled = true;
         }
 
-        public void ModifyToolsOnClickBtnNewEdit()
+        private void ModifyToolsOnClickBtnNewEdit()
         {
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
@@ -73,6 +73,18 @@ namespace GUI
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
+        }
+
+        private void LoadNewExpense()
+        {
+            //ClearBasketTextBox();
+            //ClearProductsDataGrid();
+
+            int expenseNo, increment = 1;
+
+            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            expenseNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblExpenseNumber.Content = expenseNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
         private void cboTo_Loaded(object sender, RoutedEventArgs e)
@@ -112,7 +124,7 @@ namespace GUI
 
             string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
 
-            lblBalanceFrom.Content = "Balance: " + balance;
+            lblBalanceFrom.Content = balance;
             #endregion
         }
 
@@ -133,13 +145,14 @@ namespace GUI
 
             string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
 
-            lblBalanceTo.Content = "Balance: " + balance;
+            lblBalanceTo.Content = balance;
             #endregion
         }
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            clickedNewOrEdit = btnNew;//0 stands for the user has entered the btnNew.
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
+            LoadNewExpense();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -184,7 +197,7 @@ namespace GUI
                 #region TABLE ASSET UPDATING SECTION
                 //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
                 assetCUL.Id = Convert.ToInt32(lblAssetId.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) -Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
                 isSuccessAsset = assetDAL.Update(assetCUL);
 
                 //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
@@ -193,7 +206,7 @@ namespace GUI
                 isSuccessAssetSupplier = assetDAL.Update(assetCUL);
                 #endregion
 
-                if (clickedNewOrEdit==btnEdit)
+                if (clickedNewOrEdit==clickedEdit)
                 {
                     isSuccess = expenseBLL.UpdateExpense(expenseCUL);
                 }
