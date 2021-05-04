@@ -33,7 +33,7 @@ namespace BLL
             {
                 invoiceNo = Convert.ToInt32(dataTable.Rows[initialIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
             }
-            else//If there is no any invoice number, that means it is the first sale. So, assing invoiceNo with 0;
+            else//If there is no any expense number, that means it is the first sale. So, assing expenseNo with 0;
             {
                 invoiceNo = initialIndex;
             }

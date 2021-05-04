@@ -210,6 +210,10 @@ namespace GUI
                 {
                     isSuccess = expenseBLL.UpdateExpense(expenseCUL);
                 }
+                else
+                {
+                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
+                }
             }
         }
 
