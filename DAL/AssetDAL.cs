@@ -22,13 +22,13 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_assets SET asset_id=@asset_id, asset_type=@asset_type, asset_balance=@asset_balance WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_assets SET source_id=@source_id, source_type=@source_type, source_balance=@source_balance WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("asset_id", assetCUL.AssetId);
-                cmd.Parameters.AddWithValue("asset_type", assetCUL.AssetType);
-                cmd.Parameters.AddWithValue("asset_balance", assetCUL.AssetBalance);
+                cmd.Parameters.AddWithValue("source_id", assetCUL.SourceId);
+                cmd.Parameters.AddWithValue("source_type", assetCUL.SourceType);
+                cmd.Parameters.AddWithValue("source_balance", assetCUL.SourceBalance);
                 cmd.Parameters.AddWithValue("id", assetCUL.Id);
 
                 conn.Open();
@@ -56,5 +56,10 @@ namespace DAL
             return isSuccess;
         }
         #endregion
+
+        private void GetAssetIdByResource(int resourceId, string resourceType)
+        {
+
+        }
     }
 }

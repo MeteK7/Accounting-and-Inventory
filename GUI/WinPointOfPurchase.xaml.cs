@@ -353,14 +353,14 @@ namespace GUI
                 }
 
                 #region TABLE ASSET UPDATING SECTION
-                assetCUL.AssetId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                assetCUL.AssetBalance= Convert.ToDecimal(txtBasketGrandTotal.Text);
+                assetCUL.SourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
+                assetCUL.SourceBalance= Convert.ToDecimal(txtBasketGrandTotal.Text);
 
                 if (rbAccount.IsChecked==true)
-                    assetCUL.AssetType = account;
+                    assetCUL.SourceType = account;
                 
                 else
-                    assetCUL.AssetType = bank;
+                    assetCUL.SourceType = bank;
 
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
@@ -947,6 +947,20 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAsset.SelectedValuePath = "id";
+        }
+
+        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int resourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
+            int assetId;
+            string resourceType;
+
+            if (rbAccount.IsChecked == true)
+                resourceType = account;
+            else
+                resourceType = bank;
+
+            assetId = assetDAL.GetAssetIdByResource(resourceId,resourceType);
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)

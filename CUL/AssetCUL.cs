@@ -9,8 +9,8 @@ namespace CUL
     public class AssetCUL
     {
         public int Id { get; set; }
-        public int AssetId { get; set; }
-        public string AssetType { get; set; }
-        public decimal AssetBalance { get; set; }
+        public int SourceId { get; set; }
+        public string SourceType { get; set; }
+        public decimal SourceBalance { get; set; }
     }
 }
