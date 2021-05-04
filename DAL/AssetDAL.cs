@@ -23,12 +23,10 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_assets SET source_id=@source_id, source_type=@source_type, source_balance=@source_balance WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_assets SET source_balance=@source_balance WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("source_id", assetCUL.SourceId);
-                cmd.Parameters.AddWithValue("source_type", assetCUL.SourceType);
                 cmd.Parameters.AddWithValue("source_balance", assetCUL.SourceBalance);
                 cmd.Parameters.AddWithValue("id", assetCUL.Id);
 
@@ -55,6 +53,31 @@ namespace DAL
                 conn.Close();
             }
             return isSuccess;
+        }
+        #endregion
+        #region SEARCH METHOD BY ID
+        public DataTable SearchById(int id)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+
+            DataTable dataTable = new DataTable();//To hold the data from database
+            try
+            {
+                String sql = "SELECT * FROM tbl_assets WHERE id=" + id + "";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
         }
         #endregion
 

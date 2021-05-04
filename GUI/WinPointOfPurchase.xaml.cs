@@ -56,7 +56,7 @@ namespace GUI
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POP", account= "account",bank= "bank";
+        string calledBy = "POP", account= "account",bank= "bank",supplier="supplier";
         int oldItemsRowCount;
         int invoiceArrow;
 
@@ -353,15 +353,9 @@ namespace GUI
                 }
 
                 #region TABLE ASSET UPDATING SECTION
-                assetCUL.SourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                assetCUL.SourceBalance= Convert.ToDecimal(txtBasketGrandTotal.Text);
-
-                if (rbAccount.IsChecked==true)
-                    assetCUL.SourceType = account;
-                
-                else
-                    assetCUL.SourceType = bank;
-
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
+                assetCUL.SourceBalance = -Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Amount for getting this purchase.
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
 
@@ -934,9 +928,18 @@ namespace GUI
             cboMenuPaymentType.SelectedValuePath = "id";
         }
 
+        private void cboMenuSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            string sourceType=supplier;
+
+            sourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
+            lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
         private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
+            int sourceId;
             string sourceType;
 
             if (rbAccount.IsChecked == true)
@@ -944,6 +947,7 @@ namespace GUI
             else
                 sourceType = bank;
 
+            sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
             lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId,sourceType);
         }
 
