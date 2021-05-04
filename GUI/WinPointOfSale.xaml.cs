@@ -52,7 +52,7 @@ namespace GUI
         }
 
         int invoiceArrow;
-        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
         string calledBy = "POS";
 
@@ -332,7 +332,7 @@ namespace GUI
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
 
-                userClickedNewOrEdit = btnNewOrEdit;
+                userClickedNewOrEdit = clickedNewOrEdit;
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
@@ -587,7 +587,7 @@ namespace GUI
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
             ModifyToolsOnClickBtnNewOrEdit();
         }
@@ -615,7 +615,7 @@ namespace GUI
 
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            clickedNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
         }

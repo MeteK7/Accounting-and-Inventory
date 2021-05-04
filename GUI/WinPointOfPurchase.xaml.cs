@@ -56,7 +56,7 @@ namespace GUI
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POP", account= "account",bank= "bank";
+        string calledBy = "POP", account= "account",bank= "bank",supplier="supplier";
         int oldItemsRowCount;
         int invoiceArrow;
 
@@ -353,15 +353,9 @@ namespace GUI
                 }
 
                 #region TABLE ASSET UPDATING SECTION
-                assetCUL.AssetId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                assetCUL.AssetBalance= Convert.ToDecimal(txtBasketGrandTotal.Text);
-
-                if (rbAccount.IsChecked==true)
-                    assetCUL.AssetType = account;
-                
-                else
-                    assetCUL.AssetType = bank;
-
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
+                assetCUL.SourceBalance = -Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Amount for getting this purchase.
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
 
@@ -564,36 +558,6 @@ namespace GUI
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
-        }
-
-        private void LoadCboMenuPaymentType()
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dataTable = paymentDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuPaymentType.DisplayMemberPath = "payment_type";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuPaymentType.SelectedValuePath = "id";
-        }
-
-        private void cboMenuSupplier_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dataTable = supplierDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuSupplier.ItemsSource = dataTable.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuSupplier.DisplayMemberPath = "name";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuSupplier.SelectedValuePath = "id";
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -914,21 +878,6 @@ namespace GUI
                 txtBasketVat.Text = "";
         }
 
-        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dataTable = paymentDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuPaymentType.DisplayMemberPath = "payment_type";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuPaymentType.SelectedValuePath = "id";
-        }
-
         private void LoadCboMenuAsset(string checkStatus)
         {
             DataTable dataTable;
@@ -949,15 +898,68 @@ namespace GUI
             cboMenuAsset.SelectedValuePath = "id";
         }
 
+        private void cboMenuSupplier_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = supplierDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuSupplier.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuSupplier.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuSupplier.SelectedValuePath = "id";
+        }
+
+        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dataTable = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuPaymentType.DisplayMemberPath = "payment_type";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuPaymentType.SelectedValuePath = "id";
+        }
+
+        private void cboMenuSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            string sourceType=supplier;
+
+            sourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
+            lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
+        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            string sourceType;
+
+            if (rbAccount.IsChecked == true)
+                sourceType = account;
+            else
+                sourceType = bank;
+
+            sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
+            lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId,sourceType);
+        }
+
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            cboMenuPaymentType.ItemsSource = null;
+            //cboMenuAsset.ItemsSource = null;
             LoadCboMenuAsset(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            cboMenuPaymentType.ItemsSource = null;
+            //cboMenuAsset.ItemsSource = null;
             LoadCboMenuAsset(bank);
         }
     }
