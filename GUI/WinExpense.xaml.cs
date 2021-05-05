@@ -34,7 +34,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
 
         int clickedNewOrEdit, clickedNew=0,clickedEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        string account = "account", bank = "bank", supplier = "supplier";
+        int account = 1, bank = 2, supplier = 3;
 
         public WinExpense()
         {
@@ -106,7 +106,7 @@ namespace GUI
         {
             #region LBLASSETID POPULATING SECTION
             int sourceId;
-            string sourceType;
+            int sourceType;
 
             if (rbAccount.IsChecked == true)
                 sourceType = account;
@@ -132,7 +132,7 @@ namespace GUI
         {
             #region LBLASSETID POPULATING SECTION
             int sourceId;
-            string sourceType=supplier;
+            int sourceType=supplier;
 
             sourceId = Convert.ToInt32(cboTo.SelectedValue);
             lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
@@ -217,7 +217,7 @@ namespace GUI
             }
         }
 
-        private void LoadCboFrom(string checkStatus)
+        private void LoadCboFrom(int checkStatus)
         {
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
             if (checkStatus == account)

@@ -56,7 +56,8 @@ namespace GUI
 
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POP", account= "account",bank= "bank",supplier="supplier";
+        string calledBy = "POP";
+        int account = 1, bank = 2, supplier = 3;
         int oldItemsRowCount;
         int invoiceArrow;
 
@@ -212,10 +213,26 @@ namespace GUI
                     DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
+                    
+                    #region ASSET INFORMATION FILLING REGION
+                    int assetId = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["asset_id"].ToString());//Getting the id of account.
+                    lblAssetId.Content = assetId;
+
+                    DataTable dtAsset = assetDAL.SearchById(assetId);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[firstRowIndex]["source_type"]);
+
+                    if (sourceType == account)
+                        rbAccount.IsChecked = true;
+                    else
+                        rbBank.IsChecked = true;
+
+                    LoadCboMenuPaymentType();
+                    LoadCboMenuSupplier();
+                    cboMenuAsset.SelectedValue = dtAsset.Rows[firstRowIndex]["source_id"].ToString();
+                    #endregion
 
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
                     cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
-                    cboMenuAsset.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
                     txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
@@ -878,7 +895,7 @@ namespace GUI
                 txtBasketVat.Text = "";
         }
 
-        private void LoadCboMenuAsset(string checkStatus)
+        private void LoadCboMenuAsset(int checkStatus)
         {
             DataTable dataTable;
             if (checkStatus == account)
@@ -898,7 +915,7 @@ namespace GUI
             cboMenuAsset.SelectedValuePath = "id";
         }
 
-        private void cboMenuSupplier_Loaded(object sender, RoutedEventArgs e)
+        private void LoadCboMenuSupplier()
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = supplierDAL.Select();
@@ -913,7 +930,7 @@ namespace GUI
             cboMenuSupplier.SelectedValuePath = "id";
         }
 
-        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
+        private void LoadCboMenuPaymentType()
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = paymentDAL.Select();
@@ -931,7 +948,7 @@ namespace GUI
         private void cboMenuSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int sourceId;
-            string sourceType=supplier;
+            int sourceType=supplier;
 
             sourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
             lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
@@ -940,9 +957,9 @@ namespace GUI
         private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int sourceId;
-            string sourceType;
+            int sourceType;
 
-            if (rbAccount.IsChecked == true)
+            if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
                 sourceType = account;
             else
                 sourceType = bank;

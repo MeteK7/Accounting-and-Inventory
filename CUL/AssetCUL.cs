@@ -10,7 +10,7 @@ namespace CUL
     {
         public int Id { get; set; }
         public int SourceId { get; set; }
-        public string SourceType { get; set; }
+        public int SourceType { get; set; }
         public decimal SourceBalance { get; set; }
     }
 }
