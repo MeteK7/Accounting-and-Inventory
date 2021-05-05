@@ -226,6 +226,8 @@ namespace GUI
                     else
                         rbBank.IsChecked = true;
 
+                    LoadCboMenuPaymentType();
+                    LoadCboMenuSupplier();
                     cboMenuAsset.SelectedValue = dtAsset.Rows[firstRowIndex]["source_id"].ToString();
                     #endregion
 
@@ -913,7 +915,7 @@ namespace GUI
             cboMenuAsset.SelectedValuePath = "id";
         }
 
-        private void cboMenuSupplier_Loaded(object sender, RoutedEventArgs e)
+        private void LoadCboMenuSupplier()
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = supplierDAL.Select();
@@ -928,7 +930,7 @@ namespace GUI
             cboMenuSupplier.SelectedValuePath = "id";
         }
 
-        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
+        private void LoadCboMenuPaymentType()
         {
             //Creating Data Table to hold the products from Database
             DataTable dataTable = paymentDAL.Select();
@@ -957,7 +959,7 @@ namespace GUI
             int sourceId;
             int sourceType;
 
-            if (rbAccount.IsChecked == true)
+            if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
                 sourceType = account;
             else
                 sourceType = bank;
