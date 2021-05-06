@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, sub_total, vat, discount, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @sub_total, @vat, @discount, @grand_total, @asset_id, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, vat, discount, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @vat, @discount, @grand_total, @asset_id, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -64,7 +64,6 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
                 cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
-                cmd.Parameters.AddWithValue("@sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("@grand_total", pointOfPurchaseCUL.GrandTotal);
@@ -106,7 +105,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_amount=@total_product_amount, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_amount=@total_product_amount, cost_total=@cost_total, vat=@vat, discount=@discount, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -114,14 +113,14 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("supplier_id", pointOfPurchaseCUL.SupplierId);
                 cmd.Parameters.AddWithValue("total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
                 cmd.Parameters.AddWithValue("cost_total", pointOfPurchaseCUL.CostTotal);
-                cmd.Parameters.AddWithValue("sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("grand_total", pointOfPurchaseCUL.GrandTotal);
                 cmd.Parameters.AddWithValue("asset_id", pointOfPurchaseCUL.AssetId);
                 cmd.Parameters.AddWithValue("added_date", pointOfPurchaseCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", pointOfPurchaseCUL.AddedBy);
-                cmd.Parameters.AddWithValue("id", pointOfPurchaseCUL.InvoiceNo);//Do you really need to update the ID?
+                cmd.Parameters.AddWithValue("invoice_no", pointOfPurchaseCUL.InvoiceNo);
+                cmd.Parameters.AddWithValue("id", pointOfPurchaseCUL.Id);//Do you really need to update the ID?
 
 
                 conn.Open();
