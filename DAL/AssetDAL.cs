@@ -91,7 +91,7 @@ namespace DAL
             {
                 try
                 {
-                    String sql = "SELECT id FROM tbl_assets WHERE source_id=" + sourceId + " AND source_type=" + sourceType + "";//SQL query to search data from database 
+                    String sql = "SELECT id FROM tbl_assets WHERE id_source=" + sourceId + " AND id_source_type=" + sourceType + "";//SQL query to search data from database 
                     conn.Open();//Opening the database connection
                     SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                     SqlDataReader reader = cmd.ExecuteReader();

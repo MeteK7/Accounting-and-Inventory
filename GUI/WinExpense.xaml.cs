@@ -49,6 +49,8 @@ namespace GUI
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
+            rbAccount.IsEnabled = false;
+            rbBank.IsEnabled = false;
 
         }
 
@@ -70,9 +72,11 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            cboFrom.IsEnabled = true;
+            //cboFrom.IsEnabled = true; DEPENDS ON THE RADIO BUTTONS!!
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
         }
 
         private void LoadNewExpense()
@@ -82,9 +86,9 @@ namespace GUI
 
             int expenseNo, increment = 1;
 
-            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
-            expenseNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            lblExpenseNumber.Content = expenseNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
+            expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            lblExpenseNumber.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 
         private void cboTo_Loaded(object sender, RoutedEventArgs e)
@@ -175,6 +179,11 @@ namespace GUI
             }
         }
 
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
             int emptyIndex = -1;
@@ -214,6 +223,17 @@ namespace GUI
                 {
                     isSuccess = expenseBLL.InsertExpense(expenseCUL);
                 }
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
             }
         }
 
@@ -239,13 +259,13 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            //cboMenuAsset.ItemsSource = null;
+            cboFrom.IsEnabled = true;
             LoadCboFrom(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            //cboMenuAsset.ItemsSource = null;
+            cboFrom.IsEnabled = true;
             LoadCboFrom(bank);
         }
     }

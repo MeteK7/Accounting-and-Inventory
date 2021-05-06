@@ -18,7 +18,7 @@
         <ImageBrush x:Key="ButtonDailySummary" ImageSource="/Images/Buttons/calendar.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonAssets" ImageSource="/Images/Buttons/asset-management.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonDeposit" ImageSource="/Images/Buttons/safe-box.png" Stretch="Uniform"></ImageBrush>
-        <ImageBrush x:Key="ButtonPayment" ImageSource="/Images/Buttons/pay.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonExpense" ImageSource="/Images/Buttons/pay.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonReceipt" ImageSource="/Images/Buttons/receipt.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPop" ImageSource="/Images/Buttons/edit.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonPopReports" ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform"></ImageBrush>
@@ -251,8 +251,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="Button" x:Key="ButtonPaymentStyle">
-            <Setter Property="Background" Value="{StaticResource ButtonPayment}"></Setter>
+        <Style TargetType="Button" x:Key="ButtonExpenseStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonExpense}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -694,7 +694,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnPayment" Style="{StaticResource ButtonPaymentStyle}" Content="Payment" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnPayment_Click">
+                    <Button x:Name="btnExpense" Style="{StaticResource ButtonExpenseStyle}" Content="Expense" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnExpense_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/pay.png">
                                 <ImageBrush.RelativeTransform>
