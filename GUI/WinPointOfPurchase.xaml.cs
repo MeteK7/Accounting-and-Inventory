@@ -219,7 +219,7 @@ namespace GUI
                     lblAssetId.Content = assetId;
 
                     DataTable dtAsset = assetDAL.SearchById(assetId);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[firstRowIndex]["source_type"]);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[firstRowIndex]["id_source_type"]);
 
                     if (sourceType == account)
                         rbAccount.IsChecked = true;
@@ -228,7 +228,7 @@ namespace GUI
 
                     LoadCboMenuPaymentType();
                     LoadCboMenuSupplier();
-                    cboMenuAsset.SelectedValue = dtAsset.Rows[firstRowIndex]["source_id"].ToString();
+                    cboMenuAsset.SelectedValue = dtAsset.Rows[firstRowIndex]["id_source"].ToString();
                     #endregion
 
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
