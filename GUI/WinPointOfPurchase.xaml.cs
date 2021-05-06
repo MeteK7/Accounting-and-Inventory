@@ -54,7 +54,7 @@ namespace GUI
         AssetDAL assetDAL = new AssetDAL();
         AssetCUL assetCUL = new AssetCUL();
 
-        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
         string calledBy = "POP";
         int account = 1, bank = 2, supplier = 3;
@@ -335,7 +335,6 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
             if (isDgEqual == false && int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != "0" && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuSupplier.SelectedIndex != emptyIndex && cboMenuAsset.SelectedIndex != emptyIndex)
             {
-                int userClickedNewOrEdit = btnNewOrEdit;
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 int initialIndex = 0;
@@ -358,13 +357,13 @@ namespace GUI
 
 
                 //If there is a row in the datatable, then fetch the id of the invoice. Otherwise, it is the first run and keep the default value.
-                if (userClickedNewOrEdit == 0 && dataTableLastInvoice.Rows.Count != 0)
+                if (clickedNewOrEdit ==clickedNew && dataTableLastInvoice.Rows.Count != 0)
                 {
                     currentInvoiceId = currentInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
                 }
 
                 /*ONLY ELSE MAY BE MORE SUITABLE!!!*/
-                else if (userClickedNewOrEdit == 1)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
+                else if (clickedNewOrEdit == clickedEdit)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
                 {
                     currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
                 }
@@ -391,9 +390,7 @@ namespace GUI
                 pointOfPurchaseCUL.AddedDate = DateTime.Now;
                 pointOfPurchaseCUL.AddedBy = userId;
 
-                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
-
-                if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pop at once.
+                if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pop at once.
                 {
                     isSuccess = pointOfPurchaseDAL.Update(pointOfPurchaseCUL);
                 }
@@ -405,12 +402,11 @@ namespace GUI
                 }
                 #endregion
 
-
                 #region TABLE POP DETAILS SAVING SECTION
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
+                    if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
                         productBLL.RevertOldAmountInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
 
@@ -418,7 +414,7 @@ namespace GUI
                         pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
-                        userClickedNewOrEdit = 2;
+                        clickedNewOrEdit = clickedNull;
                     }
 
                     DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
@@ -464,7 +460,7 @@ namespace GUI
 
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessDetail == true && isSuccessAsset==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     //ClearBasketTextBox();
                     //ClearPointOfSaleDataGrid();
@@ -578,7 +574,7 @@ namespace GUI
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
             ModifyToolsOnClickBtnNewOrEdit();
         }
@@ -606,7 +602,7 @@ namespace GUI
 
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            clickedNewOrEdit = clickedEdit;//1 stands for the user has entered the btnEdit.
             oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
