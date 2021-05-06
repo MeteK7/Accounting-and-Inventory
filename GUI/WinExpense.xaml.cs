@@ -82,9 +82,9 @@ namespace GUI
 
             int expenseNo, increment = 1;
 
-            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
-            expenseNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            lblExpenseNumber.Content = expenseNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
+            expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            lblExpenseNumber.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 
         private void cboTo_Loaded(object sender, RoutedEventArgs e)
@@ -173,6 +173,11 @@ namespace GUI
                     MessageBox.Show("Nevermind then...", "KABA Accounting");
                     break;
             }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
