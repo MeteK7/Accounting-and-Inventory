@@ -249,7 +249,7 @@ namespace GUI
 
                         productCostPrice = dataTablePopDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productAmount = dataTablePopDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
