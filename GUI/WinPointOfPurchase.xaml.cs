@@ -904,7 +904,7 @@ namespace GUI
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number))
             {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
             }
             else
                 txtBasketVat.Text = "";
@@ -914,7 +914,7 @@ namespace GUI
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number))
             {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
             }
             else
                 txtBasketDiscount.Text = "";
