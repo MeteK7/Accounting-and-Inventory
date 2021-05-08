@@ -57,9 +57,10 @@ namespace GUI
         int initialIndex = 0;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] oldDgProductCells = new string[,] { };
-        string calleBy = "POP";
+        string calledBy = "POP";
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
+        int oldItemsRowCount;
         int invoiceArrow;
         int oldIdAsset, oldIdAssetSupplier;
         decimal oldGrandTotal;
@@ -901,7 +902,7 @@ namespace GUI
         }
         private void CalculateGrandTotal(int calledByVatOrDiscount)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text == "")
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
             {
                 txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
             }
