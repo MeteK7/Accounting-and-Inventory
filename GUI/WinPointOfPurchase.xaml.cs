@@ -59,6 +59,7 @@ namespace GUI
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "POP";
         int account = 1, bank = 2, supplier = 3;
+        int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
         int invoiceArrow;
         int oldIdAsset, oldIdAssetSupplier;
@@ -155,6 +156,7 @@ namespace GUI
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            txtInvoiceNo.Text = "";
         }
 
         private void ClearProductsDataGrid()
@@ -249,7 +251,7 @@ namespace GUI
 
                         productCostPrice = dataTablePopDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productAmount = dataTablePopDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
@@ -898,15 +900,35 @@ namespace GUI
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
         }
+        private void CalculateGrandTotal(int calledByVatOrDiscount)
+        {
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
+            {
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            }
+            else
+            {
+                if (calledByVatOrDiscount==calledByVAT)
+                {
+                    txtBasketVat.Text = initialIndex.ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                }
+                else
+                {
+                    txtBasketDiscount.Text = initialIndex.ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                }
+            }
+        }
 
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number))
-            {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
-            }
-            else
-                txtBasketVat.Text = "";
+            CalculateGrandTotal(calledByVAT);
+        }
+
+        private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateGrandTotal(calledByDiscount);
         }
 
         private void LoadCboMenuAsset(int checkStatus)
@@ -928,6 +950,8 @@ namespace GUI
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAsset.SelectedValuePath = "id";
         }
+
+
 
         private void LoadCboMenuSupplier()
         {
