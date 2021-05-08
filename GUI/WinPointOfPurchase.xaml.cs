@@ -57,9 +57,9 @@ namespace GUI
         int initialIndex = 0;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] oldDgProductCells = new string[,] { };
-        string calledBy = "POP";
+        string calleBy = "POP";
         int account = 1, bank = 2, supplier = 3;
-        int oldItemsRowCount;
+        int calledByVAT = 1, calledByDiscount = 2;
         int invoiceArrow;
         int oldIdAsset, oldIdAssetSupplier;
         decimal oldGrandTotal;
@@ -899,25 +899,35 @@ namespace GUI
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
         }
+        private void CalculateGrandTotal(int calledByVatOrDiscount)
+        {
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text == "")
+            {
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            }
+            else
+            {
+                if (calledByVatOrDiscount==calledByVAT)
+                {
+                    txtBasketVat.Text = initialIndex.ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                }
+                else
+                {
+                    txtBasketDiscount.Text = initialIndex.ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                }
+            }
+        }
 
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number))
-            {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
-            }
-            else
-                txtBasketVat.Text = "";
+            CalculateGrandTotal(calledByVAT);
         }
 
         private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number))
-            {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
-            }
-            else
-                txtBasketDiscount.Text = "";
+            CalculateGrandTotal(calledByDiscount);
         }
 
         private void LoadCboMenuAsset(int checkStatus)
