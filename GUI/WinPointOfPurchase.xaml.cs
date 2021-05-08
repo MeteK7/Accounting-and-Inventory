@@ -155,6 +155,7 @@ namespace GUI
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
+            txtInvoiceNo.Text = "";
         }
 
         private void ClearProductsDataGrid()
@@ -909,6 +910,16 @@ namespace GUI
                 txtBasketVat.Text = "";
         }
 
+        private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number))
+            {
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            }
+            else
+                txtBasketDiscount.Text = "";
+        }
+
         private void LoadCboMenuAsset(int checkStatus)
         {
             DataTable dataTable;
@@ -928,6 +939,8 @@ namespace GUI
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAsset.SelectedValuePath = "id";
         }
+
+
 
         private void LoadCboMenuSupplier()
         {
