@@ -23,7 +23,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_expense (id, id_from, id_to, amount, added_date, added_by) VALUES (@id, @id_from, @id_to, @amount, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_expenseS (id, id_from, id_to, amount, added_date, added_by) VALUES (@id, @id_from, @id_to, @amount, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
