@@ -55,7 +55,9 @@ namespace GUI
         AssetCUL assetCUL = new AssetCUL();
 
         int initialIndex = 0;
+        const int colLength =6;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        string[] dgcellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "POP";
         int account = 1, bank = 2, supplier = 3;
@@ -300,9 +302,7 @@ namespace GUI
         private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
             int rowLength = dgProducts.Items.Count;
-            int colLength = 6;
             string[,] dgProductCells = new string[rowLength, colLength];
-
 
             for (int rowNo = 0; rowNo < rowLength; rowNo++)
             {
@@ -310,7 +310,9 @@ namespace GUI
 
                 for (int colNo = 0; colNo < colLength; colNo++)
                 {
-                    TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
+                    ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
+                    var tmpProduct = cpProduct.ContentTemplate;
+                    TextBox tbCellContent = tmpProduct.FindName(dgcellNames[colNo], cpProduct) as TextBox;
 
                     dgProductCells[rowNo, colNo] = tbCellContent.Text;
 
@@ -436,13 +438,15 @@ namespace GUI
                         clickedNewOrEdit = clickedNull;
                     }
 
-                    DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+                    DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
                     for (int colNo = 0; colNo < cellLength; colNo++)
                     {
-                        TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                        ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
+                        var tmpProduct = cpProduct.ContentTemplate;
+                        TextBox tbCellContent = tmpProduct.FindName(dgcellNames[colNo], cpProduct) as TextBox;
 
-                        cells[colNo] = cellContent.Text;
+                        cells[colNo] = tbCellContent.Text;
                     }
 
                     dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] contains the product barcode.
@@ -873,11 +877,11 @@ namespace GUI
             TextMenuCostPriceChanged();
         }
 
-        private void txtDgProductCostPrice_KeyUp(object sender, KeyEventArgs e)
+        private void dgTxtProductCostPrice_KeyUp(object sender, KeyEventArgs e)
         {
             DgTextChanged();
         }
-        private void txtQuantity_KeyUp(object sender, KeyEventArgs e)
+        private void dgTxtProductQuantity_KeyUp(object sender, KeyEventArgs e)
         {
             DgTextChanged();
         }

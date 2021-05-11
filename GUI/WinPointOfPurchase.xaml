@@ -335,27 +335,53 @@
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="130" IsReadOnly="False"/>
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="540"/>
-                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="70" IsReadOnly="False"/>
+                        <DataGridTemplateColumn Header="Id" Width="130">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Cost Price">
+                        <DataGridTemplateColumn Header="Name" Width="540">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="txtDgProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" KeyUp="txtDgProductCostPrice_KeyUp" />
+                                    <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
-                        <DataGridTemplateColumn Header="Quantity">
+
+                        <DataGridTemplateColumn Header="Unit" Width="70">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="txtQuantity" Text="{Binding Amount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="60" KeyUp="txtQuantity_KeyUp" />
+                                    <TextBox x:Name="dgTxtProductUnit" Text="{Binding Unit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
-                        <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="Total Cost Price" Width="140"/>
+
+                        <DataGridTemplateColumn Header="Cost Price" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductCostPrice_KeyUp" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Quantity" Width="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductQuantity" Text="{Binding Amount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductQuantity_KeyUp" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Total Cost Price" Width="140">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
@@ -364,6 +390,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
