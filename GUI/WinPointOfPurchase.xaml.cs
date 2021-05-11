@@ -57,7 +57,7 @@ namespace GUI
         int initialIndex = 0;
         const int colLength =6;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        string[] dgcellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtTotalCostPrice" };
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "POP";
         int account = 1, bank = 2, supplier = 3;
@@ -312,7 +312,7 @@ namespace GUI
                 {
                     ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
-                    TextBox tbCellContent = tmpProduct.FindName(dgcellNames[colNo], cpProduct) as TextBox;
+                    TextBox tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
 
                     dgProductCells[rowNo, colNo] = tbCellContent.Text;
 
@@ -444,7 +444,7 @@ namespace GUI
                     {
                         ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                         var tmpProduct = cpProduct.ContentTemplate;
-                        TextBox tbCellContent = tmpProduct.FindName(dgcellNames[colNo], cpProduct) as TextBox;
+                        TextBox tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
 
                         cells[colNo] = tbCellContent.Text;
                     }
@@ -519,7 +519,9 @@ namespace GUI
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                TextBlock barcodeCellContent = dgProducts.Columns[initialIndex].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
+                var tmpProduct = cpProduct.ContentTemplate;
+                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
                 if (barcodeCellContent.Text == productId.ToString())
                 {
@@ -836,40 +838,36 @@ namespace GUI
 
             tbTotalCostPrice.Text = (Convert.ToDecimal(costPriceFromDg.Text) * Convert.ToDecimal(quantityFromDg.Text)).ToString();
 
-            //if (txtProductCostPrice.Text != "")
-            //{
-            //    decimal number;
-            //    string productCostPrice = txtProductCostPrice.Text;
-            //    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
-            //    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+            if (costPriceFromDg.Text != "" && quantityFromDg.Text != "")
+            {
+                decimal number;
+                string productCostPrice = costPriceFromDg.Text, productQuantity= quantityFromDg.Text;
+                char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
+                bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
-            //    if (decimal.TryParse(productCostPrice, out number) && result == true)
-            //    {
-            //        decimal productAmount = Convert.ToDecimal(txtProductAmount.Text);
+                if (decimal.TryParse(productCostPrice, out number) && decimal.TryParse(productQuantity,out number) && result == true)
+                {
+                    //txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
+                }
 
-            //        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
+                else//Reverting the amount to the default value.
+                {
+                    MessageBox.Show("Please enter a valid number");
 
-            //        btnProductAdd.IsEnabled = true;
-            //    }
+                    //using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
+                    //{
+                    //    int rowIndex = 0;
+                    //    txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
+                    //}
+                }
+            }
 
-            //    else//Reverting the amount to the default value.
-            //    {
-            //        MessageBox.Show("Please enter a valid number");
-
-            //        using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
-            //        {
-            //            int rowIndex = 0;
-            //            txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
-            //        }
-            //    }
-            //}
-
-            ///* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
-            //   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
-            //else
-            //{
-            //    btnProductAdd.IsEnabled = false;
-            //}
+            /* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
+               Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+            else
+            {
+                btnProductAdd.IsEnabled = false;
+            }
         }
 
         private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -1004,6 +1002,15 @@ namespace GUI
         private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
         {
             CalculateGrandTotal(calledByDiscount);
+        }
+
+        private void dgProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cellInfo = dgProducts.SelectedCells[0];
+
+            var content = cellInfo.Column.GetCellContent(cellInfo.Item);
+
+            MessageBox.Show(content.ToString());
         }
 
         private void LoadCboMenuAsset(int checkStatus)
