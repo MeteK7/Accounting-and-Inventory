@@ -770,7 +770,7 @@ namespace GUI
         }
 
         /*----THIS IS NOT AN EFFICIENT CODE----*/
-        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextMenuCostPriceChanged()
         {
             if (txtProductCostPrice.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
             {
@@ -809,6 +809,77 @@ namespace GUI
                     btnProductAdd.IsEnabled = false;
                 }
             }
+        }
+
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
+        private void DgTextChanged()
+        {
+            int cellCostPrice=3, cellQuantity=4,cellTotalCostPrice =5; /// Specify your column index here.
+
+            ////GETTING TEXTBOXES FROM DATAGRID.
+            ContentPresenter cpCostPrice = dgProducts.Columns[cellCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpCostPrice = cpCostPrice.ContentTemplate;
+            TextBox costPriceFromDg = tmpCostPrice.FindName("txtDgProductCostPrice", cpCostPrice) as TextBox;
+
+            ////GETTING TEXTBOXES FROM DATAGRID.
+            ContentPresenter cpQuantity = dgProducts.Columns[cellQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpQuantity = cpQuantity.ContentTemplate;
+            TextBox quantityFromDg = tmpQuantity.FindName("txtQuantity", cpQuantity) as TextBox;
+
+            //GETTING TEXTBLOCK FROM DATAGRID
+            DataGridRow row = dgProducts.ItemContainerGenerator.ContainerFromIndex(dgProducts.SelectedIndex) as DataGridRow;
+            TextBlock tbTotalCostPrice = dgProducts.Columns[cellTotalCostPrice].GetCellContent(row) as TextBlock;
+
+            tbTotalCostPrice.Text = (Convert.ToDecimal(costPriceFromDg.Text) * Convert.ToDecimal(quantityFromDg.Text)).ToString();
+
+            //if (txtProductCostPrice.Text != "")
+            //{
+            //    decimal number;
+            //    string productCostPrice = txtProductCostPrice.Text;
+            //    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
+            //    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+
+            //    if (decimal.TryParse(productCostPrice, out number) && result == true)
+            //    {
+            //        decimal productAmount = Convert.ToDecimal(txtProductAmount.Text);
+
+            //        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productAmount).ToString();
+
+            //        btnProductAdd.IsEnabled = true;
+            //    }
+
+            //    else//Reverting the amount to the default value.
+            //    {
+            //        MessageBox.Show("Please enter a valid number");
+
+            //        using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
+            //        {
+            //            int rowIndex = 0;
+            //            txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
+            //        }
+            //    }
+            //}
+
+            ///* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
+            //   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+            //else
+            //{
+            //    btnProductAdd.IsEnabled = false;
+            //}
+        }
+
+        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextMenuCostPriceChanged();
+        }
+
+        private void txtDgProductCostPrice_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
+        private void txtQuantity_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
         }
 
         private void txtInvoiceNo_GotFocus(object sender, RoutedEventArgs e)

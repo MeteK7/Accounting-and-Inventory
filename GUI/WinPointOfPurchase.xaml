@@ -342,15 +342,15 @@
                         <DataGridTemplateColumn Header="Cost Price">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                                    <TextBox x:Name="txtDgProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="100" KeyUp="txtDgProductCostPrice_KeyUp" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         
-                        <DataGridTemplateColumn Header="Amount">
+                        <DataGridTemplateColumn Header="Quantity">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox Text="{Binding Amount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="60" />
+                                    <TextBox x:Name="txtQuantity" Text="{Binding Amount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="60" KeyUp="txtQuantity_KeyUp" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
