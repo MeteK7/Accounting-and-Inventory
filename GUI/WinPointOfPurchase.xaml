@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="936" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -330,7 +330,7 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="618" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -359,7 +359,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Cost Price" Width="100">
+                        <DataGridTemplateColumn Header="Cost Price" Width="90">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductCostPrice_KeyUp" />
@@ -382,7 +382,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -390,7 +390,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

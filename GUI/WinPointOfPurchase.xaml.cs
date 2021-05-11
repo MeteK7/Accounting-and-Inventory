@@ -66,7 +66,7 @@ namespace GUI
         int oldItemsRowCount;
         int invoiceArrow;
         int oldIdAsset, oldIdAssetSupplier;
-        decimal oldBasketCostTotal,oldBasketGrandTotal;
+        decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -159,7 +159,7 @@ namespace GUI
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
-            txtInvoiceNo.Text = "";
+            //txtInvoiceNo.Text = "";
         }
 
         private void ClearProductsDataGrid()
@@ -821,25 +821,25 @@ namespace GUI
         /*----THIS IS NOT AN EFFICIENT CODE----*/
         private void DgTextChanged()
         {
-            int cellCostPrice=3, cellQuantity=4,cellTotalCostPrice =5; /// Specify your column index here.
-
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductCostPrice = dgProducts.Columns[cellCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductCostPrice = dgProducts.Columns[colProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
             TextBox productCostPrice = tmpProductCostPrice.FindName(dgCellNames[colProductCostPrice], cpProductCostPrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductQuantity = dgProducts.Columns[cellQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
             TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
-            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[cellTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
             TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
+            productQuantity.Text = productQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
             productTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(productQuantity.Text)).ToString();
 
+            txtBasketAmount.Text = (oldBasketQuantity + Convert.ToDecimal(productQuantity.Text)).ToString();
             txtBasketCostTotal.Text = (oldBasketCostTotal+Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
             txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
 
@@ -1003,12 +1003,17 @@ namespace GUI
         {
             if (dgProducts.SelectedItem!=null)
             {
-                int cellProductCostPrice = 5;
-                ////GETTING TEXTBOXES FROM DATAGRID.
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[cellProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ////GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
                 TextBox productTotalCostPrice = tmpProductCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductCostPrice) as TextBox;
 
+                ////GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductQuantity = cpProductQuantity.ContentTemplate;
+                TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
+
+                oldBasketQuantity = Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(productQuantity.Text);
                 oldBasketCostTotal = Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Cost total is without VAT.
                 oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Grand total is with VAT.
             }
