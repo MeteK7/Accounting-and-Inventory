@@ -53,10 +53,12 @@ namespace GUI
         AccountDAL accountDAL = new AccountDAL();
         AssetDAL assetDAL = new AssetDAL();
         AssetCUL assetCUL = new AssetCUL();
+        CommonBLL commonBLL = new CommonBLL();
 
         int initialIndex = 0;
         const int colLength =6;
-        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit;
+        const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colProductCostPrice=3, colProductQuantity=4, colProductTotalCostPrice = 5;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
@@ -66,7 +68,7 @@ namespace GUI
         int oldItemsRowCount;
         int invoiceArrow;
         int oldIdAsset, oldIdAssetSupplier;
-        decimal oldBasketCostTotal,oldBasketGrandTotal;
+        decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -136,7 +138,7 @@ namespace GUI
             txtInvoiceNo.IsEnabled = false;
         }
 
-        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
+        private void ModifyToolsOnClickBtnNewOrEdit(int clickedBtn= clickedNothing)//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -159,7 +161,9 @@ namespace GUI
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
-            txtInvoiceNo.Text = "";
+
+            if (clickedBtn == clickedNew)
+                txtInvoiceNo.Text = "";
         }
 
         private void ClearProductsDataGrid()
@@ -192,6 +196,12 @@ namespace GUI
         {
             ClearBasketTextBox();
             ClearProductsDataGrid();
+
+            int invoiceNo, increment = 1;
+
+            invoiceNo = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceId.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
@@ -601,7 +611,7 @@ namespace GUI
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            ModifyToolsOnClickBtnNewOrEdit();
+            ModifyToolsOnClickBtnNewOrEdit(clickedNewOrEdit);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -821,25 +831,25 @@ namespace GUI
         /*----THIS IS NOT AN EFFICIENT CODE----*/
         private void DgTextChanged()
         {
-            int cellCostPrice=3, cellQuantity=4,cellTotalCostPrice =5; /// Specify your column index here.
-
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductCostPrice = dgProducts.Columns[cellCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductCostPrice = dgProducts.Columns[colProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
             TextBox productCostPrice = tmpProductCostPrice.FindName(dgCellNames[colProductCostPrice], cpProductCostPrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductQuantity = dgProducts.Columns[cellQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
             TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
-            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[cellTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
             TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
+            productQuantity.Text = productQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
             productTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(productQuantity.Text)).ToString();
 
+            txtBasketAmount.Text = (oldBasketQuantity + Convert.ToDecimal(productQuantity.Text)).ToString();
             txtBasketCostTotal.Text = (oldBasketCostTotal+Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
             txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
 
@@ -1003,12 +1013,17 @@ namespace GUI
         {
             if (dgProducts.SelectedItem!=null)
             {
-                int cellProductCostPrice = 5;
-                ////GETTING TEXTBOXES FROM DATAGRID.
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[cellProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ////GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
                 TextBox productTotalCostPrice = tmpProductCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductCostPrice) as TextBox;
 
+                ////GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductQuantity = cpProductQuantity.ContentTemplate;
+                TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
+
+                oldBasketQuantity = Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(productQuantity.Text);
                 oldBasketCostTotal = Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Cost total is without VAT.
                 oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Grand total is with VAT.
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="936" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -330,7 +330,7 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="618" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -359,7 +359,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Cost Price" Width="100">
+                        <DataGridTemplateColumn Header="Cost Price" Width="90">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductCostPrice_KeyUp" />
@@ -382,7 +382,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -390,17 +390,13 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </GroupBox>
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Center" Height="82" Margin="0,10,-2,3" TextWrapping="Wrap" VerticalAlignment="Center" Width="225" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0">
-                <TextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0"/>
-                </TextBox.Background>
-            </TextBox>
+            <Label x:Name="lblInvoiceId" Content="Label" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
         </GroupBox>
         <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
@@ -530,6 +526,11 @@
                 <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
                 <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
                 <Label x:Name="lblAssetSupplierId" Content="" HorizontalAlignment="Left" Margin="902,40,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
+                <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0" Margin="930,52,0,0">
+                    <TextBox.Background>
+                        <SolidColorBrush Color="White" Opacity="0"/>
+                    </TextBox.Background>
+                </TextBox>
             </Grid>
         </GroupBox>
         <GroupBox Header="Controls" Margin="1128,265,10,438">
