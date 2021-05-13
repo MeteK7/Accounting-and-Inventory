@@ -396,11 +396,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Center" Height="82" Margin="0,10,-2,3" TextWrapping="Wrap" VerticalAlignment="Center" Width="225" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0">
-                <TextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0"/>
-                </TextBox.Background>
-            </TextBox>
+            <Label x:Name="lblInvoiceId" Content="Label" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
         </GroupBox>
         <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
@@ -530,6 +526,11 @@
                 <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
                 <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
                 <Label x:Name="lblAssetSupplierId" Content="" HorizontalAlignment="Left" Margin="902,40,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
+                <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0" Margin="930,52,0,0">
+                    <TextBox.Background>
+                        <SolidColorBrush Color="White" Opacity="0"/>
+                    </TextBox.Background>
+                </TextBox>
             </Grid>
         </GroupBox>
         <GroupBox Header="Controls" Margin="1128,265,10,438">

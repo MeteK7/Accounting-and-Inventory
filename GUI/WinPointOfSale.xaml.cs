@@ -181,7 +181,7 @@ namespace GUI
 
             int invoiceNo, increment = 1;
 
-            invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo = pointOfSaleBLL.GetLastInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
@@ -193,7 +193,7 @@ namespace GUI
 
             if (invoiceNo == 0)
             {
-                invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                invoiceNo = pointOfSaleBLL.GetLastInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
@@ -673,7 +673,7 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceNo = pointOfSaleBLL.GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
+            int lastInvoiceNo = pointOfSaleBLL.GetLastInvoiceId(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
 
             if (currentInvoiceNo != lastInvoiceNo)
             {

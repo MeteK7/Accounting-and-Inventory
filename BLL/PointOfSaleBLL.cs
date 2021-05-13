@@ -32,7 +32,7 @@ namespace BLL
             return dataTable;
         }
 
-        public int GetLastInvoiceNumber()
+        public int GetLastInvoiceId()
         {
             int initialIndex = 0, invoiceNo;
 

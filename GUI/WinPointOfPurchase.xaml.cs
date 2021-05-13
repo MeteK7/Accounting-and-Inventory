@@ -56,7 +56,8 @@ namespace GUI
 
         int initialIndex = 0;
         const int colLength =6;
-        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit;
+        const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colProductCostPrice=3, colProductQuantity=4, colProductTotalCostPrice = 5;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
@@ -136,7 +137,7 @@ namespace GUI
             txtInvoiceNo.IsEnabled = false;
         }
 
-        private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
+        private void ModifyToolsOnClickBtnNewOrEdit(int clickedBtn= clickedNothing)//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times! And in the other pages as well!
         {
             btnNew.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -159,7 +160,9 @@ namespace GUI
             chkUpdateProductCosts.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
-            //txtInvoiceNo.Text = "";
+
+            if (clickedBtn == clickedNew)
+                txtInvoiceNo.Text = "";
         }
 
         private void ClearProductsDataGrid()
@@ -192,6 +195,12 @@ namespace GUI
         {
             ClearBasketTextBox();
             ClearProductsDataGrid();
+
+            int invoiceNo, increment = 1;
+
+            invoiceNo = pointOfPurchaseBLL.GetLastInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceId.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
@@ -601,7 +610,7 @@ namespace GUI
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
-            ModifyToolsOnClickBtnNewOrEdit();
+            ModifyToolsOnClickBtnNewOrEdit(clickedNewOrEdit);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
