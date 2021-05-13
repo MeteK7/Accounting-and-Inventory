@@ -53,6 +53,7 @@ namespace GUI
         AccountDAL accountDAL = new AccountDAL();
         AssetDAL assetDAL = new AssetDAL();
         AssetCUL assetCUL = new AssetCUL();
+        CommonBLL commonBLL = new CommonBLL();
 
         int initialIndex = 0;
         const int colLength =6;
@@ -198,7 +199,7 @@ namespace GUI
 
             int invoiceNo, increment = 1;
 
-            invoiceNo = pointOfPurchaseBLL.GetLastInvoiceId();//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceNo = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceId.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
