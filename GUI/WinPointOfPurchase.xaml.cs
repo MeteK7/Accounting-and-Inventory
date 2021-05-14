@@ -207,60 +207,57 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
         {
-            int firstRowIndex = 0, productUnitId;
+            int initalIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productAmount, productTotalCostPrice;
 
-            if (invoiceId == 0)//If the ID is 0 came from the optional parameter, that means user just clicked the pop button to open it.
+            if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
-                DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice id and assign it to the variable called invoiceId.
-
-                if (dataTableLastInvoice.Rows.Count != 0)
-                {
-                    invoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);
-                }
+                invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (invoiceId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (invoiceId != initalIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePop = pointOfPurchaseDAL.GetByInvoiceId(invoiceId);
 
-                if (dataTablePop.Rows.Count != 0)
+                if (dataTablePop.Rows.Count != initalIndex)
                 {
                     DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
                     
                     #region ASSET INFORMATION FILLING REGION
-                    int assetId = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["asset_id"].ToString());//Getting the id of account.
+                    int assetId = Convert.ToInt32(dataTablePop.Rows[initalIndex]["asset_id"].ToString());//Getting the id of account.
                     lblAssetId.Content = assetId;
 
                     DataTable dtAsset = assetDAL.SearchById(assetId);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[firstRowIndex]["id_source_type"]);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[initalIndex]["id_source_type"]);
 
                     if (sourceType == account)
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboMenuPaymentType();
-                    LoadCboMenuSupplier();
-                    cboMenuAsset.SelectedValue = dtAsset.Rows[firstRowIndex]["id_source"].ToString();
+                    cboMenuAsset.SelectedValue = dtAsset.Rows[initalIndex]["id_source"].ToString();
                     #endregion
 
-                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                    cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[firstRowIndex]["supplier_id"].ToString());//Getting the id of supplier.
-                    txtInvoiceNo.Text = dataTablePop.Rows[firstRowIndex]["invoice_no"].ToString();
+                    LoadCboMenuPaymentType();
+                    LoadCboMenuSupplier();
+
+                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initalIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                    cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initalIndex]["supplier_id"].ToString());//Getting the id of supplier.
+                    txtInvoiceNo.Text = dataTablePop.Rows[initalIndex]["invoice_no"].ToString();
+                    lblInvoiceId.Content= dataTablePop.Rows[initalIndex]["id"].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
-                    for (int currentRow = firstRowIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
+                    for (int currentRow = initalIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
                     {
 
                         productId = dataTablePopDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePopDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
+                        productUnitName = dataTableUnitInfo.Rows[initalIndex]["name"].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
                         productCostPrice = dataTablePopDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productAmount = dataTablePopDetail.Rows[currentRow]["amount"].ToString();
@@ -268,7 +265,7 @@ namespace GUI
 
                         dataTableProduct = productDAL.SearchById(productId);
 
-                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+                        productName = dataTableProduct.Rows[initalIndex]["name"].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice });
 
@@ -277,16 +274,16 @@ namespace GUI
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketAmount.Text = dataTablePop.Rows[firstRowIndex]["total_product_amount"].ToString();
-                    txtBasketCostTotal.Text = dataTablePop.Rows[firstRowIndex]["cost_total"].ToString();
-                    txtBasketVat.Text = dataTablePop.Rows[firstRowIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePop.Rows[firstRowIndex]["discount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePop.Rows[firstRowIndex]["grand_total"].ToString();
+                    //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketAmount.Text = dataTablePop.Rows[initalIndex]["total_product_amount"].ToString();
+                    txtBasketCostTotal.Text = dataTablePop.Rows[initalIndex]["cost_total"].ToString();
+                    txtBasketVat.Text = dataTablePop.Rows[initalIndex]["vat"].ToString();
+                    txtBasketDiscount.Text = dataTablePop.Rows[initalIndex]["discount"].ToString();
+                    txtBasketGrandTotal.Text = dataTablePop.Rows[initalIndex]["grand_total"].ToString();
 
                     #endregion
                 }
-                else if (dataTablePop.Rows.Count == 0)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePop.Rows.Count == initalIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {

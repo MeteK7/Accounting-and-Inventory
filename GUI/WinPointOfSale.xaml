@@ -356,7 +356,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <Label x:Name="lblInvoiceNo" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
+            <Label x:Name="lblInvoiceId" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
         <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
