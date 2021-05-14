@@ -197,11 +197,11 @@ namespace GUI
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
-            int invoiceNo, increment = 1;
+            int invoiceId, increment = 1;
 
-            invoiceNo = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
-            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            lblInvoiceId.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+            invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
@@ -362,24 +362,16 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
-
-                int currentInvoiceId = 1, firstRowIndex = 0;//Current invoice id is 1 number greater than the previous id. So that we assign 1 as a default value to add it to the previous id later.
+                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
+                int firstRowIndex = 0;
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
                 DataTable dtAsset= new DataTable();
                 decimal oldSourceBalance;
 
-                //If there is a row in the datatable, then fetch the id of the invoice. Otherwise, it is the first run and keep the default value.
-                if (clickedNewOrEdit ==clickedNew && dataTableLastInvoice.Rows.Count != 0)
+                if (clickedNewOrEdit == clickedEdit)
                 {
-                    currentInvoiceId = currentInvoiceId + Convert.ToInt32(dataTableLastInvoice.Rows[firstRowIndex]["id"]);//Getting the new invoice id.
-                }
-
-                else if (clickedNewOrEdit == clickedEdit)//If it is in the Edit Mode, then assign the old invoice id in order to update the same invoice id later.
-                {
-                    currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
-
                     #region TABLE OLD ASSET REVERTING SECTION
                     //REVERTING THE TABLE ASSET FOR BALANCE OF THE SUPPLIER.
 
@@ -406,7 +398,7 @@ namespace GUI
 
                 #region TABLE POP SAVING SECTION
                 //Getting the values from the POP Window and fill them into the pointOfPurchaseCUL.
-                pointOfPurchaseCUL.Id = currentInvoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
+                pointOfPurchaseCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
@@ -440,7 +432,7 @@ namespace GUI
                         productBLL.RevertOldAmountInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
-                        pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
+                        pointOfPurchaseDetailDAL.Delete(invoiceId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
                         clickedNewOrEdit = clickedNull;
@@ -464,7 +456,7 @@ namespace GUI
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[0] contains the product barcode.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    pointOfPurchaseDetailCUL.Id = currentInvoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
+                    pointOfPurchaseDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
@@ -651,10 +643,10 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region DELETE INVOICE
-                    int currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
+                    int invoiceId = Convert.ToInt32(lblInvoiceId.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
-                    pointOfPurchaseDetailDAL.Delete(currentInvoiceId);
-                    pointOfPurchaseDAL.Delete(currentInvoiceId);
+                    pointOfPurchaseDetailDAL.Delete(invoiceId);
+                    pointOfPurchaseDAL.Delete(invoiceId);
 
                     #endregion
 
@@ -684,9 +676,7 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceId = 1, currentInvoiceId;
-
-            currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
+            int firstInvoiceId = 1, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content); ;
 
             if (currentInvoiceId != firstInvoiceId)
             {
@@ -699,18 +689,14 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int voidInvoiceId = 0, lastInvoiceId, currentInvoiceId;
+            int lastInvoiceId = commonBLL.GetLastInvoiceId(calledBy), currentInvoiceId;
 
-            currentInvoiceId = pointOfPurchaseBLL.GetInvoiceIdByNo(txtInvoiceNo.Text);
-
-            DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();
-            lastInvoiceId = Convert.ToInt32(dataTableLastInvoice.Rows[voidInvoiceId]["id"]);//Getting the last invoice id.
-
+            currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 
             if (currentInvoiceId != lastInvoiceId)
             {
                 ClearProductsDataGrid();
-                int nextInvoice = Convert.ToInt32(currentInvoiceId) + 1;
+                int nextInvoice = currentInvoiceId + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
             }

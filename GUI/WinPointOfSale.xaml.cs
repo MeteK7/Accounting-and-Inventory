@@ -179,11 +179,11 @@ namespace GUI
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
-            int invoiceNo, increment = 1;
+            int invoiceId, increment = 1;
 
-            invoiceNo = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
-            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            lblInvoiceId.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+            invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
         private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
@@ -313,7 +313,7 @@ namespace GUI
             if (isDgEqual == false && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuCustomer.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex && int.TryParse((lblInvoiceId.Content).ToString(), out int number))
             {
                 int userClickedNewOrEdit;
-                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
+                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
 
@@ -660,12 +660,12 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(lblInvoiceId.Content);
+            int firstInvoiceId = 0, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 
-            if (currentInvoiceNo != firstInvoiceId)
+            if (currentInvoiceId != firstInvoiceId)
             {
                 ClearProductsDataGrid();
-                int prevInvoice = Convert.ToInt32(lblInvoiceId.Content) - 1;
+                int prevInvoice = currentInvoiceId - 1;
                 invoiceArrow = 0;//0 means customer has clicked the previous button.
                 LoadPastInvoice(prevInvoice, invoiceArrow);
             }
@@ -673,12 +673,14 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceId = commonBLL.GetLastInvoiceId(calledBy), currentInvoiceNo = Convert.ToInt32(lblInvoiceId.Content);
+            int lastInvoiceId = commonBLL.GetLastInvoiceId(calledBy), currentInvoiceId;
 
-            if (currentInvoiceNo != lastInvoiceId)
+            currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
+
+            if (currentInvoiceId != lastInvoiceId)
             {
                 ClearProductsDataGrid();
-                int nextInvoice = Convert.ToInt32(lblInvoiceId.Content) + 1;
+                int nextInvoice = currentInvoiceId + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
             }
