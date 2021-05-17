@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, account_id, total_product_amount, cost_total, sub_total, vat, discount, grand_total, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @account_id, @total_product_amount, @cost_total, @sub_total, @vat, @discount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, vat, discount, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @vat, @discount, @grand_total, @asset_id, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -62,13 +62,12 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseCUL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("@account_id", pointOfPurchaseCUL.AccountId);
                 cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
-                cmd.Parameters.AddWithValue("@sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("@grand_total", pointOfPurchaseCUL.GrandTotal);
+                cmd.Parameters.AddWithValue("@asset_id", pointOfPurchaseCUL.AssetId);
                 cmd.Parameters.AddWithValue("@added_date", pointOfPurchaseCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseCUL.AddedBy);
 
@@ -106,22 +105,22 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, account_id=@account_id, total_product_amount=@total_product_amount, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_amount=@total_product_amount, cost_total=@cost_total, vat=@vat, discount=@discount, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("account_id", pointOfPurchaseCUL.AccountId);
                 cmd.Parameters.AddWithValue("total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
                 cmd.Parameters.AddWithValue("cost_total", pointOfPurchaseCUL.CostTotal);
-                cmd.Parameters.AddWithValue("sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("grand_total", pointOfPurchaseCUL.GrandTotal);
+                cmd.Parameters.AddWithValue("asset_id", pointOfPurchaseCUL.AssetId);
                 cmd.Parameters.AddWithValue("added_date", pointOfPurchaseCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", pointOfPurchaseCUL.AddedBy);
-                cmd.Parameters.AddWithValue("id", pointOfPurchaseCUL.InvoiceNo);//Do you really need to update the ID?
+                cmd.Parameters.AddWithValue("invoice_no", pointOfPurchaseCUL.InvoiceNo);
+                cmd.Parameters.AddWithValue("id", pointOfPurchaseCUL.Id);//Do you really need to update the ID?
 
 
                 conn.Open();
@@ -250,6 +249,52 @@ namespace KabaAccounting.DAL
                 String sql;
 
                     sql = "SELECT * FROM tbl_pop WHERE invoice_no=" + invoiceNo + "";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    try
+                    {
+                        /*cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;*/
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+        
+        #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
+        public DataTable GetByIdOrLastId(int invoiceId = 0)//Optional parameter
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+                String sql;
+
+                if (invoiceId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
+                {
+                    sql = "SELECT * FROM tbl_pop WHERE id=(SELECT max(id) FROM tbl_pop)";
+                    //sql = "SELECT * FROM tbl_pop WHERE id=IDENT_CURRENT('tbl_pop')";//SQL query to get the last id of rows in the table.
+                }
+
+                else
+                {
+                    sql = "SELECT * FROM tbl_pop WHERE id=" + invoiceId + "";
+                }
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {

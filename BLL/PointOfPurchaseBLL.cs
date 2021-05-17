@@ -12,14 +12,14 @@ namespace BLL
     {
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
 
-        public int GetInvoiceIdByNo(string invoiceNo)
-        {
-            int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(invoiceNo);
+        //public int GetInvoiceIdByNo(string invoiceNo)
+        //{
+        //    int voidInvoiceId = 0, currentInvoiceNo = Convert.ToInt32(invoiceNo);
 
-            DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
-            int currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
-            return currentInvoiceId;
-        }
+        //    DataTable dataTableCurrentInvoice = pointOfPurchaseDAL.SearchByInvoiceNo(currentInvoiceNo);
+        //    int currentInvoiceId = Convert.ToInt32(dataTableCurrentInvoice.Rows[voidInvoiceId]["id"]);//Getting the current invoice id.
+        //    return currentInvoiceId;
+        //}
 
         public DataTable GetLastInvoiceRecord()
         {

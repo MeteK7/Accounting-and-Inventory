@@ -204,7 +204,7 @@
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
             <Label x:Name="lblTop" Content="EXPENSES" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right">
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
                 </Button.BorderBrush>
@@ -293,24 +293,28 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,0,0,0" VerticalAlignment="Center" Height="61" Width="71"/>
-                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517"/>
+                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,0,0,0" VerticalAlignment="Center" Height="61" Width="71" Click="btnPrev_Click"/>
+                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517" Click="btnNext_Click"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Payment Number" Margin="892,34,10,610">
+        <GroupBox Header="Expense Number" Margin="892,34,10,610">
             <Grid>
-                <Label x:Name="lblPaymentNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
+                <Label x:Name="lblExpenseId" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
         <Label x:Name="lblAmount" Content="AMOUNT:" HorizontalAlignment="Left" Margin="70,290,0,0" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="201,290,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="247" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
-        <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="70,174,0,0" VerticalAlignment="Top" Width="126"/>
-        <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="201,174,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboFrom_Loaded" SelectionChanged="cboFrom_SelectionChanged"/>
+        <Label x:Name="lblFrom" Content="From (Asset)" HorizontalAlignment="Left" Margin="70,177,0,0" VerticalAlignment="Top" Width="76"/>
+        <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="221,174,0,0" VerticalAlignment="Top" Width="227" Height="34" SelectionChanged="cboFrom_SelectionChanged"/>
         <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="70,236,0,0" VerticalAlignment="Top" Width="126"/>
-        <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="201,236,0,0" VerticalAlignment="Top" Width="247" Height="29" Loaded="cboTo_Loaded" SelectionChanged="cboTo_SelectionChanged"/>
+        <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="201,236,0,0" VerticalAlignment="Top" Width="247" Height="29" SelectionChanged="cboTo_SelectionChanged" IsReadOnly="True"/>
         <Label x:Name="lblBalanceFrom" Content="" HorizontalAlignment="Left" Margin="483,175,0,0" VerticalAlignment="Top" Width="236" Height="28" Foreground="Red"/>
         <Label x:Name="lblBalanceTo" Content="" HorizontalAlignment="Left" Margin="483,236,0,0" VerticalAlignment="Top" Height="29" Width="236" Foreground="Red"/>
         <Label Content="UNDER CONSTRUCTION" HorizontalAlignment="Left" Margin="687,560,0,0" VerticalAlignment="Top" Width="354" Height="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="Red" FontSize="24" FontFamily="Constantia"/>
+        <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="151,178,0,0" VerticalAlignment="Top" Width="65" Checked="rbAccount_Checked"/>
+        <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="151,193,0,0" VerticalAlignment="Top" Width="65" Checked="rbBank_Checked"/>
+        <Label x:Name="lblAssetIdFrom" Content="" HorizontalAlignment="Left" Margin="724,175,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Label x:Name="lblAssetIdTo" Content="" HorizontalAlignment="Left" Margin="724,208,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
 
     </Grid>
 </Window>

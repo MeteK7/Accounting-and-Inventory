@@ -103,6 +103,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("name", bankCUL.Name);
                 cmd.Parameters.AddWithValue("added_date", bankCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", bankCUL.AddedBy);
+                cmd.Parameters.AddWithValue("id", bankCUL.Id);
 
                 conn.Open();
 
