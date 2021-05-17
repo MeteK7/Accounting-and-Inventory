@@ -165,7 +165,7 @@ namespace GUI
             winAccount.Show();
         }
 
-        private void btnPayment_Click(object sender, RoutedEventArgs e)
+        private void btnExpense_Click(object sender, RoutedEventArgs e)
         {
             WinExpense winPayment = new WinExpense();
             winPayment.Show();

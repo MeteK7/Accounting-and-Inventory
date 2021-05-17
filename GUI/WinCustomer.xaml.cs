@@ -58,7 +58,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("New data inserted successfully.");
-                dtgCustomer.Items.Clear();
+                dtgCustomers.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }
@@ -86,7 +86,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data successfully updated.");
-                dtgCustomer.Items.Clear();
+                dtgCustomers.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }
@@ -105,7 +105,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 MessageBox.Show("Data has been deleted successfully.");
-                dtgCustomer.Items.Clear();
+                dtgCustomers.Items.Clear();
                 ClearCustomerTextBox();
                 LoadCustomerDataGrid();
             }
@@ -129,8 +129,8 @@ namespace GUI
             DataTable dataTableUserInfo;
 
             //dtgs.ItemsSource = dataTable.DefaultView; Adds everything at once.
-            dtgCustomer.AutoGenerateColumns = true;
-            dtgCustomer.CanUserAddRows = false;
+            dtgCustomers.AutoGenerateColumns = true;
+            dtgCustomers.CanUserAddRows = false;
 
             #region LOADING THE PRODUCT DATA GRID
 
@@ -146,7 +146,7 @@ namespace GUI
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
                 addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
 
-                dtgCustomer.Items.Add(new { Id = customerId, Name = customerName,Email=customerEmail,Contact=customerContact,Address=customerAddress, AddedDate = addedDate, AddedBy = addedByUsername });
+                dtgCustomers.Items.Add(new { Id = customerId, Name = customerName,Email=customerEmail,Contact=customerContact,Address=customerAddress, AddedDate = addedDate, AddedBy = addedByUsername });
             }
             #endregion
         }
@@ -164,17 +164,22 @@ namespace GUI
 
         private void DtgCustomerIndexChanged()
         {
-            //Getting the index of a particular row and fill the text boxes with the related columns of the row.
+            object row = dtgCustomers.SelectedItem;
+            int colCustomerId = 0, colCustomerName = 1, colCustomerEmail = 2,colCustomerContact=3, colCustomerAddress = 4;
 
-            //int rowIndex = dtgCategories.SelectedIndex;
+            txtId.Text = (dtgCustomers.Columns[colCustomerId].GetCellContent(row) as TextBlock).Text;
+            txtName.Text = (dtgCustomers.Columns[colCustomerName].GetCellContent(row) as TextBlock).Text;
+            txtEmail.Text = (dtgCustomers.Columns[colCustomerEmail].GetCellContent(row) as TextBlock).Text;
+            txtContact.Text = (dtgCustomers.Columns[colCustomerContact].GetCellContent(row) as TextBlock).Text;
+            txtAddress.Text = (dtgCustomers.Columns[colCustomerAddress].GetCellContent(row) as TextBlock).Text;
 
-            DataRowView drv = (DataRowView)dtgCustomer.SelectedItem;
+            //DataRowView drv = (DataRowView)dtgCustomer.SelectedItem;
 
-            txtId.Text = (drv[0]).ToString();//Selecting the specific row
-            txtName.Text = (drv[1]).ToString();
-            txtEmail.Text = (drv[2]).ToString();
-            txtContact.Text = (drv[3]).ToString();
-            txtAddress.Text = (drv[4]).ToString();
+            //txtId.Text = (drv[0]).ToString();//Selecting the specific row
+            //txtName.Text = (drv[1]).ToString();
+            //txtEmail.Text = (drv[2]).ToString();
+            //txtContact.Text = (drv[3]).ToString();
+            //txtAddress.Text = (drv[4]).ToString();
         }
 
         private void dtgCustomer_KeyUp(object sender, KeyEventArgs e)
@@ -203,9 +208,9 @@ namespace GUI
             {
                 //Show category informations based on the keyword
                 DataTable dataTable = customerDAL.Search(keyword);
-                dtgCustomer.ItemsSource = dataTable.DefaultView;
-                dtgCustomer.AutoGenerateColumns = true;
-                dtgCustomer.CanUserAddRows = false;
+                dtgCustomers.ItemsSource = dataTable.DefaultView;
+                dtgCustomers.AutoGenerateColumns = true;
+                dtgCustomers.CanUserAddRows = false;
             }
             else
             {

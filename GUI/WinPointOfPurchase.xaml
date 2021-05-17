@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="936" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -330,18 +330,59 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="True">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="618" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id" Width="130" />
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="540"/>
-                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="70"/>
-                        <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
-                        <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price" Width="100"/>
-                        <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
-                        <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="Total Cost Price" Width="140"/>
+                        <DataGridTemplateColumn Header="Id" Width="130">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Name" Width="540">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Unit" Width="70">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductUnit" Text="{Binding Unit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Cost Price" Width="90">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductCostPrice_KeyUp" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Quantity" Width="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductQuantity" Text="{Binding Amount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductQuantity_KeyUp" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Total Cost Price" Width="140">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -349,16 +390,13 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </GroupBox>
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Center" Height="82" Margin="0,10,-2,3" TextWrapping="Wrap" VerticalAlignment="Center" Width="225" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0">
-                <TextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0"/>
-                </TextBox.Background>
-            </TextBox>
+            <Label x:Name="lblInvoiceId" Content="Label" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
         </GroupBox>
         <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
@@ -378,7 +416,7 @@
                 <TextBox x:Name="txtBasketAmount" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp"/>
-                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp"/>
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
@@ -478,12 +516,21 @@
                         <ImageBrush ImageSource="/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="101" Height="25" FontSize="11"/>
-                <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuPaymentType_Loaded"/>
+                <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="78" Height="25" FontSize="11"/>
+                <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
                 <Label x:Name="lblMenuSupplierId" Content="Supplier" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
-                <ComboBox x:Name="cboMenuSupplier" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuSupplier_Loaded"/>
-                <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
-                <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuAccount_Loaded"/>
+                <ComboBox x:Name="cboMenuSupplier" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuSupplier_SelectionChanged"/>
+                <Label x:Name="lblMenuAsset" Content="Asset" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
+                <ComboBox x:Name="cboMenuAsset" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuAsset_SelectionChanged"/>
+                <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
+                <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
+                <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
+                <Label x:Name="lblAssetSupplierId" Content="" HorizontalAlignment="Left" Margin="902,40,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
+                <TextBox x:Name="txtInvoiceNo" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontFamily="Alef" Foreground="#FFE80000" GotFocus="txtInvoiceNo_GotFocus" LostFocus="txtInvoiceNo_LostFocus" Text="0" Margin="930,52,0,0">
+                    <TextBox.Background>
+                        <SolidColorBrush Color="White" Opacity="0"/>
+                    </TextBox.Background>
+                </TextBox>
             </Grid>
         </GroupBox>
         <GroupBox Header="Controls" Margin="1128,265,10,438">

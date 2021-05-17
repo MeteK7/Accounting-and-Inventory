@@ -25,7 +25,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "SELECT * FROM tbl_pos_details";
+                string sqlQuery = "SELECT * FROM tbl_pop_details";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
@@ -193,7 +193,7 @@ namespace KabaAccounting.DAL
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                String sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pos_details')";//SQL query to get the last id of rows in the table.
+                String sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pop_details')";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {

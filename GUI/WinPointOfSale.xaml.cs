@@ -52,10 +52,10 @@ namespace GUI
         }
 
         int invoiceArrow;
-        int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POS";
-
+        string calledBy = "WinPOS";
+        CommonBLL commonBLL = new CommonBLL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -179,88 +179,88 @@ namespace GUI
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
-            int invoiceNo, increment = 1;
+            int invoiceId, increment = 1;
 
-            invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
-            invoiceNo += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
-            lblInvoiceNo.Content = invoiceNo;//Assigning invoiceNo to the content of the InvoiceNo Label.
+            invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
+            lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
-        private void LoadPastInvoice(int invoiceNo = 0, int invoiceArrow = -1)//Optional parameter
+        private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
         {
-            int firstRowIndex = 0, productUnitId;
+            int initalIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productSalePrice, productAmount, productTotalCostPrice, productTotalSalePrice;
 
-            if (invoiceNo == 0)
+            if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
-                invoiceNo = pointOfSaleBLL.GetLastInvoiceNumber();//Getting the last invoice number and assign it to the variable called invoiceNo.
+                invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (invoiceNo != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (invoiceId != initalIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceNo);
+                DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceId);
 
-                if (dataTablePos.Rows.Count != 0)
+                if (dataTablePos.Rows.Count != initalIndex)
                 {
-                    DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceNo);
+                    DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
 
-                    for (int currentRow = firstRowIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
-                    {
-                        cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                        cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["customer_id"].ToString());//Getting the id of customer.
-                        cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
-                        lblInvoiceNo.Content = dataTablePos.Rows[firstRowIndex]["id"].ToString();
+                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
+                    cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["customer_id"].ToString());//Getting the id of customer.
+                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["account_id"].ToString());//Getting the id of account.
+                    lblInvoiceId.Content = dataTablePos.Rows[initalIndex]["id"].ToString();
 
-                        #region LOADING THE PRODUCT DATA GRID
+                    #region LOADING THE PRODUCT DATA GRID
+                    for (int currentRow = initalIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                    {
                         productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
+                        productUnitName = dataTableUnitInfo.Rows[initalIndex]["name"].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
                         productCostPrice = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productSalePrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
                         productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
-                        productTotalSalePrice = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)).ToString();//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
+                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
+                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
-                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+                        productName = dataTableProduct.Rows[initalIndex]["name"].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
-                        #endregion
                     }
+                    #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketAmount.Text = dataTablePos.Rows[firstRowIndex]["total_product_amount"].ToString();
-                    txtBasketCostTotal.Text = dataTablePos.Rows[firstRowIndex]["cost_total"].ToString();
-                    txtBasketSubTotal.Text = dataTablePos.Rows[firstRowIndex]["sub_total"].ToString();
-                    txtBasketVat.Text = dataTablePos.Rows[firstRowIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePos.Rows[firstRowIndex]["discount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePos.Rows[firstRowIndex]["grand_total"].ToString();
+                    //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketAmount.Text = dataTablePos.Rows[initalIndex]["total_product_amount"].ToString();
+                    txtBasketCostTotal.Text = dataTablePos.Rows[initalIndex]["cost_total"].ToString();
+                    txtBasketSubTotal.Text = dataTablePos.Rows[initalIndex]["sub_total"].ToString();
+                    txtBasketVat.Text = dataTablePos.Rows[initalIndex]["vat"].ToString();
+                    txtBasketDiscount.Text = dataTablePos.Rows[initalIndex]["discount"].ToString();
+                    txtBasketGrandTotal.Text = dataTablePos.Rows[initalIndex]["grand_total"].ToString();
 
                     #endregion
                 }
-                else if (dataTablePos.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePos.Rows.Count == initalIndex)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
-                    if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
+                    if (invoiceArrow == initalIndex)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        invoiceNo = invoiceNo - 1;
+                        invoiceId = invoiceId - 1;
                     }
                     else
                     {
-                        invoiceNo = invoiceNo + 1;
+                        invoiceId = invoiceId + 1;
                     }
 
                     if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInvoice(invoiceNo, invoiceArrow);//Call the method again to get the new past invoice.
+                        LoadPastInvoice(invoiceId, invoiceArrow);//Call the method again to get the new past invoice.
                     }
 
                 }
@@ -310,16 +310,12 @@ namespace GUI
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
             //-1 means nothing has been chosen in the combobox. Note: We don't add the --&& lblInvoiceNo.Content.ToString()!= "0"-- into the if statement because the invoice label cannot be 0 due to the restrictions.
-            if (isDgEqual == false && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuCustomer.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex && int.TryParse((lblInvoiceNo.Content).ToString(), out int number))
+            if (isDgEqual == false && cboMenuPaymentType.SelectedIndex != emptyIndex && cboMenuCustomer.SelectedIndex != emptyIndex && cboMenuAccount.SelectedIndex != emptyIndex && int.TryParse((lblInvoiceId.Content).ToString(), out int number))
             {
-                int userClickedNewOrEdit = btnNewOrEdit;
-                int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); /*lblInvoiceNo stands for the invoice id in the database.*/
+                int userClickedNewOrEdit;
+                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false;
-
-                //DataTable dataTableLastInvoice = pointOfSaleBLL.GetLastInvoiceInfo();//Getting the last invoice number and assign it to the variable called invoiceId.
-                DataTable dataTableProduct = new DataTable();
-                DataTable dataTableUnit = new DataTable();
 
                 #region TABLE POS SAVING SECTION
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
@@ -336,7 +332,7 @@ namespace GUI
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
 
-                userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
+                userClickedNewOrEdit = clickedNewOrEdit;
 
                 if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
@@ -362,6 +358,9 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false;
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
+
+                DataTable dataTableProduct = new DataTable();
+                DataTable dataTableUnit = new DataTable();
 
                 for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
                 {
@@ -588,7 +587,7 @@ namespace GUI
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
             ModifyToolsOnClickBtnNewOrEdit();
         }
@@ -616,7 +615,7 @@ namespace GUI
 
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            clickedNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
         }
@@ -629,7 +628,7 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region DELETE INVOICE
-                    int invoiceId = Convert.ToInt32(lblInvoiceNo.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
+                    int invoiceId = Convert.ToInt32(lblInvoiceId.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
                     pointOfSaleDetailDAL.Delete(invoiceId);
                     pointOfSaleDAL.Delete(invoiceId);
@@ -661,12 +660,12 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceNo = 0, currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
+            int firstInvoiceId = 0, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 
-            if (currentInvoiceNo != firstInvoiceNo)
+            if (currentInvoiceId != firstInvoiceId)
             {
                 ClearProductsDataGrid();
-                int prevInvoice = Convert.ToInt32(lblInvoiceNo.Content) - 1;
+                int prevInvoice = currentInvoiceId - 1;
                 invoiceArrow = 0;//0 means customer has clicked the previous button.
                 LoadPastInvoice(prevInvoice, invoiceArrow);
             }
@@ -674,12 +673,14 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceNo = pointOfSaleBLL.GetLastInvoiceNumber(), currentInvoiceNo = Convert.ToInt32(lblInvoiceNo.Content);
+            int lastInvoiceId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
 
-            if (currentInvoiceNo != lastInvoiceNo)
+            currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
+
+            if (currentInvoiceId != lastInvoiceId)
             {
                 ClearProductsDataGrid();
-                int nextInvoice = Convert.ToInt32(lblInvoiceNo.Content) + 1;
+                int nextInvoice = currentInvoiceId + 1;
                 invoiceArrow = 1;//1 means customer has clicked the next button.
                 LoadPastInvoice(nextInvoice, invoiceArrow);
             }

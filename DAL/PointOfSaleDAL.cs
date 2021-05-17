@@ -270,14 +270,14 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
-        public DataTable GetByIdOrLastId(int invoiceNo=0)//Optional parameter
+        public DataTable GetByIdOrLastId(int invoiceId=0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dataTable = new DataTable();
                 String sql;
 
-                if (invoiceNo==0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
+                if (invoiceId==0)//If the invoice number is 0 which means user did not send any argument, then get the last Id using the following query.
                 {
                     sql = "SELECT * FROM tbl_pos WHERE id=(SELECT max(id) FROM tbl_pos)";
                     //sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in the table.
@@ -285,7 +285,7 @@ namespace KabaAccounting.DAL
 
                 else
                 {
-                    sql = "SELECT * FROM tbl_pos WHERE id=" + invoiceNo + "";
+                    sql = "SELECT * FROM tbl_pos WHERE id=" + invoiceId + "";
                 }
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn)) 

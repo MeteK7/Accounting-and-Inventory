@@ -114,7 +114,7 @@ namespace GUI
         private void DtgProductsIndexChanged()//Getting the index of a particular row and fill the text boxes with the related columns of the row.
         {
             object row = dtgProducts.SelectedItem;
-            int selectedRow = dtgProducts.SelectedIndex, rowId = 0, rowBarcodeRetail = 1, rowBarcodeWholesale = 2, rowProductName = 3, rowProductCategory = 4, rowProductDescription = 5, rowPrAmountInUnWhol = 6, rowPrCostPriceRet = 8, rowPrSalePriceRet = 9, rowProductUnitRet = 12, rowProductUnitWhol = 13;
+            int rowId = 0, rowBarcodeRetail = 1, rowBarcodeWholesale = 2, rowProductName = 3, rowProductCategory = 4, rowProductDescription = 5, rowPrAmountInUnWhol = 6, rowPrCostPriceRet = 8, rowPrSalePriceRet = 9, rowProductUnitRet = 12, rowProductUnitWhol = 13;
 
             txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;
             txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;
