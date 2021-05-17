@@ -38,7 +38,8 @@ namespace GUI
         int unitValue = 1;
         int clickedNewOrEdit, clickedNew=0,clickedEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int account = 1, bank = 2, supplier = 3;
-        int clickedArrow, clickedPrev = 0, clickedNext = 1;
+        bool isCboSelectionDisabled = false; 
+        int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
 
         public WinExpense()
@@ -73,7 +74,7 @@ namespace GUI
                 {
                     #region ASSET INFORMATION FILLING REGION
                     idAssetFrom = Convert.ToInt32(dtExpense.Rows[initalIndex]["id_asset_from"].ToString());
-                    lblAssetIdFrom.Content = idAssetFrom;
+                    //lblAssetIdFrom.Content = idAssetFrom;
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initalIndex]["id_source_type"]);
@@ -82,6 +83,8 @@ namespace GUI
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
+
+                    LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbSelection change does not work so the LoadCboFrom method does not work as well.
 
                     cboFrom.SelectedValue = dtAsset.Rows[initalIndex]["id_source"].ToString();
                     #endregion
@@ -149,11 +152,22 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            //cboFrom.IsEnabled = true; DEPENDS ON THE RADIO BUTTONS!!
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
             rbAccount.IsEnabled = true;
             rbBank.IsEnabled = true;
+
+            if (clickedNewOrEdit == clickedNew)
+            {
+                txtAmount.Text = "";
+                lblAssetIdFrom.Content = "";
+                lblAssetIdTo.Content = "";
+                lblBalanceFrom.Content = "";
+                lblBalanceTo.Content = "";
+                rbAccount.IsChecked = false;
+                rbBank.IsChecked = false;
+                cboFrom.IsEnabled = true;
+            }
         }
 
         private void LoadNewExpense()
@@ -170,53 +184,65 @@ namespace GUI
 
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            #region LBLASSETIDFROM POPULATING SECTION
-            int sourceId;
-            int sourceType;
+            if (isCboSelectionDisabled == false)
+            {
+                #region LBLASSETIDFROM POPULATING SECTION
+                int sourceId, assetId;
+                int sourceType;
 
-            if (rbAccount.IsChecked == true)
-                sourceType = account;
-            else
-                sourceType = bank;
+                if (rbAccount.IsChecked == true)
+                    sourceType = account;
+                else
+                    sourceType = bank;
 
-            sourceId = Convert.ToInt32(cboFrom.SelectedValue);
-            lblAssetIdFrom.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-            #endregion
+                sourceId = Convert.ToInt32(cboFrom.SelectedValue);
+                assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+                lblAssetIdFrom.Content = assetId;
+                #endregion
 
-            #region LBLBALANCEFROM POPULATING SECTION
-            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetIdFrom.Content);
+                #region LBLBALANCEFROM POPULATING SECTION
+                int rowIndex = 0;
 
-            DataTable dtAsset = assetDAL.SearchById(assetId);
+                DataTable dtAsset = assetDAL.SearchById(assetId);
 
-            string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
+                string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
 
-            lblBalanceFrom.Content = balance;
-            #endregion
+                lblBalanceFrom.Content = balance;
+                #endregion
+            }
         }
 
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            #region LBLASSETIDTO POPULATING SECTION
-            int sourceId;
-            int sourceType=supplier;
+            if (isCboSelectionDisabled==false)
+            {
+                #region LBLASSETIDTO POPULATING SECTION
+                int sourceId, assetId;
+                int sourceType = supplier;
 
-            sourceId = Convert.ToInt32(cboTo.SelectedValue);
-            lblAssetIdTo.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-            #endregion
+                sourceId = Convert.ToInt32(cboTo.SelectedValue);
+                assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+                lblAssetIdTo.Content = assetId;
+                #endregion
 
-            #region LBLBALANCETO POPULATING SECTION
-            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetIdTo.Content);
+                #region LBLBALANCETO POPULATING SECTION
+                int rowIndex = 0;
 
-            DataTable dtAsset = assetDAL.SearchById(assetId);
+                DataTable dtAsset = assetDAL.SearchById(assetId);
 
-            string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
+                string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
 
-            lblBalanceTo.Content = balance;
-            #endregion
+                lblBalanceTo.Content = balance;
+                #endregion
+            }
         }
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
+            isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
+            ClearTools();
+            isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
+
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewExpense();
             LoadCboTo();
@@ -290,7 +316,7 @@ namespace GUI
                 }
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
@@ -302,6 +328,12 @@ namespace GUI
             }
         }
 
+        private void ClearTools()
+        {
+            cboFrom.ItemsSource = null;
+            cboTo.ItemsSource = null;
+        }
+
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
             int firstExpenseId = 1, currentExpenseId = Convert.ToInt32(lblExpenseId.Content); ;
@@ -309,6 +341,11 @@ namespace GUI
             if (currentExpenseId != firstExpenseId)
             {
                 int prevExpenseId = currentExpenseId - unitValue;
+
+                isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
+                ClearTools();
+                isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
+
                 clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
                 LoadPastExpense(prevExpenseId, clickedArrow);
             }
@@ -323,6 +360,11 @@ namespace GUI
             if (currentInvoiceId != lastExpenseId)
             {
                 int nextInvoice = currentInvoiceId + unitValue;
+
+                isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
+                ClearTools();
+                isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
+
                 clickedArrow = clickedNext;//1 means customer has clicked the next button.
                 LoadPastExpense(nextInvoice, clickedArrow);
             }
@@ -355,13 +397,13 @@ namespace GUI
             dtTo = supplierDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtTo.DefaultView;
+            cboTo.ItemsSource = dtTo.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = "name";
+            cboTo.DisplayMemberPath = "name";
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = "id";
+            cboTo.SelectedValuePath = "id";
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
