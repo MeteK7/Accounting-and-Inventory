@@ -23,15 +23,14 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_expenses (id, id_from, id_to,id_asset_from,id_asset_to, amount, added_date, added_by) VALUES (@id, @id_from, @id_to,@id_asset_from,@id_asset_to, @amount, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_expenseS (id, id_from, id_to,asset_id, amount, added_date, added_by) VALUES (@id, @id_from, @id_to, @asset_id, @amount, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", expenseCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@id_from", expenseCUL.IdFrom);
                 cmd.Parameters.AddWithValue("@id_to", expenseCUL.IdTo);
-                cmd.Parameters.AddWithValue("@id_asset_from", expenseCUL.IdAssetFrom);
-                cmd.Parameters.AddWithValue("@id_asset_to", expenseCUL.IdAssetTo);
+                cmd.Parameters.AddWithValue("@asset_id", expenseCUL.AssetId);
                 cmd.Parameters.AddWithValue("@amount", expenseCUL.Amount);
                 cmd.Parameters.AddWithValue("@added_date", expenseCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", expenseCUL.AddedBy);
