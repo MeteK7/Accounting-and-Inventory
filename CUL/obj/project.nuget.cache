@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zNt528DnT+WjXLCA9dexp9ArjzVygUYE1hAuNyFmSXavW9bReqRaB0frm6CWa7+joacOqTvFIS5maRPFtq0cdA==",
+  "success": true,
+  "projectFilePath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

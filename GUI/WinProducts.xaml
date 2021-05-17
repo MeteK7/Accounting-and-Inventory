@@ -1,0 +1,186 @@
+﻿<Window x:Class="GUI.WinProducts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="Products" Height="807" Width="1062" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/paint-border.jpg"/>
+    </Window.Background>
+    <Grid>
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
+            <Label x:Name="lblTop" Content="PRODUCTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.117"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+        <Label x:Name="lblProductId" Content="Product ID" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" Width="76"/>
+        <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="26" Margin="90,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" IsReadOnly="True">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.4"/>
+            </TextBox.Background>
+        </TextBox>
+        <TabControl x:Name="tabProductSalesType" HorizontalAlignment="Left" Height="266" Margin="9,92,0,0" VerticalAlignment="Top" Width="302">
+            <TabControl.Background>
+                <SolidColorBrush Color="White" Opacity="0.4"/>
+            </TabControl.Background>
+            <TabItem x:Name="tabItemRetail" Header="Retail">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0.4"/>
+                    </Grid.Background>
+                    <Label x:Name="lblProductUnitRetail" Content="Unit" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <ComboBox x:Name="cboProductUnitRetail" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="166" Height="27" Opacity="0.75"/>
+                    <Label x:Name="lblProductBarcodeRetail" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductBarcodeRetail" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeRetail_KeyDown"/>
+                    <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75"/>
+                    <Label x:Name="lblProductCostPriceRetail" Content="Cost Price" HorizontalAlignment="Left" Margin="7,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductCostPriceRetail" HorizontalAlignment="Left" Height="27" Margin="115,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductCostPriceRetail_TextChanged" Opacity="0.75"/>
+                    <Label x:Name="lblProductSalePriceRetail" Content="Sale Price" HorizontalAlignment="Left" Margin="7,138,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductSalePriceRetail" HorizontalAlignment="Left" Height="27" Margin="115,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductSalePriceRetail_TextChanged" Opacity="0.75"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemWholesale" Header="Wholesale">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0.4"/>
+                    </Grid.Background>
+                    <Label x:Name="lblProductUnitWholesale" Content="Unit" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <ComboBox x:Name="cboProductUnitWholesale" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="165" Height="27" Opacity="0.75"/>
+                    <Label x:Name="lblProductBarcodeWholesale" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductBarcodeWholesale" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeWholesale_KeyDown"/>
+                    <Label x:Name="lblProductAmount" Content="Amount in Unit" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductAmountInUnitWholesale" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductAmountInUnitWholesale_TextChanged" Opacity="0.75"/>
+                    <Label x:Name="lblProductCostPriceWholesale" Content="Cost Price" HorizontalAlignment="Left" Margin="8,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductCostPriceWholesale" HorizontalAlignment="Left" Height="27" Margin="115,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" IsReadOnly="True" Opacity="0.75"/>
+                    <Label x:Name="lblProductSalePriceWholesale" Content="Sale Price" HorizontalAlignment="Left" Margin="7,138,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductSalePriceWholesale" HorizontalAlignment="Left" Height="27" Margin="115,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" IsReadOnly="True" Opacity="0.75"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Label x:Name="lblProductSearch" Content="Product Search" HorizontalAlignment="Left" Margin="317,51,0,0" VerticalAlignment="Top" Width="102"/>
+        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="424,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="623" TextChanged="txtProductSearch_TextChanged">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.4"/>
+            </TextBox.Background>
+        </TextBox>
+        <DataGrid x:Name="dtgProducts" HorizontalAlignment="Left" Height="623" Margin="317,0,0,0" VerticalAlignment="Center" Width="730" KeyUp="dtgProducts_KeyUp" KeyDown="dtgProducts_KeyDown" MouseLeftButtonUp="dtgProducts_MouseLeftButtonUp" Opacity="0.7">
+            <DataGrid.Background>
+                <SolidColorBrush Color="#FFF0F0F0" Opacity="0.4"/>
+            </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding BarcodeRetail}" ClipboardContentBinding="{x:Null}" Header="Barcode Retail"/>
+                <DataGridTextColumn Binding="{Binding BarcodeWholesale}" ClipboardContentBinding="{x:Null}" Header="Barcode Wholesale"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding CategoryName}" ClipboardContentBinding="{x:Null}" Header="Category"/>
+                <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" MaxWidth="0"/>
+                <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
+                <DataGridTextColumn Binding="{Binding AmountInUnitWholesale}" ClipboardContentBinding="{x:Null}" Header="Amount in Unit"/>
+                <DataGridTextColumn Binding="{Binding AmountInStock}" ClipboardContentBinding="{x:Null}" Header="Amount in Stock"/>
+                <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price"/>
+                <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date"/>
+                <DataGridTextColumn Binding="{Binding UnitNameRetail}" ClipboardContentBinding="{x:Null}" Header="Unit Retail" MaxWidth="0"/>
+                <DataGridTextColumn Binding="{Binding UnitNameWholesale}" ClipboardContentBinding="{x:Null}" Header="Unit Wholesale" MaxWidth="0"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnProductAdd" Content="ADD" HorizontalAlignment="Left" Margin="317,742,0,0" VerticalAlignment="Top" Width="177" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnProductAdd_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/Buttons/plus (3).png" Stretch="Uniform">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnProductUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="592,742,0,0" VerticalAlignment="Top" Width="180" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnProductUpdate_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Uniform" ImageSource="/Images/Buttons/refresh.png">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnProductDelete" Content="DELETE" HorizontalAlignment="Left" Margin="868,742,0,0" VerticalAlignment="Top" Width="179" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnProductDelete_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/Buttons/trash.png" Stretch="Uniform">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform X="0.35"/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Button.Background>
+        </Button>
+        <Label x:Name="lblProductCategory" Content="Category" HorizontalAlignment="Left" Margin="9,368,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="cboProductCategory" HorizontalAlignment="Left" Margin="90,368,0,0" VerticalAlignment="Top" Width="221" Height="26" Loaded="cboProductCategory_Loaded" Opacity="0.8">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" Opacity="1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <Label x:Name="lblProductDescription" Content="Description" HorizontalAlignment="Left" Margin="9,405,0,0" VerticalAlignment="Top" Width="76"/>
+        <TextBox x:Name="txtProductDescription" HorizontalAlignment="Left" Height="310" Margin="90,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.4"/>
+            </TextBox.Background>
+        </TextBox>
+    </Grid>
+</Window>

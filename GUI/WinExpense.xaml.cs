@@ -152,22 +152,11 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            //cboFrom.IsEnabled = true; DEPENDS ON THE RADIO BUTTONS!!
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
             rbAccount.IsEnabled = true;
             rbBank.IsEnabled = true;
-
-            if (clickedNewOrEdit == clickedNew)
-            {
-                txtAmount.Text = "";
-                lblAssetIdFrom.Content = "";
-                lblAssetIdTo.Content = "";
-                lblBalanceFrom.Content = "";
-                lblBalanceTo.Content = "";
-                rbAccount.IsChecked = false;
-                rbBank.IsChecked = false;
-                cboFrom.IsEnabled = true;
-            }
         }
 
         private void LoadNewExpense()
@@ -239,10 +228,6 @@ namespace GUI
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
-            ClearTools();
-            isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
-
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewExpense();
             LoadCboTo();
@@ -316,7 +301,7 @@ namespace GUI
                 }
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
