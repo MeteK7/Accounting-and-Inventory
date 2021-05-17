@@ -1,0 +1,87 @@
+﻿<Window x:Class="GUI.WinAccount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d" Height="492" Width="668.557" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Resources>
+        <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/glasses-calculator-tablet-white-neat-desk.jpg" Stretch="Fill"/>
+    </Window.Background>
+    <Grid>
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
+            <Label x:Name="lblTop" Content="ACCOUNTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.117"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Button.Background>
+            </Button>
+        </DockPanel>
+        <Label x:Name="lblAccountId" Content="ID" HorizontalAlignment="Left" Margin="16,53,0,0" VerticalAlignment="Top" Width="46"/>
+        <Label x:Name="lblAccountName" Content="NAME" HorizontalAlignment="Left" Margin="16,92,0,0" VerticalAlignment="Top" Width="46"/>
+        <TextBox x:Name="txtAccountId" HorizontalAlignment="Left" Height="26" Margin="67,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsReadOnly="True">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.85"/>
+            </TextBox.Background>
+        </TextBox>
+        <TextBox x:Name="txtAccountName" HorizontalAlignment="Left" Height="26" Margin="67,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.85"/>
+            </TextBox.Background>
+        </TextBox>
+        <DataGrid x:Name="dtgAccounts" HorizontalAlignment="Left" Height="390" Margin="222,92,0,0" VerticalAlignment="Top" Width="437" KeyUp="dtgAccounts_KeyUp" MouseLeftButtonUp="dtgAccounts_MouseLeftButtonUp" KeyDown="dtgAccounts_KeyDown">
+            <DataGrid.Background>
+                <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
+            </DataGrid.Background>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="125"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="lblAccountSearch" Content="SEARCH" HorizontalAlignment="Left" Margin="222,53,0,0" Width="62" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtAccountSearch" HorizontalAlignment="Left" Height="26" Margin="285,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" VerticalContentAlignment="Center" TextChanged="txtAccountSearch_TextChanged">
+            <TextBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.85"/>
+            </TextBox.Background>
+        </TextBox>
+        <Button x:Name="btnAdd" Content="ADD" HorizontalAlignment="Left" Margin="16,433,0,0" VerticalAlignment="Top" Width="60" Height="49" BorderBrush="#FF0068FF" Foreground="#FF000CFF" Click="btnAdd_Click"/>
+        <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="77,433,0,0" VerticalAlignment="Top" Width="60" Height="49" Foreground="#FF00C512" BorderBrush="#FF1B9300" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="145,433,0,0" VerticalAlignment="Top" Width="57" Height="49" Foreground="Red" BorderBrush="Red" Click="btnDelete_Click"/>
+    </Grid>
+</Window>
