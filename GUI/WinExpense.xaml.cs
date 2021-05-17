@@ -29,17 +29,94 @@ namespace GUI
         UserBLL userBLL = new UserBLL();
         ExpenseCUL expenseCUL = new ExpenseCUL();
         ExpenseBLL expenseBLL = new ExpenseBLL();
+        ExpenseDAL expenseDAL = new ExpenseDAL();
         AssetCUL assetCUL = new AssetCUL();
         AssetDAL assetDAL = new AssetDAL();
         BankDAL bankDAL = new BankDAL();
+        CommonBLL commonBLL = new CommonBLL();
 
+        int unitValue = 1;
         int clickedNewOrEdit, clickedNew=0,clickedEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int account = 1, bank = 2, supplier = 3;
+        int clickedArrow, clickedPrev = 0, clickedNext = 1;
+        string calledBy = "WinExpense";
 
         public WinExpense()
         {
             InitializeComponent();
             DisableTools();
+            LoadPastExpense();
+        }
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
+        }
+
+        //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
+        private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
+        {
+            int initalIndex = 0,idAssetFrom;
+
+            if (expenseId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
+            {
+                expenseId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
+            }
+
+            /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
+            if (expenseId != initalIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            {
+                DataTable dtExpense = expenseDAL.GetByExpenseId(expenseId);
+
+                if (dtExpense.Rows.Count != initalIndex)
+                {
+                    #region ASSET INFORMATION FILLING REGION
+                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initalIndex]["id_asset_from"].ToString());
+                    lblAssetIdFrom.Content = idAssetFrom;
+
+                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[initalIndex]["id_source_type"]);
+
+                    if (sourceType == account)
+                        rbAccount.IsChecked = true;
+                    else
+                        rbBank.IsChecked = true;
+
+                    cboFrom.SelectedValue = dtAsset.Rows[initalIndex]["id_source"].ToString();
+                    #endregion
+
+                    expenseId = Convert.ToInt32(dtExpense.Rows[initalIndex]["id"].ToString());//Getting the id of account.
+                    lblExpenseId.Content = expenseId;
+
+                    LoadCboTo();
+
+                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initalIndex]["id_to"].ToString());//Getting the id of supplier.
+
+                    txtAmount.Text= dtExpense.Rows[initalIndex]["amount"].ToString();
+                }
+                else if (dtExpense.Rows.Count == initalIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                {
+                    if (expenseArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
+                    {
+                        expenseId = expenseId - 1;
+                    }
+                    else
+                    {
+                        expenseId = expenseId + 1;
+                    }
+
+                    if (expenseArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    {
+                        LoadPastExpense(expenseId, expenseArrow);//Call the method again to get the new past invoice.
+                    }
+
+                }
+            }
+            else
+            {
+                FirstTimeRun();//This method is called when it is the first time of using this program.
+            }
         }
 
         public void DisableTools()
@@ -88,27 +165,12 @@ namespace GUI
 
             expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
             expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
-            lblExpenseNumber.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
-        }
-
-        private void cboTo_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dtSupplier = supplierDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboTo.ItemsSource = dtSupplier.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboTo.DisplayMemberPath = "name";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboTo.SelectedValuePath = "id";
+            lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            #region LBLASSETID POPULATING SECTION
+            #region LBLASSETIDFROM POPULATING SECTION
             int sourceId;
             int sourceType;
 
@@ -118,11 +180,11 @@ namespace GUI
                 sourceType = bank;
 
             sourceId = Convert.ToInt32(cboFrom.SelectedValue);
-            lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdFrom.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
             #endregion
 
             #region LBLBALANCEFROM POPULATING SECTION
-            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetId.Content);
+            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetIdFrom.Content);
 
             DataTable dtAsset = assetDAL.SearchById(assetId);
 
@@ -134,16 +196,16 @@ namespace GUI
 
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            #region LBLASSETID POPULATING SECTION
+            #region LBLASSETIDTO POPULATING SECTION
             int sourceId;
             int sourceType=supplier;
 
             sourceId = Convert.ToInt32(cboTo.SelectedValue);
-            lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdTo.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
             #endregion
 
             #region LBLBALANCETO POPULATING SECTION
-            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetSupplierId.Content);
+            int rowIndex = 0, assetId = Convert.ToInt32(lblAssetIdTo.Content);
 
             DataTable dtAsset = assetDAL.SearchById(assetId);
 
@@ -157,6 +219,7 @@ namespace GUI
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
             LoadNewExpense();
+            LoadCboTo();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -190,7 +253,7 @@ namespace GUI
 
             if (cboFrom.SelectedIndex!= emptyIndex && cboTo.SelectedIndex!= emptyIndex && txtAmount.Text!="")
             {
-                int expenseId = Convert.ToInt32(lblExpenseNumber.Content); /*lblExpenseNumber stands for the expense id in the database.*/
+                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
 
@@ -198,6 +261,8 @@ namespace GUI
                 expenseCUL.Id = expenseId;
                 expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
                 expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
                 expenseCUL.Amount =Convert.ToDecimal(txtAmount.Text);
                 expenseCUL.AddedBy = userId;
                 expenseCUL.AddedDate = DateTime.Now;
@@ -205,12 +270,12 @@ namespace GUI
 
                 #region TABLE ASSET UPDATING SECTION
                 //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                assetCUL.Id = Convert.ToInt32(lblAssetId.Content);
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
                 assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
                 isSuccessAsset = assetDAL.Update(assetCUL);
 
                 //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
                 assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content)+Convert.ToDecimal(txtAmount.Text);//We have to add this amount to the supplier's balance in order to reset our dept.
                 isSuccessAssetSupplier = assetDAL.Update(assetCUL);
                 #endregion
@@ -237,6 +302,32 @@ namespace GUI
             }
         }
 
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            int firstExpenseId = 1, currentExpenseId = Convert.ToInt32(lblExpenseId.Content); ;
+
+            if (currentExpenseId != firstExpenseId)
+            {
+                int prevExpenseId = currentExpenseId - unitValue;
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                LoadPastExpense(prevExpenseId, clickedArrow);
+            }
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            int lastExpenseId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
+
+            currentInvoiceId = Convert.ToInt32(lblExpenseId.Content);
+
+            if (currentInvoiceId != lastExpenseId)
+            {
+                int nextInvoice = currentInvoiceId + unitValue;
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                LoadPastExpense(nextInvoice, clickedArrow);
+            }
+        }
+
         private void LoadCboFrom(int checkStatus)
         {
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
@@ -249,6 +340,22 @@ namespace GUI
 
             //Specifying Items Source for product combobox
             cboFrom.ItemsSource = dtAccount.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboFrom.DisplayMemberPath = "name";
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboFrom.SelectedValuePath = "id";
+        }
+
+        private void LoadCboTo()
+        {
+            DataTable dtTo;//Creating Data Table to hold the products from Database.
+
+            dtTo = supplierDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtTo.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboFrom.DisplayMemberPath = "name";

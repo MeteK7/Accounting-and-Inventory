@@ -1,4 +1,5 @@
-﻿using KabaAccounting.DAL;
+﻿using DAL;
+using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,18 +13,22 @@ namespace BLL
     {
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
-        public int GetLastInvoiceId(string calledBy)
+        ExpenseDAL expenseDAL = new ExpenseDAL();
+        public int GetLastRecordById(string calledBy)
         {
             int initialIndex = 0, invoiceId;
 
             DataTable dataTable;
 
-            if (calledBy == "POS")
-            
+            if (calledBy == "WinPOS")
+
                 dataTable = pointOfSaleDAL.GetByIdOrLastId();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
-           
-            else
+
+            else if (calledBy == "WinPOP")
                 dataTable = pointOfPurchaseDAL.GetByIdOrLastId();
+
+            else
+                dataTable = expenseDAL.GetByIdOrLastId();
 
             if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
             {

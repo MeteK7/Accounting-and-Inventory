@@ -23,13 +23,14 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_expenseS (id, id_from, id_to, amount, added_date, added_by) VALUES (@id, @id_from, @id_to, @amount, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_expenseS (id, id_from, id_to,asset_id, amount, added_date, added_by) VALUES (@id, @id_from, @id_to, @asset_id, @amount, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", expenseCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@id_from", expenseCUL.IdFrom);
                 cmd.Parameters.AddWithValue("@id_to", expenseCUL.IdTo);
+                cmd.Parameters.AddWithValue("@asset_id", expenseCUL.AssetId);
                 cmd.Parameters.AddWithValue("@amount", expenseCUL.Amount);
                 cmd.Parameters.AddWithValue("@added_date", expenseCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", expenseCUL.AddedBy);
@@ -128,6 +129,52 @@ namespace DAL
                 {
                     try
                     {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region GETTING THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE USING INVOICE NO
+        public DataTable GetByExpenseId(int expenseId = 0)//Optional parameter
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+                String sql;
+
+                if (expenseId == 0)//If the invoice number is 0 which means user did not send any argument, then get the last record using the following query.
+                {
+                    sql = "SELECT * FROM tbl_expenses WHERE id=(SELECT max(id) FROM tbl_expenses)";
+                    //sql = "SELECT * FROM tbl_pop WHERE id=IDENT_CURRENT('tbl_pop')";//SQL query to get the last id of rows in the table.
+                }
+
+                else
+                {
+                    sql = "SELECT * FROM tbl_expenses WHERE id=" + expenseId + "";//SQL query to get the last id of rows in the table.
+                }
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    try
+                    {
+                        /*cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;*/
                         conn.Open();//Opening the database connection
 
                         using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))

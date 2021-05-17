@@ -54,7 +54,7 @@ namespace GUI
         int invoiceArrow;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "POS";
+        string calledBy = "WinPOS";
         CommonBLL commonBLL = new CommonBLL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -181,7 +181,7 @@ namespace GUI
 
             int invoiceId, increment = 1;
 
-            invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
@@ -193,7 +193,7 @@ namespace GUI
 
             if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
-                invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
+                invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
@@ -673,7 +673,7 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceId = commonBLL.GetLastInvoiceId(calledBy), currentInvoiceId;
+            int lastInvoiceId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
 
             currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 

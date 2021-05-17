@@ -55,18 +55,18 @@ namespace GUI
         AssetCUL assetCUL = new AssetCUL();
         CommonBLL commonBLL = new CommonBLL();
 
-        int initialIndex = 0;
+        int initialIndex = 0,unitValue=1;
         const int colLength =6;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colProductCostPrice=3, colProductQuantity=4, colProductTotalCostPrice = 5;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
-        string calledBy = "POP";
+        string calledBy = "WinPOP";
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
-        int invoiceArrow;
+        int clickedArrow,clickedPrev=0,clickedNext=1;
         int oldIdAsset, oldIdAssetSupplier;
         decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;
 
@@ -199,7 +199,7 @@ namespace GUI
 
             int invoiceId, increment = 1;
 
-            invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
+            invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
             lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
@@ -212,7 +212,7 @@ namespace GUI
 
             if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
-                invoiceId = commonBLL.GetLastInvoiceId(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
+                invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
@@ -681,24 +681,24 @@ namespace GUI
             if (currentInvoiceId != firstInvoiceId)
             {
                 ClearProductsDataGrid();
-                int prevInvoiceId = currentInvoiceId - 1;
-                invoiceArrow = 0;//0 means customer has clicked the previous button.
-                LoadPastInvoice(prevInvoiceId, invoiceArrow);
+                int prevInvoiceId = currentInvoiceId - unitValue;
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                LoadPastInvoice(prevInvoiceId, clickedArrow);
             }
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            int lastInvoiceId = commonBLL.GetLastInvoiceId(calledBy), currentInvoiceId;
+            int lastInvoiceId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
 
             currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 
             if (currentInvoiceId != lastInvoiceId)
             {
                 ClearProductsDataGrid();
-                int nextInvoice = currentInvoiceId + 1;
-                invoiceArrow = 1;//1 means customer has clicked the next button.
-                LoadPastInvoice(nextInvoice, invoiceArrow);
+                int nextInvoice = currentInvoiceId + unitValue;
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                LoadPastInvoice(nextInvoice, clickedArrow);
             }
         }
 
