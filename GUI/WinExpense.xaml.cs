@@ -229,6 +229,8 @@ namespace GUI
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
+
+            ClearTools();
             LoadNewExpense();
             LoadCboTo();
             ModifyToolsOnClickBtnNewEdit();
@@ -315,8 +317,15 @@ namespace GUI
 
         private void ClearTools()
         {
+            isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
+            isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
+            lblBalanceFrom.Content = "";
+            lblBalanceTo.Content = "";
+            lblAssetIdFrom.Content = "";
+            lblAssetIdTo.Content = "";
+            txtAmount.Text = "";
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
@@ -326,12 +335,9 @@ namespace GUI
             if (currentExpenseId != firstExpenseId)
             {
                 int prevExpenseId = currentExpenseId - unitValue;
-
-                isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
-                ClearTools();
-                isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
-
+                
                 clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                ClearTools();
                 LoadPastExpense(prevExpenseId, clickedArrow);
             }
         }
@@ -346,11 +352,8 @@ namespace GUI
             {
                 int nextInvoice = currentInvoiceId + unitValue;
 
-                isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
-                ClearTools();
-                isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
-
                 clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                ClearTools();
                 LoadPastExpense(nextInvoice, clickedArrow);
             }
         }
