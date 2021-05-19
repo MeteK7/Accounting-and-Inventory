@@ -27,8 +27,10 @@
     <None Remove="Images\Backgrounds\black-hexagonal.jpg" />
     <None Remove="Images\Backgrounds\bokeh-background.jpg" />
     <None Remove="Images\Backgrounds\business-analysis.jpg" />
+    <None Remove="Images\Backgrounds\business_background_white-01.jpg" />
     <None Remove="Images\Backgrounds\clouds.jpg" />
     <None Remove="Images\Backgrounds\customer.png" />
+    <None Remove="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />
     <None Remove="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <None Remove="Images\Backgrounds\key.png" />
     <None Remove="Images\Backgrounds\light-blur.jpg" />
@@ -132,6 +134,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
 
@@ -162,6 +168,7 @@
     <Resource Include="Images\Backgrounds\black-hexagonal.jpg" />
     <Resource Include="Images\Backgrounds\bokeh-background.jpg" />
     <Resource Include="Images\Backgrounds\business-analysis.jpg" />
+    <Resource Include="Images\Backgrounds\business_background_white-01.jpg" />
     <Resource Include="Images\Backgrounds\clouds.jpg" />
     <Resource Include="Images\Backgrounds\customer.png" />
     <Resource Include="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
