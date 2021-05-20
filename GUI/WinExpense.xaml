@@ -15,7 +15,9 @@
         <ImageBrush x:Key="ButtonMenuDelete" ImageSource="/Images/Buttons/file-trash.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonEntranceEnter" ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonEntranceClear" ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"></ImageBrush>
-
+        <ImageBrush x:Key="ButtonPrev" ImageSource="/Images/Buttons/btn-prev.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonNext" ImageSource="/Images/Buttons/btn-next.png" Stretch="Uniform"></ImageBrush>
+        
         <Style TargetType="Button" x:Key="ButtonCloseStyle">
             <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
             <Setter Property="Template">
@@ -200,6 +202,52 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Button" x:Key="ButtonPrevStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonPrev}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonNextStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonNext}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/Backgrounds/geometric_background_white_Mesa_de_trabajo_1.jpg"/>
@@ -296,8 +344,34 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,0,0,0" VerticalAlignment="Center" Height="61" Width="71" Click="btnPrev_Click"/>
-                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517" Click="btnNext_Click"/>
+                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="709,0,0,0" VerticalAlignment="Center" Height="61" Width="71" Click="btnPrev_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-prev.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.6" ScaleY="0.65"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5" AngleX="0"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform X="0"/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="785,0,0,0" VerticalAlignment="Center" Height="61" Width="70" RenderTransformOrigin="0.729,0.517" Click="btnNext_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-next.png">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.6" ScaleY="0.65"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.Background>
+                </Button>
             </Grid>
         </GroupBox>
         <GroupBox Header="Expense Number" Margin="892,34,10,610">

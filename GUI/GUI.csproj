@@ -63,6 +63,8 @@
     <None Remove="Images\Buttons\bank.png" />
     <None Remove="Images\Buttons\barcode.png" />
     <None Remove="Images\Buttons\btn-cancel.png" />
+    <None Remove="Images\Buttons\btn-next.png" />
+    <None Remove="Images\Buttons\btn-prev.png" />
     <None Remove="Images\Buttons\btn-save.png" />
     <None Remove="Images\Buttons\calculations.png" />
     <None Remove="Images\Buttons\calendar.png" />
@@ -203,6 +205,8 @@
     <Resource Include="Images\Buttons\bank.png" />
     <Resource Include="Images\Buttons\barcode.png" />
     <Resource Include="Images\Buttons\btn-cancel.png" />
+    <Resource Include="Images\Buttons\btn-next.png" />
+    <Resource Include="Images\Buttons\btn-prev.png" />
     <Resource Include="Images\Buttons\btn-save.png" />
     <Resource Include="Images\Buttons\calculations.png" />
     <Resource Include="Images\Buttons\calendar.png" />
