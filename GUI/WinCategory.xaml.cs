@@ -194,16 +194,23 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshCategoryDataGrid method!!! */
             {
+                dtgCategories.Items.Clear();
+
                 //Show category informations based on the keyword
-                DataTable dataTable = categoryDAL.Search(keyword);
-                dtgCategories.ItemsSource = dataTable.DefaultView;
-                dtgCategories.AutoGenerateColumns = true;
-                dtgCategories.CanUserAddRows = false;
-            }
-            else
-            {
-                //Show all categories from the database
-                LoadCategoryDataGrid();
+                DataTable dtCategory = categoryDAL.Search(keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+
+                for (int rowIndex = 0; rowIndex < dtCategory.Rows.Count; rowIndex++)
+                {
+                    dtgCategories.Items.Add(
+                        new CategoryCUL()
+                        {
+                            Id = Convert.ToInt32(dtCategory.Rows[rowIndex]["id"]),
+                            Name = dtCategory.Rows[rowIndex]["name"].ToString(),
+                            Description = dtCategory.Rows[rowIndex]["description"].ToString(),
+                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"]),
+                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"])
+                        });
+                }
             }
         }
     }
