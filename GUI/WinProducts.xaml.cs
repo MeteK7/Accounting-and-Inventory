@@ -144,7 +144,6 @@ namespace GUI
             {
                 return 0;
             }
-
         }
 
         private double CalculateTotalSalePrice()
