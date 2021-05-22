@@ -206,15 +206,29 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshSupplierCustomerDataGrid method!!! */
             {
-                //Show category informations based on the keyword
-                DataTable dataTable = customerDAL.Search(keyword);
-                dtgCustomers.ItemsSource = dataTable.DefaultView;
-                dtgCustomers.AutoGenerateColumns = true;
-                dtgCustomers.CanUserAddRows = false;
+                dtgCustomers.Items.Clear();
+
+                //Show customer informations based on the keyword.
+                DataTable dtCustomer = customerDAL.Search(keyword);
+
+                for (int rowIndex = 0; rowIndex < dtCustomer.Rows.Count; rowIndex++)
+                {
+                    dtgCustomers.Items.Add(
+                        new CustomerCUL()
+                        {
+                            Id = Convert.ToInt32(dtCustomer.Rows[rowIndex]["id"]),
+                            Name = dtCustomer.Rows[rowIndex]["name"].ToString(),
+                            Email = dtCustomer.Rows[rowIndex]["email"].ToString(),
+                            Contact = dtCustomer.Rows[rowIndex]["contact"].ToString(),
+                            Address = dtCustomer.Rows[rowIndex]["address"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtCustomer.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtCustomer.Rows[rowIndex]["added_by"])
+                        });
+                }
             }
             else
             {
-                //Show all categories from the database
+                //Show all customers from the database.
                 LoadCustomerDataGrid();
             }
         }
