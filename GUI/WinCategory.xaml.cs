@@ -183,8 +183,6 @@ namespace GUI
             //txtDescription.Text = (drv[2]).ToString();
         }
 
-
-
         private void txtCategorySearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Get Keyword from Text box
@@ -196,8 +194,8 @@ namespace GUI
             {
                 dtgCategories.Items.Clear();
 
-                //Show category informations based on the keyword
-                DataTable dtCategory = categoryDAL.Search(keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+                //Show category informations based on the keyword.
+                DataTable dtCategory = categoryDAL.Search(keyword);
 
                 for (int rowIndex = 0; rowIndex < dtCategory.Rows.Count; rowIndex++)
                 {
@@ -207,10 +205,15 @@ namespace GUI
                             Id = Convert.ToInt32(dtCategory.Rows[rowIndex]["id"]),
                             Name = dtCategory.Rows[rowIndex]["name"].ToString(),
                             Description = dtCategory.Rows[rowIndex]["description"].ToString(),
-                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"]),
-                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"])
+                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"])
                         });
                 }
+            }
+            else
+            {
+                //Show all categories from the database.
+                LoadCategoryDataGrid();
             }
         }
     }

@@ -189,7 +189,7 @@ namespace GUI
             {
                 dtgProducts.Items.Clear();
 
-                //Show category informations based on the keyword
+                //Show product informations based on the keyword
                 DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(keyword: keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
 
                 for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
@@ -203,12 +203,12 @@ namespace GUI
                             Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
                             CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
                             Description = dataTableProduct.Rows[rowIndex].ToString()
-                        }); ;
+                        });
                 }
             }
             else
             {
-                //Show all products from the database
+                //Show all products from the database.
                 LoadProductDataGrid();
             }
         }
