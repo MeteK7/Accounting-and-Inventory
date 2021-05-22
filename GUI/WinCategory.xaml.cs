@@ -194,8 +194,8 @@ namespace GUI
             {
                 dtgCategories.Items.Clear();
 
-                //Show category informations based on the keyword
-                DataTable dtCategory = categoryDAL.Search(keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+                //Show category informations based on the keyword.
+                DataTable dtCategory = categoryDAL.Search(keyword);
 
                 for (int rowIndex = 0; rowIndex < dtCategory.Rows.Count; rowIndex++)
                 {

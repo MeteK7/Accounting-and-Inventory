@@ -181,24 +181,24 @@ namespace GUI
             {
                 dtgAccounts.Items.Clear();
 
-                //Show account informations based on the keyword
-                DataTable dataTableProduct = accountDAL.Search(keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+                //Show account informations based on the keyword.
+                DataTable dtAccount = accountDAL.Search(keyword);
 
-                for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
+                for (int rowIndex = 0; rowIndex < dtAccount.Rows.Count; rowIndex++)
                 {
                     dtgAccounts.Items.Add(
                         new AccountCUL()
                         {
-                            Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
-                            Name = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString(),
-                            AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["barcode_wholesale"]),
-                            AddedBy = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["name"])
+                            Id = Convert.ToInt32(dtAccount.Rows[rowIndex]["id"]),
+                            Name = dtAccount.Rows[rowIndex]["barcode_retail"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtAccount.Rows[rowIndex]["barcode_wholesale"]),
+                            AddedBy = Convert.ToInt32(dtAccount.Rows[rowIndex]["name"])
                         });
                 }
             }
             else
             {
-                //Show all accounts from the database
+                //Show all accounts from the database.
                 LoadAccountDataGrid();
             }
         }
