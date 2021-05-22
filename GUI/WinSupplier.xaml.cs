@@ -211,15 +211,29 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshSupplierCustomerDataGrid method!!! */
             {
-                //Show category informations based on the keyword
-                DataTable dataTable = supplierDAL.Search(keyword);
-                dtgSuppliers.ItemsSource = dataTable.DefaultView;
-                dtgSuppliers.AutoGenerateColumns = true;
-                dtgSuppliers.CanUserAddRows = false;
+                dtgSuppliers.Items.Clear();
+
+                //Show supplier informations based on the keyword.
+                DataTable dtSupplier = supplierDAL.Search(keyword);
+
+                for (int rowIndex = 0; rowIndex < dtSupplier.Rows.Count; rowIndex++)
+                {
+                    dtgSuppliers.Items.Add(
+                        new SupplierCUL()
+                        {
+                            Id = Convert.ToInt32(dtSupplier.Rows[rowIndex]["id"]),
+                            Name = dtSupplier.Rows[rowIndex]["name"].ToString(),
+                            Email = dtSupplier.Rows[rowIndex]["email"].ToString(),
+                            Contact = dtSupplier.Rows[rowIndex]["contact"].ToString(),
+                            Address = dtSupplier.Rows[rowIndex]["address"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtSupplier.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtSupplier.Rows[rowIndex]["added_by"])
+                        });
+                }
             }
             else
             {
-                //Show all categories from the database
+                //Show all suppliers from the database.
                 LoadSupplierDataGrid();
             }
         }
