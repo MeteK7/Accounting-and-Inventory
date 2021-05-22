@@ -205,8 +205,8 @@ namespace GUI
                             Id = Convert.ToInt32(dtCategory.Rows[rowIndex]["id"]),
                             Name = dtCategory.Rows[rowIndex]["name"].ToString(),
                             Description = dtCategory.Rows[rowIndex]["description"].ToString(),
-                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"]),
-                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"])
+                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"])
                         });
                 }
             }

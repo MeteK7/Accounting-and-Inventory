@@ -179,11 +179,22 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshAccountDataGrid method!!! */
             {
+                dtgAccounts.Items.Clear();
+
                 //Show account informations based on the keyword
-                DataTable dataTable = accountDAL.Search(keyword);
-                dtgAccounts.ItemsSource = dataTable.DefaultView;
-                dtgAccounts.AutoGenerateColumns = true;
-                dtgAccounts.CanUserAddRows = false;
+                DataTable dataTableProduct = accountDAL.Search(keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
+
+                for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
+                {
+                    dtgAccounts.Items.Add(
+                        new AccountCUL()
+                        {
+                            Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
+                            Name = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString(),
+                            AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["barcode_wholesale"]),
+                            AddedBy = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["name"])
+                        });
+                }
             }
             else
             {
