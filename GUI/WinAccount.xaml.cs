@@ -190,9 +190,9 @@ namespace GUI
                         new AccountCUL()
                         {
                             Id = Convert.ToInt32(dtAccount.Rows[rowIndex]["id"]),
-                            Name = dtAccount.Rows[rowIndex]["barcode_retail"].ToString(),
-                            AddedDate = Convert.ToDateTime(dtAccount.Rows[rowIndex]["barcode_wholesale"]),
-                            AddedBy = Convert.ToInt32(dtAccount.Rows[rowIndex]["name"])
+                            Name = dtAccount.Rows[rowIndex]["name"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtAccount.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtAccount.Rows[rowIndex]["added_by"])
                         });
                 }
             }
