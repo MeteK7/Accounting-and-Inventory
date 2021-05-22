@@ -183,8 +183,6 @@ namespace GUI
             //txtDescription.Text = (drv[2]).ToString();
         }
 
-
-
         private void txtCategorySearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Get Keyword from Text box
@@ -211,6 +209,11 @@ namespace GUI
                             AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"])
                         });
                 }
+            }
+            else
+            {
+                //Show all categories from the database.
+                LoadCategoryDataGrid();
             }
         }
     }

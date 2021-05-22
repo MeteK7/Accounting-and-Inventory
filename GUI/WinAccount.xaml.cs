@@ -187,7 +187,7 @@ namespace GUI
             }
             else
             {
-                //Show all banks from the database
+                //Show all accounts from the database
                 LoadAccountDataGrid();
             }
         }
