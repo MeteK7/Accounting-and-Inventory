@@ -63,6 +63,7 @@ namespace GUI
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "WinPOP";
+        string colQtyNameInDb = "quantity_in_stock", colCostPriceNameInDb="costprice";
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
@@ -363,7 +364,6 @@ namespace GUI
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
-                int firstRowIndex = 0;
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
@@ -466,17 +466,18 @@ namespace GUI
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
-                    #region PRODUCT AMOUNT UPDATE
+                    #region PRODUCT AMOUNT AND COST UPDATE
                     productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
 
-                    productCUL.AmountInStock = productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
+                    decimal newQuantity= productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
 
                     if (chkUpdateProductCosts.IsChecked == true)
-                        productCUL.CostPrice = Convert.ToDecimal(cells[cellCostPrice]);
-
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
-
-                    productDAL.UpdateAmountInStock(productCUL);
+                    {
+                        decimal newCostPrice = Convert.ToDecimal(cells[cellCostPrice]);
+                        productDAL.UpdateSpecificColumn(productId, colCostPriceNameInDb, newCostPrice.ToString());
+                    }
                     #endregion
                 }
                 #endregion

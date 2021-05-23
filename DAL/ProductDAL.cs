@@ -284,19 +284,19 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region UPDATE AMOUNT IN STOCK METHOD
-        public bool UpdateAmountInStock(ProductCUL product)
+        #region UPDATE A SPECIFIC COLUMN METHOD
+        public bool UpdateSpecificColumn(int productId, string columnName, string columnValue)
         {
             bool isSuccessProductAmount = false;
             SqlConnection conn = new SqlConnection(connString);
 
             try
             {
-                string sql = "UPDATE tbl_products SET amount_in_stock=@amount_in_stock WHERE id=@id";
+                string sql = "UPDATE tbl_products SET '" + columnName + "'=@'" + columnName + "' WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@amount_in_stock", product.AmountInStock);
-                cmd.Parameters.AddWithValue("@id", product.Id); //Do you REALLY need to update an ID? You have already the ID in the query above.
+                cmd.Parameters.AddWithValue("@'" + columnName + "'", columnValue);
+                cmd.Parameters.AddWithValue("@id", productId); //Do you REALLY need to update an ID? You have already the ID in the query above.
 
                 conn.Open();
 
