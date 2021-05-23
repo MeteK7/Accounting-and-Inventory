@@ -54,6 +54,8 @@ namespace GUI
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
         int oldItemsRowCount;
+        string colQtyNameInDb = "quantity_in_stock", colCostPriceNameInDb = "costprice";
+        decimal newQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +104,7 @@ namespace GUI
                         productCostPrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_cost_price"]);
                         productSalePrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_sale_price"]);
                         productAmountInReal = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_real"]);
-                        productAmountInStock = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_amount_in_stock"]);
+                        productAmountInStock = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_quantity_in_stock"]);
                         productAmountDifference = productAmountInReal - productAmountInStock;//There is already a same formula in the method named "txtProductAmountInReal_TextChanged"!!!.
                         productTotalCostPrice = productCostPrice * productAmountInReal;//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
                         productTotalSalePrice = productSalePrice * productAmountInReal;//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
@@ -295,7 +297,7 @@ namespace GUI
                 productName = dataTableProduct.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database.
                 costPrice = dataTableProduct.Rows[rowIndex]["costprice"].ToString();
                 salePrice = dataTableProduct.Rows[rowIndex]["saleprice"].ToString();
-                productAmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]);
+                productAmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex][colQtyNameInDb]);
 
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
@@ -485,25 +487,26 @@ namespace GUI
 
         private void RevertOldAmountInStock()
         {
+            int productId;
             int initialRowIndex = 0;
             int colProductId = 0;
             int colProductAmountDifference = 7;
-            decimal productAmountFromDB;
+            decimal productQtyFromDB;
 
 
-            DataTable dataTableProduct = new DataTable();
+            DataTable dtProduct = new DataTable();
 
             for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
             {
-                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
+                dtProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
 
-                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
+                productQtyFromDB = Convert.ToInt32(dtProduct.Rows[initialRowIndex][colQtyNameInDb]);
 
-                productCUL.AmountInStock = productAmountFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmountDifference]);//Revert the amount in stock.
+                newQuantity = productQtyFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmountDifference]);//Revert the amount in stock.
 
-                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
+                productId = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
 
-                productDAL.UpdateAmountInStock(productCUL);
+                productDAL.UpdateSpecificColumn(productId,colQtyNameInDb, newQuantity.ToString());
             }
         }
 
@@ -549,7 +552,7 @@ namespace GUI
                 int initialRowIndex = 0;
                 int cellLength = 10;
                 string[] cells = new string[cellLength];
-                bool isSuccessProductAmount = false;
+                bool isSuccessProductQty = false;
                 bool isSuccessDetail = false;
                 bool isSuccess = false;
 
@@ -594,9 +597,8 @@ namespace GUI
                     isSuccessDetail = inventoryAdjustmentDetailDAL.Insert(inventoryAdjustmentDetailCUL);
 
                     #region TABLE PRODUCT INVENTORY ADJUSTMENT SECTION
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the stock in the DB of a specific product.
-                    productCUL.AmountInStock = Convert.ToDecimal(cells[cellProductAmountInReal]);//Assigning the real amount of the product in the facility to the system's stock.
-                    isSuccessProductAmount = productDAL.UpdateAmountInStock(productCUL);
+                    newQuantity = Convert.ToDecimal(cells[cellProductAmountInReal]);//Assigning the real amount of the product in the facility to the system's stock.
+                    isSuccessProductQty = productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
                     #endregion
                 }
                 #endregion
@@ -616,7 +618,7 @@ namespace GUI
 
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessDetail == true && isSuccessProductAmount==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessDetail == true && isSuccessProductQty==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     //ClearBasketTextBox();
                     //ClearInventoryAdjustmentDataGrid();

@@ -63,6 +63,7 @@ namespace GUI
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "WinPOP";
+        string colQtyNameInDb = "quantity_in_stock", colCostPriceNameInDb="costprice";
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
@@ -355,7 +356,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
                 int productId;
                 int unitId;
-                decimal productOldAmountInStock;
+                decimal productOldQtyInStock, newQuantity,newCostPrice;
                 int cellLength = 6;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
@@ -363,7 +364,6 @@ namespace GUI
                 int productRate = 0;//Modify this code dynamically!!!!!!!!!
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
-                int firstRowIndex = 0;
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
@@ -429,7 +429,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldAmountInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
                         pointOfPurchaseDetailDAL.Delete(invoiceId);
@@ -466,17 +466,18 @@ namespace GUI
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
-                    #region PRODUCT AMOUNT UPDATE
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+                    #region PRODUCT AMOUNT AND COST UPDATE
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colQtyNameInDb].ToString());//Getting the old product amount in stock.
 
-                    productCUL.AmountInStock = productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
+                    newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[cellProductAmount]);
+
+                    productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
 
                     if (chkUpdateProductCosts.IsChecked == true)
-                        productCUL.CostPrice = Convert.ToDecimal(cells[cellCostPrice]);
-
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
-
-                    productDAL.UpdateAmountInStock(productCUL);
+                    {
+                        newCostPrice = Convert.ToDecimal(cells[cellCostPrice]);
+                        productDAL.UpdateSpecificColumn(productId, colCostPriceNameInDb, newCostPrice.ToString());
+                    }
                     #endregion
                 }
                 #endregion
@@ -653,7 +654,7 @@ namespace GUI
                     #region REVERT THE STOCK
                     oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
                     oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    productBLL.RevertOldAmountInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
+                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
 
                     #region PREPARE TO THE LAST PAGE
