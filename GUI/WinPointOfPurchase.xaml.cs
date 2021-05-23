@@ -356,7 +356,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellProductAmount = 4;
                 int productId;
                 int unitId;
-                decimal productOldAmountInStock;
+                decimal productOldQtyInStock, newQuantity,newCostPrice;
                 int cellLength = 6;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
@@ -467,15 +467,15 @@ namespace GUI
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
                     #region PRODUCT AMOUNT AND COST UPDATE
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colQtyNameInDb].ToString());//Getting the old product amount in stock.
 
-                    decimal newQuantity= productOldAmountInStock + Convert.ToDecimal(cells[cellProductAmount]);
+                    newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[cellProductAmount]);
 
                     productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
 
                     if (chkUpdateProductCosts.IsChecked == true)
                     {
-                        decimal newCostPrice = Convert.ToDecimal(cells[cellCostPrice]);
+                        newCostPrice = Convert.ToDecimal(cells[cellCostPrice]);
                         productDAL.UpdateSpecificColumn(productId, colCostPriceNameInDb, newCostPrice.ToString());
                     }
                     #endregion

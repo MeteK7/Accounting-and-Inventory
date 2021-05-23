@@ -54,7 +54,9 @@ namespace GUI
         int invoiceArrow;
         int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "WinPOS";
+        string calledBy = "WinPOS", colQtyNameInDb = "quantity_in_stock";
+        decimal newQuantity;
+
         CommonBLL commonBLL = new CommonBLL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -350,7 +352,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
                 int productId;
                 int unitId;
-                decimal productOldAmountInStock;
+                decimal productOldQtyInStock;
                 int initialRowIndex = 0;
                 int cellLength = 7;
                 int addedBy = userId;
@@ -403,13 +405,11 @@ namespace GUI
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT AMOUNT UPDATE
-                    productOldAmountInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"].ToString());//Getting the old product amount in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb].ToString());//Getting the old product amount in stock.
 
-                    productCUL.AmountInStock = productOldAmountInStock - Convert.ToDecimal(cells[cellProductAmount]);
+                    newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductAmount]);
 
-                    productCUL.Id = productId;//Assigning the Id in the productCUL to update the product columns in the DB using a specific product.
-
-                    productDAL.UpdateAmountInStock(productCUL);
+                    productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
                     #endregion
 
                 }
