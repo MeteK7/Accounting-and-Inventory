@@ -462,7 +462,7 @@ namespace GUI
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
                     pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
-                    pointOfPurchaseDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+                    pointOfPurchaseDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductAmount]);
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 

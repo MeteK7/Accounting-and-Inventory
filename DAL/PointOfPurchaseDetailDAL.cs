@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, added_by, rate, amount, product_cost_price) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @amount, @product_cost_price)";
+                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_cost_price) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -63,7 +63,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfPurchaseDetailCUL.ProductRate);
-                cmd.Parameters.AddWithValue("@amount", pointOfPurchaseDetailCUL.ProductAmount);
+                cmd.Parameters.AddWithValue("@quantity", pointOfPurchaseDetailCUL.ProductQuantity);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfPurchaseDetailCUL.ProductCostPrice);
 
                 conn.Open();
@@ -109,7 +109,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@added_date", pointOfPurchaseDetailCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfPurchaseDetailCUL.ProductRate);
-                cmd.Parameters.AddWithValue("@amount", pointOfPurchaseDetailCUL.ProductAmount);
+                cmd.Parameters.AddWithValue("@quantity", pointOfPurchaseDetailCUL.ProductQuantity);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfPurchaseDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", pointOfPurchaseDetailCUL.ProductSalePrice);
                 cmd.Parameters.AddWithValue("@total_price", pointOfPurchaseDetailCUL.ProductTotalPrice);

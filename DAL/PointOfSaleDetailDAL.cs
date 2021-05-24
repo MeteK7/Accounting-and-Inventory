@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, amount, product_cost_price, product_sale_price) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @amount, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_cost_price, product_sale_price) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -63,7 +63,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfSaleDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailCUL.ProductRate);
-                cmd.Parameters.AddWithValue("@amount", pointOfSaleDetailCUL.ProductAmount);
+                cmd.Parameters.AddWithValue("@quantity", pointOfSaleDetailCUL.ProductQuantity);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfSaleDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", pointOfSaleDetailCUL.ProductSalePrice);
 
@@ -95,7 +95,7 @@ namespace KabaAccounting.DAL
         /*#region UPDATE METHOD
         public bool Update(PointOfSaleDetailCUL pointOfSaleDetailCUL)
         {
-            bool isSuccess = false;
+            bool isSuccess = false;Amount
 
             SqlConnection conn = new SqlConnection(connString);
 
@@ -110,7 +110,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@added_date", pointOfSaleDetailCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailCUL.ProductRate);
-                cmd.Parameters.AddWithValue("@amount", pointOfSaleDetailCUL.ProductAmount);
+                cmd.Parameters.AddWithValue("@quantity", pointOfSaleDetailCUL.ProductQuantity);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfSaleDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", pointOfSaleDetailCUL.ProductSalePrice);
                 cmd.Parameters.AddWithValue("@total_price", pointOfSaleDetailCUL.ProductTotalPrice);

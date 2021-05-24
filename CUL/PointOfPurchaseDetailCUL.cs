@@ -12,7 +12,7 @@ namespace KabaAccounting.CUL
         public int ProductId { get; set; }
         public int ProductUnitId { get; set; }
         public decimal ProductRate { get; set; }
-        public decimal ProductAmount { get; set; }
+        public decimal ProductQuantity { get; set; }
         public decimal ProductCostPrice { get; set; }
         //public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }

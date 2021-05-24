@@ -325,7 +325,7 @@ namespace GUI
                 pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);
                 pointOfSaleCUL.CustomerId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
                 pointOfSaleCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
-                pointOfSaleCUL.TotalProductAmount = Convert.ToInt32(txtBasketAmount.Text);
+                pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketAmount.Text);
                 pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -400,7 +400,7 @@ namespace GUI
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
                     pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
                     pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
-                    pointOfSaleDetailCUL.ProductAmount = Convert.ToDecimal(cells[cellProductAmount]);
+                    pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductAmount]);
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
