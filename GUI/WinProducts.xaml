@@ -88,8 +88,8 @@
                     <ComboBox x:Name="cboProductUnitWholesale" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="165" Height="27" Opacity="0.75"/>
                     <Label x:Name="lblProductBarcodeWholesale" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductBarcodeWholesale" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeWholesale_KeyDown"/>
-                    <Label x:Name="lblProductAmount" Content="Amount in Unit" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
-                    <TextBox x:Name="txtProductAmountInUnitWholesale" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductAmountInUnitWholesale_TextChanged" Opacity="0.75"/>
+                    <Label x:Name="lblProductQuantity" Content="Quantity in Unit" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
+                    <TextBox x:Name="txtProductQuantityInUnitWholesale" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductQuantityInUnitWholesale_TextChanged" Opacity="0.75"/>
                     <Label x:Name="lblProductCostPriceWholesale" Content="Cost Price" HorizontalAlignment="Left" Margin="8,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductCostPriceWholesale" HorizontalAlignment="Left" Height="27" Margin="115,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" IsReadOnly="True" Opacity="0.75"/>
                     <Label x:Name="lblProductSalePriceWholesale" Content="Sale Price" HorizontalAlignment="Left" Margin="7,138,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
@@ -115,8 +115,8 @@
                 <DataGridTextColumn Binding="{Binding CategoryName}" ClipboardContentBinding="{x:Null}" Header="Category"/>
                 <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" MaxWidth="0"/>
                 <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
-                <DataGridTextColumn Binding="{Binding AmountInUnitWholesale}" ClipboardContentBinding="{x:Null}" Header="Amount in Unit"/>
-                <DataGridTextColumn Binding="{Binding AmountInStock}" ClipboardContentBinding="{x:Null}" Header="Amount in Stock"/>
+                <DataGridTextColumn Binding="{Binding QuantityInUnitWholesale}" ClipboardContentBinding="{x:Null}" Header="Quantity in Unit"/>
+                <DataGridTextColumn Binding="{Binding QuantityInStock}" ClipboardContentBinding="{x:Null}" Header="Quantity in Stock"/>
                 <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price"/>
                 <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price"/>
                 <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By"/>

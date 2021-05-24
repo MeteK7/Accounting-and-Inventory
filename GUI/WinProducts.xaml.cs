@@ -46,7 +46,7 @@ namespace GUI
         private void LoadProductDataGrid()
         {
             int firstRowIndex = 0, productId, categoryId, unitRetailId, unitWholesaleId, addedById;
-            string productName, categoryName, unitNameRetail, unitNameWholesale, description, amountInUnitWholesale, amountInStock, costPrice, salePrice, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
+            string productName, categoryName, unitNameRetail, unitNameWholesale, description, quantityInUnitWholesale, quantityInStock, costPrice, salePrice, addedDate, addedByUsername, barcodeRetail, barcodeWholesale;
             DataTable dataTable = productDAL.SelectAllOrByKeyword();
             DataTable dataTableCategoryInfo;
             DataTable dataTableUnitInfo;
@@ -78,8 +78,8 @@ namespace GUI
                 barcodeWholesale = dataTable.Rows[currentRow]["barcode_wholesale"].ToString();
                 productName = dataTable.Rows[currentRow]["name"].ToString();
                 description = dataTable.Rows[currentRow]["description"].ToString();
-                amountInUnitWholesale = dataTable.Rows[currentRow]["amount_in_unit"].ToString();
-                amountInStock = dataTable.Rows[currentRow]["amount_in_stock"].ToString();
+                quantityInUnitWholesale = dataTable.Rows[currentRow]["quantity_in_unit"].ToString();
+                quantityInStock = dataTable.Rows[currentRow]["quantity_in_stock"].ToString();
                 costPrice = dataTable.Rows[currentRow]["costprice"].ToString();
                 salePrice = dataTable.Rows[currentRow]["saleprice"].ToString();
                 addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
@@ -88,7 +88,7 @@ namespace GUI
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
                 addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
 
-                dtgProducts.Items.Add(new { Id = productId, BarcodeRetail = barcodeRetail, BarcodeWholesale = barcodeWholesale, Name = productName, CategoryName = categoryName, Description = description, AmountInUnitWholesale = amountInUnitWholesale, AmountInStock = amountInStock, CostPrice = costPrice, SalePrice = salePrice, AddedDate = addedDate, AddedBy = addedByUsername, UnitNameRetail = unitNameRetail, UnitNameWholesale = unitNameWholesale });
+                dtgProducts.Items.Add(new { Id = productId, BarcodeRetail = barcodeRetail, BarcodeWholesale = barcodeWholesale, Name = productName, CategoryName = categoryName, Description = description, QuantityInUnitWholesale = quantityInUnitWholesale, QuantityInStock = quantityInStock, CostPrice = costPrice, SalePrice = salePrice, AddedDate = addedDate, AddedBy = addedByUsername, UnitNameRetail = unitNameRetail, UnitNameWholesale = unitNameWholesale });
             }
             #endregion
         }
@@ -105,7 +105,7 @@ namespace GUI
             txtProductSalePriceRetail.Text = "";
             cboProductUnitWholesale.SelectedIndex = -1;
             txtProductBarcodeWholesale.Text = "";
-            txtProductAmountInUnitWholesale.Text = "";
+            txtProductQuantityInUnitWholesale.Text = "";
             txtProductCostPriceWholesale.Text = "";
             txtProductSalePriceWholesale.Text = "";
             txtProductSearch.Text = "";
@@ -114,7 +114,7 @@ namespace GUI
         private void DtgProductsIndexChanged()//Getting the index of a particular row and fill the text boxes with the related columns of the row.
         {
             object row = dtgProducts.SelectedItem;
-            int rowId = 0, rowBarcodeRetail = 1, rowBarcodeWholesale = 2, rowProductName = 3, rowProductCategory = 4, rowProductDescription = 5, rowPrAmountInUnWhol = 6, rowPrCostPriceRet = 8, rowPrSalePriceRet = 9, rowProductUnitRet = 12, rowProductUnitWhol = 13;
+            int rowId = 0, rowBarcodeRetail = 1, rowBarcodeWholesale = 2, rowProductName = 3, rowProductCategory = 4, rowProductDescription = 5, rowPrQuantityInUnWhol = 6, rowPrCostPriceRet = 8, rowPrSalePriceRet = 9, rowProductUnitRet = 12, rowProductUnitWhol = 13;
 
             txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;
             txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;
@@ -122,7 +122,7 @@ namespace GUI
             txtProductName.Text = (dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock).Text;
             cboProductCategory.Text = (dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock).Text;
             txtProductDescription.Text = (dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock).Text;//ANOTHER METHOD: (dtgProducts.SelectedCells[rowProductDescription].Column.GetCellContent(row) as TextBlock).Text;
-            txtProductAmountInUnitWholesale.Text = (dtgProducts.Columns[rowPrAmountInUnWhol].GetCellContent(row) as TextBlock).Text;
+            txtProductQuantityInUnitWholesale.Text = (dtgProducts.Columns[rowPrQuantityInUnWhol].GetCellContent(row) as TextBlock).Text;
             txtProductCostPriceRetail.Text = (dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock).Text;
             txtProductSalePriceRetail.Text = (dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock).Text;
             cboProductUnitRetail.Text = (dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock).Text;
@@ -135,26 +135,25 @@ namespace GUI
         {
             if (txtProductCostPriceRetail.Text != "")
             {
-                int amount = Convert.ToInt32(txtProductAmountInUnitWholesale.Text);
+                int quantity = Convert.ToInt32(txtProductQuantityInUnitWholesale.Text);
                 double costPriceRetail = Convert.ToDouble(txtProductCostPriceRetail.Text);
 
-                return amount * costPriceRetail;
+                return quantity * costPriceRetail;
             }
             else
             {
                 return 0;
             }
-
         }
 
         private double CalculateTotalSalePrice()
         {
             if (txtProductSalePriceRetail.Text != "")
             {
-                int amount = Convert.ToInt32(txtProductAmountInUnitWholesale.Text);
+                int quantity = Convert.ToInt32(txtProductQuantityInUnitWholesale.Text);
                 double salePriceRetail = Convert.ToDouble(txtProductSalePriceRetail.Text);
 
-                return salePriceRetail * amount;
+                return salePriceRetail * quantity;
             }
 
             else
@@ -190,7 +189,7 @@ namespace GUI
             {
                 dtgProducts.Items.Clear();
 
-                //Show category informations based on the keyword
+                //Show product informations based on the keyword
                 DataTable dataTableProduct = productDAL.SelectAllOrByKeyword(keyword: keyword);//The first "keyword" is the parameter name, and the second "keyword" is the local variable.
 
                 for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
@@ -204,12 +203,12 @@ namespace GUI
                             Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
                             CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
                             Description = dataTableProduct.Rows[rowIndex].ToString()
-                        }); ;
+                        });
                 }
             }
             else
             {
-                //Show all products from the database
+                //Show all products from the database.
                 LoadProductDataGrid();
             }
         }
@@ -253,13 +252,13 @@ namespace GUI
             string message;
 
             // THIS IS NOT AN EFFICIENT CODE BLOCK.
-            if (txtProductName.Text != "" && cboProductCategory.SelectedValue != null && cboProductUnitRetail.SelectedValue != null && cboProductUnitWholesale.SelectedValue != null && txtProductAmountInUnitWholesale.Text != "" && txtProductCostPriceRetail.Text != "" && txtProductSalePriceRetail.Text != "")
+            if (txtProductName.Text != "" && cboProductCategory.SelectedValue != null && cboProductUnitRetail.SelectedValue != null && cboProductUnitWholesale.SelectedValue != null && txtProductQuantityInUnitWholesale.Text != "" && txtProductCostPriceRetail.Text != "" && txtProductSalePriceRetail.Text != "")
             {
                 productCUL.Name = txtProductName.Text;
                 productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
                 productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
                 productCUL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
-                productCUL.AmountInUnit = int.Parse(txtProductAmountInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductAmountInUnitWholesale.Text)
+                productCUL.QuantityInUnit = int.Parse(txtProductQuantityInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductQuantityInUnitWholesale.Text)
                 productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
                 productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
                 productCUL.Description = txtProductDescription.Text;
@@ -271,9 +270,9 @@ namespace GUI
                 #region BUTTON CHECKING PART
                 if (btnType == "Add")
                 {
-                    int initialAmount = 0;
-                    productCUL.Rating = initialAmount;
-                    productCUL.AmountInStock = Convert.ToDecimal(initialAmount);//Amount in stock is always 0 while recording a new product.
+                    int initialQuantity = 0;
+                    productCUL.Rating = initialQuantity;
+                    productCUL.QuantityInStock = Convert.ToDecimal(initialQuantity);//Quantity in stock is always 0 while recording a new product.
 
                     isSuccess = productDAL.Insert(productCUL);
                     message = "Product has been added successfully.";
@@ -329,9 +328,9 @@ namespace GUI
             RunCRUD("Delete");
         }
 
-        private void txtProductAmountInUnitWholesale_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtProductQuantityInUnitWholesale_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmountInUnitWholesale.Text != "")
+            if (txtProductQuantityInUnitWholesale.Text != "")
             {
                 txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
                 txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
@@ -345,7 +344,7 @@ namespace GUI
 
         private void txtProductCostPriceRetail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmountInUnitWholesale.Text != "")
+            if (txtProductQuantityInUnitWholesale.Text != "")
             {
                 txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             }
@@ -353,7 +352,7 @@ namespace GUI
 
         private void txtProductSalePriceRetail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmountInUnitWholesale.Text != "")
+            if (txtProductQuantityInUnitWholesale.Text != "")
             {
                 txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
             }
@@ -361,13 +360,13 @@ namespace GUI
 
         private void PromptBarcodeRetail()
         {
-            int initialAmount = 0;
+            int initialQuantity = 0;
 
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeRetail.Text);
 
-            if (dtProduct.Rows.Count!= initialAmount)
+            if (dtProduct.Rows.Count!= initialQuantity)
             {
-                string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
+                string message = "There is already such product!\n Id: " + dtProduct.Rows[initialQuantity]["id"] + "\nName: " + dtProduct.Rows[initialQuantity]["name"];
 
                 MessageBox.Show(message);
 
@@ -377,13 +376,13 @@ namespace GUI
 
         private void PromptBarcodeWholesale()
         {
-            int initialAmount = 0;
+            int initialQuantity = 0;
 
             DataTable dtProduct = productDAL.SearchDuplications(txtProductBarcodeWholesale.Text);
 
-            if (dtProduct.Rows.Count != initialAmount)
+            if (dtProduct.Rows.Count != initialQuantity)
             {
-                string message = "There is already such product!\n Id: " + dtProduct.Rows[initialAmount]["id"] + "\nName: " + dtProduct.Rows[initialAmount]["name"];
+                string message = "There is already such product!\n Id: " + dtProduct.Rows[initialQuantity]["id"] + "\nName: " + dtProduct.Rows[initialQuantity]["name"];
 
                 MessageBox.Show(message);
 

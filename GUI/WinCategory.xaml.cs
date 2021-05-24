@@ -183,8 +183,6 @@ namespace GUI
             //txtDescription.Text = (drv[2]).ToString();
         }
 
-
-
         private void txtCategorySearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Get Keyword from Text box
@@ -194,15 +192,27 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshCategoryDataGrid method!!! */
             {
-                //Show category informations based on the keyword
-                DataTable dataTable = categoryDAL.Search(keyword);
-                dtgCategories.ItemsSource = dataTable.DefaultView;
-                dtgCategories.AutoGenerateColumns = true;
-                dtgCategories.CanUserAddRows = false;
+                dtgCategories.Items.Clear();
+
+                //Show category informations based on the keyword.
+                DataTable dtCategory = categoryDAL.Search(keyword);
+
+                for (int rowIndex = 0; rowIndex < dtCategory.Rows.Count; rowIndex++)
+                {
+                    dtgCategories.Items.Add(
+                        new CategoryCUL()
+                        {
+                            Id = Convert.ToInt32(dtCategory.Rows[rowIndex]["id"]),
+                            Name = dtCategory.Rows[rowIndex]["name"].ToString(),
+                            Description = dtCategory.Rows[rowIndex]["description"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtCategory.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtCategory.Rows[rowIndex]["added_by"])
+                        });
+                }
             }
             else
             {
-                //Show all categories from the database
+                //Show all categories from the database.
                 LoadCategoryDataGrid();
             }
         }

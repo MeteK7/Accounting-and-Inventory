@@ -170,15 +170,26 @@ namespace GUI
 
             if (keyword != null) /*Do NOT Repeat yourself!!! Improve if statement block!!! You have similar codes in the RefreshBankDataGrid method!!! */
             {
-                //Show bank informations based on the keyword
-                DataTable dataTable = bankDAL.Search(keyword);
-                dtgBanks.ItemsSource = dataTable.DefaultView;
-                dtgBanks.AutoGenerateColumns = true;
-                dtgBanks.CanUserAddRows = false;
+                dtgBanks.Items.Clear();
+
+                //Show bank informations based on the keyword.
+                DataTable dtBank = bankDAL.Search(keyword);
+
+                for (int rowIndex = 0; rowIndex < dtBank.Rows.Count; rowIndex++)
+                {
+                    dtgBanks.Items.Add(
+                        new BankCUL()
+                        {
+                            Id = Convert.ToInt32(dtBank.Rows[rowIndex]["id"]),
+                            Name = dtBank.Rows[rowIndex]["name"].ToString(),
+                            AddedDate = Convert.ToDateTime(dtBank.Rows[rowIndex]["added_date"]),
+                            AddedBy = Convert.ToInt32(dtBank.Rows[rowIndex]["added_by"])
+                        });
+                }
             }
             else
             {
-                //Show all banks from the database
+                //Show all banks from the database.
                 LoadBankDataGrid();
             }
         }

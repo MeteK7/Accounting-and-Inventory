@@ -54,7 +54,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_amount, cost_total, vat, discount, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_amount, @cost_total, @vat, @discount, @grand_total, @asset_id, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_quantity, cost_total, vat, discount, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_quantity, @cost_total, @vat, @discount, @grand_total, @asset_id, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -62,7 +62,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseCUL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("@total_product_quantity", pointOfPurchaseCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
                 cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
@@ -105,13 +105,13 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_amount=@total_product_amount, cost_total=@cost_total, vat=@vat, discount=@discount, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, vat=@vat, discount=@discount, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("total_product_quantity", pointOfPurchaseCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("cost_total", pointOfPurchaseCUL.CostTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfPurchaseCUL.Discount);

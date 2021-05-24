@@ -14,13 +14,15 @@ namespace BLL
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
 
-        public void RevertOldAmountInStock(string[,] dgOldProductCells, int oldItemsRowCount, string calledBy)
+        public void RevertOldQuantityInStock(string[,] dgOldProductCells, int oldItemsRowCount, string calledBy)
         {
+            int productId;
+            decimal newQuantity;
             int initialRowIndex = 0;
             int colProductId = 0;
             int colProductAmount = 5;
             decimal productAmountFromDB;
-
+            string colQtyNameInDb = "quantity_in_stock";
 
             DataTable dataTableProduct = new DataTable();
 
@@ -28,16 +30,16 @@ namespace BLL
             {
                 dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
 
-                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["amount_in_stock"]);
+                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb]);
 
                 if(calledBy=="POS")
-                    productCUL.AmountInStock = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Add the old amount if it is POS.
+                    newQuantity = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Add the old amount if it is POS.
                 else
-                    productCUL.AmountInStock = productAmountFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Subtract the old amount if it is POP.
+                    newQuantity = productAmountFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Subtract the old amount if it is POP.
 
-                productCUL.Id = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);//Getting the product id in order to fix the amount of specific product in the db by id.
+                productId = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);//Getting the product id in order to fix the amount of specific product in the db by id.
 
-                productDAL.UpdateAmountInStock(productCUL);
+                productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
             }
         }
     }
