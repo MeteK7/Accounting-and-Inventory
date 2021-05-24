@@ -67,7 +67,7 @@ namespace GUI
                         Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
                         CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
                         Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
-                        AmountInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]),
+                        QuantityInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["amount_in_stock"]),
                         CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
                         SalePrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["saleprice"]),
                         AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["added_date"]),

@@ -57,7 +57,7 @@ namespace KabaAccounting.DAL
             SqlConnection conn = new SqlConnection(connString);
             try
             {
-                String sqlQuery = "INSERT INTO tbl_products (name, category_id, description, rating, barcode_retail, barcode_wholesale, amount_in_unit, amount_in_stock, costprice, saleprice, unit_retail_id, unit_wholesale_id, added_date, added_by) VALUES (@name, @category_id, @description, @rating, @barcode_retail, @barcode_wholesale, @amount_in_unit, @amount_in_stock, @costprice, @saleprice, @unit_retail_id, @unit_wholesale_id, @added_date, @added_by)";
+                String sqlQuery = "INSERT INTO tbl_products (name, category_id, description, rating, barcode_retail, barcode_wholesale, quantity_in_unit, quantity_in_stock, costprice, saleprice, unit_retail_id, unit_wholesale_id, added_date, added_by) VALUES (@name, @category_id, @description, @rating, @barcode_retail, @barcode_wholesale, @quantity_in_unit, @quantity_in_stock, @costprice, @saleprice, @unit_retail_id, @unit_wholesale_id, @added_date, @added_by)";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
@@ -66,8 +66,8 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);
                 cmd.Parameters.AddWithValue("@barcode_wholesale", product.BarcodeWholesale);
-                cmd.Parameters.AddWithValue("@amount_in_unit", product.AmountInUnit);
-                cmd.Parameters.AddWithValue("@amount_in_stock", product.AmountInStock);
+                cmd.Parameters.AddWithValue("@quantity_in_unit", product.QuantityInUnit);
+                cmd.Parameters.AddWithValue("@quantity_in_stock", product.QuantityInStock);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
                 cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
@@ -112,7 +112,7 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sql = "UPDATE tbl_products SET name=@name, category_id=@category_id, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, amount_in_unit=@amount_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail_id=@unit_retail_id, unit_wholesale_id=@unit_wholesale_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sql = "UPDATE tbl_products SET name=@name, category_id=@category_id, description=@description, rating=@rating, barcode_retail=@barcode_retail, barcode_wholesale=@barcode_wholesale, quantity_in_unit=@quantity_in_unit, costprice=@costprice, saleprice=@saleprice, unit_retail_id=@unit_retail_id, unit_wholesale_id=@unit_wholesale_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
@@ -121,7 +121,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@rating", product.Rating);
                 cmd.Parameters.AddWithValue("@barcode_retail", product.BarcodeRetail);
                 cmd.Parameters.AddWithValue("@barcode_wholesale", product.BarcodeWholesale);
-                cmd.Parameters.AddWithValue("@amount_in_unit", product.AmountInUnit);
+                cmd.Parameters.AddWithValue("@quantity_in_unit", product.QuantityInUnit);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
                 cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
@@ -287,7 +287,7 @@ namespace KabaAccounting.DAL
         #region UPDATE A SPECIFIC COLUMN METHOD
         public bool UpdateSpecificColumn(int productId, string columnName, string columnValue)
         {
-            bool isSuccessProductAmount = false;
+            bool isSuccessProductQuantity = false;
             SqlConnection conn = new SqlConnection(connString);
 
             try
@@ -304,11 +304,11 @@ namespace KabaAccounting.DAL
 
                 if (rows > 0)
                 {
-                    isSuccessProductAmount = true;
+                    isSuccessProductQuantity = true;
                 }
                 else
                 {
-                    isSuccessProductAmount = false;
+                    isSuccessProductQuantity = false;
                 }
 
             }
@@ -322,7 +322,7 @@ namespace KabaAccounting.DAL
                 conn.Close();
             }
 
-            return isSuccessProductAmount;
+            return isSuccessProductQuantity;
         }
         #endregion
     }
