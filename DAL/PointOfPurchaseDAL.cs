@@ -62,7 +62,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@invoice_no", pointOfPurchaseCUL.InvoiceNo);
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("@total_product_amount", pointOfPurchaseCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
                 cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
@@ -111,7 +111,7 @@ namespace KabaAccounting.DAL
 
                 cmd.Parameters.AddWithValue("payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("supplier_id", pointOfPurchaseCUL.SupplierId);
-                cmd.Parameters.AddWithValue("total_product_amount", pointOfPurchaseCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("total_product_amount", pointOfPurchaseCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("cost_total", pointOfPurchaseCUL.CostTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfPurchaseCUL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfPurchaseCUL.Discount);

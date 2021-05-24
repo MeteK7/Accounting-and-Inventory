@@ -16,8 +16,8 @@ namespace KabaAccounting.CUL
         public decimal Rating { get; set; }
         public string BarcodeRetail { get; set; }
         public string BarcodeWholesale { get; set; }
-        public decimal AmountInUnit { get; set; }
-        public decimal AmountInStock { get; set; }
+        public decimal QuantityInUnit { get; set; }
+        public decimal QuantityInStock { get; set; }
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
         public decimal TotalSalePrice { get; set; }
