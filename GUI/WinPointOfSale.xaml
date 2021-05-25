@@ -307,14 +307,14 @@
                 <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
                 <Label x:Name="lblProductCostPrice" Content="Cost Price" HorizontalAlignment="Left" Margin="409,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductSalePrice" Content="Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
-                <Label x:Name="lblProductAmount" Content="Amount" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
+                <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyDown="txtProductId_KeyDown" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="349,41,0,0" VerticalAlignment="Top" Width="55"/>
                 <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
                 <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductAmount" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductAmount_TextChanged"/>
+                <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged"/>
                 <TextBox x:Name="txtProductTotalPrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
@@ -341,7 +341,7 @@
                         <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
                         <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost" Width="70"/>
                         <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Price" Width="70"/>
-                        <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount"/>
+                        <DataGridTextColumn Binding="{Binding Quantity}" ClipboardContentBinding="{x:Null}" Header="Quantity"/>
                         <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="Total Cost"/>
                         <DataGridTextColumn Binding="{Binding TotalSalePrice}" ClipboardContentBinding="{x:Null}" Header="Total Price" Width="85"/>
                         <DataGridTemplateColumn Header="Delete">
@@ -374,7 +374,7 @@
                 <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,114,0,0" Width="80"/>
                 <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" Width="80"/>
                 <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold"/>
-                <TextBox x:Name="txtBasketAmount" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
