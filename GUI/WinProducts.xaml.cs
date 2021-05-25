@@ -131,12 +131,12 @@ namespace GUI
             txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
         }
 
-        private double CalculateTotalCostPrice()
+        private decimal CalculateTotalCostPrice()
         {
             if (txtProductCostPriceRetail.Text != "")
             {
-                int quantity = Convert.ToInt32(txtProductQuantityInUnitWholesale.Text);
-                double costPriceRetail = Convert.ToDouble(txtProductCostPriceRetail.Text);
+                decimal quantity = Convert.ToDecimal(txtProductQuantityInUnitWholesale.Text);
+                decimal costPriceRetail = Convert.ToDecimal(txtProductCostPriceRetail.Text);
 
                 return quantity * costPriceRetail;
             }
@@ -146,12 +146,12 @@ namespace GUI
             }
         }
 
-        private double CalculateTotalSalePrice()
+        private decimal CalculateTotalSalePrice()
         {
             if (txtProductSalePriceRetail.Text != "")
             {
-                int quantity = Convert.ToInt32(txtProductQuantityInUnitWholesale.Text);
-                double salePriceRetail = Convert.ToDouble(txtProductSalePriceRetail.Text);
+                decimal quantity = Convert.ToDecimal(txtProductQuantityInUnitWholesale.Text);
+                decimal salePriceRetail = Convert.ToDecimal(txtProductSalePriceRetail.Text);
 
                 return salePriceRetail * quantity;
             }
@@ -258,7 +258,7 @@ namespace GUI
                 productCUL.CategoryId = Convert.ToInt32(cboProductCategory.SelectedValue); //SelectedValue Property helps you to get the hidden value of Combobox selected Item.
                 productCUL.UnitRetail = Convert.ToInt32(cboProductUnitRetail.SelectedValue);
                 productCUL.UnitWholesale = Convert.ToInt32(cboProductUnitWholesale.SelectedValue);
-                productCUL.QuantityInUnit = int.Parse(txtProductQuantityInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductQuantityInUnitWholesale.Text)
+                productCUL.QuantityInUnit = Convert.ToDecimal(txtProductQuantityInUnitWholesale.Text);//You can also use ===> Convert.ToInt32(txtProductQuantityInUnitWholesale.Text)
                 productCUL.CostPrice = Convert.ToDecimal(txtProductCostPriceRetail.Text);
                 productCUL.SalePrice = Convert.ToDecimal(txtProductSalePriceRetail.Text);
                 productCUL.Description = txtProductDescription.Text;
