@@ -122,7 +122,7 @@ namespace GUI
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
             txtProductSalePrice.IsEnabled = false;
-            txtProductAmount.IsEnabled = false;
+            txtProductQuantity.IsEnabled = false;
             txtProductTotalPrice.IsEnabled = false;
         }
 
@@ -143,7 +143,7 @@ namespace GUI
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
             txtProductSalePrice.IsEnabled = true;
-            txtProductAmount.IsEnabled = true;
+            txtProductQuantity.IsEnabled = true;
             txtProductTotalPrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
         }
@@ -155,7 +155,7 @@ namespace GUI
 
         private void ClearBasketTextBox()
         {
-            txtBasketAmount.Text = "0";
+            txtBasketQuantity.Text = "0";
             txtBasketCostTotal.Text = "0";
             txtBasketSubTotal.Text = "0";
             txtBasketVat.Text = "0";
@@ -170,7 +170,7 @@ namespace GUI
             cboProductUnit.SelectedIndex = -1;
             txtProductCostPrice.Text = "";
             txtProductSalePrice.Text = "";
-            txtProductAmount.Text = "";
+            txtProductQuantity.Text = "";
             txtProductTotalPrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
@@ -191,7 +191,7 @@ namespace GUI
         private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
         {
             int initalIndex = 0, productUnitId;
-            string productId, productName, productUnitName, productCostPrice, productSalePrice, productAmount, productTotalCostPrice, productTotalSalePrice;
+            string productId, productName, productUnitName, productCostPrice, productSalePrice, productQuantity, productTotalCostPrice, productTotalSalePrice;
 
             if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
@@ -225,22 +225,22 @@ namespace GUI
 
                         productCostPrice = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
                         productSalePrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
-                        productAmount = dataTablePosDetail.Rows[currentRow]["amount"].ToString();
-                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the amount to find the total cost.
-                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the amount to find the total price.
+                        productQuantity = dataTablePosDetail.Rows[currentRow]["quantity"].ToString();
+                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
                         productName = dataTableProduct.Rows[initalIndex]["name"].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
 
-                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Amount = productAmount, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
+                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Quantity = productQuantity, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
                     }
                     #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketAmount.Text = dataTablePos.Rows[initalIndex]["total_product_amount"].ToString();
+                    txtBasketQuantity.Text = dataTablePos.Rows[initalIndex]["total_product_quantity"].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[initalIndex]["cost_total"].ToString();
                     txtBasketSubTotal.Text = dataTablePos.Rows[initalIndex]["sub_total"].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[initalIndex]["vat"].ToString();
@@ -325,7 +325,7 @@ namespace GUI
                 pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);
                 pointOfSaleCUL.CustomerId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
                 pointOfSaleCUL.AccountId = Convert.ToInt32(cboMenuAccount.SelectedValue);
-                pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketAmount.Text);
+                pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketQuantity.Text);
                 pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -349,7 +349,7 @@ namespace GUI
                 #endregion
 
                 #region TABLE POS DETAILS SAVING SECTION
-                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductAmount = 5;
+                int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductQuantity = 5;
                 int productId;
                 int unitId;
                 decimal productOldQtyInStock;
@@ -368,7 +368,7 @@ namespace GUI
                 {
                     if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' amount in stock.
+                        productBLL.RevertOldQuantityInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -400,14 +400,14 @@ namespace GUI
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
                     pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
                     pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
-                    pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductAmount]);
+                    pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductQuantity]);
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT AMOUNT UPDATE
-                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb].ToString());//Getting the old product amount in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb].ToString());//Getting the old product quantity in stock.
 
-                    newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductAmount]);
+                    newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
 
                     productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
                     #endregion
@@ -442,10 +442,10 @@ namespace GUI
             int firstIndex = 0;
             //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
             //int priceColNo = 4;
-            int amountColNo = 5;
+            int quantityColNo = 5;
             int totalCostColNo = 6;
             int totalPriceColNo = 7;
-            int amount;
+            int quantity;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
@@ -463,18 +463,18 @@ namespace GUI
                     {
                         //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellAmountContent = dgProducts.Columns[amountColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellQuantityContent = dgProducts.Columns[quantityColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
                         TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
                         TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
-                        amount = Convert.ToInt32(tbCellAmountContent.Text);
-                        amount += Convert.ToInt32(txtProductAmount.Text);//We are adding the amount entered in the "txtProductAmount" to the previous amount cell's amount.
+                        quantity = Convert.ToInt32(tbCellQuantityContent.Text);
+                        quantity += Convert.ToInt32(txtProductQuantity.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
 
                         //tbCellCostContent.Text = txtProductCostPrice.Text; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
-                        tbCellAmountContent.Text = amount.ToString();//Assignment of the new amount to the related cell.
-                        tbCellTotalCostContent.Text = (amount * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
-                        totalPrice = amount * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
+                        tbCellQuantityContent.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
+                        tbCellTotalCostContent.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
+                        totalPrice = quantity * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
                         tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
@@ -484,9 +484,9 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductAmount.Text);
+                decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
-                dgProducts.Items.Add(new { Id = productId, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Amount = txtProductAmount.Text, TotalCostPrice = totalCostPrice.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
+                dgProducts.Items.Add(new { Id = productId, Name = txtProductName.Text, Unit = cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, Quantity = txtProductQuantity.Text, TotalCostPrice = totalCostPrice.ToString(), TotalSalePrice = txtProductTotalPrice.Text });
             }
 
             dgProducts.UpdateLayout();
@@ -501,13 +501,13 @@ namespace GUI
 
         private void PopulateBasket()
         {
-            decimal amountFromTextEntry = Convert.ToDecimal(txtProductAmount.Text);
+            decimal quantityFromTextEntry = Convert.ToDecimal(txtProductQuantity.Text);
 
-            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) + amountFromTextEntry).ToString();
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * amountFromTextEntry)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * amountFromTextEntry)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
@@ -516,22 +516,22 @@ namespace GUI
         {
             DataGridRow dataGridRow;
             TextBlock tbCellTotalCost;
-            TextBlock tbCellAmount;
+            TextBlock tbCellQuantity;
             TextBlock tbCellTotalPrice;
             int colProductTotalCost = 6;
-            int colProductAmount = 5;
+            int colProductQuantity = 5;
             int colProductTotalPrice = 7;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbCellAmount = dgProducts.Columns[colProductAmount].GetCellContent(dataGridRow) as TextBlock;
+            tbCellQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dataGridRow) as TextBlock;
 
             tbCellTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
             tbCellTotalPrice = dgProducts.Columns[colProductTotalPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
 
-            txtBasketAmount.Text = (Convert.ToDecimal(txtBasketAmount.Text) - Convert.ToDecimal(tbCellAmount.Text)).ToString();
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantity.Text)).ToString();
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
 
@@ -700,20 +700,20 @@ namespace GUI
         }
 
         /*----THIS IS NOT AN EFFICIENT CODE----*/
-        private void txtProductAmount_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtProductAmount.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
+            if (txtProductQuantity.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
             {
-                if (txtProductAmount.Text != "")
+                if (txtProductQuantity.Text != "")
                 {
                     decimal number;
-                    string productAmount = txtProductAmount.Text;
+                    string productQuantity = txtProductQuantity.Text;
 
-                    char lastCharacter = char.Parse(productAmount.Substring(productAmount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, "
+                    char lastCharacter = char.Parse(productQuantity.Substring(productQuantity.Length - 1));//Getting the last character to check if the user has entered a missing quantity like " 3, "
 
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
-                    if (decimal.TryParse(productAmount, out number) && result == true)
+                    if (decimal.TryParse(productQuantity, out number) && result == true)
                     {
                         DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
@@ -725,27 +725,27 @@ namespace GUI
                         {
                             /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
                             So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
-                            productAmount = Convert.ToInt32(txtProductAmount.Text).ToString();
-                            txtProductAmount.Text = productAmount.ToString();
+                            productQuantity = Convert.ToInt32(txtProductQuantity.Text).ToString();
+                            txtProductQuantity.Text = productQuantity.ToString();
                         }
-                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal amount like "3,5 liter."
+                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal quantity like "3,5 liter."
                         {
-                            productAmount = Convert.ToDecimal(txtProductAmount.Text).ToString();
+                            productQuantity = Convert.ToDecimal(txtProductQuantity.Text).ToString();
                         }
 
-                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productAmount)).ToString();
+                        txtProductTotalPrice.Text = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)).ToString();
 
                         btnProductAdd.IsEnabled = true;
                     }
 
-                    else//Reverting the amount to the default value.
+                    else//Reverting the quantity to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
-                        this.txtProductAmount.Text = "1";//We are reverting the amount of the product to default if the user has pressed a wrong key such as "a-b-c".
+                        this.txtProductQuantity.Text = "1";//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".
                     }
                 }
 
-                /* If the user left the txtProductAmount as empty, wait for him to enter a new value and block the btnProductAdd. 
+                /* If the user left the txtProductQuantity as empty, wait for him to enter a new value and block the btnProductAdd. 
                    Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
                 else
                 {
@@ -781,7 +781,7 @@ namespace GUI
 
             else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dataTable.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
             {
-                int productAmount = 1;
+                int productQuantity = 1;
                 int rowIndex = firstIndex;
                 int productId;
                 int productUnit;
@@ -819,8 +819,8 @@ namespace GUI
 
                 txtProductCostPrice.Text = costPrice;
                 txtProductSalePrice.Text = salePrice;
-                txtProductAmount.Text = productAmount.ToString();
-                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productAmount).ToString();
+                txtProductQuantity.Text = productQuantity.ToString();
+                txtProductTotalPrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
             }
 
             /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
