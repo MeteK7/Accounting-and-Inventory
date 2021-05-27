@@ -63,7 +63,23 @@ namespace GUI
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "WinPOP";
-        string colTxtQtyInDb = "quantity_in_stock", colTxtCostPriceNameInDb = "costprice",colTxtPaymentTypeId= "payment_type_id", colTxtSupplierId= "supplier_id", colTxtInvoiceNo = "invoice_no", colTxtId = "id", colTxtProductId = "product_id", colTxtProductUnitId = "product_unit_id", colTxtName = "name", colTxtProductCostPrice = "product_cost_price";
+
+        string
+            colTxtQtyInDb = "quantity_in_stock",
+            colTxtCostPrice = "costprice",
+            colTxtPaymentTypeId = "payment_type_id",
+            colTxtSupplierId = "supplier_id",
+            colTxtInvoiceNo = "invoice_no",
+            colTxtId = "id",
+            colTxtProductQtyPurchased= "quantity",
+            colTxtProductId ="product_id",
+            colTxtProductUnitId = "product_unit_id",
+            colTxtName = "name",
+            colTxtProductCostPrice = "product_cost_price",
+            colTxtBarcodeRetail = "barcode_retail",
+            colTxtUnitRetailId = "unit_retail_id",
+            colTxtUnitWholesaleId = "unit_wholesale_id";
+
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
@@ -223,7 +239,7 @@ namespace GUI
 
                 if (dataTablePop.Rows.Count != initalIndex)
                 {
-                    DataTable dataTablePopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
+                    DataTable dtPopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
                     
@@ -251,17 +267,17 @@ namespace GUI
                     lblInvoiceId.Content= dataTablePop.Rows[initalIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
-                    for (int currentRow = initalIndex; currentRow < dataTablePopDetail.Rows.Count; currentRow++)
+                    for (int currentRow = initalIndex; currentRow < dtPopDetail.Rows.Count; currentRow++)
                     {
 
-                        productId = dataTablePopDetail.Rows[currentRow][colTxtProductId].ToString();
-                        productUnitId = Convert.ToInt32(dataTablePopDetail.Rows[currentRow][colTxtProductUnitId]);
+                        productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
+                        productUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
                         productUnitName = dataTableUnitInfo.Rows[initalIndex][colTxtName].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCostPrice = dataTablePopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
-                        productQuantity = dataTablePopDetail.Rows[currentRow]["quantity"].ToString();
+                        productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
+                        productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
                         dataTableProduct = productDAL.SearchById(productId);
@@ -476,7 +492,7 @@ namespace GUI
                     if (chkUpdateProductCosts.IsChecked == true)
                     {
                         newCostPrice = Convert.ToDecimal(cells[cellCostPrice]);
-                        productDAL.UpdateSpecificColumn(productId, colTxtCostPriceNameInDb, newCostPrice.ToString());
+                        productDAL.UpdateSpecificColumn(productId, colTxtCostPrice, newCostPrice.ToString());
                     }
                     #endregion
                 }
@@ -798,7 +814,7 @@ namespace GUI
                         using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
                         {
                             int rowIndex = 0;
-                            txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
+                            txtProductCostPrice.Text = dataTable.Rows[rowIndex][colTxtCostPrice].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
                         }
                     }
                 }
@@ -856,7 +872,7 @@ namespace GUI
             //        //using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
             //        //{
             //        //    int rowIndex = 0;
-            //        //    txtProductCostPrice.Text = dataTable.Rows[rowIndex]["costprice"].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
+            //        //    txtProductCostPrice.Text = dataTable.Rows[rowIndex][colTxtCostPriceNameInDb].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
             //        //}
             //    }
             //}
@@ -905,7 +921,7 @@ namespace GUI
             int firstIndex=0;
             long number;
 
-            DataTable dataTable = productDAL.SearchProductByIdBarcode(productIdFromUser);
+            DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
 
             if (e.Key == Key.Enter)
             {
@@ -919,7 +935,7 @@ namespace GUI
                 }
             }
 
-            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dataTable.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
+            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
             {
                 int productQuantity = 1;
                 int rowIndex = firstIndex;
@@ -931,30 +947,29 @@ namespace GUI
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
-
-                productId = Convert.ToInt32(dataTable.Rows[rowIndex][colTxtId]);
-                productBarcodeRetail = dataTable.Rows[rowIndex]["barcode_retail"].ToString();
+                productId = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtId]);
+                productBarcodeRetail = dtProduct.Rows[rowIndex][colTxtBarcodeRetail].ToString();
                 //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
 
 
                 if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_retail_id"]);
+                    productUnit = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitRetailId]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnit = Convert.ToInt32(dataTable.Rows[rowIndex]["unit_wholesale_id"]);
+                    productUnit = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitWholesaleId]);
                 }
 
-                txtProductName.Text = dataTable.Rows[rowIndex][colTxtName].ToString();//Filling the product name textbox from the database
+                txtProductName.Text = dtProduct.Rows[rowIndex][colTxtName].ToString();//Filling the product name textbox from the database
 
                 DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
 
                 cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex][colTxtName].ToString());//Populating the combobox with related unit names from dataTableUnit.
                 cboProductUnit.SelectedIndex = firstIndex;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
 
-                costPrice = dataTable.Rows[rowIndex]["costprice"].ToString();
+                costPrice = dtProduct.Rows[rowIndex][colTxtCostPrice].ToString();
 
                 txtProductCostPrice.Text = costPrice;
                 txtProductQuantity.Text = productQuantity.ToString();
