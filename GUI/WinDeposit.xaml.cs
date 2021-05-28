@@ -33,6 +33,8 @@ namespace GUI
         UserBLL userBLL = new UserBLL();
         BankDAL bankDAL = new BankDAL();
         AccountDAL accountDAL = new AccountDAL();
+        AssetDAL assetDAL = new AssetDAL();
+        AssetCUL assetCUL = new AssetCUL();
         public WinDeposit()
         {
             InitializeComponent();
@@ -43,6 +45,7 @@ namespace GUI
 
         int depositArrow;
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int account = 1, bank = 2, supplier = 3;
         string[,] dgOldProductCells = new string[,] { };
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -119,7 +122,7 @@ namespace GUI
 
                 if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
                 {
-                    dgDeposits.Items.Add(new { Id = txtEntranceBankId.Text, BankName = cboEntranceBankName.Text, Description = txtEntranceDescription.Text, Amount = txtEntranceAmount.Text });
+                    dgDeposits.Items.Add(new { BankId = txtEntranceBankId.Text, BankName = cboEntranceBankName.Text, Description = txtEntranceDescription.Text, Amount = txtEntranceAmount.Text });
                 }
 
                 dgDeposits.UpdateLayout();
@@ -410,8 +413,12 @@ namespace GUI
                 int cellBankId = 0, cellDescription = 2, cellAmount = 3;
                 int colLength = 4;
                 string[] cells = new string[colLength];
+                string balance;
                 DateTime dateTime = DateTime.Now;
-                bool isSuccessDetail = false;
+                bool isSuccessDetail = false, isSuccessAssetBank=false;
+                int sourceId, assetId;
+                int sourceType = bank;
+                int rowIndex = 0;
 
                 for (int rowNo = 0; rowNo < dgDeposits.Items.Count; rowNo++)
                 {
@@ -439,11 +446,31 @@ namespace GUI
                     depositDetailCUL.Amount = Convert.ToDecimal(cells[cellAmount]);
 
                     isSuccessDetail = depositDetailDAL.Insert(depositDetailCUL);
+
+
+                    #region GETTING ASSET ID SECTION
+                    sourceId = Convert.ToInt32(cells[cellBankId]);
+                    assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+                    #endregion
+
+                    #region UPDATING BANK ASSET BALANCE SECTION
+                    DataTable dtAsset = assetDAL.SearchById(assetId);
+
+                    balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
+
+                    //UPDATING THE ASSET FOR BALANCE OF THE BANK.
+                    assetCUL.Id = Convert.ToInt32(assetId);
+                    assetCUL.SourceBalance = Convert.ToDecimal(cells[cellAmount]) + Convert.ToDecimal(balance);//We have to add this amount to the supplier's balance in order to reset our dept.
+                    isSuccessAssetBank = assetDAL.Update(assetCUL);
+
+                    if (isSuccessAssetBank == false)//We need to break the loop in order not to override the variable if the result is false.
+                        break;
+                    #endregion
                 }
                 #endregion
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessDetail == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessDetail == true && isSuccessAssetBank==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     //ClearBasketTextBox();
                     //ClearPointOfSaleDataGrid();
