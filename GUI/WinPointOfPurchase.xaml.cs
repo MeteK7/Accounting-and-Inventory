@@ -544,16 +544,24 @@ namespace GUI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
-                        //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[quantityColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
+                        ContentPresenter cpProductQty = dgProducts.Columns[quantityColNo].GetCellContent(row) as ContentPresenter;
+                        var tmpProductQty = cpProductQty.ContentTemplate;
+                        TextBox txtProductDgQty = tmpProductQty.FindName(dgCellNames[quantityColNo], cpProductQty) as TextBox;
 
-                        quantity = Convert.ToInt32(tbCellQuantityContent.Text);
+                        //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
+                        ContentPresenter cpProductTotalCost = dgProducts.Columns[totalCostColNo].GetCellContent(row) as ContentPresenter;
+                        var tmpProductTotalCost = cpProductTotalCost.ContentTemplate;
+                        TextBox txtProductDgTotalCost = tmpProductTotalCost.FindName(dgCellNames[totalCostColNo], cpProductTotalCost) as TextBox;
+
+                        //CALCULATING NEW PRODUCT QUANTITY IN DATAGRID
+                        quantity = Convert.ToInt32(txtProductDgQty.Text);
                         quantity += Convert.ToInt32(txtProductQuantity.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
 
-                        tbCellQuantityContent.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
-                        tbCellTotalCostPriceContent.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();//Calculating the new total cost price according to the new entry. Then, assigning the result into the table total price. User may have entered a new price in the entry box.
+                        //ASSIGNING NEW VALUES TO THE RELATED DATA GRID CELLS.
+                        txtProductDgQty.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
+                        txtProductDgTotalCost.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();//Calculating the new total cost price according to the new entry. Then, assigning the result into the table total price. User may have entered a new price in the entry box.
+                        
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
                     }
@@ -593,22 +601,26 @@ namespace GUI
         private void SubstractBasket(int selectedRowIndex)
         {
             DataGridRow dataGridRow;
-            TextBlock tbCellTotalCost;
-            TextBlock tbCellQuantity;
 
             int colProductQuantity = 4;
             int colProductTotalCost = 5;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbCellQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dataGridRow) as TextBlock;
+            //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
+            ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductQuantity = cpProductQuantity.ContentTemplate;
+            TextBox txtProductQty = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
 
-            tbCellTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
+            ContentPresenter cpProductTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductTotalCost = cpProductTotalCost.ContentTemplate;
+            TextBox txtProductTotalCost = tmpProductTotalCost.FindName(dgCellNames[colProductTotalCost], cpProductTotalCost) as TextBox;
+            
+            //ASSIGNING NEW VALUES TO THE BASKET'S RELATED TEXT BOXES.
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(txtProductQty.Text)).ToString();
 
-
-            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantity.Text)).ToString();
-
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtProductTotalCost.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
