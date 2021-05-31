@@ -851,50 +851,22 @@ namespace GUI
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
-            TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
             ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-            TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
-            productQuantity.Text = productQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-            productTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(productQuantity.Text)).ToString();
+            if (txtDgProductQuantity.Text != "" && productCostPrice.Text != "")
+            {
+                txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
+                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
-            txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(productQuantity.Text)).ToString();
-            txtBasketCostTotal.Text = (oldBasketCostTotal+Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
-            txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(productTotalCostPrice.Text)).ToString();
-
-            //if (costPriceFromDg.Text != "" && quantityFromDg.Text != "")
-            //{
-            //    decimal number;
-            //    string productCostPrice = costPriceFromDg.Text, productQuantity= quantityFromDg.Text;
-            //    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
-            //    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
-
-            //    if (decimal.TryParse(productCostPrice, out number) && decimal.TryParse(productQuantity,out number) && result == true)
-            //    {
-            //        //txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
-            //    }
-
-            //    else//Reverting the quantity to the default value.
-            //    {
-            //        MessageBox.Show("Please enter a valid number");
-
-            //        //using (DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text))
-            //        //{
-            //        //    int rowIndex = 0;
-            //        //    txtProductCostPrice.Text = dataTable.Rows[rowIndex][colTxtCostPriceNameInDb].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
-            //        //}
-            //    }
-            //}
-
-            ///* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
-            //   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
-            //else
-            //{
-            //    btnProductAdd.IsEnabled = false;
-            //}
+                txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
+                txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
+            }
         }
 
         private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
