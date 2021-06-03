@@ -115,11 +115,11 @@
                 <DataGridTextColumn Binding="{Binding CategoryName}" ClipboardContentBinding="{x:Null}" Header="Category"/>
                 <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" MaxWidth="0"/>
                 <!--<DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Unit"  SelectedItemBinding="{Binding Unit}" TextBinding="{x:Null}" DisplayIndex="2"/>-->
-                <DataGridTextColumn Binding="{Binding QuantityInUnitWholesale}" ClipboardContentBinding="{x:Null}" Header="Quantity in Unit"/>
+                <DataGridTextColumn Binding="{Binding QuantityInUnit}" ClipboardContentBinding="{x:Null}" Header="Quantity in Unit"/>
                 <DataGridTextColumn Binding="{Binding QuantityInStock}" ClipboardContentBinding="{x:Null}" Header="Quantity in Stock"/>
                 <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price"/>
                 <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price"/>
-                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By"/>
+                <DataGridTextColumn Binding="{Binding AddedByUsername}" ClipboardContentBinding="{x:Null}" Header="Added By"/>
                 <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date"/>
                 <DataGridTextColumn Binding="{Binding UnitNameRetail}" ClipboardContentBinding="{x:Null}" Header="Unit Retail" MaxWidth="0"/>
                 <DataGridTextColumn Binding="{Binding UnitNameWholesale}" ClipboardContentBinding="{x:Null}" Header="Unit Wholesale" MaxWidth="0"/>

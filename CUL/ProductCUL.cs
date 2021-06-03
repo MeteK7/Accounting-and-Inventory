@@ -21,9 +21,12 @@ namespace KabaAccounting.CUL
         public decimal CostPrice { get; set; }
         public decimal SalePrice { get; set; }
         public decimal TotalSalePrice { get; set; }
-        public int UnitRetail { get; set; }
-        public int UnitWholesale { get; set; }
+        public int UnitRetailId { get; set; }
+        public int UnitWholesaleId { get; set; }
+        public string UnitNameRetail { get; set; }
+        public string UnitNameWholesale { get; set; }
         public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
+        public string AddedByUsername { get; set; }
     }
 }

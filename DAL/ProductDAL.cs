@@ -70,8 +70,8 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@quantity_in_stock", product.QuantityInStock);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
-                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
-                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesale);
+                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetailId);
+                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesaleId);
                 cmd.Parameters.AddWithValue("@added_date", product.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", product.AddedBy);
 
@@ -124,8 +124,8 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@quantity_in_unit", product.QuantityInUnit);
                 cmd.Parameters.AddWithValue("@costprice", product.CostPrice);
                 cmd.Parameters.AddWithValue("@saleprice", product.SalePrice);
-                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetail);
-                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesale);
+                cmd.Parameters.AddWithValue("@unit_retail_id", product.UnitRetailId);
+                cmd.Parameters.AddWithValue("@unit_wholesale_id", product.UnitWholesaleId);
                 cmd.Parameters.AddWithValue("@added_date", product.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", product.AddedBy);
                 cmd.Parameters.AddWithValue("@id", product.Id); //Do you REALLY need to update an ID? You have already the ID in the query above.
