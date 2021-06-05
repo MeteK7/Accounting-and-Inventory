@@ -292,10 +292,10 @@ namespace KabaAccounting.DAL
 
             try
             {
-                string sql = "UPDATE tbl_products SET '" + columnName + "'=@'" + columnName + "' WHERE id=@id";
+                string sql = "UPDATE tbl_products SET " + columnName + "=@" + columnName + " WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@'" + columnName + "'", columnValue);
+                cmd.Parameters.AddWithValue("@" + columnName + "", columnValue);
                 cmd.Parameters.AddWithValue("@id", productId); //Do you REALLY need to update an ID? You have already the ID in the query above.
 
                 conn.Open();

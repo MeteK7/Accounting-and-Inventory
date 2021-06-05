@@ -20,7 +20,7 @@ namespace BLL
             decimal newQuantity;
             int initialRowIndex = 0;
             int colProductId = 0;
-            int colProductAmount = 5;
+            int colProductAmount = 4;
             decimal productAmountFromDB;
             string colQtyNameInDb = "quantity_in_stock";
 
