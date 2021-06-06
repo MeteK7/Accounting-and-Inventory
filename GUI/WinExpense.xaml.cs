@@ -58,26 +58,26 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
         {
-            int initalIndex = 0,idAssetFrom;
+            int initialIndex = 0,idAssetFrom;
 
-            if (expenseId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
+            if (expenseId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
                 expenseId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (expenseId != initalIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (expenseId != initialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dtExpense = expenseDAL.GetByExpenseId(expenseId);
 
-                if (dtExpense.Rows.Count != initalIndex)
+                if (dtExpense.Rows.Count != initialIndex)
                 {
                     #region ASSET INFORMATION FILLING REGION
-                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initalIndex]["id_asset_from"].ToString());
+                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_asset_from"].ToString());
                     //lblAssetIdFrom.Content = idAssetFrom;
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initalIndex]["id_source_type"]);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
 
                     if (sourceType == account)
                         rbAccount.IsChecked = true;
@@ -86,19 +86,20 @@ namespace GUI
 
                     LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbSelection change does not work so the LoadCboFrom method does not work as well.
 
-                    cboFrom.SelectedValue = dtAsset.Rows[initalIndex]["id_source"].ToString();
+                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
-                    expenseId = Convert.ToInt32(dtExpense.Rows[initalIndex]["id"].ToString());//Getting the id of account.
+                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex]["id"].ToString());//Getting the id of account.
                     lblExpenseId.Content = expenseId;
 
                     LoadCboTo();
 
-                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initalIndex]["id_to"].ToString());//Getting the id of supplier.
+                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_to"].ToString());//Getting the id of supplier.
 
-                    txtAmount.Text= dtExpense.Rows[initalIndex]["amount"].ToString();
+                    txtAmount.Text= dtExpense.Rows[initialIndex]["amount"].ToString();
+                    lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex]["added_date"]).ToString("f");
                 }
-                else if (dtExpense.Rows.Count == initalIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (expenseArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {

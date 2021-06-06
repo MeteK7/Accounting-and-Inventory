@@ -685,6 +685,21 @@ namespace GUI
                     productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
 
+                    #region REVERT THE ASSET
+                    int assetSupplierId = Convert.ToInt32(lblAssetSupplierId.Content);
+                    decimal oldSourceBalance;
+
+                    //CODE DUPLICATION!!!! SIMILAR EXISTS IN SAVE SECTION
+
+                    DataTable dtAsset = assetDAL.SearchById(assetSupplierId);
+                    oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+
+                    assetCUL.SourceBalance = oldSourceBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase.
+                    assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
+
+                    assetDAL.Update(assetCUL);
+                    #endregion
+
                     #region PREPARE TO THE LAST PAGE
                     DisableTools();
                     ClearProductEntranceTextBox();
