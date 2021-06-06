@@ -392,7 +392,7 @@
         <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="44,214,0,0" VerticalAlignment="Top" Width="65" Checked="rbBank_Checked"/>
         <Label x:Name="lblAssetIdFrom" Content="" HorizontalAlignment="Left" Margin="724,197,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <Label x:Name="lblAssetIdTo" Content="" HorizontalAlignment="Left" Margin="724,263,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
-        <Label x:Name="lblDate" Content="DATE" HorizontalAlignment="Left" Margin="724,137,0,0" VerticalAlignment="Top" Width="163" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Broadway Copyist Text Ext" FontSize="20"/>
+        <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Left" Margin="577,137,0,0" VerticalAlignment="Top" Width="310" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Broadway Copyist Text Ext" FontSize="20" />
 
     </Grid>
 </Window>
