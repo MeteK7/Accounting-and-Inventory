@@ -327,6 +327,7 @@ namespace GUI
             lblBalanceTo.Content = "";
             lblAssetIdFrom.Content = "";
             lblAssetIdTo.Content = "";
+            lblDateAdded.Content = "";
             txtAmount.Text = "";
         }
 
