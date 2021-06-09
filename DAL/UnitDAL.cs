@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KabaAccounting.CUL;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,6 +13,7 @@ namespace KabaAccounting.DAL
 {
     public class UnitDAL
     {
+        UnitCUL unitCUL = new UnitCUL();
         //Static string method for Database Connnection String
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
@@ -48,18 +50,18 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region Getting Unit Infos By Id
+        #region PRODUCT UNIT INFO FETCHING SECTION
         public DataTable GetUnitInfoById(int unitId)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
-            DataTable dataTable = new DataTable();//To hold the data from database
+            DataTable dtUnitInfo = new DataTable();//To hold the data from database
             try
             {
                 String sql = "SELECT * FROM tbl_units WHERE id=" + unitId + "";//SQL query to search data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
-                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                dataAdapter.Fill(dtUnitInfo);//Passing values from adapter to Data Table
             }
             catch (Exception ex)
             {
@@ -69,7 +71,42 @@ namespace KabaAccounting.DAL
             {
                 conn.Close();
             }
-            return dataTable;
+            return dtUnitInfo;
+        }
+        #endregion
+
+        #region PRODUCT UNIT IDS FETCHING SECTION
+        public List<UnitCUL> GetProductUnitId(List<int> listOfIds)
+        {
+            SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+
+            using (conn)
+            {
+                var ids = string.Join(",", listOfIds);
+                List<UnitCUL> listUnit = new List<UnitCUL>();
+
+                conn.Open();//Opening the database connection
+                String sql = "SELECT * FROM tbl_units WHERE id IN (" + ids + ")";//SQL query to search data from database 
+                SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+
+                using (SqlDataReader dataReader = cmd.ExecuteReader())
+                {
+                    if(dataReader==null)
+                        throw new NullReferenceException("No Unit Available.");
+
+                    while (dataReader.Read())
+                    {
+                        UnitCUL unit = new UnitCUL();
+                        unit.Id = Convert.ToInt32(dataReader["id"]);
+                        unit.Name = dataReader["name"].ToString();
+
+                        listUnit.Add(unit);
+                    }
+                }
+                conn.Close();
+
+                return listUnit;
+            }
         }
         #endregion
 
