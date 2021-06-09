@@ -76,7 +76,7 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region PRODUCT UNIT IDS FETCHING SECTION
-        public DataTable GetProductUnitId(List<int> listOfIds)
+        public List<UnitCUL> GetProductUnitId(List<int> listOfIds)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
 
@@ -85,8 +85,6 @@ namespace KabaAccounting.DAL
                 var ids = string.Join(",", listOfIds);
                 List<UnitCUL> listUnit = new List<UnitCUL>();
                 DataTable dtUnitInfo = new DataTable();//To hold the data from database
-                dtUnitInfo.Columns.Add("id", typeof(int));
-                dtUnitInfo.Columns.Add("name", typeof(string));
 
                 conn.Open();//Opening the database connection
                 String sql = "SELECT * FROM tbl_units WHERE id IN (" + ids + ")";//SQL query to search data from database 
@@ -97,24 +95,20 @@ namespace KabaAccounting.DAL
                     if(dataReader==null)
                         throw new NullReferenceException("No Unit Available.");
 
-                    DataRow row = dtUnitInfo.NewRow();
-                    UnitCUL unit = new UnitCUL();
-
                     while (dataReader.Read())
                     {
-                        unit.Id = Convert.ToInt32(dataReader["id"]);
-                        unit.Name = dataReader["name"].ToString();
-                        
-                        listUnit.Add(unit);
+                        listUnit.Add(
+                            new UnitCUL()
+                            {
+                                Id = Convert.ToInt32(dataReader["id"]),
+                                Name = dataReader["name"].ToString()
+                            });
                     }
-
-                    row[0] = listUnit[0];
-                    row[1] = listUnit[1];
-                    dtUnitInfo.Rows.Add(row);
                 }
+
                 conn.Close();
 
-                return dtUnitInfo;
+                return listUnit;
             }
         }
         #endregion

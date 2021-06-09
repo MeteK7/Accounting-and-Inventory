@@ -979,10 +979,10 @@ namespace GUI
                 primeNumbers.Add(productRetailUnitId);
                 primeNumbers.Add(productWholesaleUnitId);
 
-                DataTable dtUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
+                //List<UnitCUL> listUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
 
                 //Specifying Items Source for product combobox
-                cboProductUnit.ItemsSource = dtUnitInfo.DefaultView;
+                cboProductUnit.ItemsSource = unitDAL.GetProductUnitId(primeNumbers);
 
                 //Here DisplayMemberPath helps to display Text in the ComboBox.
                 cboProductUnit.DisplayMemberPath = colTxtName;
