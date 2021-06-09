@@ -71,12 +71,13 @@ namespace GUI
             colTxtSupplierId = "supplier_id",
             colTxtInvoiceNo = "invoice_no",
             colTxtId = "id",
-            colTxtProductQtyPurchased= "quantity",
-            colTxtProductId ="product_id",
+            colTxtProductQtyPurchased = "quantity",
+            colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
             colTxtProductCostPrice = "product_cost_price",
             colTxtBarcodeRetail = "barcode_retail",
+            colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
             colTxtUnitWholesaleId = "unit_wholesale_id";
 
@@ -924,7 +925,7 @@ namespace GUI
 
             if (e.Key == Key.Enter)
             {
-                if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
+                if (btnProductAdd.IsEnabled == true)
                 {
                     btnProductAdd_Click(sender, e);
                 }
@@ -936,11 +937,11 @@ namespace GUI
 
             else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
             {
-                int productQuantity = 1;
+                decimal productQuantity;
                 int rowIndex = firstIndex;
                 int productId;
-                int productUnit;
-                string productBarcodeRetail/*, productBarcodeWholesale*/;
+                int productCurrentUnitId,productRetailUnitId,productWholesaleUnitId;
+                string productBarcodeRetail, productBarcodeWholesale;
                 string costPrice;
 
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
@@ -948,25 +949,49 @@ namespace GUI
 
                 productId = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtId]);
                 productBarcodeRetail = dtProduct.Rows[rowIndex][colTxtBarcodeRetail].ToString();
-                //productBarcodeWholesale = dataTable.Rows[rowIndex]["barcode_wholesale"].ToString();
-
+                productBarcodeWholesale = dtProduct.Rows[rowIndex][colTxtBarcodeWholesale].ToString();
+                txtProductName.Text = dtProduct.Rows[rowIndex][colTxtName].ToString();//Filling the product name textbox from the database
+                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitRetailId]);
+                productWholesaleUnitId= Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitWholesaleId]);
 
                 if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnit = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitRetailId]);
+                    productCurrentUnitId = productRetailUnitId;
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnit = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitWholesaleId]);
+                    productCurrentUnitId = productWholesaleUnitId;
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[rowIndex][colTxtQtyInDb]);
                 }
 
-                txtProductName.Text = dtProduct.Rows[rowIndex][colTxtName].ToString();//Filling the product name textbox from the database
+                #region CBO UNIT POPULATING SECTION
+                //DataTable dtUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Datatable for finding the unit name by unit id.
 
-                DataTable dataTableUnit = unitDAL.GetUnitInfoById(productUnit);//Datatable for finding the unit name by unit id.
+                //cboProductUnit.Items.Add(dtUnitInfo.Rows[rowIndex][colTxtName].ToString());//Populating the combobox with related unit names from dataTableUnit.
+                //cboProductUnit.SelectedIndex = firstIndex;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
 
-                cboProductUnit.Items.Add(dataTableUnit.Rows[rowIndex][colTxtName].ToString());//Populating the combobox with related unit names from dataTableUnit.
-                cboProductUnit.SelectedIndex = firstIndex;//For selecting the combobox's first element. We selected 0 index because we have just one unit of a retail product.
+                //var idList = string.Join(",", productRetailUnitId, productWholesaleUnitId);
+
+                List<int> primeNumbers = new List<int>();
+
+                primeNumbers.Add(productRetailUnitId);
+                primeNumbers.Add(productWholesaleUnitId);
+
+                //List<UnitCUL> listUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
+
+                //Specifying Items Source for product combobox
+                cboProductUnit.ItemsSource = unitDAL.GetProductUnitId(primeNumbers);
+
+                //Here DisplayMemberPath helps to display Text in the ComboBox.
+                cboProductUnit.DisplayMemberPath = colTxtName;
+
+                //SelectedValuePath helps to store values like a hidden field.
+                cboProductUnit.SelectedValuePath = colTxtId;
+
+                cboProductUnit.SelectedValue = productCurrentUnitId;
+                #endregion
 
                 costPrice = dtProduct.Rows[rowIndex][colTxtCostPrice].ToString();
 
