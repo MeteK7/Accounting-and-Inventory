@@ -55,7 +55,7 @@ namespace GUI
         AssetCUL assetCUL = new AssetCUL();
         CommonBLL commonBLL = new CommonBLL();
 
-        int initialIndex = 0,unitValue=1;
+        const int initialIndex = 0,unitValue=1;
         const int colLength =6;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
@@ -203,7 +203,7 @@ namespace GUI
         {
             txtProductId.Text = "";
             txtProductName.Text = "";
-            cboProductUnit.SelectedIndex = -1;
+            cboProductUnit.SelectedIndex = -unitValue;
             txtProductCostPrice.Text = "";
             txtProductQuantity.Text = "";
             txtProductTotalCostPrice.Text = "";
@@ -216,7 +216,7 @@ namespace GUI
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
-            int invoiceId, increment = 1;
+            int invoiceId, increment = unitValue;
 
             invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
@@ -224,59 +224,59 @@ namespace GUI
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
-        private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
+        private void LoadPastInvoice(int invoiceId = initialIndex, int invoiceArrow = -unitValue)//Optional parameter
         {
-            int initalIndex = 0, productUnitId;
+            int productUnitId;
             string productId, productName, productUnitName, productCostPrice, productQuantity, productTotalCostPrice;
 
-            if (invoiceId == initalIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
+            if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
                 invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (invoiceId != initalIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (invoiceId != initialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTablePop = pointOfPurchaseDAL.GetByInvoiceId(invoiceId);
 
-                if (dataTablePop.Rows.Count != initalIndex)
+                if (dataTablePop.Rows.Count != initialIndex)
                 {
                     DataTable dtPopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
                     
                     #region ASSET INFORMATION FILLING REGION
-                    int assetId = Convert.ToInt32(dataTablePop.Rows[initalIndex]["asset_id"].ToString());//Getting the id of account.
+                    int assetId = Convert.ToInt32(dataTablePop.Rows[initialIndex]["asset_id"].ToString());//Getting the id of account.
                     lblAssetId.Content = assetId;
 
                     DataTable dtAsset = assetDAL.SearchById(assetId);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initalIndex]["id_source_type"]);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
 
                     if (sourceType == account)
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
 
-                    cboMenuAsset.SelectedValue = dtAsset.Rows[initalIndex]["id_source"].ToString();
+                    cboMenuAsset.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
                     LoadCboMenuPaymentType();
                     LoadCboMenuSupplier();
 
-                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initalIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
-                    cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initalIndex][colTxtSupplierId].ToString());//Getting the id of supplier.
-                    txtInvoiceNo.Text = dataTablePop.Rows[initalIndex][colTxtInvoiceNo].ToString();
-                    lblInvoiceId.Content= dataTablePop.Rows[initalIndex][colTxtId].ToString();
+                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initialIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
+                    cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[initialIndex][colTxtSupplierId].ToString());//Getting the id of supplier.
+                    txtInvoiceNo.Text = dataTablePop.Rows[initialIndex][colTxtInvoiceNo].ToString();
+                    lblInvoiceId.Content= dataTablePop.Rows[initialIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
-                    for (int currentRow = initalIndex; currentRow < dtPopDetail.Rows.Count; currentRow++)
+                    for (int currentRow = initialIndex; currentRow < dtPopDetail.Rows.Count; currentRow++)
                     {
 
                         productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
                         productUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[initalIndex][colTxtName].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
+                        productUnitName = dataTableUnitInfo.Rows[initialIndex][colTxtName].ToString();//We use initialIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
                         productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
@@ -284,7 +284,7 @@ namespace GUI
 
                         dataTableProduct = productDAL.SearchById(productId);
 
-                        productName = dataTableProduct.Rows[initalIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
+                        productName = dataTableProduct.Rows[initialIndex][colTxtName].ToString();//We used initialIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, Quantity = productQuantity, TotalCostPrice = productTotalCostPrice });
 
@@ -293,27 +293,27 @@ namespace GUI
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTablePop.Rows[initalIndex]["total_product_quantity"].ToString();
-                    txtBasketCostTotal.Text = dataTablePop.Rows[initalIndex]["cost_total"].ToString();
-                    txtBasketVat.Text = dataTablePop.Rows[initalIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePop.Rows[initalIndex]["discount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePop.Rows[initalIndex]["grand_total"].ToString();
+                    //We used initialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketQuantity.Text = dataTablePop.Rows[initialIndex]["total_product_quantity"].ToString();
+                    txtBasketCostTotal.Text = dataTablePop.Rows[initialIndex]["cost_total"].ToString();
+                    txtBasketVat.Text = dataTablePop.Rows[initialIndex]["vat"].ToString();
+                    txtBasketDiscount.Text = dataTablePop.Rows[initialIndex]["discount"].ToString();
+                    txtBasketGrandTotal.Text = dataTablePop.Rows[initialIndex]["grand_total"].ToString();
 
                     #endregion
                 }
-                else if (dataTablePop.Rows.Count == initalIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTablePop.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        invoiceId = invoiceId - 1;
+                        invoiceId = invoiceId - unitValue;
                     }
                     else
                     {
-                        invoiceId = invoiceId + 1;
+                        invoiceId = invoiceId + unitValue;
                     }
 
-                    if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (invoiceArrow != -unitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
                         LoadPastInvoice(invoiceId, invoiceArrow);//Call the method again to get the new past invoice.
                     }
@@ -331,11 +331,11 @@ namespace GUI
             int rowLength = dgProducts.Items.Count;
             string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowNo = 0; rowNo < rowLength; rowNo++)
+            for (int rowNo = initialIndex; rowNo < rowLength; rowNo++)
             {
                 DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                for (int colNo = 0; colNo < colLength; colNo++)
+                for (int colNo = initialIndex; colNo < colLength; colNo++)
                 {
                     ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
@@ -352,7 +352,7 @@ namespace GUI
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            int emptyCboIndex = -1;
+            int emptyCboIndex = -unitValue;
             string[,] dgNewProductCells = new string[,] { };
 
             dgNewProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
@@ -379,7 +379,7 @@ namespace GUI
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
                 DateTime dateTime = DateTime.Now;
-                int productRate = 0;//Modify this code dynamically!!!!!!!!!
+                int productRate = initialIndex;//Modify this code dynamically!!!!!!!!!
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
@@ -525,10 +525,8 @@ namespace GUI
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
-            //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
-            //int priceColNo = 4;
-            int quantityColNo = 4;
-            int totalCostColNo = 5;
+            int colProductQuantity = 4;
+            int colProductTotalCost = 5;
             int quantity;
             int rowQuntity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
@@ -547,14 +545,14 @@ namespace GUI
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
-                        ContentPresenter cpProductQty = dgProducts.Columns[quantityColNo].GetCellContent(row) as ContentPresenter;
+                        ContentPresenter cpProductQty = dgProducts.Columns[colProductQuantity].GetCellContent(row) as ContentPresenter;
                         var tmpProductQty = cpProductQty.ContentTemplate;
-                        TextBox txtProductDgQty = tmpProductQty.FindName(dgCellNames[quantityColNo], cpProductQty) as TextBox;
+                        TextBox txtProductDgQty = tmpProductQty.FindName(dgCellNames[colProductQuantity], cpProductQty) as TextBox;
 
                         //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-                        ContentPresenter cpProductTotalCost = dgProducts.Columns[totalCostColNo].GetCellContent(row) as ContentPresenter;
+                        ContentPresenter cpProductTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(row) as ContentPresenter;
                         var tmpProductTotalCost = cpProductTotalCost.ContentTemplate;
-                        TextBox txtProductDgTotalCost = tmpProductTotalCost.FindName(dgCellNames[totalCostColNo], cpProductTotalCost) as TextBox;
+                        TextBox txtProductDgTotalCost = tmpProductTotalCost.FindName(dgCellNames[colProductTotalCost], cpProductTotalCost) as TextBox;
 
                         //CALCULATING NEW PRODUCT QUANTITY IN DATAGRID
                         quantity = Convert.ToInt32(txtProductDgQty.Text);
@@ -722,7 +720,7 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceId = 1, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content); ;
+            int firstInvoiceId = unitValue, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content); ;
 
             if (currentInvoiceId != firstInvoiceId)
             {
@@ -771,7 +769,7 @@ namespace GUI
                     decimal number;
                     string productQuantity = txtProductQuantity.Text;
 
-                    char lastCharacter = char.Parse(productQuantity.Substring(productQuantity.Length - 1));//Getting the last character to check if the user has entered a missing quantity like " 3, "
+                    char lastCharacter = char.Parse(productQuantity.Substring(productQuantity.Length - unitValue));//Getting the last character to check if the user has entered a missing quantity like " 3, "
 
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
@@ -802,7 +800,7 @@ namespace GUI
                     else//Reverting the quantity to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
-                        txtProductQuantity.Text = "1";//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".  
+                        txtProductQuantity.Text = unitValue.ToString();//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".  
                     }
                 }
 
@@ -824,7 +822,7 @@ namespace GUI
                 {
                     decimal number;
                     string productCostPrice = txtProductCostPrice.Text;
-                    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - 1));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
+                    char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - unitValue));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
                     if (decimal.TryParse(productCostPrice, out number) && result == true)
