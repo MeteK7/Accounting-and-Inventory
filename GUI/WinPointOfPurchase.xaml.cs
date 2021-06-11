@@ -67,6 +67,7 @@ namespace GUI
         string
             colTxtQtyInDb = "quantity_in_stock",
             colTxtCostPrice = "costprice",
+            colTxtPaymentType = "payment_type",
             colTxtPaymentTypeId = "payment_type_id",
             colTxtSupplierId = "supplier_id",
             colTxtInvoiceNo = "invoice_no",
@@ -191,11 +192,11 @@ namespace GUI
 
         private void ClearBasketTextBox()
         {
-            txtBasketQuantity.Text = "0";
-            txtBasketCostTotal.Text = "0";
-            txtBasketVat.Text = "0";
-            txtBasketDiscount.Text = "0";
-            txtBasketGrandTotal.Text = "0";
+            txtBasketQuantity.Text = initialIndex.ToString();
+            txtBasketCostTotal.Text = initialIndex.ToString();
+            txtBasketVat.Text = initialIndex.ToString();
+            txtBasketDiscount.Text = initialIndex.ToString();
+            txtBasketGrandTotal.Text = initialIndex.ToString();
         }
 
         private void ClearProductEntranceTextBox()
@@ -901,7 +902,7 @@ namespace GUI
 
         private void txtInvoiceNo_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (txtInvoiceNo.Text == "0")
+            if (txtInvoiceNo.Text == initialIndex.ToString())
             {
                 txtInvoiceNo.Text = "";
             }
@@ -911,7 +912,7 @@ namespace GUI
         {
             if (txtInvoiceNo.Text == "" || !Int32.TryParse(txtInvoiceNo.Text, out int value))//The code will work if the text is empty or does NOT contain a numeric value.
             {
-                txtInvoiceNo.Text = "0";
+                txtInvoiceNo.Text = initialIndex.ToString();
             }
         }
 
@@ -979,10 +980,10 @@ namespace GUI
                 primeNumbers.Add(productRetailUnitId);
                 primeNumbers.Add(productWholesaleUnitId);
 
-                //List<UnitCUL> listUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
+                var listUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
 
                 //Specifying Items Source for product combobox
-                cboProductUnit.ItemsSource = unitDAL.GetProductUnitId(primeNumbers);
+                cboProductUnit.ItemsSource = listUnitInfo;
 
                 //Here DisplayMemberPath helps to display Text in the ComboBox.
                 cboProductUnit.DisplayMemberPath = colTxtName;
@@ -1064,16 +1065,16 @@ namespace GUI
 
         private void LoadCboMenuAsset(int checkStatus)
         {
-            DataTable dataTable;
+            DataTable dtAccount;
             if (checkStatus == account)
-                dataTable = accountDAL.Select();
+                dtAccount = accountDAL.Select();
 
 
             else
-                dataTable = bankDAL.Select();
+                dtAccount = bankDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboMenuAsset.ItemsSource = dataTable.DefaultView;
+            cboMenuAsset.ItemsSource = dtAccount.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboMenuAsset.DisplayMemberPath = colTxtName;
@@ -1087,10 +1088,10 @@ namespace GUI
         private void LoadCboMenuSupplier()
         {
             //Creating Data Table to hold the products from Database
-            DataTable dataTable = supplierDAL.Select();
+            DataTable dtSupplier = supplierDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboMenuSupplier.ItemsSource = dataTable.DefaultView;
+            cboMenuSupplier.ItemsSource = dtSupplier.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboMenuSupplier.DisplayMemberPath = colTxtName;
@@ -1102,13 +1103,13 @@ namespace GUI
         private void LoadCboMenuPaymentType()
         {
             //Creating Data Table to hold the products from Database
-            DataTable dataTable = paymentDAL.Select();
+            DataTable dtPayment = paymentDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
+            cboMenuPaymentType.ItemsSource = dtPayment.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuPaymentType.DisplayMemberPath = "payment_type";
+            cboMenuPaymentType.DisplayMemberPath = colTxtPaymentType;
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuPaymentType.SelectedValuePath = colTxtId;

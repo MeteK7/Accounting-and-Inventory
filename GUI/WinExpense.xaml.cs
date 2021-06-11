@@ -41,7 +41,7 @@ namespace GUI
         bool isCboSelectionDisabled = false; 
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
-
+        string colNameFromDb = "name",colIdFromDb= "id";
         public WinExpense()
         {
             InitializeComponent();
@@ -89,7 +89,7 @@ namespace GUI
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
-                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex]["id"].ToString());//Getting the id of account.
+                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colIdFromDb].ToString());//Getting the id of account.
                     lblExpenseId.Content = expenseId;
 
                     LoadCboTo();
@@ -375,10 +375,10 @@ namespace GUI
             cboFrom.ItemsSource = dtAccount.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = "name";
+            cboFrom.DisplayMemberPath = colNameFromDb;
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = "id";
+            cboFrom.SelectedValuePath = colIdFromDb;
         }
 
         private void LoadCboTo()
@@ -391,10 +391,10 @@ namespace GUI
             cboTo.ItemsSource = dtTo.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboTo.DisplayMemberPath = "name";
+            cboTo.DisplayMemberPath = colNameFromDb;
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboTo.SelectedValuePath = "id";
+            cboTo.SelectedValuePath = colIdFromDb;
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
