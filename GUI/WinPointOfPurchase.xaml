@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="1160" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="992" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -330,7 +330,7 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="844" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="674" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
