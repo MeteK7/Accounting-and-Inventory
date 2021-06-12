@@ -351,14 +351,18 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Unit" Width="70">
-                            <DataGridTemplateColumn.CellTemplate>
+                        <!--<DataGridTemplateColumn Header="Unit" Width="70">
+                            <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductUnit" Text="{Binding Unit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <ComboBox x:Name="dgCboProductUnit" ItemsSource="{Binding UnitCboList}" SelectedItem="{Binding UnitCboSelected}" HorizontalAlignment="Left" Margin="424,40,0,0" VerticalAlignment="Top" Width="55"/>
                                 </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>-->
 
+                        <DataGridComboBoxColumn Header="Unit" Width="70"
+                                                ItemsSource="{Binding UnitCboList , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedItemBinding="{Binding UnitCboSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        
                         <DataGridTemplateColumn Header="Cost Price" Width="90">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
