@@ -76,42 +76,72 @@ namespace KabaAccounting.DAL
         #endregion
 
         #region PRODUCT UNIT IDS FETCHING SECTION
-        public List<UnitCUL> GetProductUnitId(List<int> listOfIds)
+        public DataTable GetProductUnitId(List<int> listOfIds)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
 
             using (conn)
             {
                 var ids = string.Join(",", listOfIds);
-                List<UnitCUL> listUnit = new List<UnitCUL>();
                 DataTable dtUnitInfo = new DataTable();//To hold the data from database
 
                 conn.Open();//Opening the database connection
                 String sql = "SELECT * FROM tbl_units WHERE id IN (" + ids + ")";//SQL query to search data from database 
                 SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
 
-                using (SqlDataReader dataReader = cmd.ExecuteReader())
+                using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
                 {
-                    if(dataReader==null)
+                    if (dataAdapter == null)
                         throw new NullReferenceException("No Unit Available.");
 
-                    while (dataReader.Read())
-                    {
-                        listUnit.Add(
-                            new UnitCUL()
-                            {
-                                Id = Convert.ToInt32(dataReader["id"]),
-                                Name = dataReader["name"].ToString()
-                            });
-                    }
+                    else
+                        dataAdapter.Fill(dtUnitInfo);
                 }
 
                 conn.Close();
 
-                return listUnit;
+                return dtUnitInfo;
             }
         }
         #endregion
+
+        //#region PRODUCT UNIT IDS FETCHING SECTION
+        //public List<UnitCUL> GetProductUnitId(List<int> listOfIds)
+        //{
+        //    SqlConnection conn = new SqlConnection(connString);//Static method to connect database
+
+        //    using (conn)
+        //    {
+        //        var ids = string.Join(",", listOfIds);
+        //        List<UnitCUL> listUnit = new List<UnitCUL>();
+        //        DataTable dtUnitInfo = new DataTable();//To hold the data from database
+
+        //        conn.Open();//Opening the database connection
+        //        String sql = "SELECT * FROM tbl_units WHERE id IN (" + ids + ")";//SQL query to search data from database 
+        //        SqlCommand cmd = new SqlCommand(sql, conn);//For executing the command 
+
+        //        using (SqlDataReader dataReader = cmd.ExecuteReader())
+        //        {
+        //            if(dataReader==null)
+        //                throw new NullReferenceException("No Unit Available.");
+
+        //            while (dataReader.Read())
+        //            {
+        //                listUnit.Add(
+        //                    new UnitCUL()
+        //                    {
+        //                        Id = Convert.ToInt32(dataReader["id"]),
+        //                        Name = dataReader["name"].ToString()
+        //                    });
+        //            }
+        //        }
+
+        //        conn.Close();
+
+        //        return listUnit;
+        //    }
+        //}
+        //#endregion
 
         #region GETTING THE UNIT INFORMATIONS BY USING UNIT NAME.
         public DataTable GetUnitInfoByName(string unitName)

@@ -65,7 +65,8 @@ namespace GUI
         string calledBy = "WinPOP";
 
         string
-            colTxtQtyInDb = "quantity_in_stock",
+            colTxtQtyInUnit = "quantity_in_unit",
+            colTxtQtyInStock = "quantity_in_stock",
             colTxtCostPrice = "costprice",
             colTxtPaymentType = "payment_type",
             colTxtPaymentTypeId = "payment_type_id",
@@ -485,11 +486,11 @@ namespace GUI
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
                     #region PRODUCT AMOUNT AND COST UPDATE
-                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInDb].ToString());//Getting the old product quantity in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[cellProductQuantity]);
 
-                    productDAL.UpdateSpecificColumn(productId, colTxtQtyInDb, newQuantity.ToString());
+                    productDAL.UpdateSpecificColumn(productId, colTxtQtyInStock, newQuantity.ToString());
 
                     if (chkUpdateProductCosts.IsChecked == true)
                     {
@@ -934,7 +935,8 @@ namespace GUI
                 }
             }
 
-            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
+            else 
+            if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
             {
                 decimal productQuantity;
                 int rowIndex = firstIndex;
@@ -962,7 +964,7 @@ namespace GUI
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
                     productCurrentUnitId = productWholesaleUnitId;
-                    productQuantity = Convert.ToDecimal(dtProduct.Rows[rowIndex][colTxtQtyInDb]);
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[rowIndex][colTxtQtyInUnit]);
                 }
 
                 #region CBO UNIT POPULATING SECTION
@@ -978,10 +980,12 @@ namespace GUI
                 primeNumbers.Add(productRetailUnitId);
                 primeNumbers.Add(productWholesaleUnitId);
 
-                var listUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
+                //var listUnitInfo = unitDAL.GetProductUnitId(primeNumbers).Select(i => i.ToString()).ToList();
+
+                DataTable dtUnitInfo = unitDAL.GetProductUnitId(primeNumbers);
 
                 //Specifying Items Source for product combobox
-                cboProductUnit.ItemsSource = listUnitInfo;
+                cboProductUnit.ItemsSource = dtUnitInfo.DefaultView;
 
                 //Here DisplayMemberPath helps to display Text in the ComboBox.
                 cboProductUnit.DisplayMemberPath = colTxtName;
