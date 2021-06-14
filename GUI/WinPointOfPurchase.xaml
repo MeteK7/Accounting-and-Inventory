@@ -325,7 +325,6 @@
                         <ImageBrush ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label Content="Label" HorizontalAlignment="Left" Margin="1012,58,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
@@ -351,6 +350,14 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
+                        <!--<DataGridTemplateColumn Header="TEST">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="dgTxtTest" Text="{Binding Test, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+
                         <!--<DataGridTemplateColumn Header="Unit" Width="70">
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
@@ -359,9 +366,17 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>-->
 
+                        <DataGridTextColumn Binding="{Binding Path=Test}" MaxWidth="50"/>
+                        <DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status, Mode=OneWay}" ItemsSource="{Binding Sour, Mode=OneWay}" />
+                        <!--<DataGridComboBoxColumn Width="100" x:Name="Test"
+                                                SelectedValueBinding="{Binding Test, Mode=OneWay}"
+                                                DisplayMemberPath="{Binding Test}" />-->
+                        
                         <DataGridComboBoxColumn Header="Unit" Width="70"
                                                 ItemsSource="{Binding UnitCboList , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                SelectedItemBinding="{Binding UnitCboSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                SelectedValueBinding="{Binding UnitCboSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="{Binding UnitCboSValue}"
+                                                DisplayMemberPath="{Binding UnitCboDMember}"/>
                         
                         <DataGridTemplateColumn Header="Cost Price" Width="90">
                             <DataGridTemplateColumn.CellTemplate>

@@ -574,7 +574,21 @@ namespace GUI
             {
                 decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
-                dgProducts.Items.Add(new { Id = productId, Name = txtProductName.Text, UnitCboList = cboProductUnit.ItemsSource, UnitCboSelected=cboProductUnit.SelectedItem, CostPrice = txtProductCostPrice.Text, Quantity = txtProductQuantity.Text, TotalCostPrice = totalCostPrice.ToString() });
+                dgProducts.Items.Add(new
+                {
+                    Id = productId,
+                    Name = txtProductName.Text,
+                    Test=cboProductUnit.SelectedItem,
+
+                    Sour = cboProductUnit.ItemsSource,
+                    Status = cboProductUnit.SelectedItem,
+
+                    UnitCboSValue = cboProductUnit.SelectedValuePath,
+                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
+                    CostPrice = txtProductCostPrice.Text,
+                    Quantity = txtProductQuantity.Text,
+                    TotalCostPrice = totalCostPrice.ToString()
+                });
             }
 
             dgProducts.UpdateLayout();
