@@ -341,7 +341,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-
+                        <!--<DataGridTextColumn Binding="{Binding Path=Test}" MaxWidth="50"/>-->
                         <DataGridTemplateColumn Header="Name" Width="540">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -366,8 +366,10 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>-->
 
-                        <DataGridTextColumn Binding="{Binding Path=Test}" MaxWidth="50"/>
-                        <DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status, Mode=OneWay}" ItemsSource="{Binding Sour, Mode=OneWay}" />
+                        <DataGridComboBoxColumn Header="UnitTemp"
+                                                ItemsSource="{Binding UnıtTempSource, Mode=OneWay}"
+                                                SelectedItemBinding="{Binding UnitTemp, Mode=OneWay}"/>
+                                                
                         <!--<DataGridComboBoxColumn Width="100" x:Name="Test"
                                                 SelectedValueBinding="{Binding Test, Mode=OneWay}"
                                                 DisplayMemberPath="{Binding Test}" />-->
