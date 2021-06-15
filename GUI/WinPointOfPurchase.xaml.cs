@@ -578,17 +578,19 @@ namespace GUI
                 {
                     Id = productId,
                     Name = txtProductName.Text,
-                    Test=cboProductUnit.SelectedItem,
-
-                    Sour = cboProductUnit.ItemsSource,
-                    Status = cboProductUnit.SelectedItem,
-
-                    UnitCboSValue = cboProductUnit.SelectedValuePath,
-                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
                     CostPrice = txtProductCostPrice.Text,
                     Quantity = txtProductQuantity.Text,
-                    TotalCostPrice = totalCostPrice.ToString()
-                });
+                    TotalCostPrice = totalCostPrice.ToString(),
+
+                    //ATTEMPT 1
+                    UnıtTempSource =cboProductUnit.ItemsSource,
+                    UnitTemp = cboProductUnit.SelectedItem,
+
+                    //ATTEMPT 2
+                    UnitCboList = cboProductUnit.ItemsSource,
+                    UnitCboSValue = cboProductUnit.SelectedValuePath,
+                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
+                });;
             }
 
             dgProducts.UpdateLayout();
@@ -949,8 +951,7 @@ namespace GUI
                 }
             }
 
-            else 
-            if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
+            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
             {
                 decimal productQuantity;
                 int rowIndex = firstIndex;
