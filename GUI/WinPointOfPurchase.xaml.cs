@@ -205,7 +205,7 @@ namespace GUI
         {
             txtProductId.Text = "";
             txtProductName.Text = "";
-            cboProductUnit.SelectedIndex = -unitValue;
+            cboProductUnit.ItemsSource = null;
             txtProductCostPrice.Text = "";
             txtProductQuantity.Text = "";
             txtProductTotalCostPrice.Text = "";
@@ -521,6 +521,34 @@ namespace GUI
             else
             {
                 MessageBox.Show("You have a missing part or you are trying to save the same things!");
+            }
+        }
+
+        private void cboProductUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (txtProductQuantity.Text!="" &&txtProductCostPrice.Text!="")
+            {
+                decimal productQuantity;
+                int productRetailUnitId, productWholesaleUnitId;
+                string productIdFromUser = txtProductId.Text;
+                DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
+                int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+
+                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                //productWholesaleUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
+
+                if (Convert.ToInt32(cboProductUnit.SelectedValue) == productRetailUnitId)
+                {
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
+                }
+
+                else
+                {
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[initialIndex][colTxtQtyInUnit]);
+                }
+
+                txtProductQuantity.Text = productQuantity.ToString();
+                txtProductTotalCostPrice.Text = (productQuantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
             }
         }
 
@@ -932,7 +960,6 @@ namespace GUI
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             string productIdFromUser = txtProductId.Text;
-            int firstIndex=0;
             long number;
 
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
@@ -949,10 +976,9 @@ namespace GUI
                 }
             }
 
-            else if (productIdFromUser != firstIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != firstIndex)//Validating the barcode if it is a number(except zero) or not.
+            else if (productIdFromUser != initialIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != initialIndex)//Validating the barcode if it is a number(except zero) or not.
             {
                 decimal productQuantity;
-                int rowIndex = firstIndex;
                 int productId;
                 int productCurrentUnitId,productRetailUnitId,productWholesaleUnitId;
                 string productBarcodeRetail, productBarcodeWholesale;
@@ -961,12 +987,12 @@ namespace GUI
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
                 btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
-                productId = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtId]);
-                productBarcodeRetail = dtProduct.Rows[rowIndex][colTxtBarcodeRetail].ToString();
-                productBarcodeWholesale = dtProduct.Rows[rowIndex][colTxtBarcodeWholesale].ToString();
-                txtProductName.Text = dtProduct.Rows[rowIndex][colTxtName].ToString();//Filling the product name textbox from the database
-                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitRetailId]);
-                productWholesaleUnitId= Convert.ToInt32(dtProduct.Rows[rowIndex][colTxtUnitWholesaleId]);
+                productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]);
+                productBarcodeRetail = dtProduct.Rows[initialIndex][colTxtBarcodeRetail].ToString();
+                productBarcodeWholesale = dtProduct.Rows[initialIndex][colTxtBarcodeWholesale].ToString();
+                txtProductName.Text = dtProduct.Rows[initialIndex][colTxtName].ToString();//Filling the product name textbox from the database
+                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                productWholesaleUnitId= Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
 
                 if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
@@ -977,7 +1003,7 @@ namespace GUI
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
                     productCurrentUnitId = productWholesaleUnitId;
-                    productQuantity = Convert.ToDecimal(dtProduct.Rows[rowIndex][colTxtQtyInUnit]);
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[initialIndex][colTxtQtyInUnit]);
                 }
 
                 #region CBO UNIT POPULATING SECTION
@@ -1009,7 +1035,7 @@ namespace GUI
                 cboProductUnit.SelectedValue = productCurrentUnitId;
                 #endregion
 
-                costPrice = dtProduct.Rows[rowIndex][colTxtCostPrice].ToString();
+                costPrice = dtProduct.Rows[initialIndex][colTxtCostPrice].ToString();
 
                 txtProductCostPrice.Text = costPrice;
                 txtProductQuantity.Text = productQuantity.ToString();
