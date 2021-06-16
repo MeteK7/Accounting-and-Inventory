@@ -350,6 +350,25 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
+                        <DataGridComboBoxColumn Header="Unit"
+                                                ItemsSource="{Binding UnitCboItemsSource , Mode=OneWay}"
+                                                DisplayMemberPath="{Binding UnitCboDMember}"
+                                                SelectedValueBinding="{Binding UnitCboSValue, Mode=OneWay}"
+                                                SelectedValuePath="{Binding UnitCboSValuePath, Mode=OneWay}">
+                            
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Teams}"/>
+                                    <Setter Property="IsReadOnly" Value="True"/>
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Teams}"/>
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        
                         <!--<DataGridTemplateColumn Header="TEST">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -366,19 +385,19 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>-->
 
-                        <DataGridComboBoxColumn Header="UnitTemp"
-                                                ItemsSource="{Binding UnıtTempSource, Mode=OneWay}"
+                        <!--<DataGridComboBoxColumn Header="UnitTemp"
+                                                ItemsSource="{Binding UnitTempSource, Mode=OneWay}"
                                                 SelectedItemBinding="{Binding UnitTemp, Mode=OneWay}"/>
                                                 
-                        <!--<DataGridComboBoxColumn Width="100" x:Name="Test"
+                        <DataGridComboBoxColumn Width="100" x:Name="Test"
                                                 SelectedValueBinding="{Binding Test, Mode=OneWay}"
-                                                DisplayMemberPath="{Binding Test}" />-->
+                                                DisplayMemberPath="{Binding Test}" />
                         
                         <DataGridComboBoxColumn Header="Unit" Width="70"
                                                 ItemsSource="{Binding UnitCboList , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedValueBinding="{Binding UnitCboSelected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                SelectedValuePath="{Binding UnitCboSValue}"
-                                                DisplayMemberPath="{Binding UnitCboDMember}"/>
+                                                SelectedValuePath="{Binding UnitCboSValuePath}"
+                                                DisplayMemberPath="{Binding UnitCboDMember}"/>-->
                         
                         <DataGridTemplateColumn Header="Cost Price" Width="90">
                             <DataGridTemplateColumn.CellTemplate>

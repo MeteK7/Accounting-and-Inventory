@@ -5,6 +5,7 @@ using KabaAccounting.CUL;
 using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -523,6 +524,8 @@ namespace GUI
             }
         }
 
+        public ObservableCollection<PointOfPurchaseCUL> PopInfos { get; set; }
+
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
@@ -572,6 +575,10 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
+                //PopInfos = new ObservableCollection<PointOfPurchaseCUL>()
+                //{
+                //    new PointOfPurchaseCUL(){}
+                //};
                 decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 dgProducts.Items.Add(new
@@ -583,12 +590,9 @@ namespace GUI
                     TotalCostPrice = totalCostPrice.ToString(),
 
                     //ATTEMPT 1
-                    UnıtTempSource =cboProductUnit.ItemsSource,
-                    UnitTemp = cboProductUnit.SelectedItem,
-
-                    //ATTEMPT 2
-                    UnitCboList = cboProductUnit.ItemsSource,
-                    UnitCboSValue = cboProductUnit.SelectedValuePath,
+                    UnitCboItemsSource = cboProductUnit.ItemsSource,
+                    UnitCboSValue = cboProductUnit.SelectedValue,
+                    UnitCboSValuePath = cboProductUnit.SelectedValuePath,
                     UnitCboDMember = cboProductUnit.DisplayMemberPath,
                 });;
             }
