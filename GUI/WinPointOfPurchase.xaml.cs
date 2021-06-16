@@ -524,8 +524,6 @@ namespace GUI
             }
         }
 
-        public ObservableCollection<PointOfPurchaseCUL> PopInfos { get; set; }
-
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
@@ -575,10 +573,6 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                //PopInfos = new ObservableCollection<PointOfPurchaseCUL>()
-                //{
-                //    new PointOfPurchaseCUL(){}
-                //};
                 decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 dgProducts.Items.Add(new
@@ -589,7 +583,7 @@ namespace GUI
                     Quantity = txtProductQuantity.Text,
                     TotalCostPrice = totalCostPrice.ToString(),
 
-                    //ATTEMPT 1
+                    //BINDING DATAGRID COMBOBOX
                     UnitCboItemsSource = cboProductUnit.ItemsSource,
                     UnitCboSValue = cboProductUnit.SelectedValue,
                     UnitCboSValuePath = cboProductUnit.SelectedValuePath,
