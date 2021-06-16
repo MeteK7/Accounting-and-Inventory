@@ -526,7 +526,7 @@ namespace GUI
 
         private void cboProductUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (txtProductQuantity.Text!="" &&txtProductCostPrice.Text!="")
+            if (txtProductQuantity.Text!="" &&txtProductCostPrice.Text!="" && cboProductUnit.ItemsSource!=null)
             {
                 decimal productQuantity;
                 int productRetailUnitId, productWholesaleUnitId;
