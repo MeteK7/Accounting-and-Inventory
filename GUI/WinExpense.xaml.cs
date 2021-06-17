@@ -132,7 +132,17 @@ namespace GUI
             txtAmount.IsEnabled = false;
             rbAccount.IsEnabled = false;
             rbBank.IsEnabled = false;
+        }
 
+        public void EnableTools()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
         }
 
         private void EnableButtonsOnClickSaveCancel()
@@ -315,6 +325,11 @@ namespace GUI
                     MessageBox.Show("Something went wrong :(");
                 }
             }
+        }
+
+        private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EnableTools();
         }
 
         private void ClearTools()
