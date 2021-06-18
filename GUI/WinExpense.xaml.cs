@@ -277,64 +277,68 @@ namespace GUI
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
-            if (clickedNewOrEdit==clickedNew)
+            int emptyIndex = -1;
+
+            if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
             {
-                int emptyIndex = -1;
+                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
 
-                if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
+                #region ASSIGNING CUL SECTION
+                expenseCUL.Id = expenseId;
+                expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
+                expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                expenseCUL.AddedBy = userId;
+                expenseCUL.AddedDate = DateTime.Now;
+                #endregion
+
+                if (clickedNewOrEdit == clickedEdit)
                 {
-                    int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
-                    int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
-                    bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
-
-                    #region ASSIGNING CUL SECTION
-                    expenseCUL.Id = expenseId;
-                    expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
-                    expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
-                    expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
-                    expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
-                    expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
-                    expenseCUL.AddedBy = userId;
-                    expenseCUL.AddedDate = DateTime.Now;
-                    #endregion
-
-                    #region TABLE ASSET UPDATING SECTION
+                    #region TABLE ASSET REVERTING SECTION
                     //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
-                    isSuccessAsset = assetDAL.Update(assetCUL);
+                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]);//We have to add this amount into company's balance in order to revert the old expense.
+                    assetDAL.Update(assetCUL);
 
                     //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to the supplier's balance in order to reset our dept.
-                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]);//We have to subtract this amount from supplier's balance in order to revert our dept.
+                    assetDAL.Update(assetCUL);
                     #endregion
 
-                    if (clickedNewOrEdit == clickedEdit)
-                    {
-                        isSuccess = expenseBLL.UpdateExpense(expenseCUL);
-                    }
-                    else
-                    {
-                        isSuccess = expenseBLL.InsertExpense(expenseCUL);
-                    }
-
-                    //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                    if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
-                    {
-                        DisableTools();
-                        EnableButtonsOnClickSaveCancel();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Something went wrong :(");
-                    }
+                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
                 }
-            }
+                else
+                {
+                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
+                }
 
-            else if (clickedNewOrEdit == clickedEdit)
-            {
+                #region TABLE ASSET UPDATING SECTION
+                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                isSuccessAsset = assetDAL.Update(assetCUL);
 
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                #endregion
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
             }
         }
 
