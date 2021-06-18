@@ -36,7 +36,7 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         int unitValue = 1;
-        int clickedNewOrEdit, clickedNew=0,clickedEdit=1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int clickedNewOrEdit, clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int account = 1, bank = 2, supplier = 3;
         bool isCboSelectionDisabled = false; 
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
@@ -277,56 +277,64 @@ namespace GUI
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
-            int emptyIndex = -1;
-
-            if (cboFrom.SelectedIndex!= emptyIndex && cboTo.SelectedIndex!= emptyIndex && txtAmount.Text!="")
+            if (clickedNewOrEdit==clickedNew)
             {
-                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
-                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
-                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
+                int emptyIndex = -1;
 
-                #region ASSIGNING CUL SECTION
-                expenseCUL.Id = expenseId;
-                expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
-                expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
-                expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
-                expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
-                expenseCUL.Amount =Convert.ToDecimal(txtAmount.Text);
-                expenseCUL.AddedBy = userId;
-                expenseCUL.AddedDate = DateTime.Now;
-                #endregion
-
-                #region TABLE ASSET UPDATING SECTION
-                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
-                isSuccessAsset = assetDAL.Update(assetCUL);
-
-                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content)+Convert.ToDecimal(txtAmount.Text);//We have to add this amount to the supplier's balance in order to reset our dept.
-                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
-                #endregion
-
-                if (clickedNewOrEdit==clickedEdit)
+                if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
                 {
-                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
-                }
-                else
-                {
-                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
-                }
+                    int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
+                    int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                    bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
 
-                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
-                {
-                    DisableTools();
-                    EnableButtonsOnClickSaveCancel();
+                    #region ASSIGNING CUL SECTION
+                    expenseCUL.Id = expenseId;
+                    expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                    expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                    expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                    expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
+                    expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                    expenseCUL.AddedBy = userId;
+                    expenseCUL.AddedDate = DateTime.Now;
+                    #endregion
+
+                    #region TABLE ASSET UPDATING SECTION
+                    //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                    isSuccessAsset = assetDAL.Update(assetCUL);
+
+                    //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to the supplier's balance in order to reset our dept.
+                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    #endregion
+
+                    if (clickedNewOrEdit == clickedEdit)
+                    {
+                        isSuccess = expenseBLL.UpdateExpense(expenseCUL);
+                    }
+                    else
+                    {
+                        isSuccess = expenseBLL.InsertExpense(expenseCUL);
+                    }
+
+                    //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                    if (isSuccess == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                    {
+                        DisableTools();
+                        EnableButtonsOnClickSaveCancel();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong :(");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Something went wrong :(");
-                }
+            }
+
+            else if (clickedNewOrEdit == clickedEdit)
+            {
+
             }
         }
 
@@ -339,6 +347,8 @@ namespace GUI
             oldExpense[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
             oldExpense[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
             oldExpense[oldAmount] = txtAmount.Text.ToString();
+
+            clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old expense page.
         }
 
         private void ClearTools()
