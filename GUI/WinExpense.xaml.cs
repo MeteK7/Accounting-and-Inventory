@@ -42,6 +42,9 @@ namespace GUI
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
         string colNameFromDb = "name",colIdFromDb= "id";
+        const int expenseSize = 5;
+        const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
+        string[] oldExpense = new string[expenseSize];
         public WinExpense()
         {
             InitializeComponent();
@@ -330,6 +333,12 @@ namespace GUI
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
             EnableTools();
+
+            oldExpense[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
+            oldExpense[oldBalanceTo] = lblBalanceTo.Content.ToString();
+            oldExpense[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
+            oldExpense[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
+            oldExpense[oldAmount] = txtAmount.Text.ToString();
         }
 
         private void ClearTools()
