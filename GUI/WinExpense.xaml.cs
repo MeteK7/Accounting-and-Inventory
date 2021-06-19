@@ -215,6 +215,11 @@ namespace GUI
             }
         }
 
+        private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionDisabled==false)
