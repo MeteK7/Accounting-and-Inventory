@@ -298,36 +298,37 @@ namespace GUI
 
                 if (clickedNewOrEdit == clickedEdit)
                 {
-                    #region TABLE ASSET REVERTING SECTION
+                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
+
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
                     //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
                     assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]);//We have to add this amount into company's balance in order to revert the old expense.
-                    assetDAL.Update(assetCUL);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount])-Convert.ToDecimal(txtAmount.Text);//We have to add this amount into company's balance in order to revert the old expense.
+                    isSuccessAsset=assetDAL.Update(assetCUL);
 
                     //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
                     assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]);//We have to subtract this amount from supplier's balance in order to revert our dept.
-                    assetDAL.Update(assetCUL);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount])+ Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from supplier's balance in order to revert our dept.
+                    isSuccessAssetSupplier=assetDAL.Update(assetCUL);
                     #endregion
-
-                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
                 }
                 else
                 {
                     isSuccess = expenseBLL.InsertExpense(expenseCUL);
+
+                    #region TABLE ASSET UPDATING SECTION
+                    //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                    isSuccessAsset = assetDAL.Update(assetCUL);
+
+                    //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    #endregion
                 }
 
-                #region TABLE ASSET UPDATING SECTION
-                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
-                isSuccessAsset = assetDAL.Update(assetCUL);
-
-                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
-                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
-                #endregion
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
                 if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!

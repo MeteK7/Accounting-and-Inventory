@@ -70,7 +70,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_expense SET id_from=@id_from, id_to=@id_to, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_expenses SET id_from=@id_from, id_to=@id_to, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
