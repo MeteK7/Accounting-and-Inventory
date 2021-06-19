@@ -330,7 +330,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console">
+                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/file-trash.png">
                             <ImageBrush.RelativeTransform>
