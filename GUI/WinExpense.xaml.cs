@@ -217,7 +217,36 @@ namespace GUI
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the expense?", "Delete Expense", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
 
+                    #region DELETE INVOICE
+                    int expenseId = Convert.ToInt32(lblExpenseId.Content);
+
+                    expenseDAL.Delete(expenseId);
+
+                    #endregion
+
+                    #region REVERT THE ASSET
+
+                    #endregion
+
+                    #region PREPARE TO THE LAST PAGE
+                    DisableTools();
+                    LoadPastExpense();
+                    EnableButtonsOnClickSaveCancel();
+                    #endregion
+
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
