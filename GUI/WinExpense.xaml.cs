@@ -41,7 +41,7 @@ namespace GUI
         bool isCboSelectionDisabled = false; 
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
-        string colNameFromDb = "name",colIdFromDb= "id";
+        string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtAddedDate= "added_date";
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
         string[] oldExpense = new string[expenseSize];
@@ -92,15 +92,15 @@ namespace GUI
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
-                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colIdFromDb].ToString());//Getting the id of account.
+                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
                     lblExpenseId.Content = expenseId;
 
                     LoadCboTo();
 
-                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_to"].ToString());//Getting the id of supplier.
+                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
-                    txtAmount.Text= dtExpense.Rows[initialIndex]["amount"].ToString();
-                    lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex]["added_date"]).ToString("f");
+                    txtAmount.Text= dtExpense.Rows[initialIndex][colTxtAmount].ToString();
+                    lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
                 }
                 else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
@@ -448,10 +448,10 @@ namespace GUI
             cboFrom.ItemsSource = dtAccount.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = colNameFromDb;
+            cboFrom.DisplayMemberPath = colTxtName;
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = colIdFromDb;
+            cboFrom.SelectedValuePath = colTxtId;
         }
 
         private void LoadCboTo()
@@ -464,10 +464,10 @@ namespace GUI
             cboTo.ItemsSource = dtTo.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboTo.DisplayMemberPath = colNameFromDb;
+            cboTo.DisplayMemberPath = colTxtName;
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboTo.SelectedValuePath = colIdFromDb;
+            cboTo.SelectedValuePath = colTxtId;
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
