@@ -34,7 +34,6 @@ F:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\ref\DAL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.pdb
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.pdb
-F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csprojAssemblyReference.cache
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfoInputs.cache
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfo.cs
@@ -43,3 +42,4 @@ F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.CopyCo
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\ref\DAL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.pdb
+F:\Projects\Kaba-Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.AssemblyReference.cache
