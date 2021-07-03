@@ -170,7 +170,6 @@ F:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\DAL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\BLL.pdb
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\CUL.pdb
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\DAL.pdb
-F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csprojAssemblyReference.cache
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\TEST.g.cs
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinAccount.g.cs
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinAdminDashboard.g.cs
@@ -220,3 +219,4 @@ F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.dll
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\ref\GUI.dll
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.pdb
 F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.genruntimeconfig.cache
+F:\Projects\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csproj.AssemblyReference.cache
