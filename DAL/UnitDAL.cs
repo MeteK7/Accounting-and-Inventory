@@ -50,7 +50,7 @@ namespace KabaAccounting.DAL
         }
         #endregion
 
-        #region PRODUCT UNIT INFO FETCHING SECTION
+        #region PRODUCT UNIT INFO BY ID SECTION
         public DataTable GetUnitInfoById(int unitId)
         {
             SqlConnection conn = new SqlConnection(connString);//Static method to connect database
