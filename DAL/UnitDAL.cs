@@ -177,5 +177,40 @@ namespace KabaAccounting.DAL
             }
         }
         #endregion
+
+        #region GETTING THE UNIT INFORMATIONS BY USING UNIT ID.
+        public DataTable GetUnitInfoById(string unitId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_units WHERE name= '" + unitId + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
     }
 }
