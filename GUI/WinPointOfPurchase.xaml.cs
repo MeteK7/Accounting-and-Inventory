@@ -330,21 +330,33 @@ namespace GUI
 
         private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
-            int rowLength = dgProducts.Items.Count;
+            int rowLength = dgProducts.Items.Count, cellUnit = 2;
             string[,] dgProductCells = new string[rowLength, colLength];
+
+            DataGridRow dgRow;
+            ContentPresenter cpProduct;
+            TextBox tbCellContent;
+            ComboBox tbCellContentCbo;
 
             for (int rowNo = initialIndex; rowNo < rowLength; rowNo++)
             {
-                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+                dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
                 for (int colNo = initialIndex; colNo < colLength; colNo++)
                 {
-                    ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
+                    cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
-                    TextBox tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
 
-                    dgProductCells[rowNo, colNo] = tbCellContent.Text;
-
+                    if (colNo != cellUnit)
+                    {
+                        tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
+                        dgProductCells[rowNo, colNo] = tbCellContent.Text;
+                    }
+                    else
+                    {
+                        tbCellContentCbo = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as ComboBox;
+                        dgProductCells[rowNo, colNo] = tbCellContentCbo.SelectedValue.ToString();
+                    }
                     //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
                 }
             }
@@ -445,7 +457,12 @@ namespace GUI
 
                 #region TABLE POP DETAILS SAVING SECTION
 
-                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+                DataGridRow dgRow;
+                ContentPresenter cpProduct;
+                TextBox tbCellContent;
+                ComboBox tbCellContentCbo;
+
+                for (int rowNo = initialIndex; rowNo < dgProducts.Items.Count; rowNo++)
                 {
                     if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
@@ -458,15 +475,23 @@ namespace GUI
                         clickedNewOrEdit = clickedNull;
                     }
 
-                    DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
+                    dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    for (int colNo = initialIndex; colNo < cellLength; colNo++)
                     {
-                        ContentPresenter cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
+                        cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                         var tmpProduct = cpProduct.ContentTemplate;
-                        TextBox tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
 
-                        cells[colNo] = tbCellContent.Text;
+                        if (colNo != cellUnit)
+                        {
+                            tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
+                            cells[colNo] = tbCellContent.Text;
+                        }
+                        else
+                        {
+                            tbCellContentCbo = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as ComboBox;
+                            cells[colNo] = tbCellContentCbo.SelectedValue.ToString();
+                        }
                     }
 
                     dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] contains the product barcode.
