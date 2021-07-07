@@ -353,7 +353,7 @@
                         <DataGridTemplateColumn Header="Unit" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding UnitCboItemsSource}"
+                                    <ComboBox x:Name="dgTxtProductUnit" ItemsSource="{Binding UnitCboItemsSource}"
                                               DisplayMemberPath="{Binding UnitCboDMember}"
                                               SelectedValuePath="{Binding UnitCboSValuePath}"
                                               SelectedValue="{Binding UnitCboSValue, Mode=OneWay}"/>
