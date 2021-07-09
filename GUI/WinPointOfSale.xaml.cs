@@ -24,6 +24,14 @@ namespace GUI
     /// </summary>
     public partial class WinPointOfSale : Window
     {
+        public WinPointOfSale()
+        {
+            InitializeComponent();
+            DisableTools();
+            LoadUserInformations();
+            LoadPastInvoice();
+        }
+
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
@@ -43,19 +51,42 @@ namespace GUI
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
 
-        public WinPointOfSale()
-        {
-            InitializeComponent();
-            DisableTools();
-            LoadUserInformations();
-            LoadPastInvoice();
-        }
+        
 
-        int invoiceArrow;
-        int clickedNewOrEdit, clickedNew = 0, clickedEdit = 1;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        string[,] dgOldProductCells = new string[,] { };
-        string calledBy = "WinPOS", colQtyNameInDb = "quantity_in_stock";
-        decimal newQuantity;
+        const int initialIndex = 0, unitValue = 1;
+        const int colLength = 6;
+        int clickedNewOrEdit;
+        const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int colNoProductCostPrice = 3, colNoProductQuantity = 4, colNoProductTotalCostPrice = 5;
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
+        string[,] oldDgProductCells = new string[,] { };
+
+        string calledBy = "WinPOS";
+        string
+            colTxtQtyInUnit = "quantity_in_unit",
+            colTxtQtyInStock = "quantity_in_stock",
+            colTxtCostPrice = "costprice",
+            colTxtPaymentType = "payment_type",
+            colTxtPaymentTypeId = "payment_type_id",
+            colTxtSupplierId = "supplier_id",
+            colTxtInvoiceNo = "invoice_no",
+            colTxtId = "id",
+            colTxtProductQtyPurchased = "quantity",
+            colTxtProductId = "product_id",
+            colTxtProductUnitId = "product_unit_id",
+            colTxtName = "name",
+            colTxtProductCostPrice = "product_cost_price",
+            colTxtBarcodeRetail = "barcode_retail",
+            colTxtBarcodeWholesale = "barcode_wholesale",
+            colTxtUnitRetailId = "unit_retail_id",
+            colTxtUnitWholesaleId = "unit_wholesale_id";
+
+        int account = 1, bank = 2, supplier = 3;
+        int calledByVAT = 1, calledByDiscount = 2;
+        int oldItemsRowCount;
+        int clickedArrow, clickedPrev = 0, clickedNext = 1;
+        int oldIdAsset, oldIdAssetSupplier;
+        decimal oldBasketCostTotal, oldBasketGrandTotal, oldBasketQuantity;
 
         CommonBLL commonBLL = new CommonBLL();
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -188,7 +219,7 @@ namespace GUI
             lblInvoiceId.Content = invoiceId;//Assigning invoiceNo to the content of the InvoiceNo Label.
         }
 
-        private void LoadPastInvoice(int invoiceId = 0, int invoiceArrow = -1)//Optional parameter
+        private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
         {
             int initalIndex = 0, productUnitId;
             string productId, productName, productUnitName, productCostPrice, productSalePrice, productQuantity, productTotalCostPrice, productTotalSalePrice;
@@ -251,7 +282,7 @@ namespace GUI
                 }
                 else if (dataTablePos.Rows.Count == initalIndex)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
-                    if (invoiceArrow == initalIndex)//If the invoice arrow is 0, that means user clicked the previous button.
+                    if (clickedArrow == initalIndex)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
                         invoiceId = invoiceId - 1;
                     }
@@ -260,9 +291,9 @@ namespace GUI
                         invoiceId = invoiceId + 1;
                     }
 
-                    if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (clickedArrow != -1)//If the user has not clicked either previous or next button, then the clickedArrow will be -1 and no need for recursion.
                     {
-                        LoadPastInvoice(invoiceId, invoiceArrow);//Call the method again to get the new past invoice.
+                        LoadPastInvoice(invoiceId, clickedArrow);//Call the method again to get the new past invoice.
                     }
 
                 }
@@ -289,7 +320,7 @@ namespace GUI
 
                     dgProductCells[rowIndex, colNo] = tbCellContent.Text;
 
-                    //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
+                    //oldDgProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "oldDgProductCells" so that we can access to the old products to revert the changes.
                 }
             }
 
@@ -305,9 +336,9 @@ namespace GUI
 
             #region Comparing two multidimensional arrays
             bool isDgEqual =
-            dgOldProductCells.Rank == dgNewProductCells.Rank &&
-            Enumerable.Range(0, dgOldProductCells.Rank).All(dimension => dgOldProductCells.GetLength(dimension) == dgNewProductCells.GetLength(dimension)) &&
-            dgOldProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
+            oldDgProductCells.Rank == dgNewProductCells.Rank &&
+            Enumerable.Range(0, oldDgProductCells.Rank).All(dimension => oldDgProductCells.GetLength(dimension) == dgNewProductCells.GetLength(dimension)) &&
+            oldDgProductCells.Cast<string>().SequenceEqual(dgNewProductCells.Cast<string>());
             #endregion
 
             //If the old datagrid equals new datagrid, no need for saving because the user did not change anything.(ONLY IN CASE OF CLICKING TO THE EDIT BUTTON!!!)
@@ -352,7 +383,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellSalePrice = 4, cellProductQuantity = 5;
                 int productId;
                 int unitId;
-                decimal productOldQtyInStock;
+                decimal productOldQtyInStock,newQuantity;
                 int initialRowIndex = 0;
                 int cellLength = 7;
                 int addedBy = userId;
@@ -368,7 +399,7 @@ namespace GUI
                 {
                     if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -405,11 +436,11 @@ namespace GUI
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT AMOUNT UPDATE
-                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb].ToString());//Getting the old product quantity in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialRowIndex][colTxtName].ToString());//Getting the old product quantity in stock.
 
                     newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
 
-                    productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
+                    productDAL.UpdateSpecificColumn(productId, colTxtName, newQuantity.ToString());
                     #endregion
 
                 }
@@ -616,7 +647,7 @@ namespace GUI
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
-            dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+            oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
@@ -636,8 +667,8 @@ namespace GUI
                     #endregion
 
                     #region REVERT THE STOCK
-                    dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-                    productBLL.RevertOldQuantityInStock(dgOldProductCells, dgProducts.Items.Count, calledBy);
+                    oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
 
                     #region PREPARE TO THE LAST PAGE
@@ -660,14 +691,14 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInvoiceId = 0, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
+            int firstInvoiceId = unitValue, currentInvoiceId = Convert.ToInt32(lblInvoiceId.Content);
 
             if (currentInvoiceId != firstInvoiceId)
             {
                 ClearProductsDataGrid();
-                int prevInvoice = currentInvoiceId - 1;
-                invoiceArrow = 0;//0 means customer has clicked the previous button.
-                LoadPastInvoice(prevInvoice, invoiceArrow);
+                int prevInvoice = currentInvoiceId - unitValue;
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                LoadPastInvoice(prevInvoice, clickedArrow);
             }
         }
 
@@ -680,9 +711,9 @@ namespace GUI
             if (currentInvoiceId != lastInvoiceId)
             {
                 ClearProductsDataGrid();
-                int nextInvoice = currentInvoiceId + 1;
-                invoiceArrow = 1;//1 means customer has clicked the next button.
-                LoadPastInvoice(nextInvoice, invoiceArrow);
+                int nextInvoice = currentInvoiceId + unitValue;
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                LoadPastInvoice(nextInvoice, clickedArrow);
             }
         }
 
