@@ -290,14 +290,14 @@ namespace GUI
                 {
                     if (clickedArrow == initalIndex)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        invoiceId = invoiceId - 1;
+                        invoiceId = invoiceId - unitValue;
                     }
                     else
                     {
-                        invoiceId = invoiceId + 1;
+                        invoiceId = invoiceId + unitValue;
                     }
 
-                    if (clickedArrow != -1)//If the user has not clicked either previous or next button, then the clickedArrow will be -1 and no need for recursion.
+                    if (clickedArrow != -unitValue)//If the user has not clicked either previous or next button, then the clickedArrow will be -1 and no need for recursion.
                     {
                         LoadPastInvoice(invoiceId, clickedArrow);//Call the method again to get the new past invoice.
                     }
@@ -312,21 +312,35 @@ namespace GUI
 
         private string[,] GetDataGridContent()
         {
-            int rowLength = dgProducts.Items.Count;
+            int rowLength = dgProducts.Items.Count, cellUnit = 2;
             int colLength = 8;
             string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            DataGridRow dgRow;
+            ContentPresenter cpProduct;
+            TextBox tbCellContent;
+            ComboBox tbCellContentCbo;
+
+            for (int rowNo = initialIndex; rowNo < rowLength; rowNo++)
             {
-                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+                dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                for (int colNo = 0; colNo < colLength; colNo++)
+                for (int colNo = initialIndex; colNo < colLength; colNo++)
                 {
-                    TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
+                    cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
+                    var tmpProduct = cpProduct.ContentTemplate;
 
-                    dgProductCells[rowIndex, colNo] = tbCellContent.Text;
-
-                    //oldDgProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "oldDgProductCells" so that we can access to the old products to revert the changes.
+                    if (colNo != cellUnit)
+                    {
+                        tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
+                        dgProductCells[rowNo, colNo] = tbCellContent.Text;
+                    }
+                    else
+                    {
+                        tbCellContentCbo = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as ComboBox;
+                        dgProductCells[rowNo, colNo] = tbCellContentCbo.SelectedValue.ToString();
+                    }
+                    //dgOldProductCells[rowNo, colNo] = cells[rowNo, colNo];//Assigning the old products' informations to the global array called "dgOldProductCells" so that we can access to the old products to revert the changes.
                 }
             }
 
