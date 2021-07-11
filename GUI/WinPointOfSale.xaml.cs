@@ -51,8 +51,6 @@ namespace GUI
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
 
-        
-
         const int initialIndex = 0, unitValue = 1;
         const int colLength = 6;
         int clickedNewOrEdit;
@@ -66,9 +64,10 @@ namespace GUI
             colTxtQtyInUnit = "quantity_in_unit",
             colTxtQtyInStock = "quantity_in_stock",
             colTxtCostPrice = "costprice",
+            colTxtAccountId = "account_id",
             colTxtPaymentType = "payment_type",
             colTxtPaymentTypeId = "payment_type_id",
-            colTxtSupplierId = "supplier_id",
+            colTxtCustomerId = "supplier_id",
             colTxtInvoiceNo = "invoice_no",
             colTxtId = "id",
             colTxtProductQtyPurchased = "quantity",
@@ -76,10 +75,17 @@ namespace GUI
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
             colTxtProductCostPrice = "product_cost_price",
+            colTxtProductSalePrice = "product_sale_price",
             colTxtBarcodeRetail = "barcode_retail",
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
-            colTxtUnitWholesaleId = "unit_wholesale_id";
+            colTxtUnitWholesaleId = "unit_wholesale_id",
+            colTxtSubTotal = "sub_total",
+            colTxtTotalPQuantity = "total_product_quantity",
+            colTxtCostTotal = "cost_total",
+            colTxtVat = "vat",
+            colTxtDiscount = "discount",
+            colTxtGrandTotal = "grand_total";
 
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
@@ -186,19 +192,19 @@ namespace GUI
 
         private void ClearBasketTextBox()
         {
-            txtBasketQuantity.Text = "0";
-            txtBasketCostTotal.Text = "0";
-            txtBasketSubTotal.Text = "0";
-            txtBasketVat.Text = "0";
-            txtBasketDiscount.Text = "0";
-            txtBasketGrandTotal.Text = "0";
+            txtBasketQuantity.Text = initialIndex.ToString();
+            txtBasketCostTotal.Text = initialIndex.ToString();
+            txtBasketSubTotal.Text = initialIndex.ToString();
+            txtBasketVat.Text = initialIndex.ToString();
+            txtBasketDiscount.Text = initialIndex.ToString();
+            txtBasketGrandTotal.Text = initialIndex.ToString();
         }
 
         private void ClearProductEntranceTextBox()
         {
             txtProductId.Text = "";
             txtProductName.Text = "";
-            cboProductUnit.SelectedIndex = -1;
+            cboProductUnit.ItemsSource = null;
             txtProductCostPrice.Text = "";
             txtProductSalePrice.Text = "";
             txtProductQuantity.Text = "";
@@ -212,7 +218,7 @@ namespace GUI
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
-            int invoiceId, increment = 1;
+            int invoiceId, increment = unitValue;
 
             invoiceId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice number and assign it to the variable called invoiceNo.
             invoiceId += increment;//We are adding one to the last invoice number because every new invoice number is one greater tham the previous invoice number.
@@ -240,29 +246,29 @@ namespace GUI
                     DataTable dataTableUnitInfo;
                     DataTable dataTableProduct;
 
-                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["payment_type_id"].ToString());//Getting the id of purchase type.
-                    cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["customer_id"].ToString());//Getting the id of customer.
-                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex]["account_id"].ToString());//Getting the id of account.
-                    lblInvoiceId.Content = dataTablePos.Rows[initalIndex]["id"].ToString();
+                    cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
+                    cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex][colTxtCustomerId].ToString());//Getting the id of customer.
+                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initalIndex][colTxtAccountId].ToString());//Getting the id of account.
+                    lblInvoiceId.Content = dataTablePos.Rows[initalIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
                     for (int currentRow = initalIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
-                        productId = dataTablePosDetail.Rows[currentRow]["product_id"].ToString();
-                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow]["product_unit_id"]);
+                        productId = dataTablePosDetail.Rows[currentRow][colTxtProductId].ToString();
+                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow][colTxtProductUnitId]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[initalIndex]["name"].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
+                        productUnitName = dataTableUnitInfo.Rows[initalIndex][colTxtName].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
-                        productCostPrice = dataTablePosDetail.Rows[currentRow]["product_cost_price"].ToString();
-                        productSalePrice = dataTablePosDetail.Rows[currentRow]["product_sale_price"].ToString();
-                        productQuantity = dataTablePosDetail.Rows[currentRow]["quantity"].ToString();
+                        productCostPrice = dataTablePosDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
+                        productSalePrice = dataTablePosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
+                        productQuantity = dataTablePosDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
                         productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
 
                         dataTableProduct = productDAL.SearchById(productId);
 
-                        productName = dataTableProduct.Rows[initalIndex]["name"].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
+                        productName = dataTableProduct.Rows[initalIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Quantity = productQuantity, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
                     }
@@ -271,12 +277,12 @@ namespace GUI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTablePos.Rows[initalIndex]["total_product_quantity"].ToString();
-                    txtBasketCostTotal.Text = dataTablePos.Rows[initalIndex]["cost_total"].ToString();
-                    txtBasketSubTotal.Text = dataTablePos.Rows[initalIndex]["sub_total"].ToString();
-                    txtBasketVat.Text = dataTablePos.Rows[initalIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePos.Rows[initalIndex]["discount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePos.Rows[initalIndex]["grand_total"].ToString();
+                    txtBasketQuantity.Text = dataTablePos.Rows[initalIndex][colTxtTotalPQuantity].ToString();
+                    txtBasketCostTotal.Text = dataTablePos.Rows[initalIndex][colTxtCostTotal].ToString();
+                    txtBasketSubTotal.Text = dataTablePos.Rows[initalIndex][colTxtSubTotal].ToString();
+                    txtBasketVat.Text = dataTablePos.Rows[initalIndex][colTxtVat].ToString();
+                    txtBasketDiscount.Text = dataTablePos.Rows[initalIndex][colTxtDiscount].ToString();
+                    txtBasketGrandTotal.Text = dataTablePos.Rows[initalIndex][colTxtGrandTotal].ToString();
 
                     #endregion
                 }

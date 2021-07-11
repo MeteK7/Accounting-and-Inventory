@@ -56,8 +56,8 @@ namespace GUI
         AssetCUL assetCUL = new AssetCUL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const int initialIndex = 0,unitValue=1;
-        const int colLength =6;
+        const int initialIndex = 0,unitValue = 1;
+        const int colLength = 6;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colNoProductCostPrice=3, colNoProductQuantity=4, colNoProductTotalCostPrice = 5;
@@ -82,7 +82,12 @@ namespace GUI
             colTxtBarcodeRetail = "barcode_retail",
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
-            colTxtUnitWholesaleId = "unit_wholesale_id";
+            colTxtUnitWholesaleId = "unit_wholesale_id",
+            colTxtTotalPQuantity = "total_product_quantity",
+            colTxtCostTotal = "cost_total",
+            colTxtVat = "vat",
+            colTxtDiscount = "discount",
+            colTxtGrandTotal = "grand_total";
 
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
@@ -105,6 +110,8 @@ namespace GUI
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnEditRecord.IsEnabled = false;//There cannot be any editable records for the first run.
+            btnDeleteRecord.IsEnabled = false;//There cannot be any deletible records for the first run.
             btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
@@ -296,11 +303,11 @@ namespace GUI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used initialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTablePop.Rows[initialIndex]["total_product_quantity"].ToString();
-                    txtBasketCostTotal.Text = dataTablePop.Rows[initialIndex]["cost_total"].ToString();
-                    txtBasketVat.Text = dataTablePop.Rows[initialIndex]["vat"].ToString();
-                    txtBasketDiscount.Text = dataTablePop.Rows[initialIndex]["discount"].ToString();
-                    txtBasketGrandTotal.Text = dataTablePop.Rows[initialIndex]["grand_total"].ToString();
+                    txtBasketQuantity.Text = dataTablePop.Rows[initialIndex][colTxtTotalPQuantity].ToString();
+                    txtBasketCostTotal.Text = dataTablePop.Rows[initialIndex][colTxtCostTotal].ToString();
+                    txtBasketVat.Text = dataTablePop.Rows[initialIndex][colTxtVat].ToString();
+                    txtBasketDiscount.Text = dataTablePop.Rows[initialIndex][colTxtDiscount].ToString();
+                    txtBasketGrandTotal.Text = dataTablePop.Rows[initialIndex][colTxtGrandTotal].ToString();
 
                     #endregion
                 }
