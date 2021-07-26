@@ -11,7 +11,7 @@ namespace KabaAccounting.CUL
         public int Id { get; set; }
         public int PaymentTypeId { get; set; }
         public int CustomerId { get; set; }
-        public int AccountId { get; set; }
+        public int AssetId { get; set; }
         public int TotalProductQuantity { get; set; }
         public decimal CostTotal { get; set; }
         public decimal SubTotal { get; set; }
