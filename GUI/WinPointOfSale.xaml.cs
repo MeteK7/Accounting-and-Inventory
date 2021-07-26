@@ -91,25 +91,9 @@ namespace GUI
             colTxtGrandTotal = "grand_total",
             colTxtSourceBalance= "source_balance";
 
-        int account = 1, bank = 2, supplier = 3;
+        int account = 1, bank = 2, supplier = 3,customer=4;
         int calledByVAT = 1, calledByDiscount = 2;
         int oldItemsRowCount;
-
-        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         int clickedArrow, clickedPrev = 0, clickedNext = 1;
         int oldIdAsset, oldIdAssetCustomer;
         decimal oldBasketCostTotal, oldBasketGrandTotal, oldBasketQuantity;
@@ -942,6 +926,39 @@ namespace GUI
 
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
+        }
+
+        private void cboMenuCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            int sourceType = customer;
+
+            sourceId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
+            lblAssetCustomerId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
+        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            int sourceType;
+
+            if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
+                sourceType = account;
+            else
+                sourceType = bank;
+
+            sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
+            lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboMenuAsset(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboMenuAsset(bank);
         }
     }
 }

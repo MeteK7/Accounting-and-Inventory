@@ -481,7 +481,7 @@
                 <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="101" Height="25" FontSize="11"/>
                 <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuPaymentType_Loaded"/>
                 <Label x:Name="lblMenuCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
-                <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuCustomer_Loaded"/>
+                <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuCustomer_Loaded" SelectionChanged="cboMenuCustomer_SelectionChanged"/>
                 <Label x:Name="lblMenuAsset" Content="Asset" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
                 <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
                 <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
