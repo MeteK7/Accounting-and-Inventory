@@ -87,7 +87,8 @@ namespace GUI
             colTxtCostTotal = "cost_total",
             colTxtVat = "vat",
             colTxtDiscount = "discount",
-            colTxtGrandTotal = "grand_total";
+            colTxtGrandTotal = "grand_total",
+            colTxtSourceBalance = "source_balance";
 
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
@@ -415,7 +416,7 @@ namespace GUI
                     //REVERTING THE TABLE ASSET FOR BALANCE OF THE SUPPLIER.
 
                     dtAsset = assetDAL.SearchById(oldIdAssetSupplier);
-                    oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+                    oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
                     assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
                     assetCUL.SourceBalance = oldSourceBalance+oldBasketGrandTotal;//We have to add the old grandTotal to the source balance because the new grand total may be different from it.
@@ -427,7 +428,7 @@ namespace GUI
                 //UPDATING THE TABLE ASSET FOR BALANCE OF THE SUPPLIER.
 
                 dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetSupplierId.Content));
-                oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+                oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
                 
                 assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase.
                 assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
@@ -1155,7 +1156,6 @@ namespace GUI
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuAsset.SelectedValuePath = colTxtId;
         }
-
 
 
         private void LoadCboMenuSupplier()

@@ -23,10 +23,8 @@ namespace BLL
             return pointOfSaleDAL.Update(pointOfSaleCUL);
         }
 
-        public DataTable GetLastInvoiceInfo()
+        public DataTable GetLastInvoiceRecord()
         {
-            //int specificRowIndex = 0, invoiceNo;
-
             DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
 
             return dataTable;
