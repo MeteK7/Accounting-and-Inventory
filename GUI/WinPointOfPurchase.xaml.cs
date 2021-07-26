@@ -1158,7 +1158,6 @@ namespace GUI
         }
 
 
-
         private void LoadCboMenuSupplier()
         {
             //Creating Data Table to hold the products from Database

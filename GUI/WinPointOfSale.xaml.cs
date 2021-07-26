@@ -35,6 +35,7 @@ namespace GUI
 
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
+        BankDAL bankDAL = new BankDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
@@ -926,6 +927,26 @@ namespace GUI
 
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
+        }
+
+        private void LoadCboMenuAsset(int checkStatus)
+        {
+            DataTable dtAccount;
+            if (checkStatus == account)
+                dtAccount = accountDAL.Select();
+
+
+            else
+                dtAccount = bankDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuAsset.ItemsSource = dtAccount.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuAsset.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuAsset.SelectedValuePath = colTxtId;
         }
 
         private void cboMenuCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
