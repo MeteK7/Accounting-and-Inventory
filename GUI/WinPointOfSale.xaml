@@ -482,8 +482,12 @@
                 <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuPaymentType_Loaded"/>
                 <Label x:Name="lblMenuCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
                 <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuCustomer_Loaded"/>
-                <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
-                <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuAccount_Loaded"/>
+                <Label x:Name="lblMenuAsset" Content="Asset" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
+                <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
+                <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
+                <ComboBox x:Name="cboMenuAsset" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuAsset_SelectionChanged"/>
+                <Label x:Name="lblAssetCustomerId" Content="" HorizontalAlignment="Left" Margin="902,40,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
+                <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
             </Grid>
         </GroupBox>
 
