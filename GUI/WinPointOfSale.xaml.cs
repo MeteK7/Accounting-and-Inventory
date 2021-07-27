@@ -868,6 +868,40 @@ namespace GUI
             }
         }
 
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
+        private void DgTextChanged()
+        {
+            ////GETTING TEXTBOX FROM DATAGRID.
+            ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
+            TextBox productCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+
+            ////GETTING TEXTBOX FROM DATAGRID.
+            ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductQuantity = cpProductQuantity.ContentTemplate;
+            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+
+            if (txtDgProductQuantity.Text != "" && productCostPrice.Text != "")
+            {
+                txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
+                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+
+                txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
+                txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
+            }
+        }
+
+        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextMenuCostPriceChanged();
+        }
+
         private void dgTxtProductCostPrice_KeyUp(object sender, KeyEventArgs e)
         {
             DgTextChanged();
