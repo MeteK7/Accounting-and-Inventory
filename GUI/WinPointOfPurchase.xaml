@@ -341,7 +341,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <!--<DataGridTextColumn Binding="{Binding Path=Test}" MaxWidth="50"/>-->
+                        
                         <DataGridTemplateColumn Header="Name" Width="540">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -392,7 +392,6 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

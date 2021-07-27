@@ -56,11 +56,11 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const int initialIndex = 0, unitValue = 1;
-        const int colLength = 6;
+        const int colLength =8;
         int clickedNewOrEdit;
         const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int colNoProductCostPrice = 3, colNoProductQuantity = 4, colNoProductTotalCostPrice = 5;
-        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
+        int colNoProductCostPrice = 3, colNoProductSalePrice=4,colNoProductQuantity = 5, colNoProductTotalCostPrice = 6,colNoProductTotalSalePrice=7;
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductSalePrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice", "dgTxtProductTotalSalePrice" };
         string[,] oldDgProductCells = new string[,] { };
 
         string calledBy = "WinPOS";
@@ -338,7 +338,6 @@ namespace GUI
         private string[,] GetDataGridContent()
         {
             int rowLength = dgProducts.Items.Count, cellUnit = 2;
-            int colLength = 8;
             string[,] dgProductCells = new string[rowLength, colLength];
 
             DataGridRow dgRow;
@@ -867,6 +866,20 @@ namespace GUI
                     btnProductAdd.IsEnabled = false;
                 }
             }
+        }
+
+        private void dgTxtProductCostPrice_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
+
+        private void dgTxtProductSalePrice_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
+        private void dgTxtProductQuantity_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
         }
 
         private void txtProductId_KeyDown(object sender, KeyEventArgs e)
