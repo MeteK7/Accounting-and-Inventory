@@ -1160,22 +1160,6 @@ namespace GUI
             cboMenuAsset.SelectedValuePath = colTxtId;
         }
 
-
-        private void LoadCboMenuSupplier()
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dtSupplier = supplierDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuSupplier.ItemsSource = dtSupplier.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuSupplier.DisplayMemberPath = colTxtName;
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuSupplier.SelectedValuePath = colTxtId;
-        }
-
         private void LoadCboMenuPaymentType()
         {
             //Creating Data Table to hold the products from Database
@@ -1189,6 +1173,20 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuPaymentType.SelectedValuePath = colTxtId;
+        }
+        private void LoadCboMenuSupplier()
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dtSupplier = supplierDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuSupplier.ItemsSource = dtSupplier.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuSupplier.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuSupplier.SelectedValuePath = colTxtId;
         }
 
         private void cboMenuSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)

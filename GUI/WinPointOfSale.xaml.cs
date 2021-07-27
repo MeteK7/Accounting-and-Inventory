@@ -970,6 +970,35 @@ namespace GUI
             cboMenuAsset.SelectedValuePath = colTxtId;
         }
 
+        private void LoadCboMenuPaymentType()
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dtPayment = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuPaymentType.ItemsSource = dtPayment.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuPaymentType.DisplayMemberPath = colTxtPaymentType;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuPaymentType.SelectedValuePath = colTxtId;
+        }
+        private void LoadCboMenuCustomer()
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dtCustomer = customerDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboMenuCustomer.ItemsSource = dtCustomer.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboMenuCustomer.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboMenuCustomer.SelectedValuePath = colTxtId;
+        }
+
         private void cboMenuCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int sourceId;
