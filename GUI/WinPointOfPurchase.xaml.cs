@@ -88,7 +88,10 @@ namespace GUI
             colTxtVat = "vat",
             colTxtDiscount = "discount",
             colTxtGrandTotal = "grand_total",
-            colTxtSourceBalance = "source_balance";
+            colTxtSourceBalance = "source_balance",
+            colTxtIdSourceType= "id_source_type",
+            colTxtIdSource="id_source",
+            coTxtAssetId="asset_id";
 
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
@@ -256,18 +259,18 @@ namespace GUI
                     DataTable dataTableProduct;
                     
                     #region ASSET INFORMATION FILLING REGION
-                    int assetId = Convert.ToInt32(dataTablePop.Rows[initialIndex]["asset_id"].ToString());//Getting the id of account.
+                    int assetId = Convert.ToInt32(dataTablePop.Rows[initialIndex][coTxtAssetId].ToString());//Getting the id of account.
                     lblAssetId.Content = assetId;
 
                     DataTable dtAsset = assetDAL.SearchById(assetId);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
+                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex][colTxtIdSourceType]);
 
                     if (sourceType == account)
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
 
-                    cboMenuAsset.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
+                    cboMenuAsset.SelectedValue = dtAsset.Rows[initialIndex][colTxtIdSource].ToString();
                     #endregion
 
                     LoadCboMenuPaymentType();
