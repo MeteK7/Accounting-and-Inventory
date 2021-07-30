@@ -84,7 +84,7 @@ namespace GUI
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
             colTxtUnitWholesaleId = "unit_wholesale_id",
-            colTxtSubTotal = "sub_total",
+            colTxtSaleTotal = "sale_total",
             colTxtTotalPQuantity = "total_product_quantity",
             colTxtCostTotal = "cost_total",
             colTxtVat = "vat",
@@ -100,7 +100,7 @@ namespace GUI
         int oldItemsRowCount;
         int clickedArrow, clickedPrev = 0, clickedNext = 1;
         int oldIdAsset, oldIdAssetCustomer;
-        decimal oldBasketCostTotal, oldBasketGrandTotal, oldBasketQuantity;
+        decimal oldBasketCostTotal, oldBasketSaleTotal, oldBasketGrandTotal, oldBasketQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -201,7 +201,7 @@ namespace GUI
         {
             txtBasketQuantity.Text = initialIndex.ToString();
             txtBasketCostTotal.Text = initialIndex.ToString();
-            txtBasketSubTotal.Text = initialIndex.ToString();
+            txtBasketSaleTotal.Text = initialIndex.ToString();
             txtBasketVat.Text = initialIndex.ToString();
             txtBasketDiscount.Text = initialIndex.ToString();
             txtBasketGrandTotal.Text = initialIndex.ToString();
@@ -304,7 +304,7 @@ namespace GUI
                     //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketQuantity.Text = dataTablePos.Rows[initialIndex][colTxtTotalPQuantity].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[initialIndex][colTxtCostTotal].ToString();
-                    txtBasketSubTotal.Text = dataTablePos.Rows[initialIndex][colTxtSubTotal].ToString();
+                    txtBasketSaleTotal.Text = dataTablePos.Rows[initialIndex][colTxtSaleTotal].ToString();
                     txtBasketVat.Text = dataTablePos.Rows[initialIndex][colTxtVat].ToString();
                     txtBasketDiscount.Text = dataTablePos.Rows[initialIndex][colTxtDiscount].ToString();
                     txtBasketGrandTotal.Text = dataTablePos.Rows[initialIndex][colTxtGrandTotal].ToString();
@@ -442,7 +442,7 @@ namespace GUI
                 pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                 pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketQuantity.Text);
                 pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-                pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+                pointOfSaleCUL.SaleTotal = Convert.ToDecimal(txtBasketSaleTotal.Text);
                 pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
                 pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                 pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
@@ -621,9 +621,9 @@ namespace GUI
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
+            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void SubstractBasket(int selectedRowIndex)
@@ -649,9 +649,9 @@ namespace GUI
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(tbCellTotalPrice.Text)).ToString();
+            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) - Convert.ToDecimal(tbCellTotalPrice.Text)).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
@@ -872,9 +872,9 @@ namespace GUI
         private void DgTextChanged()
         {
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-            TextBox productCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+            ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
+            TextBox productSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
@@ -882,24 +882,19 @@ namespace GUI
             TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
-            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+            ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+            TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
-            if (txtDgProductQuantity.Text != "" && productCostPrice.Text != "")
+            if (txtDgProductQuantity.Text != "" && productSalePrice.Text != "")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
-                txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
+                txtBasketSaleTotal.Text = (oldBasketSaleTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
+                txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();//VAT and Discount are already in the old grand total so no need to calculate them.
             }
-        }
-
-        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextMenuCostPriceChanged();
         }
 
         private void dgTxtProductCostPrice_KeyUp(object sender, KeyEventArgs e)
