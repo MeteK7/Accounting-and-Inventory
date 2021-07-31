@@ -64,7 +64,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("@account_id", pointOfSaleCUL.AssetId);
                 cmd.Parameters.AddWithValue("@total_product_quantity", pointOfSaleCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("@cost_total", pointOfSaleCUL.CostTotal);
-                cmd.Parameters.AddWithValue("@sub_total", pointOfSaleCUL.SubTotal);
+                cmd.Parameters.AddWithValue("@sub_total", pointOfSaleCUL.SaleTotal);
                 cmd.Parameters.AddWithValue("@vat",pointOfSaleCUL.Vat);
                 cmd.Parameters.AddWithValue("@discount",pointOfSaleCUL.Discount);
                 cmd.Parameters.AddWithValue("@grand_total",pointOfSaleCUL.GrandTotal);
@@ -114,7 +114,7 @@ namespace KabaAccounting.DAL
                 cmd.Parameters.AddWithValue("account_id", pointOfSaleCUL.AssetId);
                 cmd.Parameters.AddWithValue("total_product_quantity", pointOfSaleCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("cost_total", pointOfSaleCUL.CostTotal);
-                cmd.Parameters.AddWithValue("sub_total", pointOfSaleCUL.SubTotal);
+                cmd.Parameters.AddWithValue("sub_total", pointOfSaleCUL.SaleTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfSaleCUL.Vat);
                 cmd.Parameters.AddWithValue("discount", pointOfSaleCUL.Discount);
                 cmd.Parameters.AddWithValue("grand_total", pointOfSaleCUL.GrandTotal);

@@ -14,7 +14,7 @@ namespace KabaAccounting.CUL
         public int AssetId { get; set; }
         public int TotalProductQuantity { get; set; }
         public decimal CostTotal { get; set; }
-        public decimal SubTotal { get; set; }
+        public decimal SaleTotal { get; set; }
         public decimal Vat { get; set; }
         public decimal Discount { get; set; }
         public decimal GrandTotal { get; set; }
