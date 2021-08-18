@@ -580,23 +580,22 @@ namespace GUI
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
-            int firstIndex = 0;
-            //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
-            //int priceColNo = 4;
-            int quantityColNo = 5;
-            int totalCostColNo = 6;
-            int totalPriceColNo = 7;
+            int colProductQuantity = 5;
+            int colProductTotalCost = 6;
+            int colProductTotalPrice = 7;
             int quantity;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-            int productId = Convert.ToInt32(dtProduct.Rows[firstIndex]["id"]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+            int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
             for (int i = 0; i < rowQuntity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                TextBlock barcodeCellContent = dgProducts.Columns[firstIndex].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
+                var tmpProduct = cpProduct.ContentTemplate;
+                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
                 if (barcodeCellContent.Text == productId.ToString())
                 {
@@ -604,9 +603,9 @@ namespace GUI
                     {
                         //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[quantityColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityContent = dgProducts.Columns[colProductQuantity].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellTotalCostContent = dgProducts.Columns[colProductTotalCost].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[colProductTotalPrice].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
                         quantity = Convert.ToInt32(tbCellQuantityContent.Text);
