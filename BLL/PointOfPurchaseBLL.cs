@@ -1,4 +1,5 @@
-﻿using KabaAccounting.DAL;
+﻿using KabaAccounting.CUL;
+using KabaAccounting.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,16 @@ namespace BLL
     public class PointOfPurchaseBLL
     {
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
+
+        public bool InsertPOP(PointOfPurchaseCUL pointOfPurchaseCUL)
+        {
+            return pointOfPurchaseDAL.Insert(pointOfPurchaseCUL);
+        }
+
+        public bool UpdatePOP(PointOfPurchaseCUL pointOfPurchaseCUL)
+        {
+            return pointOfPurchaseDAL.Update(pointOfPurchaseCUL);
+        }
 
         //public int GetInvoiceIdByNo(string invoiceNo)
         //{

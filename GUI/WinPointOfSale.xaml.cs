@@ -273,7 +273,6 @@ namespace GUI
 
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
                     cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtCustomerId].ToString());//Getting the id of customer.
-                    cboMenuAsset.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtAccountId].ToString());//Getting the id of account.
                     lblInvoiceId.Content = dataTablePos.Rows[initialIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
@@ -395,7 +394,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellSalePrice=4, cellProductQuantity = 5;
                 int productId;
                 int unitId;
-                decimal productOldQtyInStock, newQuantity, newCostPrice;
+                decimal productOldQtyInStock, newQuantity, newCostPrice, newSalePrice;
                 int cellLength = 8;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
@@ -449,7 +448,7 @@ namespace GUI
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
 
-                if (clickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                if (clickedNewOrEdit == clickedEdit)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
                     isSuccess = pointOfSaleBLL.UpdatePOS(pointOfSaleCUL);
                 }
@@ -518,7 +517,7 @@ namespace GUI
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
-                    #region PRODUCT AMOUNT UPDATE
+                    #region PRODUCT QUANTITY UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtName].ToString());//Getting the old product quantity in stock.
 
                     newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
@@ -550,26 +549,53 @@ namespace GUI
             }
         }
 
+        private void cboProductUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (txtProductQuantity.Text != "" && cboProductUnit.ItemsSource != null)
+            {
+                decimal productQuantity;
+                int productRetailUnitId;
+                string productIdFromUser = txtProductId.Text;
+                DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
+                int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+
+                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                //productWholesaleUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
+
+                if (Convert.ToInt32(cboProductUnit.SelectedValue) == productRetailUnitId)
+                {
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
+                }
+
+                else
+                {
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[initialIndex][colTxtQtyInUnit]);
+                }
+
+                txtProductQuantity.Text = productQuantity.ToString();
+                txtProductTotalPrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
+            }
+        }
+
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
             bool addNewProductLine = true;
-            int firstIndex = 0;
-            //int costColNo = 3; NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
-            //int priceColNo = 4;
-            int quantityColNo = 5;
-            int totalCostColNo = 6;
-            int totalPriceColNo = 7;
+            int colProductQuantity = 5;
+            int colProductTotalCost = 6;
+            int colProductTotalPrice = 7;
             int quantity;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-            int productId = Convert.ToInt32(dtProduct.Rows[firstIndex]["id"]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+            int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
             for (int i = 0; i < rowQuntity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                TextBlock barcodeCellContent = dgProducts.Columns[firstIndex].GetCellContent(row) as TextBlock;    //Try to understand this code!!!  
+                ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
+                var tmpProduct = cpProduct.ContentTemplate;
+                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
                 if (barcodeCellContent.Text == productId.ToString())
                 {
@@ -577,9 +603,9 @@ namespace GUI
                     {
                         //TextBlock tbCellCostContent = dgProducts.Columns[costColNo].GetCellContent(row) as TextBlock;    NO NEED TO GET THE COST CONTENT AGAIN SINCE WE HAVE ALREADY GOT IT FROM THE FIRST ENTRY OF THIS PRODUCT.
                         //TextBlock tbCellPriceContent = dgProducts.Columns[priceColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[quantityColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityContent = dgProducts.Columns[colProductQuantity].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
+                        TextBlock tbCellTotalCostContent = dgProducts.Columns[colProductTotalCost].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
+                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[colProductTotalPrice].GetCellContent(row) as TextBlock;
 
                         //MessageBox.Show(cellContent.Text);
                         quantity = Convert.ToInt32(tbCellQuantityContent.Text);

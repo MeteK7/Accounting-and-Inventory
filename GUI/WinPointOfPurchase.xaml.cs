@@ -284,7 +284,6 @@ namespace GUI
                     #region LOADING THE PRODUCT DATA GRID
                     for (int currentRow = initialIndex; currentRow < dtPopDetail.Rows.Count; currentRow++)
                     {
-
                         productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
                         productUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
 
@@ -393,6 +392,7 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
             if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != initialIndex.ToString() || isDgEqual == false || oldIdAsset != Convert.ToInt32(lblAssetId.Content) || oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) || cboMenuPaymentType.SelectedIndex != emptyCboIndex || cboMenuSupplier.SelectedIndex != emptyCboIndex || cboMenuAsset.SelectedIndex != emptyCboIndex)
             {
+                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false,isSuccessAsset=false;
@@ -406,7 +406,6 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 int productRate = initialIndex;//Modify this code dynamically!!!!!!!!!
 
-                int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 DataTable dataTableLastInvoice = pointOfPurchaseBLL.GetLastInvoiceRecord();//Getting the last invoice.
                 DataTable dataTableProduct = new DataTable();
                 DataTable dataTableUnit = new DataTable();
@@ -456,13 +455,13 @@ namespace GUI
 
                 if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pop at once.
                 {
-                    isSuccess = pointOfPurchaseDAL.Update(pointOfPurchaseCUL);
+                    isSuccess = pointOfPurchaseBLL.UpdatePOP(pointOfPurchaseCUL);
                 }
 
                 else
                 {
                     //Creating a Boolean variable to insert data into the database.
-                    isSuccess = pointOfPurchaseDAL.Insert(pointOfPurchaseCUL);
+                    isSuccess = pointOfPurchaseBLL.InsertPOP(pointOfPurchaseCUL);
                 }
                 #endregion
 
@@ -522,7 +521,7 @@ namespace GUI
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
-                    #region PRODUCT AMOUNT AND COST UPDATE
+                    #region PRODUCT QUANTITY AND COST UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[cellProductQuantity]);
