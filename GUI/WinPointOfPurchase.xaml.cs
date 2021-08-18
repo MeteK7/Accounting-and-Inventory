@@ -521,7 +521,7 @@ namespace GUI
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
-                    #region PRODUCT AMOUNT AND COST UPDATE
+                    #region PRODUCT QUANTITY AND COST UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[cellProductQuantity]);

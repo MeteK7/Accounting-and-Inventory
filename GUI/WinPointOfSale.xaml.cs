@@ -517,7 +517,7 @@ namespace GUI
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
-                    #region PRODUCT AMOUNT UPDATE
+                    #region PRODUCT QUANTITY UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtName].ToString());//Getting the old product quantity in stock.
 
                     newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
@@ -546,6 +546,34 @@ namespace GUI
             else
             {
                 MessageBox.Show("You have a missing part or you are trying to save the same things!");
+            }
+        }
+
+        private void cboProductUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (txtProductQuantity.Text != "" && cboProductUnit.ItemsSource != null)
+            {
+                decimal productQuantity;
+                int productRetailUnitId;
+                string productIdFromUser = txtProductId.Text;
+                DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
+                int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+
+                productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                //productWholesaleUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
+
+                if (Convert.ToInt32(cboProductUnit.SelectedValue) == productRetailUnitId)
+                {
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
+                }
+
+                else
+                {
+                    productQuantity = Convert.ToDecimal(dtProduct.Rows[initialIndex][colTxtQtyInUnit]);
+                }
+
+                txtProductQuantity.Text = productQuantity.ToString();
+                txtProductTotalPrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
             }
         }
 
