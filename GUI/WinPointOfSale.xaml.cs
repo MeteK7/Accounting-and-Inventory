@@ -273,7 +273,6 @@ namespace GUI
 
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
                     cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtCustomerId].ToString());//Getting the id of customer.
-                    cboMenuAsset.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtAccountId].ToString());//Getting the id of account.
                     lblInvoiceId.Content = dataTablePos.Rows[initialIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
@@ -395,7 +394,7 @@ namespace GUI
                 int cellUnit = 2, cellCostPrice = 3, cellSalePrice=4, cellProductQuantity = 5;
                 int productId;
                 int unitId;
-                decimal productOldQtyInStock, newQuantity, newCostPrice;
+                decimal productOldQtyInStock, newQuantity, newCostPrice, newSalePrice;
                 int cellLength = 8;
                 int addedBy = userId;
                 string[] cells = new string[cellLength];
@@ -449,7 +448,7 @@ namespace GUI
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
 
-                if (clickedNewOrEdit == 1)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
+                if (clickedNewOrEdit == clickedEdit)//If the user clicked the btnEdit, then update the specific invoice information in tbl_pos at once.
                 {
                     isSuccess = pointOfSaleBLL.UpdatePOS(pointOfSaleCUL);
                 }
