@@ -172,7 +172,7 @@ namespace GUI {
         
         #line 318 "..\..\..\WinPointOfSale.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.TextBox txtProductTotalPrice;
+        internal System.Windows.Controls.TextBox txtProductTotalSalePrice;
         
         #line default
         #line hidden
@@ -598,7 +598,7 @@ namespace GUI {
             #line hidden
             return;
             case 17:
-            this.txtProductTotalPrice = ((System.Windows.Controls.TextBox)(target));
+            this.txtProductTotalSalePrice = ((System.Windows.Controls.TextBox)(target));
             return;
             case 18:
             this.btnProductAdd = ((System.Windows.Controls.Button)(target));
