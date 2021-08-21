@@ -753,20 +753,20 @@ namespace GUI
 
                     #region REVERT THE STOCK
                     oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
-                    oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
                     productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
 
                     #region REVERT THE ASSET
                     int assetSupplierId = Convert.ToInt32(lblAssetSupplierId.Content);
-                    decimal oldSourceBalance;
+                    decimal oldSupplierBalance;
 
                     //CODE DUPLICATION!!!! SIMILAR EXISTS IN SAVE SECTION
 
-                    DataTable dtAsset = assetDAL.SearchById(assetSupplierId);
-                    oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+                    DataTable dtAssetSupplier = assetDAL.SearchById(assetSupplierId);
+                    oldSupplierBalance = Convert.ToDecimal(dtAssetSupplier.Rows[initialIndex]["source_balance"]);
 
-                    assetCUL.SourceBalance = oldSourceBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase.
+                    assetCUL.SourceBalance = oldSupplierBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Balance for reverting this purchase.
                     assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
 
                     assetDAL.Update(assetCUL);

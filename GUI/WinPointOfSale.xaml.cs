@@ -776,8 +776,12 @@ namespace GUI
 
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
-            clickedNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            clickedNewOrEdit = clickedEdit;//1 stands for the user has entered the btnEdit.
+            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+            oldIdAsset = Convert.ToInt32(lblAssetId.Content);
+            oldIdAssetCustomer = Convert.ToInt32(lblAssetCustomerId.Content);
+            oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
@@ -797,8 +801,24 @@ namespace GUI
                     #endregion
 
                     #region REVERT THE STOCK
-                    oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+                    oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
                     productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
+                    #endregion
+
+                    #region REVERT THE ASSET
+                    int assetCustomerId = Convert.ToInt32(lblAssetCustomerId.Content);
+                    decimal oldCustomerDebt;
+
+                    //CODE DUPLICATION!!!! SIMILAR EXISTS IN SAVE SECTION
+
+                    DataTable dtAssetCustomer = assetDAL.SearchById(assetCustomerId);
+                    oldCustomerDebt = Convert.ToDecimal(dtAssetCustomer.Rows[initialIndex]["source_balance"]);
+
+                    assetCUL.SourceBalance = oldCustomerDebt - Convert.ToDecimal(txtBasketGrandTotal.Text);//We need to give the price back to the customer for reverting this purchase.
+                    assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
+
+                    assetDAL.Update(assetCUL);
                     #endregion
 
                     #region PREPARE TO THE LAST PAGE
