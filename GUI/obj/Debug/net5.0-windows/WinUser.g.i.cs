@@ -285,7 +285,7 @@ namespace GUI {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUI;component/winuser.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUI;V1.0.0.0;component/winuser.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WinUser.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
