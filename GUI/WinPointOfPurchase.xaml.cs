@@ -1132,7 +1132,6 @@ namespace GUI
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
 
-
             else
                 dtAccount = bankDAL.Select();
 
@@ -1160,6 +1159,7 @@ namespace GUI
             //SelectedValuePath helps to store values like a hidden field.
             cboMenuPaymentType.SelectedValuePath = colTxtId;
         }
+
         private void LoadCboMenuSupplier()
         {
             //Creating Data Table to hold the products from Database
