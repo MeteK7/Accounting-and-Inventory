@@ -309,13 +309,13 @@
                 <Label x:Name="lblProductSalePrice" Content="Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyDown="txtProductId_KeyDown" KeyUp="txtProductId_KeyUp"/>
+                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="349,41,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged"/>
                 <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
                 <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
                 <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged"/>
-                <TextBox x:Name="txtProductTotalPrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
@@ -330,7 +330,7 @@
         </GroupBox>
         <GroupBox Header="ENTERED PRODUCTS" Margin="10,254,250,10">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="True">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -435,8 +435,8 @@
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
                 <TextBox x:Name="txtBasketSaleTotal" HorizontalAlignment="Left" Height="26" Margin="95,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-                <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp"/>
+                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp"/>
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
             </Grid>
         </GroupBox>
