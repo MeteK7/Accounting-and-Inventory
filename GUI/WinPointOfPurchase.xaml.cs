@@ -591,7 +591,7 @@ namespace GUI
         {
             bool addNewProductLine = true;
             int colProductQuantity = 4;
-            int colProductTotalCost = 5;
+            int colProductTotalCostPrice = 5;
             int quantity;
             int rowQuntity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
@@ -615,17 +615,17 @@ namespace GUI
                         TextBox txtProductDgQty = tmpProductQty.FindName(dgCellNames[colProductQuantity], cpProductQty) as TextBox;
 
                         //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-                        ContentPresenter cpProductTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(row) as ContentPresenter;
-                        var tmpProductTotalCost = cpProductTotalCost.ContentTemplate;
-                        TextBox txtProductDgTotalCost = tmpProductTotalCost.FindName(dgCellNames[colProductTotalCost], cpProductTotalCost) as TextBox;
+                        ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                        var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+                        TextBox txtProductDgTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                         //CALCULATING NEW PRODUCT QUANTITY IN DATAGRID
                         quantity = Convert.ToInt32(txtProductDgQty.Text);
                         quantity += Convert.ToInt32(txtProductQuantity.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
 
                         //ASSIGNING NEW VALUES TO THE RELATED DATA GRID CELLS.
-                        txtProductDgQty.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
-                        txtProductDgTotalCost.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();//Calculating the new total cost price according to the new entry. Then, assigning the result into the table total price. User may have entered a new price in the entry box.
+                        txtProductDgQty.Text = quantity.ToString();
+                        txtProductDgTotalCostPrice.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
                         
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
@@ -651,18 +651,12 @@ namespace GUI
                     UnitCboSValue = cboProductUnit.SelectedValue,
                     UnitCboSValuePath = cboProductUnit.SelectedValuePath,
                     UnitCboDMember = cboProductUnit.DisplayMemberPath,
-                });;
+                });
             }
 
             dgProducts.UpdateLayout();
-
-            //rowQuntity = dgProducts.Items.Count;//Renewing the row quantity after adding a new product.
-
             PopulateBasket();
-
             ClearProductEntranceTextBox();
-
-            //items[0].BarcodeRetail = "EXAMPLECODE"; This code can change the 0th row's data on the column called BarcodeRetail.
         }
 
         private void PopulateBasket()
@@ -681,7 +675,7 @@ namespace GUI
             DataGridRow dataGridRow;
 
             int colProductQuantity = 4;
-            int colProductTotalCost = 5;
+            int colProductTotalCostPrice = 5;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
@@ -691,14 +685,14 @@ namespace GUI
             TextBox txtProductQty = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-            ContentPresenter cpProductTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as ContentPresenter;
-            var tmpProductTotalCost = cpProductTotalCost.ContentTemplate;
-            TextBox txtProductTotalCost = tmpProductTotalCost.FindName(dgCellNames[colProductTotalCost], cpProductTotalCost) as TextBox;
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+            TextBox txtProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
             
             //ASSIGNING NEW VALUES TO THE BASKET'S RELATED TEXT BOXES.
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(txtProductQty.Text)).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtProductTotalCost.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtProductTotalCostPrice.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
