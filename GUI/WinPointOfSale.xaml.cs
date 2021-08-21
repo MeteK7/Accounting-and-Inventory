@@ -669,27 +669,34 @@ namespace GUI
         private void SubstractBasket(int selectedRowIndex)
         {
             DataGridRow dataGridRow;
-            TextBlock tbCellTotalCost;
-            TextBlock tbCellQuantity;
-            TextBlock tbCellTotalPrice;
-            int colProductTotalCost = 6;
+
             int colProductQuantity = 5;
-            int colProductTotalPrice = 7;
+            int colProductTotalCostPrice = 6;
+            int colProductTotalSalePrice = 7;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbCellQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dataGridRow) as TextBlock;
+            //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
+            ContentPresenter cpProductQuantity = dgProducts.Columns[colProductQuantity].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductQuantity = cpProductQuantity.ContentTemplate;
+            TextBox txtProductQty = tmpProductQuantity.FindName(dgCellNames[colProductQuantity], cpProductQuantity) as TextBox;
 
-            tbCellTotalCost = dgProducts.Columns[colProductTotalCost].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+            TextBox txtProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
-            tbCellTotalPrice = dgProducts.Columns[colProductTotalPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL SALE PRICE
+            ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(dataGridRow) as ContentPresenter;
+            var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+            TextBox txtProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
             //ASSIGNING NEW VALUES TO THE BASKET'S RELATED TEXT BOXES.
-            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantity.Text)).ToString();
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(txtProductQty.Text)).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(tbCellTotalCost.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtProductTotalCostPrice.Text)).ToString();
 
-            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) - Convert.ToDecimal(tbCellTotalPrice.Text)).ToString();
+            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) - Convert.ToDecimal(txtProductTotalSalePrice.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
