@@ -85,7 +85,8 @@ namespace GUI
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
             colTxtUnitWholesaleId = "unit_wholesale_id",
-            colTxtSaleTotal = "sale_total",
+            colTxtSubTotal = "sub_total",
+            colTxtGrossAmount = "gross_amount",
             colTxtTotalPQuantity = "total_product_quantity",
             colTxtCostTotal = "cost_total",
             colTxtVat = "vat",
@@ -202,9 +203,10 @@ namespace GUI
         {
             txtBasketQuantity.Text = initialIndex.ToString();
             txtBasketCostTotal.Text = initialIndex.ToString();
-            txtBasketSaleTotal.Text = initialIndex.ToString();
-            txtBasketVat.Text = initialIndex.ToString();
+            txtBasketSubTotal.Text = initialIndex.ToString();
             txtBasketDiscount.Text = initialIndex.ToString();
+            txtBasketGrossAmount.Text = initialIndex.ToString();
+            txtBasketVat.Text = initialIndex.ToString();
             txtBasketGrandTotal.Text = initialIndex.ToString();
         }
 
@@ -304,9 +306,10 @@ namespace GUI
                     //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketQuantity.Text = dataTablePos.Rows[initialIndex][colTxtTotalPQuantity].ToString();
                     txtBasketCostTotal.Text = dataTablePos.Rows[initialIndex][colTxtCostTotal].ToString();
-                    txtBasketSaleTotal.Text = dataTablePos.Rows[initialIndex][colTxtSaleTotal].ToString();
-                    txtBasketVat.Text = dataTablePos.Rows[initialIndex][colTxtVat].ToString();
+                    txtBasketSubTotal.Text = dataTablePos.Rows[initialIndex][colTxtSubTotal].ToString();
                     txtBasketDiscount.Text = dataTablePos.Rows[initialIndex][colTxtDiscount].ToString();
+                    txtBasketGrossAmount.Text = dataTablePos.Rows[initialIndex][colTxtGrossAmount].ToString();
+                    txtBasketVat.Text = dataTablePos.Rows[initialIndex][colTxtVat].ToString();
                     txtBasketGrandTotal.Text = dataTablePos.Rows[initialIndex][colTxtGrandTotal].ToString();
 
                     #endregion
@@ -442,9 +445,10 @@ namespace GUI
                 pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                 pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketQuantity.Text);
                 pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-                pointOfSaleCUL.SaleTotal = Convert.ToDecimal(txtBasketSaleTotal.Text);
-                pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+                pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+                pointOfSaleCUL.GrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text);
+                pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
                 pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
                 pointOfSaleCUL.AddedDate = DateTime.Now;
                 pointOfSaleCUL.AddedBy = userId;
