@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj": {}
+    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj": {}
   },
   "projects": {
-    "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
+    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
-                "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
+              "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
               }
             }
           }
@@ -68,24 +68,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
+    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
         "projectName": "CUL",
-        "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -132,24 +132,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
+    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -164,8 +164,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
-                "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
+              "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
               }
             }
           }
@@ -220,24 +220,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj": {
+    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
         "projectName": "GUI",
-        "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\GUI\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -252,14 +252,14 @@
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
             "projectReferences": {
-              "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
-                "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
+              "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
               },
-              "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
-                "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
+              "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
               },
-              "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
-                "projectPath": "F:\\Projects\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
+              "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
               }
             }
           }
@@ -297,7 +297,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
