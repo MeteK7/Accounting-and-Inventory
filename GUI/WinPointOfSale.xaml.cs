@@ -102,7 +102,7 @@ namespace GUI
         int oldItemsRowCount;
         int clickedArrow, clickedPrev = 0, clickedNext = 1;
         int oldIdAsset, oldIdAssetCustomer;
-        decimal oldBasketCostTotal, oldBasketSaleTotal, oldBasketGrandTotal, oldBasketQuantity;
+        decimal oldBasketCostTotal, oldBasketSaleTotal, oldBasketSubTotal, oldBasketGrossAmount, oldBasketGrandTotal, oldBasketQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -947,7 +947,7 @@ namespace GUI
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
-            TextBox productSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
+            TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
@@ -959,20 +959,16 @@ namespace GUI
             var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
             TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
-            if (txtDgProductQuantity.Text != "" && productSalePrice.Text != "")
+            if (txtDgProductQuantity.Text != "" && txtDgProductSalePrice.Text != "")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtBasketSaleTotal.Text = (oldBasketSaleTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
+                txtBasketGrossAmount.Text = (oldBasketGrossAmount + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
+                txtBasketSubTotal.Text = (oldBasketSubTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
                 txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();//VAT and Discount are already in the old grand total so no need to calculate them.
             }
-        }
-
-        private void dgTxtProductCostPrice_KeyUp(object sender, KeyEventArgs e)
-        {
-            DgTextChanged();
         }
 
         private void dgTxtProductSalePrice_KeyUp(object sender, KeyEventArgs e)
@@ -1129,8 +1125,9 @@ namespace GUI
 
                 oldBasketQuantity = Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(productQuantity.Text);
                 oldBasketCostTotal = Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Cost total is without VAT.
-                oldBasketSaleTotal = Convert.ToDecimal(txtBasketSaleTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);//Cost total is without VAT.
-                oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalCostPrice.Text);//Grand total is with VAT.
+                oldBasketGrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(productTotalSalePrice.Text);
+                oldBasketSubTotal = Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);
+                oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);//Grand total is with VAT.
             }
         }
 
