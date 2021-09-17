@@ -665,10 +665,12 @@ namespace GUI
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityFromTextEntry)).ToString();
+            
+            txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();//The previous sub total has already discount in it so no need to subtract the discount in this line.
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
         }
 
         private void SubstractBasket(int selectedRowIndex)
@@ -701,9 +703,11 @@ namespace GUI
 
             txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtProductTotalCostPrice.Text)).ToString();
 
-            txtBasketSaleTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) - Convert.ToDecimal(txtProductTotalSalePrice.Text)).ToString();
+            txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtProductTotalSalePrice.Text)).ToString();
+            
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(txtProductTotalSalePrice.Text)).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSaleTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
         }
 
         private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
@@ -1077,19 +1081,19 @@ namespace GUI
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
             {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text) ).ToString();
             }
             else
             {
                 if (calledByVatOrDiscount == calledByVAT)
                 {
                     txtBasketVat.Text = initialIndex.ToString();
-                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();//Since the VAT is zero, we only need to calculate the Grand Total without VAT.
                 }
                 else
                 {
                     txtBasketDiscount.Text = initialIndex.ToString();
-                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();//Since the Discount is zero, we only need to calculate the Grand Total without Discount.
                 }
             }
         }
