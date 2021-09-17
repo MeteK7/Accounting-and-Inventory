@@ -889,7 +889,7 @@ namespace GUI
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-            TextBox productCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+            TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
@@ -901,10 +901,10 @@ namespace GUI
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
             TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
-            if (txtDgProductQuantity.Text != "" && productCostPrice.Text != "")
+            if (txtDgProductQuantity.Text != "" && txtDgProductCostPrice.Text != "")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
