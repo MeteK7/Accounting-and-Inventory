@@ -599,9 +599,9 @@ namespace GUI
 
                 ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
                 var tmpProduct = cpProduct.ContentTemplate;
-                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
+                TextBox tbBarcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
-                if (barcodeCellContent.Text == productId.ToString())
+                if (tbBarcodeCellContent.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -644,12 +644,17 @@ namespace GUI
                 {
                     Id = productId,
                     Name = txtProductName.Text,
-                    Unit = cboProductUnit.SelectedItem,
                     CostPrice = txtProductCostPrice.Text,
                     SalePrice = txtProductSalePrice.Text,
                     Quantity = txtProductQuantity.Text,
                     TotalCostPrice = totalCostPrice.ToString(),
-                    TotalSalePrice = txtProductTotalSalePrice.Text
+                    TotalSalePrice = txtProductTotalSalePrice.Text,
+
+                    //BINDING DATAGRID COMBOBOX
+                    UnitCboItemsSource = cboProductUnit.ItemsSource,
+                    UnitCboSValue = cboProductUnit.SelectedValue,
+                    UnitCboSValuePath = cboProductUnit.SelectedValuePath,
+                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
                 });
             }
 
@@ -1075,9 +1080,10 @@ namespace GUI
 
         private void CalculateGrandTotal(int calledByVatOrDiscount)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")//TRY TO SEPERATE VAT AND DISCOUNT SECTION IN THE FOLLOWING IF STATEMENT!
             {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text) ).ToString();
+                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
             }
             else
             {

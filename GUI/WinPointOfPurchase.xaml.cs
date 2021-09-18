@@ -603,9 +603,9 @@ namespace GUI
 
                 ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
                 var tmpProduct = cpProduct.ContentTemplate;
-                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
+                TextBox tbBarcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
-                if (barcodeCellContent.Text == productId.ToString())
+                if (tbBarcodeCellContent.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
