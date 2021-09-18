@@ -237,8 +237,7 @@ namespace GUI
 
         private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
         {
-            int productUnitId;
-            string productId, productName, productUnitName, productCostPrice, productSalePrice, productQuantity, productTotalCostPrice, productTotalSalePrice;
+            string productId, productName, productCostPrice, productSalePrice, productQuantity, productTotalCostPrice, productTotalSalePrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
@@ -254,7 +253,7 @@ namespace GUI
                 {
                     DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
-                    DataTable dataTableProduct;
+                    DataTable dtProduct;
 
                     #region ASSET INFORMATION FILLING REGION
                     int assetId = Convert.ToInt32(dataTablePos.Rows[initialIndex][coTxtAssetId].ToString());//Getting the id of account.
@@ -279,25 +278,48 @@ namespace GUI
                     lblInvoiceId.Content = dataTablePos.Rows[initialIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
+                    int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
+
                     for (int currentRow = initialIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
                     {
                         productId = dataTablePosDetail.Rows[currentRow][colTxtProductId].ToString();
-                        productUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow][colTxtProductUnitId]);
-
-                        dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[initialIndex][colTxtName].ToString();//We use initalIndex value for the index number in every loop because there can be only one unit name of a specific id.
-
+                        productCurrentUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow][colTxtProductUnitId]);
                         productCostPrice = dataTablePosDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
                         productSalePrice = dataTablePosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
                         productQuantity = dataTablePosDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
                         productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
 
-                        dataTableProduct = productDAL.SearchById(productId);
+                        dtProduct = productDAL.SearchById(productId);
+                        productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
+                        productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                        productWholesaleUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
 
-                        productName = dataTableProduct.Rows[initialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
+                        #region CBO UNIT INFO FETCHING SECTION
+                        List<int> unitIds = new List<int>();
 
-                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, Quantity = productQuantity, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
+                        unitIds.Add(productRetailUnitId);
+                        unitIds.Add(productWholesaleUnitId);
+
+                        DataTable dtUnitInfo = unitDAL.GetProductUnitId(unitIds);
+                        #endregion
+
+                        dgProducts.Items.Add(new 
+                        {
+                            Id = productId,
+                            Name = productName,
+                            CostPrice = productCostPrice,
+                            SalePrice = productSalePrice,
+                            Quantity = productQuantity,
+                            TotalCostPrice = productTotalCostPrice,
+                            TotalSalePrice = productTotalSalePrice,
+
+                            //BINDING DATAGRID COMBOBOX
+                            UnitCboItemsSource = dtUnitInfo.DefaultView,
+                            UnitCboSValue = productCurrentUnitId,
+                            UnitCboSValuePath = colTxtId,
+                            UnitCboDMemberPath = colTxtName,
+                        });
                     }
                     #endregion
 
@@ -599,9 +621,9 @@ namespace GUI
 
                 ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
                 var tmpProduct = cpProduct.ContentTemplate;
-                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
+                TextBox tbBarcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
-                if (barcodeCellContent.Text == productId.ToString())
+                if (tbBarcodeCellContent.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -644,12 +666,17 @@ namespace GUI
                 {
                     Id = productId,
                     Name = txtProductName.Text,
-                    Unit = cboProductUnit.SelectedItem,
                     CostPrice = txtProductCostPrice.Text,
                     SalePrice = txtProductSalePrice.Text,
                     Quantity = txtProductQuantity.Text,
                     TotalCostPrice = totalCostPrice.ToString(),
-                    TotalSalePrice = txtProductTotalSalePrice.Text
+                    TotalSalePrice = txtProductTotalSalePrice.Text,
+
+                    //BINDING DATAGRID COMBOBOX
+                    UnitCboItemsSource = cboProductUnit.ItemsSource,
+                    UnitCboSValue = cboProductUnit.SelectedValue,
+                    UnitCboSValuePath = cboProductUnit.SelectedValuePath,
+                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
                 });
             }
 
@@ -1020,7 +1047,7 @@ namespace GUI
                 if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
                     productCurrentUnitId = productRetailUnitId;
-                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one as a default value.
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
@@ -1075,9 +1102,10 @@ namespace GUI
 
         private void CalculateGrandTotal(int calledByVatOrDiscount)
         {
-            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
+            if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")//TRY TO SEPERATE VAT AND DISCOUNT SECTION IN THE FOLLOWING IF STATEMENT!
             {
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text) ).ToString();
+                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
             }
             else
             {

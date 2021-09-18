@@ -256,7 +256,7 @@ namespace GUI
                 {
                     DataTable dtPopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
                     DataTable dataTableUnitInfo;
-                    DataTable dataTableProduct;
+                    DataTable dtProduct;
                     
                     #region ASSET INFORMATION FILLING REGION
                     int assetId = Convert.ToInt32(dataTablePop.Rows[initialIndex][coTxtAssetId].ToString());//Getting the id of account.
@@ -282,23 +282,44 @@ namespace GUI
                     lblInvoiceId.Content= dataTablePop.Rows[initialIndex][colTxtId].ToString();
 
                     #region LOADING THE PRODUCT DATA GRID
+                    int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
+
                     for (int currentRow = initialIndex; currentRow < dtPopDetail.Rows.Count; currentRow++)
                     {
                         productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
-                        productUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
-
-                        dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[initialIndex][colTxtName].ToString();//We use initialIndex value for the index number in every loop because there can be only one unit name of a specific id.
-
+                        productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
                         productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
-                        dataTableProduct = productDAL.SearchById(productId);
+                        dtProduct = productDAL.SearchById(productId);
+                        productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initialIndex because there can be only one row in the datatable for a specific product.
+                        productRetailUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitRetailId]);
+                        productWholesaleUnitId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtUnitWholesaleId]);
 
-                        productName = dataTableProduct.Rows[initialIndex][colTxtName].ToString();//We used initialIndex because there can be only one row in the datatable for a specific product.
+                        #region CBO UNIT INFO FETCHING SECTION
+                        List<int> unitIds = new List<int>();
 
-                        dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, Quantity = productQuantity, TotalCostPrice = productTotalCostPrice });
+                        unitIds.Add(productRetailUnitId);
+                        unitIds.Add(productWholesaleUnitId);
+
+                        DataTable dtUnitInfo = unitDAL.GetProductUnitId(unitIds);
+                        #endregion
+
+                        dgProducts.Items.Add(new 
+                        { 
+                            Id = productId,
+                            Name = productName,
+                            CostPrice = productCostPrice,
+                            Quantity = productQuantity,
+                            TotalCostPrice = productTotalCostPrice,
+
+                            //BINDING DATAGRID COMBOBOX
+                            UnitCboItemsSource = dtUnitInfo.DefaultView,
+                            UnitCboSValue = productCurrentUnitId,
+                            UnitCboSValuePath = colTxtId,
+                            UnitCboDMemberPath = colTxtName,
+                        });
 
                     }
                     #endregion
@@ -603,9 +624,9 @@ namespace GUI
 
                 ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
                 var tmpProduct = cpProduct.ContentTemplate;
-                TextBox barcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
+                TextBox tbBarcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
-                if (barcodeCellContent.Text == productId.ToString())
+                if (tbBarcodeCellContent.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -650,7 +671,7 @@ namespace GUI
                     UnitCboItemsSource = cboProductUnit.ItemsSource,
                     UnitCboSValue = cboProductUnit.SelectedValue,
                     UnitCboSValuePath = cboProductUnit.SelectedValuePath,
-                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
+                    UnitCboDMemberPath = cboProductUnit.DisplayMemberPath,
                 });
             }
 
@@ -1024,7 +1045,7 @@ namespace GUI
                 if (productBarcodeRetail == productIdFromUser || productId.ToString() == productIdFromUser)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
                     productCurrentUnitId = productRetailUnitId;
-                    productQuantity = unitValue;//If it is a unit retail id, the assign one asa default value.
+                    productQuantity = unitValue;//If it is a unit retail id, the assign one as a default value.
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
