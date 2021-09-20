@@ -453,7 +453,7 @@ namespace GUI
                 dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetCustomerId.Content));
                 oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
-                assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase.
+                assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);
                 assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
 
                 isSuccessAsset = assetDAL.Update(assetCUL);
@@ -530,26 +530,26 @@ namespace GUI
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
+                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[cellUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    pointOfSaleDetailCUL.Id = invoiceId;
+                    pointOfSaleDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfSaleDetailCUL.ProductId = productId;
                     pointOfSaleDetailCUL.AddedBy = addedBy;
                     pointOfSaleDetailCUL.ProductRate = productRate;
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
-                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list.
-                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list.
+                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellCostPrice]);//cells[3] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
+                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
                     pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductQuantity]);
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT QUANTITY UPDATE
-                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtName].ToString());//Getting the old product quantity in stock.
+                    productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
 
-                    productDAL.UpdateSpecificColumn(productId, colTxtName, newQuantity.ToString());
+                    productDAL.UpdateSpecificColumn(productId, colTxtQtyInStock, newQuantity.ToString());
                     #endregion
 
                 }
@@ -676,7 +676,7 @@ namespace GUI
                     UnitCboItemsSource = cboProductUnit.ItemsSource,
                     UnitCboSValue = cboProductUnit.SelectedValue,
                     UnitCboSValuePath = cboProductUnit.SelectedValuePath,
-                    UnitCboDMember = cboProductUnit.DisplayMemberPath,
+                    UnitCboDMemberPath = cboProductUnit.DisplayMemberPath,
                 });
             }
 
