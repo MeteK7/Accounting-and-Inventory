@@ -549,7 +549,7 @@ namespace GUI
 
                     newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
 
-                    productDAL.UpdateSpecificColumn(productId, colTxtName, newQuantity.ToString());
+                    productDAL.UpdateSpecificColumn(productId, colTxtQtyInStock, newQuantity.ToString());
                     #endregion
 
                 }
