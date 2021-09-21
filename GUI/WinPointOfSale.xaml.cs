@@ -251,8 +251,7 @@ namespace GUI
 
                 if (dataTablePos.Rows.Count != initialIndex)
                 {
-                    DataTable dataTablePosDetail = pointOfSaleDetailDAL.Search(invoiceId);
-                    DataTable dataTableUnitInfo;
+                    DataTable dtPosDetail = pointOfSaleDetailDAL.Search(invoiceId);
                     DataTable dtProduct;
 
                     #region ASSET INFORMATION FILLING REGION
@@ -280,13 +279,13 @@ namespace GUI
                     #region LOADING THE PRODUCT DATA GRID
                     int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
 
-                    for (int currentRow = initialIndex; currentRow < dataTablePosDetail.Rows.Count; currentRow++)
+                    for (int currentRow = initialIndex; currentRow < dtPosDetail.Rows.Count; currentRow++)
                     {
-                        productId = dataTablePosDetail.Rows[currentRow][colTxtProductId].ToString();
-                        productCurrentUnitId = Convert.ToInt32(dataTablePosDetail.Rows[currentRow][colTxtProductUnitId]);
-                        productCostPrice = dataTablePosDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
-                        productSalePrice = dataTablePosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
-                        productQuantity = dataTablePosDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
+                        productId = dtPosDetail.Rows[currentRow][colTxtProductId].ToString();
+                        productCurrentUnitId = Convert.ToInt32(dtPosDetail.Rows[currentRow][colTxtProductUnitId]);
+                        productCostPrice = dtPosDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
+                        productSalePrice = dtPosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
+                        productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
                         productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
 
