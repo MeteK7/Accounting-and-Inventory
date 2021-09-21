@@ -239,8 +239,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastInvoice(int invoiceId = initialIndex, int invoiceArrow = -unitValue)//Optional parameter
         {
-            int productUnitId;
-            string productId, productName, productUnitName, productCostPrice, productQuantity, productTotalCostPrice;
+            string productId, productName, productCostPrice, productQuantity, productTotalCostPrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -255,7 +254,6 @@ namespace GUI
                 if (dataTablePop.Rows.Count != initialIndex)
                 {
                     DataTable dtPopDetail = pointOfPurchaseDetailDAL.Search(invoiceId);
-                    DataTable dataTableUnitInfo;
                     DataTable dtProduct;
                     
                     #region ASSET INFORMATION FILLING REGION
