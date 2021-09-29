@@ -736,21 +736,6 @@ namespace GUI
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
         }
 
-        private void cboMenuPaymentType_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Creating Data Table to hold the products from Database
-            DataTable dataTable = paymentDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboMenuPaymentType.ItemsSource = dataTable.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboMenuPaymentType.DisplayMemberPath = "payment_type";
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboMenuPaymentType.SelectedValuePath = "id";
-        }
-
         private void cboMenuCustomer_Loaded(object sender, RoutedEventArgs e)
         {
             //Creating Data Table to hold the products from Database
