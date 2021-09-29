@@ -433,13 +433,13 @@
                 <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" Width="80"/>
                 <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,187,0,0" Width="80"/>
                 <Label x:Name="lblBasketGrandTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold"/>
-                <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
+                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
+                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
                 <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp"/>
-                <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+                <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp"/>
-                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun"/>
+                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="118" Margin="0,34,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
@@ -539,9 +539,9 @@
                     </Button.Background>
                 </Button>
                 <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="101" Height="25" FontSize="11"/>
-                <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuPaymentType_Loaded"/>
+                <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
                 <Label x:Name="lblMenuCustomerId" Content="Customer" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
-                <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" Loaded="cboMenuCustomer_Loaded" SelectionChanged="cboMenuCustomer_SelectionChanged"/>
+                <ComboBox x:Name="cboMenuCustomer" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuCustomer_SelectionChanged"/>
                 <Label x:Name="lblMenuAsset" Content="Asset" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
                 <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
                 <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
