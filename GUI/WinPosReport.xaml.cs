@@ -95,7 +95,7 @@ namespace GUI
                         //MessageBox.Show(temp);
                         if (product.ProductId==Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]))
                         {
-                            product.ProductAmountSold += Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]);
+                            product.ProductQuantitySold += Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"]);
                             addNew = false;
                             break;
                         }
@@ -112,7 +112,7 @@ namespace GUI
                                 //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
                                 ProductId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]),
                                 ProductName = dataTableProduct.Rows[initialIndex]["name"].ToString(),
-                                ProductAmountSold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["amount"]),
+                                ProductQuantitySold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"]),
                             });
                     }
                 }
