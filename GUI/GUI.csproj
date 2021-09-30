@@ -34,6 +34,7 @@
     <None Remove="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <None Remove="Images\Backgrounds\key.png" />
     <None Remove="Images\Backgrounds\light-blur.jpg" />
+    <None Remove="Images\Backgrounds\login-background-blue.jpg" />
     <None Remove="Images\Backgrounds\login-background.jpg" />
     <None Remove="Images\Backgrounds\navy-blue.jpg" />
     <None Remove="Images\Backgrounds\paint-border.jpg" />
@@ -176,6 +177,7 @@
     <Resource Include="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <Resource Include="Images\Backgrounds\key.png" />
     <Resource Include="Images\Backgrounds\light-blur.jpg" />
+    <Resource Include="Images\Backgrounds\login-background-blue.jpg" />
     <Resource Include="Images\Backgrounds\login-background.jpg" />
     <Resource Include="Images\Backgrounds\navy-blue.jpg" />
     <Resource Include="Images\Backgrounds\paint-border.jpg" />

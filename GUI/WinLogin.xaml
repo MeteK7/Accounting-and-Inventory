@@ -32,7 +32,7 @@
     </Window.Resources>
     <Border BorderThickness="1" HorizontalAlignment="Left" Height="634" VerticalAlignment="Top" Width="474" CornerRadius="15">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/Backgrounds/login-background.jpg"/>
+            <ImageBrush ImageSource="/Images/Backgrounds/login-background-blue.jpg"/>
         </Border.Background>
         <Grid Margin="0.2,0.2,-1.2,-1.2">
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,3,3,0" Height="51" Width="51" DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="btnClose_Click">
