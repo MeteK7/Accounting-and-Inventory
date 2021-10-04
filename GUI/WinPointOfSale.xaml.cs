@@ -940,15 +940,25 @@ namespace GUI
         /*----THIS IS NOT AN EFFICIENT CODE----*/
         private void DgTextChanged()
         {
-            ////GETTING TEXTBOX FROM DATAGRID.
+            //GETTING TEXTBOX FROM DATAGRID.
+            ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
+            TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
             TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
 
-            ////GETTING TEXTBOX FROM DATAGRID.
+            //GETTING TEXTBOX FROM DATAGRID.
             ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
             TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
             ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
@@ -958,9 +968,11 @@ namespace GUI
             if (txtDgProductQuantity.Text != "" && txtDgProductSalePrice.Text != "")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
+                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductTotalCostPrice.Text)).ToString();
                 txtBasketGrossAmount.Text = (oldBasketGrossAmount + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
                 txtBasketSubTotal.Text = (oldBasketSubTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
                 txtBasketGrandTotal.Text = (oldBasketGrandTotal + Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();//VAT and Discount are already in the old grand total so no need to calculate them.
