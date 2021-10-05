@@ -44,6 +44,8 @@ namespace GUI
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
         string[] oldExpense = new string[expenseSize];
+        bool isCboSelectionEnabled = true;
+
         public WinExpense()
         {
             InitializeComponent();
@@ -218,24 +220,20 @@ namespace GUI
             }
         }
 
-        private void cboFrom_MouseUp(object sender, MouseButtonEventArgs e)
+        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CboFromSelectionChanged();
+            if (isCboSelectionEnabled == true)
+            {
+                CboFromSelectionChanged();
+            }
         }
 
-        private void cboTo_MouseUp(object sender, MouseButtonEventArgs e)
+        private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CboToSelectionChanged();
-        }
-
-        private void cboFrom_KeyUp(object sender, KeyEventArgs e)
-        {
-            CboFromSelectionChanged();
-        }
-
-        private void cboTo_KeyUp(object sender, KeyEventArgs e)
-        {
-            CboToSelectionChanged();
+            if (isCboSelectionEnabled == true)
+            {
+                CboToSelectionChanged();
+            }
         }
 
         private void CboFromSelectionChanged()
