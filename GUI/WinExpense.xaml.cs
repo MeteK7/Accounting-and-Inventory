@@ -441,6 +441,8 @@ namespace GUI
 
         private void LoadCboFrom(int checkStatus)
         {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
@@ -456,10 +458,14 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
         private void LoadCboTo()
         {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
             DataTable dtTo;//Creating Data Table to hold the products from Database.
 
             dtTo = supplierDAL.Select();
@@ -472,6 +478,8 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboTo.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
