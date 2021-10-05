@@ -35,16 +35,17 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        int unitValue = 1;
+        int initialIndex = 0, unitValue = 1;
         int clickedNewOrEdit, clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int account = 1, bank = 2, supplier = 3;
-        bool isCboSelectionDisabled = false; 
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
         string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtAddedDate= "added_date";
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
         string[] oldExpense = new string[expenseSize];
+        bool isCboSelectionEnabled = true;
+
         public WinExpense()
         {
             InitializeComponent();
@@ -61,7 +62,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
         {
-            int initialIndex = 0,idAssetFrom;
+            int idAssetFrom;
 
             if (expenseId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -75,6 +76,9 @@ namespace GUI
 
                 if (dtExpense.Rows.Count != initialIndex)
                 {
+                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
+                    lblExpenseId.Content = expenseId;
+
                     #region ASSET INFORMATION FILLING REGION
                     idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_asset_from"].ToString());
                     //lblAssetIdFrom.Content = idAssetFrom;
@@ -87,33 +91,30 @@ namespace GUI
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbSelection change does not work so the LoadCboFrom method does not work as well.
-
+                    LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
+                    CboFromSelectionChanged();
                     #endregion
 
-                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
-                    lblExpenseId.Content = expenseId;
-
                     LoadCboTo();
-
                     cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
+                    CboToSelectionChanged();
 
                     txtAmount.Text= dtExpense.Rows[initialIndex][colTxtAmount].ToString();
                     lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
                 }
                 else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
-                    if (expenseArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
+                    if (expenseArrow == initialIndex)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        expenseId = expenseId - 1;
+                        expenseId = expenseId - unitValue;
                     }
                     else
                     {
-                        expenseId = expenseId + 1;
+                        expenseId = expenseId + unitValue;
                     }
 
-                    if (expenseArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (expenseArrow != -unitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
                         LoadPastExpense(expenseId, expenseArrow);//Call the method again to get the new past invoice.
                     }
@@ -166,7 +167,7 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
-            //cboFrom.IsEnabled = true; DEPENDS ON THE RADIO BUTTONS!!
+            cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
             rbAccount.IsEnabled = true;
@@ -183,36 +184,6 @@ namespace GUI
             expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
             expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
             lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
-        }
-
-        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (isCboSelectionDisabled == false)
-            {
-                #region LBLASSETIDFROM POPULATING SECTION
-                int sourceId, assetId;
-                int sourceType;
-
-                if (rbAccount.IsChecked == true)
-                    sourceType = account;
-                else
-                    sourceType = bank;
-
-                sourceId = Convert.ToInt32(cboFrom.SelectedValue);
-                assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-                lblAssetIdFrom.Content = assetId;
-                #endregion
-
-                #region LBLBALANCEFROM POPULATING SECTION
-                int rowIndex = 0;
-
-                DataTable dtAsset = assetDAL.SearchById(assetId);
-
-                string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
-
-                lblBalanceFrom.Content = balance;
-                #endregion
-            }
         }
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
@@ -249,10 +220,49 @@ namespace GUI
             }
         }
 
+        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                CboFromSelectionChanged();
+            }
+        }
+
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (isCboSelectionDisabled==false)
+            if (isCboSelectionEnabled == true)
             {
+                CboToSelectionChanged();
+            }
+        }
+
+        private void CboFromSelectionChanged()
+        {
+                #region LBLASSETIDFROM POPULATING SECTION
+                int sourceId, assetId;
+                int sourceType;
+
+                if (rbAccount.IsChecked == true)
+                    sourceType = account;
+                else
+                    sourceType = bank;
+
+                sourceId = Convert.ToInt32(cboFrom.SelectedValue);
+                assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+                lblAssetIdFrom.Content = assetId;
+                #endregion
+
+                #region LBLBALANCEFROM POPULATING SECTION
+                DataTable dtAsset = assetDAL.SearchById(assetId);
+
+                string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+
+                lblBalanceFrom.Content = balance;
+                #endregion
+        }
+
+        private void CboToSelectionChanged()
+        {
                 #region LBLASSETIDTO POPULATING SECTION
                 int sourceId, assetId;
                 int sourceType = supplier;
@@ -263,15 +273,12 @@ namespace GUI
                 #endregion
 
                 #region LBLBALANCETO POPULATING SECTION
-                int rowIndex = 0;
-
                 DataTable dtAsset = assetDAL.SearchById(assetId);
 
-                string balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
+                string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
 
                 lblBalanceTo.Content = balance;
                 #endregion
-            }
         }
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
@@ -315,7 +322,7 @@ namespace GUI
 
             if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
             {
-                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseNumber stands for the expense id in the database.*/
+                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseId stands for the expense id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
 
@@ -337,35 +344,35 @@ namespace GUI
                     #region TABLE ASSET REVERTING AND UPDATING SECTION
                     //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
                     assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount])-Convert.ToDecimal(txtAmount.Text);//We have to add this amount into company's balance in order to revert the old expense.
-                    isSuccessAsset=assetDAL.Update(assetCUL);
-
-                    //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount])+ Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from supplier's balance in order to revert our dept.
-                    isSuccessAssetSupplier=assetDAL.Update(assetCUL);
-                    #endregion
-                }
-                else
-                {
-                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
-
-                    #region TABLE ASSET UPDATING SECTION
-                    //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]) - Convert.ToDecimal(txtAmount.Text);//We have to add this amount into company's balance in order to revert the old expense.
                     isSuccessAsset = assetDAL.Update(assetCUL);
 
                     //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                    assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]) + Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from supplier's balance in order to revert our dept.
                     isSuccessAssetSupplier = assetDAL.Update(assetCUL);
                     #endregion
                 }
 
+                else
+                {
+                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
+                }
+                  
+                #region TABLE ASSET UPDATING SECTION
+                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                isSuccessAsset = assetDAL.Update(assetCUL);
+
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                #endregion
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     DisableTools();
                     EnableButtonsOnClickSaveCancel();
@@ -392,10 +399,8 @@ namespace GUI
 
         private void ClearTools()
         {
-            isCboSelectionDisabled = true;//We need to disable the function cboselectionchange because they are being launched once we clear them.
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
-            isCboSelectionDisabled = false;//We need to enable the function cboselectionchange after clearing them.
             lblBalanceFrom.Content = "";
             lblBalanceTo.Content = "";
             lblAssetIdFrom.Content = "";
@@ -436,10 +441,11 @@ namespace GUI
 
         private void LoadCboFrom(int checkStatus)
         {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
-
 
             else
                 dtAccount = bankDAL.Select();
@@ -452,10 +458,14 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
         private void LoadCboTo()
         {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
             DataTable dtTo;//Creating Data Table to hold the products from Database.
 
             dtTo = supplierDAL.Select();
@@ -468,17 +478,17 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboTo.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            cboFrom.IsEnabled = true;
             LoadCboFrom(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            cboFrom.IsEnabled = true;
             LoadCboFrom(bank);
         }
     }
