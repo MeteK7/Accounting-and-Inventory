@@ -440,9 +440,10 @@ namespace GUI
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
 
-
             else
                 dtAccount = bankDAL.Select();
+
+            cboFrom.ItemsSource = null;
 
             //Specifying Items Source for product combobox
             cboFrom.ItemsSource = dtAccount.DefaultView;
