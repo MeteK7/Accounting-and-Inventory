@@ -344,12 +344,12 @@ namespace GUI
                     #region TABLE ASSET REVERTING AND UPDATING SECTION
                     //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
                     assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]) - Convert.ToDecimal(txtAmount.Text);//We have to add this amount into company's balance in order to revert the old expense.
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]);//We have to add this amount into company's balance in order to revert the old expense.
                     isSuccessAsset = assetDAL.Update(assetCUL);
 
                     //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
                     assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]) + Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from supplier's balance in order to revert our dept.
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]);//We have to subtract this amount from supplier's balance in order to revert our dept.
                     isSuccessAssetSupplier = assetDAL.Update(assetCUL);
                     #endregion
                 }
@@ -358,16 +358,16 @@ namespace GUI
                 {
                     isSuccess = expenseBLL.InsertExpense(expenseCUL);
                 }
-                  
+
                 #region TABLE ASSET UPDATING SECTION
                 //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
                 assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceFrom.Content) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
                 isSuccessAsset = assetDAL.Update(assetCUL);
 
                 //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
                 assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(lblBalanceTo.Content) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
                 isSuccessAssetSupplier = assetDAL.Update(assetCUL);
                 #endregion
 
@@ -382,6 +382,15 @@ namespace GUI
                     MessageBox.Show("Something went wrong :(");
                 }
             }
+        }
+
+        private decimal GetBalance(int assetId)
+        {
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+
+            return balance;
         }
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
