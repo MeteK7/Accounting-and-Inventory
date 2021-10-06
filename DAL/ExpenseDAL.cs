@@ -70,11 +70,14 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_expenses SET id_from=@id_from, id_to=@id_to, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_expenses SET id_from=@id_from, id_to=@id_to, id_asset_from=@id_asset_from, id_asset_to=@id_asset_to, amount=@amount, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("id_from", expenseCUL.IdFrom);
+                cmd.Parameters.AddWithValue("id_to", expenseCUL.IdTo);
+                cmd.Parameters.AddWithValue("id_asset_from", expenseCUL.IdAssetFrom);
+                cmd.Parameters.AddWithValue("id_asset_to", expenseCUL.IdAssetTo);
                 cmd.Parameters.AddWithValue("id_to", expenseCUL.IdTo);
                 cmd.Parameters.AddWithValue("amount", expenseCUL.Amount);
                 cmd.Parameters.AddWithValue("added_date", expenseCUL.AddedDate);
