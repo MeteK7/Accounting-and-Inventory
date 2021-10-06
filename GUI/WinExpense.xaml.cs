@@ -93,12 +93,10 @@ namespace GUI
 
                     LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
-                    CboFromSelectionChanged();
                     #endregion
 
                     LoadCboTo();
                     cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
-                    CboToSelectionChanged();
 
                     txtAmount.Text= dtExpense.Rows[initialIndex][colTxtAmount].ToString();
                     lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
@@ -408,8 +406,11 @@ namespace GUI
 
         private void ClearTools()
         {
+            isCboSelectionEnabled = false;
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
+            isCboSelectionEnabled = true;
+
             lblBalanceFrom.Content = "";
             lblBalanceTo.Content = "";
             lblAssetIdFrom.Content = "";
@@ -420,7 +421,7 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstExpenseId = 1, currentExpenseId = Convert.ToInt32(lblExpenseId.Content); ;
+            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content); ;
 
             if (currentExpenseId != firstExpenseId)
             {
