@@ -421,7 +421,7 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content); ;
+            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content);
 
             if (currentExpenseId != firstExpenseId)
             {
