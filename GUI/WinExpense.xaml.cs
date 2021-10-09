@@ -209,12 +209,7 @@ namespace GUI
                     expenseDAL.Delete(expenseId);
                     #endregion
 
-                    #region PREPARE TO THE LAST PAGE
-                    DisableTools();
                     LoadPastExpense();
-                    EnableButtonsOnClickSaveCancel();
-                    #endregion
-
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
@@ -338,6 +333,7 @@ namespace GUI
                 expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
                 expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
                 expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                expenseCUL.Details = txtDetails.Text;
                 expenseCUL.AddedBy = userId;
                 expenseCUL.AddedDate = DateTime.Now;
                 #endregion
