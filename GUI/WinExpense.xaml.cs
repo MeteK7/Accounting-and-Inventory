@@ -191,23 +191,25 @@ namespace GUI
             {
                 case MessageBoxResult.Yes:
 
-                    #region DELETE INVOICE
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //REVERTING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount into company's balance in order to revert the old expense.
+                    assetDAL.Update(assetCUL);
+
+                    //REVERTING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from supplier's balance in order to revert our dept.
+                    assetDAL.Update(assetCUL);
+                    #endregion
+
+                    #region DELETE EXPENSE RECORD
                     int expenseId = Convert.ToInt32(lblExpenseId.Content);
 
                     expenseDAL.Delete(expenseId);
-
                     #endregion
 
-                    #region REVERT THE ASSET
-
-                    #endregion
-
-                    #region PREPARE TO THE LAST PAGE
-                    DisableTools();
                     LoadPastExpense();
-                    EnableButtonsOnClickSaveCancel();
-                    #endregion
-
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
@@ -331,6 +333,7 @@ namespace GUI
                 expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
                 expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
                 expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                expenseCUL.Details = txtDetails.Text;
                 expenseCUL.AddedBy = userId;
                 expenseCUL.AddedDate = DateTime.Now;
                 #endregion

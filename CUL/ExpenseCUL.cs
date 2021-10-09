@@ -15,6 +15,7 @@ namespace CUL
         public int IdAssetTo { get; set; }
         public int AssetId { get; set; }
         public decimal Amount { get; set; }
+        public string Details { get; set; }
         public int AddedBy { get; set; }
         public DateTime AddedDate { get; set; }
     }
