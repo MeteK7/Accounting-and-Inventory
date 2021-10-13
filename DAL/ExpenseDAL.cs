@@ -79,7 +79,6 @@ namespace DAL
                 cmd.Parameters.AddWithValue("id_to", expenseCUL.IdTo);
                 cmd.Parameters.AddWithValue("id_asset_from", expenseCUL.IdAssetFrom);
                 cmd.Parameters.AddWithValue("id_asset_to", expenseCUL.IdAssetTo);
-                cmd.Parameters.AddWithValue("id_to", expenseCUL.IdTo);
                 cmd.Parameters.AddWithValue("amount", expenseCUL.Amount);
                 cmd.Parameters.AddWithValue("details", expenseCUL.Details);
                 cmd.Parameters.AddWithValue("added_date", expenseCUL.AddedDate);
