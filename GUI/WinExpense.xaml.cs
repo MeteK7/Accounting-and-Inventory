@@ -40,7 +40,7 @@ namespace GUI
         int account = 1, bank = 2, supplier = 3;
         int clickedArrow,  clickedPrev = 0, clickedNext = 1;
         string calledBy = "WinExpense";
-        string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtAddedDate= "added_date";
+        string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtDetails="details",colTxtAddedDate= "added_date";
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
         string[] oldExpense = new string[expenseSize];
@@ -99,6 +99,7 @@ namespace GUI
                     cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
                     txtAmount.Text= dtExpense.Rows[initialIndex][colTxtAmount].ToString();
+                    txtDetails.Text = dtExpense.Rows[initialIndex][colTxtDetails].ToString();
                     lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
                 }
                 else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
@@ -419,6 +420,7 @@ namespace GUI
             lblAssetIdFrom.Content = "";
             lblAssetIdTo.Content = "";
             lblDateAdded.Content = "";
+            txtDetails.Text = "";
             txtAmount.Text = "";
         }
 
