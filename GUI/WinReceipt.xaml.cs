@@ -23,5 +23,26 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
+        {
+            int lastExpenseId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
+
+            currentInvoiceId = Convert.ToInt32(lblReceiptId.Content);
+
+            if (currentInvoiceId != lastExpenseId)
+            {
+                int nextInvoice = currentInvoiceId + unitValue;
+
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                ClearTools();
+                LoadPastReceipt(nextInvoice, clickedArrow);
+            }
+        }
     }
 }
