@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace KabaAccounting.DAL
+namespace DAL
 {
     public class PaymentDAL
     {

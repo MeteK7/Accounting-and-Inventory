@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KabaAccounting.DAL
+namespace DAL
 {
     public class InventoryAdjustmentDAL
     {

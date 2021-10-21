@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using KabaAccounting.DAL;
+using DAL;
 
-namespace KabaAccounting.DAL
+namespace DAL
 {
     public class LoginDAL
     {
