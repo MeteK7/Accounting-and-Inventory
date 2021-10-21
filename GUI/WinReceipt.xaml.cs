@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL;
+using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,17 @@ namespace GUI
     /// </summary>
     public partial class WinReceipt : Window
     {
+        AccountDAL accountDAL = new AccountDAL();
+        SupplierDAL supplierDAL = new SupplierDAL();
+        UserBLL userBLL = new UserBLL();
+        ReceiptCUL receiptCUL = new ReceiptCUL();
+        ReceiptBLL receiptBLL = new ReceiptBLL();
+        ReceiptDAL receiptDAL = new ReceiptDAL();
+        AssetCUL assetCUL = new AssetCUL();
+        AssetDAL assetDAL = new AssetDAL();
+        BankDAL bankDAL = new BankDAL();
+        CommonBLL commonBLL = new CommonBLL();
+
         public WinReceipt()
         {
             InitializeComponent();
