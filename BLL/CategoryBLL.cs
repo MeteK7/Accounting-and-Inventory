@@ -1,4 +1,4 @@
-﻿using KabaAccounting.DAL;
+﻿using DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;

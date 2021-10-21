@@ -1,6 +1,6 @@
 ﻿using BLL;
 using KabaAccounting.CUL;
-using KabaAccounting.DAL;
+using DAL;
 using System;
 using System.Collections;
 using System.Collections.Generic;

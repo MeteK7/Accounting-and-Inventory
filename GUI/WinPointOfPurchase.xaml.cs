@@ -2,7 +2,7 @@
 using CUL;
 using DAL;
 using KabaAccounting.CUL;
-using KabaAccounting.DAL;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
