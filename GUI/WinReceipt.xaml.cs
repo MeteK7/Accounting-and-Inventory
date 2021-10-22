@@ -61,6 +61,28 @@ namespace GUI
             txtAmount.Text = "";
         }
 
+        public void DisableTools()
+        {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
+            cboFrom.IsEnabled = false;
+            cboTo.IsEnabled = false;
+            txtAmount.IsEnabled = false;
+            rbAccount.IsEnabled = false;
+            rbBank.IsEnabled = false;
+        }
+
+        public void EnableTools()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
