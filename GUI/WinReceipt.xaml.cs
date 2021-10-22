@@ -38,6 +38,29 @@ namespace GUI
             InitializeComponent();
         }
 
+        private void FirstTimeRun()
+        {
+            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
+            btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
+        }
+
+        private void ClearTools()
+        {
+            isCboSelectionEnabled = false;
+            cboFrom.ItemsSource = null;
+            cboTo.ItemsSource = null;
+            isCboSelectionEnabled = true;
+
+            lblBalanceFrom.Content = "";
+            lblBalanceTo.Content = "";
+            lblAssetIdFrom.Content = "";
+            lblAssetIdTo.Content = "";
+            lblDateAdded.Content = "";
+            txtDetails.Text = "";
+            txtAmount.Text = "";
+        }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
