@@ -59,6 +59,22 @@ namespace GUI
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
+        private void ClearTools()
+        {
+            isCboSelectionEnabled = false;
+            cboFrom.ItemsSource = null;
+            cboTo.ItemsSource = null;
+            isCboSelectionEnabled = true;
+
+            lblBalanceFrom.Content = "";
+            lblBalanceTo.Content = "";
+            lblAssetIdFrom.Content = "";
+            lblAssetIdTo.Content = "";
+            lblDateAdded.Content = "";
+            txtDetails.Text = "";
+            txtAmount.Text = "";
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
         {
@@ -406,22 +422,6 @@ namespace GUI
             oldExpense[oldAmount] = txtAmount.Text.ToString();
 
             clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old expense page.
-        }
-
-        private void ClearTools()
-        {
-            isCboSelectionEnabled = false;
-            cboFrom.ItemsSource = null;
-            cboTo.ItemsSource = null;
-            isCboSelectionEnabled = true;
-
-            lblBalanceFrom.Content = "";
-            lblBalanceTo.Content = "";
-            lblAssetIdFrom.Content = "";
-            lblAssetIdTo.Content = "";
-            lblDateAdded.Content = "";
-            txtDetails.Text = "";
-            txtAmount.Text = "";
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
