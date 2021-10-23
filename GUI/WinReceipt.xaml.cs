@@ -33,6 +33,17 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
+        int initialIndex = 0, unitValue = 1;
+        int clickedNewOrEdit, clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        int account = 1, bank = 2, supplier = 3;
+        int clickedArrow, clickedPrev = 0, clickedNext = 1;
+        string calledBy = "WinReceipt";
+        string colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const int receiptSize = 5;
+        const int oldBalanceFrom = 0, oldBalanceTo = 1, oldAssetIdFrom = 2, oldAssetIdTo = 3, oldAmount = 4;
+        string[] oldReceipt = new string[receiptSize];
+        bool isCboSelectionEnabled = true;
+
         public WinReceipt()
         {
             InitializeComponent();
