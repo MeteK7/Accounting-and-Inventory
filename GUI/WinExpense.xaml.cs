@@ -35,14 +35,13 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        int initialIndex = 0, unitValue = 1;
-        int clickedNewOrEdit, clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int account = 1, bank = 2, supplier = 3;
-        int clickedArrow,  clickedPrev = 0, clickedNext = 1;
-        string calledBy = "WinExpense";
-        string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtDetails="details",colTxtAddedDate= "added_date";
+        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const int initialIndex = 0, unitValue = 1;
+        const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        const int account = 1, bank = 2, supplier = 3;
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
+        int clickedNewOrEdit, clickedArrow;
         string[] oldExpense = new string[expenseSize];
         bool isCboSelectionEnabled = true;
 
@@ -76,7 +75,7 @@ namespace GUI
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
-        private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
+        private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
             int idAssetFrom;
 
