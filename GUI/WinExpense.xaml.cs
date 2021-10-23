@@ -35,14 +35,13 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        int initialIndex = 0, unitValue = 1;
-        int clickedNewOrEdit, clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int account = 1, bank = 2, supplier = 3;
-        int clickedArrow,  clickedPrev = 0, clickedNext = 1;
-        string calledBy = "WinExpense";
-        string colTxtName = "name",colTxtId= "id", colTxtIdTo = "id_to", colTxtAmount= "amount",colTxtDetails="details",colTxtAddedDate= "added_date";
+        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const int initialIndex = 0, unitValue = 1;
+        const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        const int account = 1, bank = 2, supplier = 3;
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
+        int clickedNewOrEdit, clickedArrow;
         string[] oldExpense = new string[expenseSize];
         bool isCboSelectionEnabled = true;
 
@@ -52,6 +51,12 @@ namespace GUI
             DisableTools();
             LoadPastExpense();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
@@ -75,8 +80,55 @@ namespace GUI
             txtAmount.Text = "";
         }
 
+        public void DisableTools()
+        {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
+            cboFrom.IsEnabled = false;
+            cboTo.IsEnabled = false;
+            txtAmount.IsEnabled = false;
+            rbAccount.IsEnabled = false;
+            rbBank.IsEnabled = false;
+        }
+
+        public void EnableTools()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;
+            btnMenuEdit.IsEnabled = true;
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        private void ModifyToolsOnClickBtnNewEdit()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            btnMenuNew.IsEnabled = false;
+            btnMenuEdit.IsEnabled = false;
+            btnMenuDelete.IsEnabled = false;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
-        private void LoadPastExpense(int expenseId = 0, int expenseArrow = -1)//Optional parameter
+        private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
             int idAssetFrom;
 
@@ -142,62 +194,15 @@ namespace GUI
             }
         }
 
-        public void DisableTools()
-        {
-            btnMenuSave.IsEnabled = false;
-            btnMenuCancel.IsEnabled = false;
-            cboFrom.IsEnabled = false;
-            cboTo.IsEnabled = false;
-            txtAmount.IsEnabled = false;
-            rbAccount.IsEnabled = false;
-            rbBank.IsEnabled = false;
-        }
-
-        public void EnableTools()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
-        }
-
-        private void EnableButtonsOnClickSaveCancel()
-        {
-            btnMenuNew.IsEnabled = true;
-            btnMenuEdit.IsEnabled = true;
-            btnMenuDelete.IsEnabled = true;
-            btnPrev.IsEnabled = true;
-            btnNext.IsEnabled = true;
-        }
-
-        private void ModifyToolsOnClickBtnNewEdit()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            btnMenuNew.IsEnabled = false;
-            btnMenuEdit.IsEnabled = false;
-            btnMenuDelete.IsEnabled = false;
-            btnPrev.IsEnabled = false;
-            btnNext.IsEnabled = false;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
-        }
-
         private void LoadNewExpense()
         {
             //ClearBasketTextBox();
             //ClearProductsDataGrid();
 
-            int expenseNo, increment = 1;
+            int expenseNo;
 
             expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
-            expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            expenseNo += unitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
             lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 
@@ -326,11 +331,6 @@ namespace GUI
                     MessageBox.Show("Nevermind then...", "KABA Accounting");
                     break;
             }
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
