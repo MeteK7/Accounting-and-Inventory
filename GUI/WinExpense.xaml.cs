@@ -80,6 +80,53 @@ namespace GUI
             txtAmount.Text = "";
         }
 
+        public void DisableTools()
+        {
+            btnMenuSave.IsEnabled = false;
+            btnMenuCancel.IsEnabled = false;
+            cboFrom.IsEnabled = false;
+            cboTo.IsEnabled = false;
+            txtAmount.IsEnabled = false;
+            rbAccount.IsEnabled = false;
+            rbBank.IsEnabled = false;
+        }
+
+        public void EnableTools()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;
+            btnMenuEdit.IsEnabled = true;
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        private void ModifyToolsOnClickBtnNewEdit()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            btnMenuNew.IsEnabled = false;
+            btnMenuEdit.IsEnabled = false;
+            btnMenuDelete.IsEnabled = false;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
@@ -147,62 +194,15 @@ namespace GUI
             }
         }
 
-        public void DisableTools()
-        {
-            btnMenuSave.IsEnabled = false;
-            btnMenuCancel.IsEnabled = false;
-            cboFrom.IsEnabled = false;
-            cboTo.IsEnabled = false;
-            txtAmount.IsEnabled = false;
-            rbAccount.IsEnabled = false;
-            rbBank.IsEnabled = false;
-        }
-
-        public void EnableTools()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
-        }
-
-        private void EnableButtonsOnClickSaveCancel()
-        {
-            btnMenuNew.IsEnabled = true;
-            btnMenuEdit.IsEnabled = true;
-            btnMenuDelete.IsEnabled = true;
-            btnPrev.IsEnabled = true;
-            btnNext.IsEnabled = true;
-        }
-
-        private void ModifyToolsOnClickBtnNewEdit()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            btnMenuNew.IsEnabled = false;
-            btnMenuEdit.IsEnabled = false;
-            btnMenuDelete.IsEnabled = false;
-            btnPrev.IsEnabled = false;
-            btnNext.IsEnabled = false;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
-        }
-
         private void LoadNewExpense()
         {
             //ClearBasketTextBox();
             //ClearProductsDataGrid();
 
-            int expenseNo, increment = 1;
+            int expenseNo;
 
             expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
-            expenseNo += increment;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            expenseNo += unitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
             lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 

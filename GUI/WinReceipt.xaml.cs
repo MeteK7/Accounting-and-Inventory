@@ -193,6 +193,18 @@ namespace GUI
             }
         }
 
+        private void LoadNewReceipt()
+        {
+            //ClearBasketTextBox();
+            //ClearProductsDataGrid();
+
+            int expenseNo;
+
+            expenseNo = receiptBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
+            expenseNo += unitValue;//We are adding one to the last expense number because every new receipt number is one greater tham the previous expense number.
+            lblReceiptId.Content = expenseNo;//Assigning receiptNo to the content of the receiptNo Label.
+        }
+
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             int lastReceiptId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
