@@ -101,6 +101,31 @@ namespace GUI
             rbBank.IsEnabled = true;
         }
 
+        private void EnableButtonsOnClickSaveCancel()
+        {
+            btnMenuNew.IsEnabled = true;
+            btnMenuEdit.IsEnabled = true;
+            btnMenuDelete.IsEnabled = true;
+            btnPrev.IsEnabled = true;
+            btnNext.IsEnabled = true;
+        }
+
+        private void ModifyToolsOnClickBtnNewEdit()
+        {
+            btnMenuSave.IsEnabled = true;
+            btnMenuCancel.IsEnabled = true;
+            btnMenuNew.IsEnabled = false;
+            btnMenuEdit.IsEnabled = false;
+            btnMenuDelete.IsEnabled = false;
+            btnPrev.IsEnabled = false;
+            btnNext.IsEnabled = false;
+            cboFrom.IsEnabled = true;
+            cboTo.IsEnabled = true;
+            txtAmount.IsEnabled = true;
+            rbAccount.IsEnabled = true;
+            rbBank.IsEnabled = true;
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastReceipt(int receiptId = initialIndex, int receiptArrow = clickedNothing)//Optional parameter
         {

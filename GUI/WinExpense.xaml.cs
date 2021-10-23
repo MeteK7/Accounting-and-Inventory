@@ -51,6 +51,12 @@ namespace GUI
             DisableTools();
             LoadPastExpense();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
@@ -325,11 +331,6 @@ namespace GUI
                     MessageBox.Show("Nevermind then...", "KABA Accounting");
                     break;
             }
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
