@@ -127,6 +127,18 @@ namespace GUI
             rbBank.IsEnabled = true;
         }
 
+        private void LoadNewExpense()
+        {
+            //ClearBasketTextBox();
+            //ClearProductsDataGrid();
+
+            int expenseNo;
+
+            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last expense number and assign it to the variable called expenseNo.
+            expenseNo += unitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
@@ -194,16 +206,116 @@ namespace GUI
             }
         }
 
-        private void LoadNewExpense()
+        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            //ClearBasketTextBox();
-            //ClearProductsDataGrid();
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
 
-            int expenseNo;
+            ClearTools();
+            LoadNewExpense();
+            LoadCboTo();
+            ModifyToolsOnClickBtnNewEdit();
+        }
 
-            expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
-            expenseNo += unitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
-            lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
+        private void btnMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            int emptyIndex = -1;
+
+            if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
+            {
+                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseId stands for the expense id in the database.*/
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
+
+                #region ASSIGNING CUL SECTION
+                expenseCUL.Id = expenseId;
+                expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
+                expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                expenseCUL.Details = txtDetails.Text;
+                expenseCUL.AddedBy = userId;
+                expenseCUL.AddedDate = DateTime.Now;
+                #endregion
+
+                if (clickedNewOrEdit == clickedEdit)
+                {
+                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
+
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]);//We have to add this amount into company's balance in order to revert the old expense.
+                    isSuccessAsset = assetDAL.Update(assetCUL);
+
+                    //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]);//We have to subtract this amount from supplier's balance in order to revert our dept.
+                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    #endregion
+                }
+
+                else
+                {
+                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
+                }
+
+                #region TABLE ASSET UPDATING SECTION
+                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                isSuccessAsset = assetDAL.Update(assetCUL);
+
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                #endregion
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
+            }
+        }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    ClearTools();
+                    LoadPastExpense();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
+        }
+
+        private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EnableTools();
+
+            oldExpense[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
+            oldExpense[oldBalanceTo] = lblBalanceTo.Content.ToString();
+            oldExpense[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
+            oldExpense[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
+            oldExpense[oldAmount] = txtAmount.Text.ToString();
+
+            clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old expense page.
         }
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
@@ -303,105 +415,6 @@ namespace GUI
                 #endregion
         }
 
-        private void btnMenuNew_Click(object sender, RoutedEventArgs e)
-        {
-            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
-
-            ClearTools();
-            LoadNewExpense();
-            LoadCboTo();
-            ModifyToolsOnClickBtnNewEdit();
-        }
-
-        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    DisableTools();
-                    ClearTools();
-                    LoadPastExpense();
-                    EnableButtonsOnClickSaveCancel();
-                    break;
-                case MessageBoxResult.No:
-                    MessageBox.Show("Enjoy!", "Enjoy");
-                    break;
-                case MessageBoxResult.Cancel:
-                    MessageBox.Show("Nevermind then...", "KABA Accounting");
-                    break;
-            }
-        }
-
-        private void btnMenuSave_Click(object sender, RoutedEventArgs e)
-        {
-            int emptyIndex = -1;
-
-            if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
-            {
-                int expenseId = Convert.ToInt32(lblExpenseId.Content); /*lblExpenseId stands for the expense id in the database.*/
-                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
-                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
-
-                #region ASSIGNING CUL SECTION
-                expenseCUL.Id = expenseId;
-                expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
-                expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
-                expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
-                expenseCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
-                expenseCUL.Amount = Convert.ToDecimal(txtAmount.Text);
-                expenseCUL.Details = txtDetails.Text;
-                expenseCUL.AddedBy = userId;
-                expenseCUL.AddedDate = DateTime.Now;
-                #endregion
-
-                if (clickedNewOrEdit == clickedEdit)
-                {
-                    isSuccess = expenseBLL.UpdateExpense(expenseCUL);
-
-                    #region TABLE ASSET REVERTING AND UPDATING SECTION
-                    //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdFrom]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceFrom]) + Convert.ToDecimal(oldExpense[oldAmount]);//We have to add this amount into company's balance in order to revert the old expense.
-                    isSuccessAsset = assetDAL.Update(assetCUL);
-
-                    //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                    assetCUL.Id = Convert.ToInt32(oldExpense[oldAssetIdTo]);
-                    assetCUL.SourceBalance = Convert.ToDecimal(oldExpense[oldBalanceTo]) - Convert.ToDecimal(oldExpense[oldAmount]);//We have to subtract this amount from supplier's balance in order to revert our dept.
-                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
-                    #endregion
-                }
-
-                else
-                {
-                    isSuccess = expenseBLL.InsertExpense(expenseCUL);
-                }
-
-                #region TABLE ASSET UPDATING SECTION
-                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
-                isSuccessAsset = assetDAL.Update(assetCUL);
-
-                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
-                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
-                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
-                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
-                #endregion
-
-                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
-                {
-                    DisableTools();
-                    EnableButtonsOnClickSaveCancel();
-                }
-                else
-                {
-                    MessageBox.Show("Something went wrong :(");
-                }
-            }
-        }
-
         private decimal GetBalance(int assetId)
         {
             DataTable dtAsset = assetDAL.SearchById(assetId);
@@ -409,19 +422,6 @@ namespace GUI
             decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
 
             return balance;
-        }
-
-        private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
-        {
-            EnableTools();
-
-            oldExpense[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
-            oldExpense[oldBalanceTo] = lblBalanceTo.Content.ToString();
-            oldExpense[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
-            oldExpense[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
-            oldExpense[oldAmount] = txtAmount.Text.ToString();
-
-            clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old expense page.
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)

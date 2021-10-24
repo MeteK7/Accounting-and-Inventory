@@ -40,6 +40,7 @@ namespace GUI
         const int account = 1, bank = 2, supplier = 3;
         const int receiptSize = 5;
         const int oldBalanceFrom = 0, oldBalanceTo = 1, oldAssetIdFrom = 2, oldAssetIdTo = 3, oldAmount = 4;
+
         int clickedNewOrEdit, clickedArrow;
         string[] oldReceipt = new string[receiptSize];
         bool isCboSelectionEnabled = true;
@@ -126,6 +127,18 @@ namespace GUI
             rbBank.IsEnabled = true;
         }
 
+        private void LoadNewReceipt()
+        {
+            //ClearBasketTextBox();
+            //ClearProductsDataGrid();
+
+            int receiptNo;
+
+            receiptNo = receiptBLL.GetLastReceiptNumber();//Getting the last receipt number and assign it to the variable called receiptNo.
+            receiptNo += unitValue;//We are adding one to the last receipt number because every new receipt number is one greater tham the previous receipt number.
+            lblReceiptId.Content = receiptNo;//Assigning receiptNo to the content of the receiptNo Label.
+        }
+
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastReceipt(int receiptId = initialIndex, int receiptArrow = clickedNothing)//Optional parameter
         {
@@ -193,18 +206,6 @@ namespace GUI
             }
         }
 
-        private void LoadNewReceipt()
-        {
-            //ClearBasketTextBox();
-            //ClearProductsDataGrid();
-
-            int expenseNo;
-
-            expenseNo = receiptBLL.GetLastExpenseNumber();//Getting the last invoice number and assign it to the variable called expenseNo.
-            expenseNo += unitValue;//We are adding one to the last expense number because every new receipt number is one greater tham the previous expense number.
-            lblReceiptId.Content = expenseNo;//Assigning receiptNo to the content of the receiptNo Label.
-        }
-
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
@@ -213,6 +214,69 @@ namespace GUI
             LoadNewReceipt();
             LoadCboTo();
             ModifyToolsOnClickBtnNewEdit();
+        }
+
+        private void btnMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadCboFrom(int checkStatus)
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtAccount;//Creating Data Table to hold the products from Database.
+            if (checkStatus == account)
+                dtAccount = accountDAL.Select();
+
+            else
+                dtAccount = bankDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtAccount.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboFrom.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboTo()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtTo;//Creating Data Table to hold the products from Database.
+
+            dtTo = supplierDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboTo.ItemsSource = dtTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboTo.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboTo.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
     }
 }
