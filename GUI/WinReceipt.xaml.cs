@@ -254,12 +254,35 @@ namespace GUI
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Receipt", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    ClearTools();
+                    LoadPastReceipt();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
+            EnableTools();
 
+            oldReceipt[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
+            oldReceipt[oldBalanceTo] = lblBalanceTo.Content.ToString();
+            oldReceipt[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
+            oldReceipt[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
+            oldReceipt[oldAmount] = txtAmount.Text.ToString();
+
+            clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old receipt page.
         }
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
