@@ -14,6 +14,7 @@ namespace BLL
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
         ExpenseDAL expenseDAL = new ExpenseDAL();
+        ReceiptDAL receiptDAL = new ReceiptDAL();
         public int GetLastRecordById(string calledBy)
         {
             int initialIndex = 0, recordId;
@@ -27,8 +28,11 @@ namespace BLL
             else if (calledBy == "WinPOP")
                 dataTable = pointOfPurchaseDAL.GetByIdOrLastId();
 
-            else
+            else if (calledBy == "WinExpense")
                 dataTable = expenseDAL.GetByIdOrLastId();
+
+            else
+                dataTable = receiptDAL.GetByIdOrLastId();
 
             if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
             {
