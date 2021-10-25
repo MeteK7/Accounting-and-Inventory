@@ -274,7 +274,15 @@ namespace GUI
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
+            EnableTools();
 
+            oldReceipt[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
+            oldReceipt[oldBalanceTo] = lblBalanceTo.Content.ToString();
+            oldReceipt[oldAssetIdFrom] = lblAssetIdFrom.Content.ToString();
+            oldReceipt[oldAssetIdTo] = lblAssetIdTo.Content.ToString();
+            oldReceipt[oldAmount] = txtAmount.Text.ToString();
+
+            clickedNewOrEdit = clickedEdit;//Changing the state of the clicked NewOrEdit in order to update the old receipt page.
         }
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
