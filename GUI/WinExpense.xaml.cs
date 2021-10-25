@@ -287,7 +287,7 @@ namespace GUI
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Invoice", MessageBoxButton.YesNoCancel);
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Expense", MessageBoxButton.YesNoCancel);
             switch (result)
             {
                 case MessageBoxResult.Yes:

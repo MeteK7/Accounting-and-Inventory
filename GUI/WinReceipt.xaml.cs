@@ -254,7 +254,22 @@ namespace GUI
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Would you really like to cancel the expense page?", "Cancel Receipt", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DisableTools();
+                    ClearTools();
+                    LoadPastReceipt();
+                    EnableButtonsOnClickSaveCancel();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
