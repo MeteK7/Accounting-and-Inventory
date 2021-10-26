@@ -307,12 +307,12 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-
+            LoadCboFrom(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-
+            LoadCboFrom(bank);
         }
 
         private void CboFromSelectionChanged()
