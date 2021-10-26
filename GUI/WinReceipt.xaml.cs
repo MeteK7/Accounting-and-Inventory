@@ -42,37 +42,6 @@ namespace GUI
         const int oldBalanceFrom = 0, oldBalanceTo = 1, oldAssetIdFrom = 2, oldAssetIdTo = 3, oldAmount = 4;
 
         int clickedNewOrEdit, clickedArrow;
-
-        private void btnPrev_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         string[] oldReceipt = new string[receiptSize];
         bool isCboSelectionEnabled = true;
 
@@ -237,6 +206,16 @@ namespace GUI
             }
         }
 
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
@@ -286,6 +265,26 @@ namespace GUI
         }
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
 
         }
