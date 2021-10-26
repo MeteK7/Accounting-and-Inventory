@@ -360,6 +360,15 @@ namespace GUI
             #endregion
         }
 
+        private decimal GetBalance(int assetId)
+        {
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+
+            return balance;
+        }
+
         private void LoadCboFrom(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
