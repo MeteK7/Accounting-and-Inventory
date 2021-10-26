@@ -340,6 +340,26 @@ namespace GUI
             #endregion
         }
 
+        private void CboToSelectionChanged()
+        {
+            #region LBLASSETIDTO POPULATING SECTION
+            int sourceId, assetId;
+            int sourceType = supplier;
+
+            sourceId = Convert.ToInt32(cboTo.SelectedValue);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdTo.Content = assetId;
+            #endregion
+
+            #region LBLBALANCETO POPULATING SECTION
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+
+            lblBalanceTo.Content = balance;
+            #endregion
+        }
+
         private void LoadCboFrom(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
