@@ -208,7 +208,16 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
+            int firstReceiptId = unitValue, currentReceiptId = Convert.ToInt32(lblReceiptId.Content);
 
+            if (currentReceiptId != firstReceiptId)
+            {
+                int prevReceiptId = currentReceiptId - unitValue;
+
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                ClearTools();
+                LoadPastReceipt(prevReceiptId, clickedArrow);
+            }
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
