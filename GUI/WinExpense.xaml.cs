@@ -178,9 +178,9 @@ namespace GUI
                     LoadCboTo();
                     cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
-                    txtAmount.Text= dtExpense.Rows[initialIndex][colTxtAmount].ToString();
+                    txtAmount.Text = dtExpense.Rows[initialIndex][colTxtAmount].ToString();
                     txtDetails.Text = dtExpense.Rows[initialIndex][colTxtDetails].ToString();
-                    lblDateAdded.Content =Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
+                    lblDateAdded.Content = Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtAddedDate]).ToString("f");
                 }
                 else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
@@ -203,6 +203,36 @@ namespace GUI
             else
             {
                 FirstTimeRun();//This method is called when it is the first time of using this program.
+            }
+        }
+
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content);
+
+            if (currentExpenseId != firstExpenseId)
+            {
+                int prevExpenseId = currentExpenseId - unitValue;
+
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                ClearTools();
+                LoadPastExpense(prevExpenseId, clickedArrow);
+            }
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            int lastExpenseId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
+
+            currentInvoiceId = Convert.ToInt32(lblExpenseId.Content);
+
+            if (currentInvoiceId != lastExpenseId)
+            {
+                int nextInvoice = currentInvoiceId + unitValue;
+
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                ClearTools();
+                LoadPastExpense(nextInvoice, clickedArrow);
             }
         }
 
@@ -370,6 +400,16 @@ namespace GUI
             }
         }
 
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(bank);
+        }
+
         private void CboFromSelectionChanged()
         {
                 #region LBLASSETIDFROM POPULATING SECTION
@@ -424,36 +464,6 @@ namespace GUI
             return balance;
         }
 
-        private void btnPrev_Click(object sender, RoutedEventArgs e)
-        {
-            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content);
-
-            if (currentExpenseId != firstExpenseId)
-            {
-                int prevExpenseId = currentExpenseId - unitValue;
-                
-                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
-                ClearTools();
-                LoadPastExpense(prevExpenseId, clickedArrow);
-            }
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            int lastExpenseId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
-
-            currentInvoiceId = Convert.ToInt32(lblExpenseId.Content);
-
-            if (currentInvoiceId != lastExpenseId)
-            {
-                int nextInvoice = currentInvoiceId + unitValue;
-
-                clickedArrow = clickedNext;//1 means customer has clicked the next button.
-                ClearTools();
-                LoadPastExpense(nextInvoice, clickedArrow);
-            }
-        }
-
         private void LoadCboFrom(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
@@ -495,16 +505,6 @@ namespace GUI
             cboTo.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboFrom(account);
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboFrom(bank);
         }
     }
 }

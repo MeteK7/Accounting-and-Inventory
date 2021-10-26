@@ -42,37 +42,6 @@ namespace GUI
         const int oldBalanceFrom = 0, oldBalanceTo = 1, oldAssetIdFrom = 2, oldAssetIdTo = 3, oldAmount = 4;
 
         int clickedNewOrEdit, clickedArrow;
-
-        private void btnPrev_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         string[] oldReceipt = new string[receiptSize];
         bool isCboSelectionEnabled = true;
 
@@ -237,6 +206,36 @@ namespace GUI
             }
         }
 
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            int firstReceiptId = unitValue, currentReceiptId = Convert.ToInt32(lblReceiptId.Content);
+
+            if (currentReceiptId != firstReceiptId)
+            {
+                int prevReceiptId = currentReceiptId - unitValue;
+
+                clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
+                ClearTools();
+                LoadPastReceipt(prevReceiptId, clickedArrow);
+            }
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            int lastReceiptId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
+
+            currentInvoiceId = Convert.ToInt32(lblReceiptId.Content);
+
+            if (currentInvoiceId != lastReceiptId)
+            {
+                int nextInvoice = currentInvoiceId + unitValue;
+
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                ClearTools();
+                LoadPastReceipt(nextInvoice, clickedArrow);
+            }
+        }
+
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
@@ -288,6 +287,86 @@ namespace GUI
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                CboFromSelectionChanged();
+            }
+        }
+
+        private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                CboToSelectionChanged();
+            }
+        }
+
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(bank);
+        }
+
+        private void CboFromSelectionChanged()
+        {
+            #region LBLASSETIDFROM POPULATING SECTION
+            int sourceId, assetId;
+            int sourceType;
+
+            if (rbAccount.IsChecked == true)
+                sourceType = account;
+            else
+                sourceType = bank;
+
+            sourceId = Convert.ToInt32(cboFrom.SelectedValue);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdFrom.Content = assetId;
+            #endregion
+
+            #region LBLBALANCEFROM POPULATING SECTION
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+
+            lblBalanceFrom.Content = balance;
+            #endregion
+        }
+
+        private void CboToSelectionChanged()
+        {
+            #region LBLASSETIDTO POPULATING SECTION
+            int sourceId, assetId;
+            int sourceType = supplier;
+
+            sourceId = Convert.ToInt32(cboTo.SelectedValue);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdTo.Content = assetId;
+            #endregion
+
+            #region LBLBALANCETO POPULATING SECTION
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+
+            lblBalanceTo.Content = balance;
+            #endregion
+        }
+
+        private decimal GetBalance(int assetId)
+        {
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+
+            return balance;
         }
 
         private void LoadCboFrom(int checkStatus)
