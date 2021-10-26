@@ -291,12 +291,18 @@ namespace GUI
 
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (isCboSelectionEnabled == true)
+            {
+                CboFromSelectionChanged();
+            }
         }
 
         private void cboTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (isCboSelectionEnabled == true)
+            {
+                CboToSelectionChanged();
+            }
         }
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
