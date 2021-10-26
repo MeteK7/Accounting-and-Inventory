@@ -222,7 +222,18 @@ namespace GUI
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
+            int lastReceiptId = commonBLL.GetLastRecordById(calledBy), currentInvoiceId;
 
+            currentInvoiceId = Convert.ToInt32(lblReceiptId.Content);
+
+            if (currentInvoiceId != lastReceiptId)
+            {
+                int nextInvoice = currentInvoiceId + unitValue;
+
+                clickedArrow = clickedNext;//1 means customer has clicked the next button.
+                ClearTools();
+                LoadPastReceipt(nextInvoice, clickedArrow);
+            }
         }
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
