@@ -315,6 +315,31 @@ namespace GUI
 
         }
 
+        private void CboFromSelectionChanged()
+        {
+            #region LBLASSETIDFROM POPULATING SECTION
+            int sourceId, assetId;
+            int sourceType;
+
+            if (rbAccount.IsChecked == true)
+                sourceType = account;
+            else
+                sourceType = bank;
+
+            sourceId = Convert.ToInt32(cboFrom.SelectedValue);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            lblAssetIdFrom.Content = assetId;
+            #endregion
+
+            #region LBLBALANCEFROM POPULATING SECTION
+            DataTable dtAsset = assetDAL.SearchById(assetId);
+
+            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+
+            lblBalanceFrom.Content = balance;
+            #endregion
+        }
+
         private void LoadCboFrom(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.

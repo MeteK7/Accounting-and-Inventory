@@ -400,6 +400,16 @@ namespace GUI
             }
         }
 
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboFrom(bank);
+        }
+
         private void CboFromSelectionChanged()
         {
                 #region LBLASSETIDFROM POPULATING SECTION
@@ -495,16 +505,6 @@ namespace GUI
             cboTo.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboFrom(account);
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboFrom(bank);
         }
     }
 }
