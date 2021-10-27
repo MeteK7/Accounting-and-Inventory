@@ -171,11 +171,12 @@ namespace GUI
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboFrom(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+                    LoadCboFrom();
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
-                    LoadCboTo();
+                    LoadCboTo(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+
                     cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
                     txtAmount.Text = dtReceipt.Rows[initialIndex][colTxtAmount].ToString();
@@ -242,7 +243,7 @@ namespace GUI
 
             ClearTools();
             LoadNewReceipt();
-            LoadCboTo();
+            LoadCboFrom();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -338,12 +339,12 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(account);
+            LoadCboTo(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(bank);
+            LoadCboTo(bank);
         }
 
         private void CboFromSelectionChanged()
@@ -400,7 +401,28 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int checkStatus)
+        private void LoadCboFrom()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtTo;//Creating Data Table to hold the products from Database.
+
+            dtTo = supplierDAL.Select();
+
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboFrom.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboTo(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
@@ -412,27 +434,7 @@ namespace GUI
                 dtAccount = bankDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtAccount.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = colTxtName;
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = colTxtId;
-
-            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
-        }
-
-        private void LoadCboTo()
-        {
-            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
-
-            DataTable dtTo;//Creating Data Table to hold the products from Database.
-
-            dtTo = supplierDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboTo.ItemsSource = dtTo.DefaultView;
+            cboTo.ItemsSource = dtAccount.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboTo.DisplayMemberPath = colTxtName;
