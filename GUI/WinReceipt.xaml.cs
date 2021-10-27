@@ -286,7 +286,38 @@ namespace GUI
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the receipt?", "Delete Receipt", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
 
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //REVERTING THE ASSET FOR EXPENSE OF THE SOURCE.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount into source's balance in order to revert the old receipt.
+                    assetDAL.Update(assetCUL);
+
+                    //REVERTING THE ASSET FOR BALANCE OF THE COMPANY.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to revert our balance.
+                    assetDAL.Update(assetCUL);
+                    #endregion
+
+                    #region DELETE EXPENSE RECORD
+                    int receiptId = Convert.ToInt32(lblReceiptId.Content);
+
+                    receiptDAL.Delete(receiptId);
+                    #endregion
+
+                    LoadPastReceipt();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
