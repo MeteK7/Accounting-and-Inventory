@@ -249,7 +249,71 @@ namespace GUI
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
+            int emptyIndex = -1;
 
+            if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
+            {
+                int receiptId = Convert.ToInt32(lblReceiptId.Content); /*lblReceiptId stands for the receipt id in the database.*/
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
+
+                #region ASSIGNING CUL SECTION
+                receiptCUL.Id = receiptId;
+                receiptCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                receiptCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                receiptCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                receiptCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
+                receiptCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                receiptCUL.Details = txtDetails.Text;
+                receiptCUL.AddedBy = userId;
+                receiptCUL.AddedDate = DateTime.Now;
+                #endregion
+
+                if (clickedNewOrEdit == clickedEdit)
+                {
+                    isSuccess = receiptBLL.UpdateReceipt(receiptCUL);
+
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //UPDATING THE ASSET FOR SOURCE BALANCE.
+                    assetCUL.Id = Convert.ToInt32(oldReceipt[oldAssetIdFrom]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldReceipt[oldBalanceFrom]) + Convert.ToDecimal(oldReceipt[oldAmount]);//We have to add this amount into source's balance in order to revert the old receipt.
+                    isSuccessAsset = assetDAL.Update(assetCUL);
+
+                    //UPDATING THE ASSET FOR COMPANY BALANCE.
+                    assetCUL.Id = Convert.ToInt32(oldReceipt[oldAssetIdTo]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldReceipt[oldBalanceTo]) - Convert.ToDecimal(oldReceipt[oldAmount]);//We have to subtract this amount from company's balance in order to revert our balance.
+                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    #endregion
+                }
+
+                else
+                {
+                    isSuccess = receiptBLL.InsertReceipt(receiptCUL);
+                }
+
+                #region TABLE ASSET UPDATING SECTION
+                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                isSuccessAsset = assetDAL.Update(assetCUL);
+
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                #endregion
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
+            }
         }
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
@@ -293,12 +357,12 @@ namespace GUI
                 case MessageBoxResult.Yes:
 
                     #region TABLE ASSET REVERTING AND UPDATING SECTION
-                    //REVERTING THE ASSET FOR EXPENSE OF THE SOURCE.
+                    //REVERTING THE ASSET FOR SOURCE BALANCE.
                     assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
                     assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount into source's balance in order to revert the old receipt.
                     assetDAL.Update(assetCUL);
 
-                    //REVERTING THE ASSET FOR BALANCE OF THE COMPANY.
+                    //REVERTING THE ASSET FOR COMPANY BALANCE.
                     assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
                     assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to revert our balance.
                     assetDAL.Update(assetCUL);
