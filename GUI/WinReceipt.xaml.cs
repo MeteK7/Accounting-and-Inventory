@@ -171,11 +171,12 @@ namespace GUI
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboFrom(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+                    LoadCboFrom();
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
                     #endregion
 
-                    LoadCboTo();
+                    LoadCboTo(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+
                     cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
                     txtAmount.Text = dtReceipt.Rows[initialIndex][colTxtAmount].ToString();
@@ -242,13 +243,77 @@ namespace GUI
 
             ClearTools();
             LoadNewReceipt();
-            LoadCboTo();
+            LoadCboFrom();
             ModifyToolsOnClickBtnNewEdit();
         }
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
+            int emptyIndex = -1;
 
+            if (cboFrom.SelectedIndex != emptyIndex && cboTo.SelectedIndex != emptyIndex && txtAmount.Text != "")
+            {
+                int receiptId = Convert.ToInt32(lblReceiptId.Content); /*lblReceiptId stands for the receipt id in the database.*/
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                bool isSuccess = false, isSuccessAsset = false, isSuccessAssetSupplier = false;
+
+                #region ASSIGNING CUL SECTION
+                receiptCUL.Id = receiptId;
+                receiptCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
+                receiptCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
+                receiptCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
+                receiptCUL.IdAssetTo = Convert.ToInt32(lblAssetIdTo.Content);
+                receiptCUL.Amount = Convert.ToDecimal(txtAmount.Text);
+                receiptCUL.Details = txtDetails.Text;
+                receiptCUL.AddedBy = userId;
+                receiptCUL.AddedDate = DateTime.Now;
+                #endregion
+
+                if (clickedNewOrEdit == clickedEdit)
+                {
+                    isSuccess = receiptBLL.UpdateReceipt(receiptCUL);
+
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //UPDATING THE ASSET FOR SOURCE BALANCE.
+                    assetCUL.Id = Convert.ToInt32(oldReceipt[oldAssetIdFrom]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldReceipt[oldBalanceFrom]) + Convert.ToDecimal(oldReceipt[oldAmount]);//We have to add this amount into source's balance in order to revert the old receipt.
+                    isSuccessAsset = assetDAL.Update(assetCUL);
+
+                    //UPDATING THE ASSET FOR COMPANY BALANCE.
+                    assetCUL.Id = Convert.ToInt32(oldReceipt[oldAssetIdTo]);
+                    assetCUL.SourceBalance = Convert.ToDecimal(oldReceipt[oldBalanceTo]) - Convert.ToDecimal(oldReceipt[oldAmount]);//We have to subtract this amount from company's balance in order to revert our balance.
+                    isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                    #endregion
+                }
+
+                else
+                {
+                    isSuccess = receiptBLL.InsertReceipt(receiptCUL);
+                }
+
+                #region TABLE ASSET UPDATING SECTION
+                //UPDATING THE ASSET FOR EXPENSE OF THE CORPORATION.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to make the payment to the supplier.
+                isSuccessAsset = assetDAL.Update(assetCUL);
+
+                //UPDATING THE ASSET FOR BALANCE OF THE SUPPLIER.
+                assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount to supplier's balance in order to reset our dept.
+                isSuccessAssetSupplier = assetDAL.Update(assetCUL);
+                #endregion
+
+                //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
+                if (isSuccess == true && isSuccessAsset == true && isSuccessAssetSupplier == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                {
+                    DisableTools();
+                    EnableButtonsOnClickSaveCancel();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong :(");
+                }
+            }
         }
 
         private void btnMenuCancel_Click(object sender, RoutedEventArgs e)
@@ -286,7 +351,38 @@ namespace GUI
 
         private void btnMenuDelete_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Would you really like to delete the receipt?", "Delete Receipt", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
 
+                    #region TABLE ASSET REVERTING AND UPDATING SECTION
+                    //REVERTING THE ASSET FOR SOURCE BALANCE.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdFrom.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdFrom.Content))) + Convert.ToDecimal(txtAmount.Text);//We have to add this amount into source's balance in order to revert the old receipt.
+                    assetDAL.Update(assetCUL);
+
+                    //REVERTING THE ASSET FOR COMPANY BALANCE.
+                    assetCUL.Id = Convert.ToInt32(lblAssetIdTo.Content);
+                    assetCUL.SourceBalance = Convert.ToDecimal(GetBalance(Convert.ToInt32(lblAssetIdTo.Content))) - Convert.ToDecimal(txtAmount.Text);//We have to subtract this amount from company's balance in order to revert our balance.
+                    assetDAL.Update(assetCUL);
+                    #endregion
+
+                    #region DELETE EXPENSE RECORD
+                    int receiptId = Convert.ToInt32(lblReceiptId.Content);
+
+                    receiptDAL.Delete(receiptId);
+                    #endregion
+
+                    LoadPastReceipt();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Enjoy!", "Enjoy");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    break;
+            }
         }
 
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -307,12 +403,12 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(account);
+            LoadCboTo(account);
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(bank);
+            LoadCboTo(bank);
         }
 
         private void CboFromSelectionChanged()
@@ -369,7 +465,28 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int checkStatus)
+        private void LoadCboFrom()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtTo;//Creating Data Table to hold the products from Database.
+
+            dtTo = supplierDAL.Select();
+
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboFrom.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboTo(int checkStatus)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
@@ -381,27 +498,7 @@ namespace GUI
                 dtAccount = bankDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtAccount.DefaultView;
-
-            //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = colTxtName;
-
-            //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = colTxtId;
-
-            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
-        }
-
-        private void LoadCboTo()
-        {
-            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
-
-            DataTable dtTo;//Creating Data Table to hold the products from Database.
-
-            dtTo = supplierDAL.Select();
-
-            //Specifying Items Source for product combobox
-            cboTo.ItemsSource = dtTo.DefaultView;
+            cboTo.ItemsSource = dtAccount.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboTo.DisplayMemberPath = colTxtName;
