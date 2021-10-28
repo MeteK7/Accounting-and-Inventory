@@ -87,6 +87,7 @@ namespace GUI
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
+            txtDetails.IsEnabled = false;
             rbAccount.IsEnabled = false;
             rbBank.IsEnabled = false;
         }
@@ -98,6 +99,7 @@ namespace GUI
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
+            txtDetails.IsEnabled = true;
             rbAccount.IsEnabled = true;
             rbBank.IsEnabled = true;
         }
@@ -415,12 +417,9 @@ namespace GUI
         {
             #region LBLASSETIDFROM POPULATING SECTION
             int sourceId, assetId;
-            int sourceType;
+            int sourceType=supplier;
 
-            if (rbAccount.IsChecked == true)
-                sourceType = account;
-            else
-                sourceType = bank;
+
 
             sourceId = Convert.ToInt32(cboFrom.SelectedValue);
             assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
@@ -440,7 +439,12 @@ namespace GUI
         {
             #region LBLASSETIDTO POPULATING SECTION
             int sourceId, assetId;
-            int sourceType = supplier;
+            int sourceType;
+
+            if (rbAccount.IsChecked == true)
+                sourceType = account;
+            else
+                sourceType = bank;
 
             sourceId = Convert.ToInt32(cboTo.SelectedValue);
             assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
