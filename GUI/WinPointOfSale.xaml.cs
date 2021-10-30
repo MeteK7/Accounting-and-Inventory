@@ -446,17 +446,27 @@ namespace GUI
                     #endregion
                 }
 
-                #region TABLE ASSET UPDATING SECTION
-                //UPDATING THE TABLE ASSET FOR BALANCE OF THE CUSTOMER.
+                #region BALANCE UPDATING SECTION FOR ASSET
 
-                dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetCustomerId.Content));
+                dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetId.Content));
                 oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
-                assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);
+                assetCUL.SourceBalance = oldSourceBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);
                 assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
 
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
+
+                //#region BALANCE UPDATING SECTION FOR CUSTOMER
+
+                //dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetCustomerId.Content));
+                //oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
+
+                //assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);
+                //assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
+
+                //isSuccessAsset = assetDAL.Update(assetCUL);
+                //#endregion
 
                 #region TABLE POS SAVING SECTION
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
