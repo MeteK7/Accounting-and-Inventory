@@ -12,9 +12,9 @@ namespace KabaAccounting.CUL
         public int InventoryAdjustmentId { get; set; }
         public int ProductId { get; set; }
         public int ProductUnitId { get; set; }
-        public decimal ProductAmountInReal { get; set; }
-        public decimal ProductAmountInStock { get; set; }
-        public decimal ProductAmountDifference { get; set; }
+        public decimal ProductQuantityInReal { get; set; }
+        public decimal ProductQuantityInStock { get; set; }
+        public decimal ProductQuantityDifference { get; set; }
         public decimal ProductCostPrice { get; set; }
         public decimal ProductSalePrice { get; set; }
     }

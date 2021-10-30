@@ -66,12 +66,12 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_inventory_adjustment (id, total_product_amount, grand_total, added_date, added_by) VALUES (@id, @total_product_amount, @grand_total, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_inventory_adjustment (id, total_product_quantity, grand_total, added_date, added_by) VALUES (@id, @total_product_quantity, @grand_total, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", inventoryAdjustmentCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
-                cmd.Parameters.AddWithValue("@total_product_amount", inventoryAdjustmentCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("@total_product_quantity", inventoryAdjustmentCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("@grand_total", inventoryAdjustmentCUL.GrandTotal);
                 cmd.Parameters.AddWithValue("@added_date", inventoryAdjustmentCUL.AddedDate);
                 cmd.Parameters.AddWithValue("@added_by", inventoryAdjustmentCUL.AddedBy);
@@ -110,11 +110,11 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, total_product_amount=@total_product_amount, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("total_product_amount", inventoryAdjustmentCUL.TotalProductAmount);
+                cmd.Parameters.AddWithValue("total_product_quantity", inventoryAdjustmentCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("grand_total", inventoryAdjustmentCUL.GrandTotal);
                 cmd.Parameters.AddWithValue("added_date", inventoryAdjustmentCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", inventoryAdjustmentCUL.AddedBy);
