@@ -447,12 +447,11 @@ namespace GUI
                 }
 
                 #region BALANCE UPDATING SECTION FOR ASSET
-
                 dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetId.Content));
                 oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
                 assetCUL.SourceBalance = oldSourceBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);
-                assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
+                assetCUL.Id = Convert.ToInt32(lblAssetId.Content);
 
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
