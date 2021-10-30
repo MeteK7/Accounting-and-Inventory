@@ -23,7 +23,7 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (/*id,*/ inventory_adjustment_id, product_id, product_unit_id, product_amount_in_real, product_amount_in_stock, product_cost_price, product_sale_price) VALUES (/*@id,*/ @inventory_adjustment_id, @product_id, @product_unit_id, @product_amount_in_real, @product_amount_in_stock, @product_cost_price, @product_sale_price)";
+                String sqlQuery = "INSERT INTO tbl_inventory_adjustment_detailed (/*id,*/ inventory_adjustment_id, product_id, product_unit_id, product_quantity_in_real, product_quantity_in_stock, product_cost_price, product_sale_price) VALUES (/*@id,*/ @inventory_adjustment_id, @product_id, @product_unit_id, @product_quantity_in_real, @product_quantity_in_stock, @product_cost_price, @product_sale_price)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -31,8 +31,8 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@inventory_adjustment_id", inventoryAdjustmentDetailCUL.InventoryAdjustmentId);
                 cmd.Parameters.AddWithValue("@product_id", inventoryAdjustmentDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", inventoryAdjustmentDetailCUL.ProductUnitId);
-                cmd.Parameters.AddWithValue("@product_amount_in_real", inventoryAdjustmentDetailCUL.ProductAmountInReal);
-                cmd.Parameters.AddWithValue("@product_amount_in_stock", inventoryAdjustmentDetailCUL.ProductAmountInStock);
+                cmd.Parameters.AddWithValue("@product_quantity_in_real", inventoryAdjustmentDetailCUL.ProductQuantityInReal);
+                cmd.Parameters.AddWithValue("@product_quantity_in_stock", inventoryAdjustmentDetailCUL.ProductQuantityInStock);
                 cmd.Parameters.AddWithValue("@product_cost_price", inventoryAdjustmentDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", inventoryAdjustmentDetailCUL.ProductSalePrice);
 

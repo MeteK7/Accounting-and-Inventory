@@ -537,7 +537,7 @@ namespace GUI
 
                 //Getting the values from the POS Window and fill them into the pointOfSaleCUL.
                 inventoryAdjustmentCUL.Id = inventoryAdjustmentId;//The column invoice id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
-                inventoryAdjustmentCUL.TotalProductQuantity = Convert.ToInt32(txtBasketQuantity.Text);
+                inventoryAdjustmentCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
                 inventoryAdjustmentCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
                 inventoryAdjustmentCUL.AddedDate = DateTime.Now;
                 inventoryAdjustmentCUL.AddedBy = userId;

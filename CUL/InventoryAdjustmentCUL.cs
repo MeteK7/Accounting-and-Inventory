@@ -9,7 +9,7 @@ namespace KabaAccounting.CUL
     public class InventoryAdjustmentCUL
     {
         public int Id { get; set; }
-        public int TotalProductAmount { get; set; }
+        public decimal TotalProductQuantity { get; set; }
         public decimal GrandTotal { get; set; }
         public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
