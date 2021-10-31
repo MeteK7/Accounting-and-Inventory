@@ -8,6 +8,7 @@
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonWindowState" ImageSource="/Images/Buttons/btn-window-state.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonProductAdd" ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonProductClear" ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonNew" ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform"></ImageBrush>
@@ -21,6 +22,29 @@
 
         <Style TargetType="Button" x:Key="ButtonCloseStyle">
             <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonStateStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonWindowState}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -278,30 +302,23 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
-            <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
-                </Button.BorderBrush>
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.117"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-                <Button.Background>
-                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
-                </Button.Background>
-            </Button>
+            <Grid Width="1371">
+                <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+                <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="29" Width="29" HorizontalAlignment="Left" Click="btnClose_Click" Margin="1342,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Margin="1312,0,30,0" Click="btnState_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-window-state.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="10,152,250,608" Padding="0">
-            <Grid Margin="10,0,-2,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1037*"/>
-                    <ColumnDefinition Width="15*"/>
-                </Grid.ColumnDefinitions>
+        <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
+            <Grid Margin="10,0,-2,0">
                 <Label x:Name="lblProductBarcode" Content="Id / Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
                 <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
@@ -309,28 +326,28 @@
                 <Label x:Name="lblProductSalePrice" Content="Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductTotalPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
-                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
-                <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="349,41,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged"/>
-                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged"/>
-                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
-                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
+                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="40" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="40" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="349,41,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged" Height="39" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="39" Margin="409,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="39" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="40" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="39" Height="39" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonProductClearStyle}" x:Name="btnProductClear" Content="" HorizontalAlignment="Left" Margin="815,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductClear_Click">
+                <Button Style="{StaticResource ButtonProductClearStyle}" x:Name="btnProductClear" Content="" HorizontalAlignment="Left" Margin="831,41,0,0" VerticalAlignment="Top" Width="39" Height="39" BorderBrush="White" Click="btnProductClear_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="10,254,250,10">
+        <GroupBox Header="ENTERED PRODUCTS" Margin="10,273,250,0" VerticalAlignment="Top" Height="593">
             <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1080" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged">
+                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="555" VerticalAlignment="Top" Width="1080" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -416,7 +433,7 @@
         <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Label x:Name="lblInvoiceId" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
-        <GroupBox Header="User Informations" Height="108" Margin="0,152,10.4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="User Informations" Height="116" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
                 <Label x:Name="lblUserPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
                 <Label x:Name="lblUsername" Content="Username" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
@@ -424,7 +441,7 @@
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="298" Margin="0,560,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Basket Informations" Height="306" Margin="0,560,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,10,-2,11">
                 <Label x:Name="lblBasketQuantity" Content="Quantity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80"/>
                 <Label x:Name="lblBasketCostTotal" Content="Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="80"/>
@@ -442,7 +459,7 @@
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="118" Margin="0,34,250,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1105">
+        <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
             <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
@@ -528,12 +545,12 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Left" Margin="930,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
+                <Button Style="{StaticResource ButtonPrevStyle}" x:Name="btnPrev" Content="" HorizontalAlignment="Right" Margin="0,10,90,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnPrev_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/back.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
+                <Button Style="{StaticResource ButtonNextStyle}" x:Name="btnNext" Content="" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75" Height="36" Click="btnNext_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>

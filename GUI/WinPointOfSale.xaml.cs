@@ -109,6 +109,11 @@ namespace GUI
             this.Close();
         }
 
+        private void btnState_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;
+        }
+
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {
             ClearProductEntranceTextBox();

@@ -69,6 +69,7 @@
     <None Remove="Images\Buttons\btn-next.png" />
     <None Remove="Images\Buttons\btn-prev.png" />
     <None Remove="Images\Buttons\btn-save.png" />
+    <None Remove="Images\Buttons\btn-window-state.png" />
     <None Remove="Images\Buttons\calculations.png" />
     <None Remove="Images\Buttons\calendar.png" />
     <None Remove="Images\Buttons\cancel.png" />
@@ -214,6 +215,7 @@
     <Resource Include="Images\Buttons\btn-next.png" />
     <Resource Include="Images\Buttons\btn-prev.png" />
     <Resource Include="Images\Buttons\btn-save.png" />
+    <Resource Include="Images\Buttons\btn-window-state.png" />
     <Resource Include="Images\Buttons\calculations.png" />
     <Resource Include="Images\Buttons\calendar.png" />
     <Resource Include="Images\Buttons\cancel.png" />
