@@ -309,7 +309,7 @@
                         <ImageBrush ImageSource="/Images/Icons/close.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Margin="1312,0,30,0" Click="Button_Click">
+                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Margin="1312,0,30,0" Click="btnState_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-window-state.png"/>
                     </Button.Background>

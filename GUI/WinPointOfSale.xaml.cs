@@ -109,9 +109,9 @@ namespace GUI
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnState_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            WindowState = WindowState.Maximized;
         }
 
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
