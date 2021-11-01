@@ -174,7 +174,7 @@ namespace GUI
                         rbBank.IsChecked = true;
 
                     LoadCboFrom();
-                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
+                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id"].ToString();
                     #endregion
 
                     LoadCboTo(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
@@ -475,7 +475,7 @@ namespace GUI
 
             DataTable dtTo;//Creating Data Table to hold the products from Database.
 
-            dtTo = supplierDAL.Select();
+            dtTo = assetDAL.Select();
 
 
             //Specifying Items Source for product combobox

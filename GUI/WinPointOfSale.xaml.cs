@@ -111,7 +111,12 @@ namespace GUI
 
         private void btnState_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Maximized;
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+                WindowState = WindowState.Normal;
         }
 
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
@@ -172,6 +177,7 @@ namespace GUI
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
+            txtProductCostPrice.IsEnabled = false;
             txtProductSalePrice.IsEnabled = false;
             txtProductQuantity.IsEnabled = false;
             txtProductTotalSalePrice.IsEnabled = false;
@@ -193,6 +199,7 @@ namespace GUI
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
+            txtProductCostPrice.IsEnabled = true;
             txtProductSalePrice.IsEnabled = true;
             txtProductQuantity.IsEnabled = true;
             txtProductTotalSalePrice.IsEnabled = true;
