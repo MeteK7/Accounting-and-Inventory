@@ -304,12 +304,12 @@
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
             <Grid Width="1371">
                 <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-                <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="29" Width="29" HorizontalAlignment="Left" Click="btnClose_Click" Margin="1342,0,0,0">
+                <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="29" Width="30" HorizontalAlignment="Right" Click="btnClose_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Icons/close.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Margin="1312,0,30,0" Click="btnState_Click">
+                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Click="btnState_Click" HorizontalAlignment="Right" Margin="0,0,34,0">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-window-state.png"/>
                     </Button.Background>
@@ -345,9 +345,9 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="10,273,250,0" VerticalAlignment="Top" Height="593">
-            <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="555" VerticalAlignment="Top" Width="1080" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged">
+        <GroupBox Header="ENTERED PRODUCTS" Margin="10,273,250,10">
+            <Grid Margin="10,0,-2,0">
+                <DataGrid x:Name="dgProducts" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged" Margin="5,10,5,10">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -441,7 +441,7 @@
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="306" Margin="0,560,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Basket Informations" Height="297" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,10,-2,11">
                 <Label x:Name="lblBasketQuantity" Content="Quantity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80"/>
                 <Label x:Name="lblBasketCostTotal" Content="Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="80"/>
