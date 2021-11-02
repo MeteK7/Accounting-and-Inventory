@@ -243,7 +243,7 @@ namespace GUI
 
             ClearTools();
             LoadNewReceipt();
-            LoadCboFrom();
+            LoadCboSourceFrom();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -475,13 +475,13 @@ namespace GUI
 
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtSourceFrom.DefaultView;
+            cboSourceFrom.ItemsSource = dtSourceFrom.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
-            cboFrom.DisplayMemberPath = colTxtName;
+            cboSourceFrom.DisplayMemberPath = colTxtName;
 
             //SelectedValuePath helps to store values like a hidden field.
-            cboFrom.SelectedValuePath = colTxtId;
+            cboSourceFrom.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
