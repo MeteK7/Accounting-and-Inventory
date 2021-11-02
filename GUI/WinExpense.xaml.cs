@@ -161,7 +161,6 @@ namespace GUI
 
                     #region ASSET INFORMATION FILLING REGION
                     idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_asset_from"].ToString());
-                    //lblAssetIdFrom.Content = idAssetFrom;
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);

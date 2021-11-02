@@ -163,17 +163,13 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region ASSET INFORMATION FILLING REGION
-                    LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked.
+                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
-                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString());
-
-                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
+                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
 
-                    if (sourceType == account)
-                        rbAccount.IsChecked = true;
-                    else
-                        rbBank.IsChecked = true;
+                    LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
+                    cboSourceFrom.SelectedValue = sourceType;
 
                     LoadCboFrom();
                     cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id"].ToString();
@@ -418,11 +414,11 @@ namespace GUI
         private void CboFromSelectionChanged()
         {
             #region LBLASSETIDFROM POPULATING SECTION
-            int sourceId, assetId;
-            int sourceType=supplier;
-
+            int sourceId, assetId, sourceTypeId;
+            
+            sourceTypeId = Convert.ToInt32(cboSourceFrom.SelectedValue);
             sourceId = Convert.ToInt32(cboFrom.SelectedValue);
-            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceTypeId);
             lblAssetIdFrom.Content = assetId;
             #endregion
 
