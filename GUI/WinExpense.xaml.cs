@@ -463,12 +463,12 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int checkStatus)
+        private void LoadCboFrom(int assetType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
-            if (checkStatus == account)
+            if (assetType == account)
                 dtAccount = accountDAL.Select();
 
             else

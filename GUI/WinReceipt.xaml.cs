@@ -419,6 +419,10 @@ namespace GUI
             LoadCboTo(bank);
         }
 
+        private void CboSourceFromSelectionChanged()
+        {
+            LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
+        }
         private void CboFromSelectionChanged()
         {
             #region LBLASSETIDFROM POPULATING SECTION
@@ -494,7 +498,7 @@ namespace GUI
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
-        private void LoadCboFrom()
+        private void LoadCboFrom(int assetId)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
