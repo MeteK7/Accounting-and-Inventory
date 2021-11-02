@@ -419,8 +419,6 @@ namespace GUI
             int sourceId, assetId;
             int sourceType=supplier;
 
-
-
             sourceId = Convert.ToInt32(cboFrom.SelectedValue);
             assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
             lblAssetIdFrom.Content = assetId;
@@ -473,7 +471,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtTo;//Creating Data Table to hold the products from Database.
+            DataTable dtTo;//Creating Data Table to hold the ids from Database.
 
             dtTo = assetDAL.Select();
 
@@ -494,7 +492,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtAccount;//Creating Data Table to hold the products from Database.
+            DataTable dtAccount;//Creating Data Table to hold the ids from Database.
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
 
