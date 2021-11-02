@@ -25,6 +25,7 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        SourceTypeDAL SourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ReceiptCUL receiptCUL = new ReceiptCUL();
         ReceiptBLL receiptBLL = new ReceiptBLL();
@@ -162,8 +163,9 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region ASSET INFORMATION FILLING REGION
+                    LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked.
+
                     idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString());
-                    //lblAssetIdFrom.Content = idAssetFrom;
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
@@ -465,6 +467,27 @@ namespace GUI
             decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
 
             return balance;
+        }
+
+        private void LoadCboSourceFrom()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtSourceFrom;
+
+            dtSourceFrom = SourceTypeDAL.Select();
+
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtSourceFrom.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboFrom.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
         private void LoadCboFrom()
