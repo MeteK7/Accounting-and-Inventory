@@ -385,6 +385,14 @@ namespace GUI
             }
         }
 
+        private void cboSourceFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                CboSourceFromSelectionChanged();
+            }
+        }
+
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
