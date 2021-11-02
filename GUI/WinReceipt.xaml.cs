@@ -25,6 +25,7 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        SourceTypeDAL SourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ReceiptCUL receiptCUL = new ReceiptCUL();
         ReceiptBLL receiptBLL = new ReceiptBLL();
@@ -162,22 +163,19 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region ASSET INFORMATION FILLING REGION
-                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString());
-                    //lblAssetIdFrom.Content = idAssetFrom;
+                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
-                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
+                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
 
-                    if (sourceType == account)
-                        rbAccount.IsChecked = true;
-                    else
-                        rbBank.IsChecked = true;
+                    LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
+                    cboSourceFrom.SelectedValue = idSourceType;
 
-                    LoadCboFrom();
-                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id"].ToString();
+                    LoadCboFrom(idSourceType);
+                    cboFrom.SelectedValue = idAssetFrom;
                     #endregion
 
-                    LoadCboTo(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+                    LoadCboTo(idSourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
 
                     cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
@@ -245,7 +243,7 @@ namespace GUI
 
             ClearTools();
             LoadNewReceipt();
-            LoadCboFrom();
+            LoadCboSourceFrom();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -387,6 +385,14 @@ namespace GUI
             }
         }
 
+        private void cboSourceFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
+            }
+        }
+
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
@@ -416,13 +422,11 @@ namespace GUI
         private void CboFromSelectionChanged()
         {
             #region LBLASSETIDFROM POPULATING SECTION
-            int sourceId, assetId;
-            int sourceType=supplier;
-
-
-
+            int sourceId, assetId, sourceTypeId;
+            
+            sourceTypeId = Convert.ToInt32(cboSourceFrom.SelectedValue);
             sourceId = Convert.ToInt32(cboFrom.SelectedValue);
-            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceTypeId);
             lblAssetIdFrom.Content = assetId;
             #endregion
 
@@ -469,17 +473,38 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom()
+        private void LoadCboSourceFrom()
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtTo;//Creating Data Table to hold the products from Database.
+            DataTable dtSourceFrom;
 
-            dtTo = assetDAL.Select();
+            dtSourceFrom = SourceTypeDAL.Select();
 
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtTo.DefaultView;
+            cboSourceFrom.ItemsSource = dtSourceFrom.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboSourceFrom.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboSourceFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboFrom(int idSourceType)
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtFrom;//Creating Data Table to hold the ids from Database.
+
+            dtFrom = assetDAL.SearchBySourceTypeId(idSourceType);
+
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtFrom.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboFrom.DisplayMemberPath = colTxtName;
@@ -494,7 +519,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtAccount;//Creating Data Table to hold the products from Database.
+            DataTable dtAccount;//Creating Data Table to hold the ids from Database.
             if (checkStatus == account)
                 dtAccount = accountDAL.Select();
 

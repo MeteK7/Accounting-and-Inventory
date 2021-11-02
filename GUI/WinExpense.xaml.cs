@@ -161,7 +161,6 @@ namespace GUI
 
                     #region ASSET INFORMATION FILLING REGION
                     idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_asset_from"].ToString());
-                    //lblAssetIdFrom.Content = idAssetFrom;
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
@@ -464,12 +463,12 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int checkStatus)
+        private void LoadCboFrom(int assetType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
             DataTable dtAccount;//Creating Data Table to hold the products from Database.
-            if (checkStatus == account)
+            if (assetType == account)
                 dtAccount = accountDAL.Select();
 
             else
