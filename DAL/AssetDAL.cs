@@ -88,6 +88,7 @@ namespace DAL
             return isSuccess;
         }
         #endregion
+
         #region SEARCH METHOD BY ID
         public DataTable SearchById(int id)
         {
