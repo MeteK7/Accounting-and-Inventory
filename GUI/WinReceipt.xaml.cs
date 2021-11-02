@@ -166,16 +166,16 @@ namespace GUI
                     idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAsset = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
+                    int idSourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
-                    cboSourceFrom.SelectedValue = sourceType;
+                    cboSourceFrom.SelectedValue = idSourceType;
 
-                    LoadCboFrom();
-                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id"].ToString();
+                    LoadCboFrom(idSourceType);
+                    cboFrom.SelectedValue = idAssetFrom;
                     #endregion
 
-                    LoadCboTo(sourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
+                    LoadCboTo(idSourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
 
                     cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
 
@@ -389,7 +389,7 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
-                CboSourceFromSelectionChanged();
+                LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
             }
         }
 
@@ -419,10 +419,6 @@ namespace GUI
             LoadCboTo(bank);
         }
 
-        private void CboSourceFromSelectionChanged()
-        {
-            LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
-        }
         private void CboFromSelectionChanged()
         {
             #region LBLASSETIDFROM POPULATING SECTION
@@ -498,17 +494,17 @@ namespace GUI
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
-        private void LoadCboFrom(int assetId)
+        private void LoadCboFrom(int idSourceType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtTo;//Creating Data Table to hold the ids from Database.
+            DataTable dtFrom;//Creating Data Table to hold the ids from Database.
 
-            dtTo = assetDAL.Select();
+            dtFrom = assetDAL.SearchBySourceTypeId(idSourceType);
 
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtTo.DefaultView;
+            cboFrom.ItemsSource = dtFrom.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboFrom.DisplayMemberPath = colTxtName;

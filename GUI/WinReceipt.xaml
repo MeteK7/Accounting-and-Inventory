@@ -405,6 +405,6 @@
         <Label x:Name="lblAssetIdFrom" Content="" HorizontalAlignment="Left" Margin="724,197,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <Label x:Name="lblAssetIdTo" Content="" HorizontalAlignment="Left" Margin="724,263,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <Label Content="UNDER CONSTRUCTION" HorizontalAlignment="Left" Margin="687,560,0,0" VerticalAlignment="Top" Width="354" Height="172" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="Red" FontSize="24" FontFamily="Constantia"/>
-        <ComboBox x:Name="cboSourceFrom" HorizontalAlignment="Left" Margin="201,196,0,0" VerticalAlignment="Top" Width="80" Height="34"/>
+        <ComboBox x:Name="cboSourceFrom" HorizontalAlignment="Left" Margin="201,196,0,0" VerticalAlignment="Top" Width="80" Height="34" SelectionChanged="cboSourceFrom_SelectionChanged"/>
     </Grid>
 </Window>
