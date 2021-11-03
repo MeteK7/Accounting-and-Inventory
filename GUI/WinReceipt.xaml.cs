@@ -38,7 +38,7 @@ namespace GUI
         const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        const int account = 1, bank = 2, supplier = 3;
+        const int account = 1, bank = 2, supplier = 3,customer=4;
         const int receiptSize = 5;
         const int oldBalanceFrom = 0, oldBalanceTo = 1, oldAssetIdFrom = 2, oldAssetIdTo = 3, oldAmount = 4;
 
@@ -389,6 +389,9 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
+                lblBalanceFrom.Content = "";
+                lblAssetIdFrom.Content = "";
+
                 LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
             }
         }
@@ -500,7 +503,22 @@ namespace GUI
 
             DataTable dtFrom;//Creating Data Table to hold the ids from Database.
 
-            dtFrom = assetDAL.SearchBySourceTypeId(idSourceType);
+            switch (idSourceType)
+            {
+                case account:
+                    dtFrom = accountDAL.Select();
+                    break;
+                case bank:
+                    dtFrom = bankDAL.Select();
+                    break;
+                case supplier:
+                    dtFrom = supplierDAL.Select();
+                    break;
+                default:
+                    dtFrom = customerDAL.Select();
+                    break;
+            }
+
 
 
             //Specifying Items Source for product combobox
