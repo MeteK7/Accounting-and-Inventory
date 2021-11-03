@@ -25,6 +25,7 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        CustomerDAL customerDAL = new CustomerDAL();
         SourceTypeDAL SourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ReceiptCUL receiptCUL = new ReceiptCUL();
@@ -518,7 +519,6 @@ namespace GUI
                     dtFrom = customerDAL.Select();
                     break;
             }
-
 
 
             //Specifying Items Source for product combobox
