@@ -36,7 +36,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtAssetIdFrom= "id_asset_from", colTxtAssetIdTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3,customer=4;
@@ -86,24 +86,24 @@ namespace GUI
         {
             btnMenuSave.IsEnabled = false;
             btnMenuCancel.IsEnabled = false;
+            cboSourceFrom.IsEnabled = false;
+            cboSourceTo.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
             txtDetails.IsEnabled = false;
-            rbAccount.IsEnabled = false;
-            rbBank.IsEnabled = false;
         }
 
         public void EnableTools()
         {
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
+            cboSourceFrom.IsEnabled = true;
+            cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
             txtDetails.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
         }
 
         private void EnableButtonsOnClickSaveCancel()
@@ -124,11 +124,12 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            cboSourceFrom.IsEnabled = true;
+            cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
+            txtDetails.IsEnabled = true;
         }
 
         private void LoadNewReceipt()
@@ -146,7 +147,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastReceipt(int receiptId = initialIndex, int receiptArrow = clickedNothing)//Optional parameter
         {
-            int idAssetFrom;
+            int idAssetFrom,idAssetTo,idFrom,idTo;
 
             if (receiptId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -163,24 +164,36 @@ namespace GUI
                     receiptId = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
                     lblReceiptId.Content = receiptId;
 
-                    #region ASSET INFORMATION FILLING REGION
-                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex]["id_asset_from"].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
+                    #region SOURCE TYPE CBO INFORMATION FILLING REGION
+                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtAssetIdFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
-                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
-                    int idSourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
+                    DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
-                    cboSourceFrom.SelectedValue = idSourceType;
+                    cboSourceFrom.SelectedValue = idSourceTypeFrom;//This code trigs the method LoadCboFrom!
+
+
+                    idAssetTo = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtAssetIdTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
+
+                    DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
-                    cboSourceTo.SelectedValue = idSourceType;
-
-                    LoadCboFrom(idSourceType);
-                    cboFrom.SelectedValue = idAssetFrom;
-                    
-                    LoadCboTo(idSourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
-                    cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
+                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo!
                     #endregion
+
+                    #region SOURCE CBO INFORMATION FILLING REGION 
+
+                    idFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdFrom].ToString());
+                    //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
+                    cboFrom.SelectedValue = idFrom;
+
+                    //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
+                    idTo = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());
+                    cboTo.SelectedValue = idTo;
+                    #endregion
+
                     txtAmount.Text = dtReceipt.Rows[initialIndex][colTxtAmount].ToString();
                     txtDetails.Text = dtReceipt.Rows[initialIndex][colTxtDetails].ToString();
                     lblDateAdded.Content = Convert.ToDateTime(dtReceipt.Rows[initialIndex][colTxtAddedDate]).ToString("f");
@@ -246,6 +259,7 @@ namespace GUI
             ClearTools();
             LoadNewReceipt();
             LoadCboSourceFrom();
+            LoadCboSourceTo();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -474,6 +488,28 @@ namespace GUI
             return balance;
         }
 
+        private DataTable FetchSourceData(int idSourceType)
+        {
+            DataTable dtSource;
+
+            switch (idSourceType)
+            {
+                case account:
+                    dtSource = accountDAL.Select();
+                    break;
+                case bank:
+                    dtSource = bankDAL.Select();
+                    break;
+                case supplier:
+                    dtSource = supplierDAL.Select();
+                    break;
+                default:
+                    dtSource = customerDAL.Select();
+                    break;
+            }
+            return dtSource;
+        }
+
         private void LoadCboSourceFrom()
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
@@ -510,28 +546,6 @@ namespace GUI
             cboSourceTo.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
-        }
-
-        private DataTable FetchSourceData(int idSourceType)
-        {
-            DataTable dtSource;
-
-            switch (idSourceType)
-            {
-                case account:
-                    dtSource = accountDAL.Select();
-                    break;
-                case bank:
-                    dtSource = bankDAL.Select();
-                    break;
-                case supplier:
-                    dtSource = supplierDAL.Select();
-                    break;
-                default:
-                    dtSource = customerDAL.Select();
-                    break;
-            }
-            return dtSource;
         }
 
         private void LoadCboFrom(int idSourceType)

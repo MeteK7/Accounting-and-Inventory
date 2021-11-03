@@ -87,6 +87,7 @@ namespace GUI
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
+            txtDetails.IsEnabled = false;
             rbAccount.IsEnabled = false;
             rbBank.IsEnabled = false;
         }
@@ -98,6 +99,7 @@ namespace GUI
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
+            txtDetails.IsEnabled = true;
             rbAccount.IsEnabled = true;
             rbBank.IsEnabled = true;
         }
@@ -123,6 +125,7 @@ namespace GUI
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
+            txtDetails.IsEnabled = true;
             rbAccount.IsEnabled = true;
             rbBank.IsEnabled = true;
         }
