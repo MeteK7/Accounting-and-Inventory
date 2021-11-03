@@ -494,28 +494,32 @@ namespace GUI
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
-        private void LoadCboFrom(int idSourceType)
+        private DataTable FetchSourceData(int idSourceType)
         {
-            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
-
-            DataTable dtFrom;//Creating Data Table to hold the ids from Database.
+            DataTable dtSource;
 
             switch (idSourceType)
             {
                 case account:
-                    dtFrom = accountDAL.Select();
+                    dtSource = accountDAL.Select();
                     break;
                 case bank:
-                    dtFrom = bankDAL.Select();
+                    dtSource = bankDAL.Select();
                     break;
                 case supplier:
-                    dtFrom = supplierDAL.Select();
+                    dtSource = supplierDAL.Select();
                     break;
                 default:
-                    dtFrom = customerDAL.Select();
+                    dtSource = customerDAL.Select();
                     break;
             }
+            return dtSource;
+        }
+        private void LoadCboFrom(int idSourceType)
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
+            DataTable dtFrom= FetchSourceData(idSourceType);
 
             //Specifying Items Source for product combobox
             cboFrom.ItemsSource = dtFrom.DefaultView;
@@ -529,19 +533,14 @@ namespace GUI
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
-        private void LoadCboTo(int checkStatus)
+        private void LoadCboTo(int idSourceType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtAccount;//Creating Data Table to hold the ids from Database.
-            if (checkStatus == account)
-                dtAccount = accountDAL.Select();
-
-            else
-                dtAccount = bankDAL.Select();
+            DataTable dtTo = FetchSourceData(idSourceType);
 
             //Specifying Items Source for product combobox
-            cboTo.ItemsSource = dtAccount.DefaultView;
+            cboTo.ItemsSource = dtTo.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboTo.DisplayMemberPath = colTxtName;
