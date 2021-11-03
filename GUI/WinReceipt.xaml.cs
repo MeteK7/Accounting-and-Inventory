@@ -172,14 +172,15 @@ namespace GUI
                     LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
                     cboSourceFrom.SelectedValue = idSourceType;
 
+                    LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
+                    cboSourceTo.SelectedValue = idSourceType;
+
                     LoadCboFrom(idSourceType);
                     cboFrom.SelectedValue = idAssetFrom;
-                    #endregion
-
+                    
                     LoadCboTo(idSourceType);//This function works twice when you open the WinReceipt because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
-
                     cboTo.SelectedValue = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
-
+                    #endregion
                     txtAmount.Text = dtReceipt.Rows[initialIndex][colTxtAmount].ToString();
                     txtDetails.Text = dtReceipt.Rows[initialIndex][colTxtDetails].ToString();
                     lblDateAdded.Content = Convert.ToDateTime(dtReceipt.Rows[initialIndex][colTxtAddedDate]).ToString("f");
@@ -477,9 +478,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtSourceFrom;
-
-            dtSourceFrom = SourceTypeDAL.Select();
+            DataTable dtSourceFrom= SourceTypeDAL.Select();
 
 
             //Specifying Items Source for product combobox
@@ -490,6 +489,25 @@ namespace GUI
 
             //SelectedValuePath helps to store values like a hidden field.
             cboSourceFrom.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboSourceTo()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtSourceTo = SourceTypeDAL.Select();
+
+
+            //Specifying Items Source for product combobox
+            cboSourceTo.ItemsSource = dtSourceTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboSourceTo.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboSourceTo.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
@@ -515,6 +533,7 @@ namespace GUI
             }
             return dtSource;
         }
+
         private void LoadCboFrom(int idSourceType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
