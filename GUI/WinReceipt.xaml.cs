@@ -404,7 +404,7 @@ namespace GUI
                 lblBalanceTo.Content = "";
                 lblAssetIdTo.Content = "";
 
-                LoadCboTo(Convert.ToInt32(cboSourceFrom.SelectedValue));
+                LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
             }
         }
 
@@ -422,16 +422,6 @@ namespace GUI
             {
                 CboToSelectionChanged();
             }
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboTo(account);
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboTo(bank);
         }
 
         private void CboFromSelectionChanged()
@@ -457,16 +447,11 @@ namespace GUI
         private void CboToSelectionChanged()
         {
             #region LBLASSETIDTO POPULATING SECTION
-            int sourceId, assetId;
-            int sourceType;
+            int sourceId, assetId, sourceTypeId;
 
-            if (rbAccount.IsChecked == true)
-                sourceType = account;
-            else
-                sourceType = bank;
-
+            sourceTypeId= Convert.ToInt32(cboSourceTo.SelectedValue);
             sourceId = Convert.ToInt32(cboTo.SelectedValue);
-            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceTypeId);
             lblAssetIdTo.Content = assetId;
             #endregion
 
