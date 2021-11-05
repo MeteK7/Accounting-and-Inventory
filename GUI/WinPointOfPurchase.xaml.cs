@@ -107,7 +107,12 @@ namespace GUI
 
         private void btnState_Click(object sender, RoutedEventArgs e)
         {
-
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+                WindowState = WindowState.Normal;
         }
 
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
