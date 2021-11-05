@@ -24,6 +24,7 @@
     <None Remove="Images\Backgrounds\background-2.jpg" />
     <None Remove="Images\Backgrounds\background-abstract.jpg" />
     <None Remove="Images\Backgrounds\bank.jpg" />
+    <None Remove="Images\Backgrounds\bg-expenses.jpg" />
     <None Remove="Images\Backgrounds\black-hexagonal.jpg" />
     <None Remove="Images\Backgrounds\bokeh-background.jpg" />
     <None Remove="Images\Backgrounds\business-analysis.jpg" />
@@ -140,6 +141,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Backgrounds\bg-expenses.jpg" />
     <Resource Include="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />
   </ItemGroup>
 

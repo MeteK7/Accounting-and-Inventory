@@ -315,7 +315,6 @@
                     </Button.Background>
                 </Button>
             </Grid>
-
         </DockPanel>
         <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
             <Grid Margin="10,0,-2,0">

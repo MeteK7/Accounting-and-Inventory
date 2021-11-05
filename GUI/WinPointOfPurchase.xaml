@@ -9,6 +9,7 @@
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
+        <ImageBrush x:Key="ButtonWindowState" ImageSource="/Images/Buttons/btn-window-state.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonProductAdd" ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonProductClear" ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"></ImageBrush>
         <ImageBrush x:Key="ButtonNew" ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform"></ImageBrush>
@@ -22,6 +23,29 @@
 
         <Style TargetType="Button" x:Key="ButtonCloseStyle">
             <Setter Property="Background" Value="{StaticResource ButtonClose}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="Blue" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <!-- If we don't tell the background to change on hover, it will remain the same -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonStateStyle">
+            <Setter Property="Background" Value="{StaticResource ButtonWindowState}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -278,24 +302,20 @@
         <ImageBrush ImageSource="/Images/Backgrounds/red-hand-printed.jpg"/>
     </Window.Background>
     <Grid>
-        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="POINT OF PURCHASE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
-            <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="#FF707070" Opacity="0"/>
-                </Button.BorderBrush>
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.117"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-                <Button.Background>
-                    <ImageBrush ImageSource="/Images/Icons/close.png"/>
-                </Button.Background>
-            </Button>
+        <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
+            <Grid Width="1371">
+                <Label x:Name="lblTop" Content="POINT OF SALE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+                <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="29" Width="30" HorizontalAlignment="Right" Click="btnClose_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnState" Style="{StaticResource ButtonStateStyle}" Content="" Height="29" Width="29" Click="btnState_Click" HorizontalAlignment="Right" Margin="0,0,34,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btn-window-state.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
         </DockPanel>
         <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="108">
             <Grid Margin="10,0,-2,3">
