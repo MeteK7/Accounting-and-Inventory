@@ -105,6 +105,11 @@ namespace GUI
             this.Close();
         }
 
+        private void btnState_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void btnProductClear_Click(object sender, RoutedEventArgs e)
         {
             ClearProductEntranceTextBox();
