@@ -317,24 +317,20 @@
                 </Button>
             </Grid>
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="108">
-            <Grid Margin="10,0,-2,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1037*"/>
-                    <ColumnDefinition Width="15*"/>
-                </Grid.ColumnDefinitions>
+        <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
+            <Grid Margin="10,0,-2,0">
                 <Label x:Name="lblProductId" Content="Id/Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
                 <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="424,14,0,0" VerticalAlignment="Top" Width="55"/>
                 <Label x:Name="lblProductCostPrice" Content="Cost Price" HorizontalAlignment="Left" Margin="484,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
                 <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductTotalCostPrice" Content="Total" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
-                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312"/>
-                <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="424,40,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged"/>
-                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="23" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductCostPrice_TextChanged"/>
-                <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged"/>
-                <TextBox x:Name="txtProductTotalCostPrice" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="40" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="40" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Margin="424,40,0,0" VerticalAlignment="Top" Height="40" Width="55" SelectionChanged="cboProductUnit_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="40" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductCostPrice_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="40" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtProductTotalCostPrice" HorizontalAlignment="Left" Height="40" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
@@ -347,9 +343,9 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="10,265,250,10">
-            <Grid Margin="10,10,-2,-0.4">
-                <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="674" VerticalAlignment="Top" Width="1080" IsReadOnly="False" AutoGenerateColumns="False" SelectionChanged="dgProducts_SelectionChanged">
+        <GroupBox Header="ENTERED PRODUCTS" Margin="10,273,250,10">
+            <Grid Margin="10,0,-2,0">
+                <DataGrid x:Name="dgProducts" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged" Margin="5,10,5,10">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
@@ -361,7 +357,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                         <DataGridTemplateColumn Header="Name" Width="540">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -441,8 +437,8 @@
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Margin="10,34,250,0" VerticalAlignment="Top" Height="118">
-            <Grid x:Name="___No_Name_" Margin="0,0,-2,-4">
+        <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
+            <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
                 <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform">
@@ -554,7 +550,7 @@
                 </TextBox>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Controls" Margin="1128,265,10,438">
+        <GroupBox Header="Controls" Margin="0,273,10,438" HorizontalAlignment="Right" Width="235">
             <Grid>
                 <CheckBox x:Name="chkUpdateProductCosts" Content="Update Product Costs" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="142"/>
             </Grid>
