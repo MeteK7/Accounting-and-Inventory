@@ -394,15 +394,15 @@
         <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="33,286,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
         <Label x:Name="lblAmount" Content="AMOUNT:" HorizontalAlignment="Left" Margin="33,376,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" FontFamily="Algerian" Foreground="Red"/>
         <Label x:Name="lblDetails" Content="Details:" HorizontalAlignment="Left" Margin="33,451,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
-        <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="245,186,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboFrom_SelectionChanged" />
-        <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="245,286,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboTo_SelectionChanged"/>
+        <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="245,186,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboFrom_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="245,286,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboTo_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="161,376,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" Height="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" Foreground="Red" FontSize="22" FontFamily="Liberation Serif"/>
         <TextBox x:Name="txtDetails" HorizontalAlignment="Left" Margin="161,451,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="246" Height="274" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White" FontSize="22" FontFamily="Liberation Serif" Opacity="0.835"/>
-        <Label x:Name="lblBalanceFrom" Content="" HorizontalAlignment="Left" Margin="412,186,0,0" VerticalAlignment="Top" Width="236" Height="54" Foreground="Red"/>
-        <Label x:Name="lblBalanceTo" Content="" HorizontalAlignment="Left" Margin="412,286,0,0" VerticalAlignment="Top" Height="54" Width="236" Foreground="Red"/>
-        <Label x:Name="lblAssetIdFrom" Content="" HorizontalAlignment="Left" Margin="696,186,0,0" VerticalAlignment="Top" Height="54" Width="40"/>
-        <Label x:Name="lblAssetIdTo" Content="" HorizontalAlignment="Left" Margin="696,286,0,0" VerticalAlignment="Top" Height="54" Width="40"/>
-        <ComboBox x:Name="cboSourceFrom" HorizontalAlignment="Left" Margin="160,186,0,0" VerticalAlignment="Top" Width="80" Height="54" SelectionChanged="cboSourceFrom_SelectionChanged"/>
-        <ComboBox x:Name="cboSourceTo" HorizontalAlignment="Left" Margin="160,286,0,0" VerticalAlignment="Top" Width="80" Height="54" SelectionChanged="cboSourceTo_SelectionChanged"/>
+        <Label x:Name="lblBalanceFrom" Content="" HorizontalAlignment="Left" Margin="412,186,0,0" VerticalAlignment="Top" Width="236" Height="54" Foreground="Red" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblBalanceTo" Content="" HorizontalAlignment="Left" Margin="412,286,0,0" VerticalAlignment="Top" Height="54" Width="236" Foreground="Red" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblAssetIdFrom" Content="" HorizontalAlignment="Left" Margin="696,186,0,0" VerticalAlignment="Top" Height="54" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblAssetIdTo" Content="" HorizontalAlignment="Left" Margin="696,286,0,0" VerticalAlignment="Top" Height="54" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cboSourceFrom" HorizontalAlignment="Left" Margin="160,186,0,0" VerticalAlignment="Top" Width="80" Height="54" SelectionChanged="cboSourceFrom_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cboSourceTo" HorizontalAlignment="Left" Margin="160,286,0,0" VerticalAlignment="Top" Width="80" Height="54" SelectionChanged="cboSourceTo_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
