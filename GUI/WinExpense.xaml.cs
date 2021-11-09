@@ -439,22 +439,22 @@ namespace GUI
 
         private void CboToSelectionChanged()
         {
-                #region LBLASSETIDTO POPULATING SECTION
-                int sourceId, assetId;
-                int sourceType = supplier;
+            #region LBLASSETIDTO POPULATING SECTION
+            int sourceId, assetId, sourceTypeId;
 
-                sourceId = Convert.ToInt32(cboTo.SelectedValue);
-                assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-                lblAssetIdTo.Content = assetId;
-                #endregion
+            sourceTypeId = Convert.ToInt32(cboSourceTo.SelectedValue);
+            sourceId = Convert.ToInt32(cboTo.SelectedValue);
+            assetId = assetDAL.GetAssetIdBySource(sourceId, sourceTypeId);
+            lblAssetIdTo.Content = assetId;
+            #endregion
 
-                #region LBLBALANCETO POPULATING SECTION
-                DataTable dtAsset = assetDAL.SearchById(assetId);
+            #region LBLBALANCETO POPULATING SECTION
+            DataTable dtAsset = assetDAL.SearchById(assetId);
 
-                string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
 
-                lblBalanceTo.Content = balance;
-                #endregion
+            lblBalanceTo.Content = balance;
+            #endregion
         }
 
         private decimal GetBalance(int assetId)
