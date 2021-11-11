@@ -26,6 +26,7 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        CustomerDAL customerDAL = new CustomerDAL();
         UserBLL userBLL = new UserBLL();
         ExpenseCUL expenseCUL = new ExpenseCUL();
         ExpenseBLL expenseBLL = new ExpenseBLL();
@@ -475,6 +476,29 @@ namespace GUI
             decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
 
             return balance;
+        }
+
+
+        private DataTable FetchSourceData(int idSourceType)
+        {
+            DataTable dtSource;
+
+            switch (idSourceType)
+            {
+                case account:
+                    dtSource = accountDAL.Select();
+                    break;
+                case bank:
+                    dtSource = bankDAL.Select();
+                    break;
+                case supplier:
+                    dtSource = supplierDAL.Select();
+                    break;
+                default:
+                    dtSource = customerDAL.Select();
+                    break;
+            }
+            return dtSource;
         }
 
         private void LoadCboFrom(int idSourceType)
