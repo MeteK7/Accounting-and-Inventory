@@ -477,19 +477,14 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int assetType)
+        private void LoadCboFrom(int idSourceType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtAccount;//Creating Data Table to hold the products from Database.
-            if (assetType == account)
-                dtAccount = accountDAL.Select();
-
-            else
-                dtAccount = bankDAL.Select();
+            DataTable dtFrom = FetchSourceData(idSourceType);
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtAccount.DefaultView;
+            cboFrom.ItemsSource = dtFrom.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboFrom.DisplayMemberPath = colTxtName;

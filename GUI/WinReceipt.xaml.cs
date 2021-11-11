@@ -552,7 +552,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtFrom= FetchSourceData(idSourceType);
+            DataTable dtFrom = FetchSourceData(idSourceType);
 
             //Specifying Items Source for product combobox
             cboFrom.ItemsSource = dtFrom.DefaultView;
