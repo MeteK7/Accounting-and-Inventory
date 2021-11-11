@@ -36,7 +36,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtAssetIdFrom= "id_asset_from", colTxtAssetIdTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtIdAssetFrom= "id_asset_from", colTxtAssetIdTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3,customer=4;
@@ -165,7 +165,7 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region SOURCE TYPE CBO INFORMATION FILLING REGION
-                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtAssetIdFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
+                    idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
