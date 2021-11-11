@@ -164,6 +164,7 @@ namespace GUI
                     lblExpenseId.Content = expenseId;
 
                     #region SOURCE TYPE CBO INFORMATION FILLING REGION
+                    //RB SOURCE-FROM FILLING
                     idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
@@ -174,7 +175,7 @@ namespace GUI
                     else
                         rbBank.IsChecked = true;
 
-
+                    //CBO SOURCE-TO FILLING
                     idAssetTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
 
                     DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
@@ -184,15 +185,15 @@ namespace GUI
                     cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo!
                     #endregion
 
-
+                    #region SOURCE CBO INFORMATION FILLING REGION 
                     idFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdFrom].ToString());
                     //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
                     cboFrom.SelectedValue = idFrom;
 
-
-
-                    LoadCboTo();
-                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
+                    idTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());
+                    //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
+                    cboTo.SelectedValue = idTo;
+                    #endregion
 
                     txtAmount.Text = dtExpense.Rows[initialIndex][colTxtAmount].ToString();
                     txtDetails.Text = dtExpense.Rows[initialIndex][colTxtDetails].ToString();
@@ -512,6 +513,8 @@ namespace GUI
             }
             return dtSource;
         }
+
+
 
         private void LoadCboFrom(int idSourceType)
         {

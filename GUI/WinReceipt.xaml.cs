@@ -26,7 +26,7 @@ namespace GUI
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
         CustomerDAL customerDAL = new CustomerDAL();
-        SourceTypeDAL SourceTypeDAL = new SourceTypeDAL();
+        SourceTypeDAL sourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ReceiptCUL receiptCUL = new ReceiptCUL();
         ReceiptBLL receiptBLL = new ReceiptBLL();
@@ -165,6 +165,7 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region SOURCE TYPE CBO INFORMATION FILLING REGION
+                    //CBO SOURCE-FROM
                     idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
@@ -174,6 +175,7 @@ namespace GUI
                     cboSourceFrom.SelectedValue = idSourceTypeFrom;//This code trigs the method LoadCboFrom!
 
 
+                    //CBO SOURCE-TO
                     idAssetTo = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
 
                     DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
@@ -184,13 +186,12 @@ namespace GUI
                     #endregion
 
                     #region SOURCE CBO INFORMATION FILLING REGION 
-
                     idFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdFrom].ToString());
                     //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
                     cboFrom.SelectedValue = idFrom;
 
-                    //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
                     idTo = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdTo].ToString());
+                    //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
                     cboTo.SelectedValue = idTo;
                     #endregion
 
@@ -514,7 +515,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtSourceFrom= SourceTypeDAL.Select();
+            DataTable dtSourceFrom= sourceTypeDAL.Select();
 
 
             //Specifying Items Source for product combobox
@@ -533,7 +534,7 @@ namespace GUI
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtSourceTo = SourceTypeDAL.Select();
+            DataTable dtSourceTo = sourceTypeDAL.Select();
 
 
             //Specifying Items Source for product combobox
