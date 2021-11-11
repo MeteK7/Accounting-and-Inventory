@@ -26,6 +26,8 @@ namespace GUI
     {
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
+        CustomerDAL customerDAL = new CustomerDAL();
+        SourceTypeDAL sourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ExpenseCUL expenseCUL = new ExpenseCUL();
         ExpenseBLL expenseBLL = new ExpenseBLL();
@@ -35,7 +37,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdFrom = "id_from", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3;
@@ -66,9 +68,12 @@ namespace GUI
 
         private void ClearTools()
         {
-            isCboSelectionEnabled = false;
+            isCboSelectionEnabled = false;//We need to disable the SelectionChanged methods in case any methods below would trig them.
+            cboSourceTo.ItemsSource = null;
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
+            rbAccount.IsChecked = null;
+            rbBank.IsChecked = null;
             isCboSelectionEnabled = true;
 
             lblBalanceFrom.Content = "";
@@ -78,6 +83,12 @@ namespace GUI
             lblDateAdded.Content = "";
             txtDetails.Text = "";
             txtAmount.Text = "";
+        }
+
+        private void ClearLabels()
+        {
+            lblBalanceTo.Content = "";
+            lblAssetIdTo.Content = "";
         }
 
         public void DisableTools()
@@ -145,7 +156,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
-            int idAssetFrom;
+            int idAssetFrom, idAssetTo, idFrom, idTo;
 
             if (expenseId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -162,23 +173,37 @@ namespace GUI
                     expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
                     lblExpenseId.Content = expenseId;
 
-                    #region ASSET INFORMATION FILLING REGION
-                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex]["id_asset_from"].ToString());
+                    #region SOURCE TYPE CBO INFORMATION FILLING REGION
+                    //RB SOURCE-FROM FILLING
+                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
-                    DataTable dtAsset = assetDAL.SearchById(idAssetFrom);
-                    int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex]["id_source_type"]);
+                    DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
 
-                    if (sourceType == account)
+                    if (idSourceTypeFrom == account)//This code trigs the method LoadCboFrom in the methods rbAccount_Checked and rbBank_Checked!
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboFrom(sourceType);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
-                    cboFrom.SelectedValue = dtAsset.Rows[initialIndex]["id_source"].ToString();
+                    //CBO SOURCE-TO FILLING
+                    idAssetTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
+
+                    DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
+
+                    LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
+                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo in the method cboSourceTo_SelectionChanged!
                     #endregion
 
-                    LoadCboTo();
-                    cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
+                    #region SOURCE CBO INFORMATION FILLING REGION 
+                    idFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdFrom].ToString());
+                    //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
+                    cboFrom.SelectedValue = idFrom;
+
+                    idTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());
+                    //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
+                    cboTo.SelectedValue = idTo;
+                    #endregion
 
                     txtAmount.Text = dtExpense.Rows[initialIndex][colTxtAmount].ToString();
                     txtDetails.Text = dtExpense.Rows[initialIndex][colTxtDetails].ToString();
@@ -244,7 +269,6 @@ namespace GUI
 
             ClearTools();
             LoadNewExpense();
-            LoadCboTo();
             ModifyToolsOnClickBtnNewEdit();
         }
 
@@ -386,6 +410,16 @@ namespace GUI
             }
         }
 
+        private void cboSourceTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                ClearLabels();
+
+                LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
+            }
+        }
+
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
@@ -404,12 +438,20 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(account);
+            if (isCboSelectionEnabled == true)
+            {
+                ClearLabels();
+                LoadCboFrom(account);
+            }
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(bank);
+            if (isCboSelectionEnabled == true)
+            {
+                ClearLabels();
+                LoadCboFrom(bank);
+            }
         }
 
         private void CboFromSelectionChanged()
@@ -466,19 +508,61 @@ namespace GUI
             return balance;
         }
 
-        private void LoadCboFrom(int assetType)
+
+        private DataTable FetchSourceData(int idSourceType)
+        {
+            DataTable dtSource;
+
+            switch (idSourceType)
+            {
+                case account:
+                    dtSource = accountDAL.Select();
+                    break;
+                case bank:
+                    dtSource = bankDAL.Select();
+                    break;
+                case supplier:
+                    dtSource = supplierDAL.Select();
+                    break;
+                default:
+                    dtSource = customerDAL.Select();
+                    break;
+            }
+            return dtSource;
+        }
+
+        private void LoadCboSourceTo()
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtAccount;//Creating Data Table to hold the products from Database.
-            if (assetType == account)
-                dtAccount = accountDAL.Select();
+            DataTable dtSourceTo = sourceTypeDAL.Select();
 
-            else
-                dtAccount = bankDAL.Select();
 
             //Specifying Items Source for product combobox
-            cboFrom.ItemsSource = dtAccount.DefaultView;
+            cboSourceTo.ItemsSource = dtSourceTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboSourceTo.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboSourceTo.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboFrom(int idSourceType)
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
+
+            DataTable dtFrom;//Creating Data Table to hold the products from Database.
+            if (idSourceType == account)
+                dtFrom = accountDAL.Select();
+
+            else
+                dtFrom = bankDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboFrom.ItemsSource = dtFrom.DefaultView;
 
             //Here DisplayMemberPath helps to display Text in the ComboBox.
             cboFrom.DisplayMemberPath = colTxtName;
@@ -489,13 +573,11 @@ namespace GUI
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
         }
 
-        private void LoadCboTo()
+        private void LoadCboTo(int idSourceType)
         {
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
-            DataTable dtTo;//Creating Data Table to hold the products from Database.
-
-            dtTo = supplierDAL.Select();
+            DataTable dtTo = FetchSourceData(idSourceType);
 
             //Specifying Items Source for product combobox
             cboTo.ItemsSource = dtTo.DefaultView;
