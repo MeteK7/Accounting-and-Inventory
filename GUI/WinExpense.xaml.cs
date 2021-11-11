@@ -386,6 +386,17 @@ namespace GUI
             }
         }
 
+        private void cboSourceFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                lblBalanceFrom.Content = "";
+                lblAssetIdFrom.Content = "";
+
+                LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
+            }
+        }
+
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
