@@ -69,6 +69,7 @@ namespace GUI
         private void ClearTools()
         {
             isCboSelectionEnabled = false;
+            cboSourceTo.ItemsSource = null;
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
             isCboSelectionEnabled = true;
@@ -80,6 +81,12 @@ namespace GUI
             lblDateAdded.Content = "";
             txtDetails.Text = "";
             txtAmount.Text = "";
+        }
+
+        private void ClearLabels()
+        {
+            lblBalanceTo.Content = "";
+            lblAssetIdTo.Content = "";
         }
 
         public void DisableTools()
@@ -183,7 +190,7 @@ namespace GUI
                     int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
-                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo!
+                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo in the method cboSourceTo_SelectionChanged!
                     #endregion
 
                     #region SOURCE CBO INFORMATION FILLING REGION 
@@ -405,10 +412,10 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
-                lblBalanceFrom.Content = "";
-                lblAssetIdFrom.Content = "";
+                lblBalanceTo.Content = "";
+                lblAssetIdTo.Content = "";
 
-                LoadCboFrom(Convert.ToInt32(cboSourceTo.SelectedValue));
+                LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
             }
         }
 
@@ -430,12 +437,22 @@ namespace GUI
 
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(account);
+            if (isCboSelectionEnabled == true)
+            {
+                lblBalanceTo.Content = "";
+                lblAssetIdTo.Content = "";
+                LoadCboFrom(account);
+            }
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
-            LoadCboFrom(bank);
+            if (isCboSelectionEnabled == true)
+            {
+                lblBalanceTo.Content = "";
+                lblAssetIdTo.Content = "";
+                LoadCboFrom(bank);
+            }
         }
 
         private void CboFromSelectionChanged()

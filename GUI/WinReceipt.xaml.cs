@@ -69,6 +69,8 @@ namespace GUI
         private void ClearTools()
         {
             isCboSelectionEnabled = false;
+            cboSourceFrom.ItemsSource = null;
+            cboSourceTo.ItemsSource = null;
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
             isCboSelectionEnabled = true;
@@ -80,6 +82,12 @@ namespace GUI
             lblDateAdded.Content = "";
             txtDetails.Text = "";
             txtAmount.Text = "";
+        }
+
+        private void ClearLabels()
+        {
+            lblBalanceTo.Content = "";
+            lblAssetIdTo.Content = "";
         }
 
         public void DisableTools()
@@ -165,24 +173,24 @@ namespace GUI
                     lblReceiptId.Content = receiptId;
 
                     #region SOURCE TYPE CBO INFORMATION FILLING REGION
-                    //CBO SOURCE-FROM
+                    //CBO SOURCE-FROM FILLING
                     idAssetFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceFrom();//We need to load the cboSourceFrom first in order to get which source type the user has clicked below.
-                    cboSourceFrom.SelectedValue = idSourceTypeFrom;//This code trigs the method LoadCboFrom!
+                    cboSourceFrom.SelectedValue = idSourceTypeFrom;//This code trigs the method LoadCboFrom in the method cboSourceFrom_SelectionChanged!
 
 
-                    //CBO SOURCE-TO
+                    //CBO SOURCE-TO FILLING
                     idAssetTo = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
 
                     DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
 
                     LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
-                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo!
+                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo in the method cboSourceTo_SelectionChanged!
                     #endregion
 
                     #region SOURCE CBO INFORMATION FILLING REGION 
