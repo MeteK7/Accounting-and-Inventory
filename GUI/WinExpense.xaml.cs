@@ -27,6 +27,7 @@ namespace GUI
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
         CustomerDAL customerDAL = new CustomerDAL();
+        SourceTypeDAL sourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ExpenseCUL expenseCUL = new ExpenseCUL();
         ExpenseBLL expenseBLL = new ExpenseBLL();
@@ -514,7 +515,24 @@ namespace GUI
             return dtSource;
         }
 
+        private void LoadCboSourceTo()
+        {
+            isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
+            DataTable dtSourceTo = sourceTypeDAL.Select();
+
+
+            //Specifying Items Source for product combobox
+            cboSourceTo.ItemsSource = dtSourceTo.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboSourceTo.DisplayMemberPath = colTxtName;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboSourceTo.SelectedValuePath = colTxtId;
+
+            isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
 
         private void LoadCboFrom(int idSourceType)
         {
