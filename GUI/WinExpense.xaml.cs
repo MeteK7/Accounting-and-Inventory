@@ -36,7 +36,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdFrom = "id_from", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3;
@@ -146,7 +146,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
-            int idAssetFrom;
+            int idAssetFrom, idAssetTo, idFrom, idTo;
 
             if (expenseId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -169,14 +169,27 @@ namespace GUI
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
 
-                    if (idSourceTypeFrom == account)
+                    if (idSourceTypeFrom == account)//This code trigs the method LoadCboFrom in the methods rbAccount_Checked and rbBank_Checked!
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
 
-                    LoadCboFrom(idSourceTypeFrom);//This function works twice when you open the WinExpense because the rb selection is being changed. But if the previous selection is same, rbBank_Checked does not work so the method LoadCboFrom called by rbBank_Checked does not work as well.
-                    cboFrom.SelectedValue = dtAssetFrom.Rows[initialIndex]["id_source"].ToString();
+
+                    idAssetTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
+
+                    DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
+                    int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
+
+                    LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
+                    cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo!
                     #endregion
+
+
+                    idFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdFrom].ToString());
+                    //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
+                    cboFrom.SelectedValue = idFrom;
+
+
 
                     LoadCboTo();
                     cboTo.SelectedValue = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());//Getting the id of supplier.
@@ -245,7 +258,6 @@ namespace GUI
 
             ClearTools();
             LoadNewExpense();
-            LoadCboTo();
             ModifyToolsOnClickBtnNewEdit();
         }
 
