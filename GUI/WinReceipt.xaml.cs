@@ -68,7 +68,7 @@ namespace GUI
 
         private void ClearTools()
         {
-            isCboSelectionEnabled = false;
+            isCboSelectionEnabled = false;//We need to disable the SelectionChanged methods in case any methods below would trig them.
             cboSourceFrom.ItemsSource = null;
             cboSourceTo.ItemsSource = null;
             cboFrom.ItemsSource = null;
@@ -414,8 +414,7 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
-                lblBalanceFrom.Content = "";
-                lblAssetIdFrom.Content = "";
+                ClearLabels();
 
                 LoadCboFrom(Convert.ToInt32(cboSourceFrom.SelectedValue));
             }
@@ -425,8 +424,7 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
-                lblBalanceTo.Content = "";
-                lblAssetIdTo.Content = "";
+                ClearLabels();
 
                 LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
             }
