@@ -269,6 +269,7 @@ namespace GUI
 
             ClearTools();
             LoadNewExpense();
+            LoadCboSourceTo();
             ModifyToolsOnClickBtnNewEdit();
         }
 
