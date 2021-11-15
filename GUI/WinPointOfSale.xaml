@@ -441,21 +441,21 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Basket Informations" Height="297" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
-            <Grid Margin="0,10,-2,11">
-                <Label x:Name="lblBasketQuantity" Content="Quantity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80"/>
-                <Label x:Name="lblBasketCostTotal" Content="Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="80"/>
-                <Label x:Name="lblBasketGrossAmount" Content="Gross Amount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,95,0,0" Width="80"/>
-                <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,126,0,0" Width="80"/>
-                <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" Width="80"/>
-                <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,187,0,0" Width="80"/>
-                <Label x:Name="lblBasketGrandTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold"/>
-                <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
-                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
-                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
-                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp"/>
-                <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True"/>
-                <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp"/>
-                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" IsReadOnly="True"/>
+            <Grid Margin="0,0,-2,0" Height="263">
+                <Label x:Name="lblBasketQuantity" Content="Quantity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketCostTotal" Content="Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrossAmount" Content="Gross Amount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,95,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,126,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,187,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrandTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="35" FontFamily="DejaVu Serif" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="35" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
