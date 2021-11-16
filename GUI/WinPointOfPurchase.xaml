@@ -331,12 +331,12 @@
                 <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="40" Margin="484,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductCostPrice_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="40" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantity_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtProductTotalCostPrice" HorizontalAlignment="Left" Height="40" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
-                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="787,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
+                <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="786,41,0,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonProductClearStyle}" x:Name="btnProductClear" Content="" HorizontalAlignment="Left" Margin="815,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductClear_Click">
+                <Button Style="{StaticResource ButtonProductClearStyle}" x:Name="btnProductClear" Content="" HorizontalAlignment="Left" Margin="831,40,0,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="White" Click="btnProductClear_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/clear-product.png" Stretch="Uniform"/>
                     </Button.Background>
