@@ -422,7 +422,7 @@ namespace GUI
             if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != initialIndex.ToString() || isDgEqual == false || oldIdAsset != Convert.ToInt32(lblAssetId.Content) || oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) || cboMenuPaymentType.SelectedIndex != emptyCboIndex || cboMenuSupplier.SelectedIndex != emptyCboIndex || cboMenuAsset.SelectedIndex != emptyCboIndex)
             {
                 int invoiceNo = initialIndex;//Defaulty, we are assigning 0 to the variable called invoiceNo in case the user would not enter any number.
-                if (txtInvoiceNo.Text != null)
+                if (txtInvoiceNo.Text != "")
                     invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
