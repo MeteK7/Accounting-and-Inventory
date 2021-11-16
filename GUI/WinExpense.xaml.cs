@@ -72,8 +72,8 @@ namespace GUI
             cboSourceTo.ItemsSource = null;
             cboFrom.ItemsSource = null;
             cboTo.ItemsSource = null;
-            rbAccount.IsChecked = null;
-            rbBank.IsChecked = null;
+            rbAccount.IsChecked = false;
+            rbBank.IsChecked = false;
             isCboSelectionEnabled = true;
 
             lblBalanceFrom.Content = "";
