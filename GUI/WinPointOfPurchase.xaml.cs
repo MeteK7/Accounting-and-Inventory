@@ -421,8 +421,11 @@ namespace GUI
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
             if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != initialIndex.ToString() || isDgEqual == false || oldIdAsset != Convert.ToInt32(lblAssetId.Content) || oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) || cboMenuPaymentType.SelectedIndex != emptyCboIndex || cboMenuSupplier.SelectedIndex != emptyCboIndex || cboMenuAsset.SelectedIndex != emptyCboIndex)
             {
+                int invoiceNo = initialIndex;//Defaulty, we are assigning 0 to the variable called invoiceNo in case the user would not enter any number.
+                if (txtInvoiceNo.Text != null)
+                    invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
+
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
-                int invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false,isSuccessAsset=false;
                 int cellUnit = 2, cellCostPrice = 3, cellProductQuantity = 4;
