@@ -148,7 +148,7 @@ namespace GUI
         private void DisableProductEntranceButtons()
         {
             btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
-            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
+            //btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
         }
 
         private void EnableButtonsOnClickSaveCancel()
@@ -1029,6 +1029,9 @@ namespace GUI
                 else
                 {
                     MessageBox.Show("You cannot enter because the Id/Barcode is wrong!");
+                    Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
+                    //txtProductId.Focus();
+                    //txtProductId.SelectAll();//Selecting all of the text to correct it easily at once.
                 }
             }
 

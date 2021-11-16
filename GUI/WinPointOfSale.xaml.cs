@@ -152,7 +152,7 @@ namespace GUI
         private void DisableProductEntranceButtons()
         {
             btnProductAdd.IsEnabled = false; //Disabling the add button if all text boxes are cleared.
-            btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
+            //btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
         }
 
         private void EnableButtonsOnClickSaveCancel()
@@ -1025,6 +1025,9 @@ namespace GUI
                 else
                 {
                     MessageBox.Show("You cannot enter because the Id/Barcode is wrong!");
+                    Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
+                    //txtProductId.Focus();
+                    //txtProductId.SelectAll();//Selecting all of the text to correct it easily at once.
                 }
             }
 
@@ -1037,7 +1040,6 @@ namespace GUI
                 string costPrice, salePrice;
 
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
-                btnProductClear.IsEnabled = true;//Enabling the clear button if any valid barcode is entered.
 
                 productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]);
                 productBarcodeRetail = dtProduct.Rows[initialIndex][colTxtBarcodeRetail].ToString();
