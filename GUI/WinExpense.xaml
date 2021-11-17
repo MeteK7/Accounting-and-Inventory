@@ -250,7 +250,16 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Images/Backgrounds/bg-expenses.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="/Images/Backgrounds/bg-expenses.jpg" Stretch="UniformToFill">
+            <ImageBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0" CenterX="0" ScaleX="1" ScaleY="1"/>
+                    <SkewTransform CenterY="0" CenterX="0" AngleX="0"/>
+                    <RotateTransform CenterY="0" CenterX="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ImageBrush.RelativeTransform>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">

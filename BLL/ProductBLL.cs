@@ -20,8 +20,8 @@ namespace BLL
             decimal newQuantity;
             int initialRowIndex = 0;
             int colProductId = 0;
-            int colProductAmount = 4;
-            decimal productAmountFromDB;
+            int colProductQuantity = 6;
+            decimal productQuantityFromDB;
             string colQtyNameInDb = "quantity_in_stock";
 
             DataTable dataTableProduct = new DataTable();
@@ -30,12 +30,12 @@ namespace BLL
             {
                 dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
 
-                productAmountFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb]);
+                productQuantityFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb]);
 
                 if(calledBy=="POS")
-                    newQuantity = productAmountFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Add the old amount if it is POS.
+                    newQuantity = productQuantityFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Add the old amount if it is POS.
                 else
-                    newQuantity = productAmountFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductAmount]);//Subtract the old amount if it is POP.
+                    newQuantity = productQuantityFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Subtract the old amount if it is POP.
 
                 productId = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);//Getting the product id in order to fix the amount of specific product in the db by id.
 
