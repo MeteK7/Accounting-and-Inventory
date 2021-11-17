@@ -797,7 +797,9 @@ namespace GUI
                     DataTable dtAssetSupplier = assetDAL.SearchById(assetSupplierId);
                     oldSupplierBalance = Convert.ToDecimal(dtAssetSupplier.Rows[initialIndex]["source_balance"]);
 
-                    assetCUL.SourceBalance = oldSupplierBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Balance for reverting this purchase.
+                    //We need to revert the supplier balance so it means we are adding the price to the dept balance of the supplier. Ex: if the supplier balance is -500(means we owe it 500) then -500+200=-300.
+                    //You also need to delete the expenseInvoice in WinExpense in order to give the price back to the company's asset. 
+                    assetCUL.SourceBalance = oldSupplierBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);
                     assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
 
                     assetDAL.Update(assetCUL);

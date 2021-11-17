@@ -822,15 +822,15 @@ namespace GUI
                     #endregion
 
                     #region REVERT THE ASSET
-                    int assetId = Convert.ToInt32(lblAssetId.Content);
-                    decimal oldBalance;
+                    int assetCompanyId = Convert.ToInt32(lblAssetId.Content);
+                    decimal oldCompanyBalance;
 
                     //CODE DUPLICATION!!!! SIMILAR EXISTS IN SAVE SECTION
 
-                    DataTable dtAsset = assetDAL.SearchById(assetId);
-                    oldBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+                    DataTable dtAssetCompany = assetDAL.SearchById(assetCompanyId);
+                    oldCompanyBalance = Convert.ToDecimal(dtAssetCompany.Rows[initialIndex]["source_balance"]);
 
-                    assetCUL.SourceBalance = oldBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We need to give the price back to the customer for reverting this purchase.
+                    assetCUL.SourceBalance = oldCompanyBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We need to give the price back to the customer for reverting this purchase.
                     assetCUL.Id = Convert.ToInt32(lblAssetId.Content);
 
                     assetDAL.Update(assetCUL);
