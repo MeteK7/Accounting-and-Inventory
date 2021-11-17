@@ -792,9 +792,12 @@ namespace GUI
             clickedNewOrEdit = clickedEdit;//1 stands for the user has entered the btnEdit.
             oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
+
+            //YOU MUST ASSIGN THE OLD VALUES TO THE VARIABLES WITH THE PREFIX "unedited" JUST LIKE BELOW instead of "old" BECAUSE THOSE VARIABLES WITH THE PREFIX "old" ARE FOR DATA GRID CHANGE!!!
             uneditedIdAsset = Convert.ToInt32(lblAssetId.Content);
             uneditedIdAssetCustomer = Convert.ToInt32(lblAssetCustomerId.Content);
             uneditedBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
