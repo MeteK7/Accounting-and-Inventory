@@ -13,5 +13,6 @@ namespace CUL
         public int ProductId { get; set; }
         public string ProductName { get; set; }//Filled by ProductDAL.
         public decimal ProductQuantitySold { get; set; }
+        public string ProductTotalSalePrice { get; set; }
     }
 }

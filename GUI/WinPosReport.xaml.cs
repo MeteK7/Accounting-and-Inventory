@@ -88,15 +88,15 @@ namespace GUI
                     items = this.lvwTopProducts.Items;
 
 
-                    foreach (PosReportDetailCUL product in items)
+                    foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
                     {
-                        //MessageBox.Show(product.ProductId.ToString());
-                        string temp = dataTablePosDetailToday.Rows[posDetailIndex]["product_id"].ToString();
-                        //MessageBox.Show(temp);
                         if (product.ProductId==Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]))
                         {
                             product.ProductQuantitySold += Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"]);
-                            addNew = false;
+                            product.ProductTotalSalePrice = String.Format("{0:0.00}",
+                                Convert.ToDecimal(product.ProductTotalSalePrice)+
+                                (Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["product_sale_price"]) * Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"])));
+                            addNew = false;//No need to run the loop again since there can be only one entry of a unique product.
                             break;
                         }
                     }
@@ -113,6 +113,7 @@ namespace GUI
                                 ProductId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["product_id"]),
                                 ProductName = dataTableProduct.Rows[initialIndex]["name"].ToString(),
                                 ProductQuantitySold = Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"]),
+                                ProductTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["product_sale_price"]) * Convert.ToDecimal(dataTablePosDetailToday.Rows[posDetailIndex]["quantity"])))
                             });
                     }
                 }
