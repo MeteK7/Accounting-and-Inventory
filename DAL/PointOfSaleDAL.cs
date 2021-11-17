@@ -309,12 +309,12 @@ namespace DAL
             {
                 if (cashOrCredit == true)//Get the cash sales for today if the cashOrCredit boolean variable is true
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=1 AND added_date >= '" + dateFrom + "' AND <= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=1 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
 
                 }
                 else//Get the credit sales for today if the cashOrCredit boolean variable is false
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=2 AND added_date >= '" + dateFrom + "' AND <= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=2 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
                 }
 
                 conn.Open();

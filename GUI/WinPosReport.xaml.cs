@@ -32,6 +32,7 @@ namespace GUI
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         string dateFrom, dateTo;
+        const int initialIndex = 0;
 
         public WinPosReport()
         {
@@ -39,7 +40,7 @@ namespace GUI
             dtpPosReportFrom.SelectedDate = DateTime.Now;
             dtpPosReportTo.SelectedDate = DateTime.Now;
             LoadRectangles();
-            LoadDataGrid();
+            LoadListView();
             
         }
 
@@ -48,8 +49,18 @@ namespace GUI
             this.Close();
         }
 
+        private void ClearRectangles()
+        {
+            lblNumOfSalesVar.Content = initialIndex.ToString();
+            lblCostVar.Content = initialIndex.ToString();
+            lblRevenueVar.Content = initialIndex.ToString();
+            lblProfitVar.Content = initialIndex.ToString();
+        }
+
         private void LoadRectangles()
         {
+            ClearRectangles();
+
             bool cash = true, credit = false;
             
             dateFrom = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportFrom.SelectedDate);
@@ -72,7 +83,7 @@ namespace GUI
             lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
         }
 
-        private void LoadDataGrid()
+        private void LoadListView()
         {
             string productId;
             int initialIndex = 0;
@@ -126,13 +137,13 @@ namespace GUI
         private void dtpPosReportFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadRectangles();
-            LoadDataGrid();
+            LoadListView();
         }
 
         private void dtpPosReportTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadRectangles();
-            LoadDataGrid();
+            LoadListView();
         }
     }
 }
