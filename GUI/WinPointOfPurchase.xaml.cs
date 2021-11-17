@@ -95,10 +95,11 @@ namespace GUI
 
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
-        int oldItemsRowCount;
         int clickedArrow,clickedPrev=0,clickedNext=1;
-        int oldIdAsset, oldIdAssetSupplier;
-        decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;
+        int oldIdAsset, oldIdAssetSupplier,oldItemsRowCount;
+        int uneditedIdAsset, uneditedIdAssetSupplier;
+        decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;//This variables are used while we are editing the datagrid in an active invoice page.
+        decimal uneditedBasketCostTotal, uneditedBasketGrandTotal, uneditedBasketQuantity;//This variables are used when we click the edit button.
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -446,25 +447,21 @@ namespace GUI
 
                 if (clickedNewOrEdit == clickedEdit)
                 {
-                    #region TABLE OLD ASSET REVERTING SECTION
-                    //REVERTING THE TABLE ASSET FOR BALANCE OF THE SUPPLIER.
-
-                    dtAsset = assetDAL.SearchById(oldIdAssetSupplier);
+                    #region SUPPLIER BALANCE REVERTING SECTION
+                    dtAsset = assetDAL.SearchById(uneditedIdAssetSupplier);
                     oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
-                    assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
-                    assetCUL.SourceBalance = oldSourceBalance+oldBasketGrandTotal;//We have to add the old grandTotal to the source balance because the new grand total may be different from it.
+                    assetCUL.SourceBalance = oldSourceBalance + uneditedBasketGrandTotal;//We have to add the unedited grandTotal to the supplier's balance in order to revert our dept .
+                    assetCUL.Id = Convert.ToInt32(uneditedIdAssetSupplier);
                     isSuccessAsset = assetDAL.Update(assetCUL);
                     #endregion
                 }
 
-                #region TABLE ASSET UPDATING SECTION
-                //UPDATING THE TABLE ASSET FOR BALANCE OF THE SUPPLIER.
-
+                #region SUPPLIER BALANCE UPDATING SECTION
                 dtAsset = assetDAL.SearchById(Convert.ToInt32(lblAssetSupplierId.Content));
                 oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
                 
-                assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase.
+                assetCUL.SourceBalance = oldSourceBalance - Convert.ToDecimal(txtBasketGrandTotal.Text);//We owe the supplier X Quantity for getting this purchase. So we subtract it from the balance to pay it later in the WinExpense.
                 assetCUL.Id = Convert.ToInt32(lblAssetSupplierId.Content);
                 
                 isSuccessAsset = assetDAL.Update(assetCUL);
