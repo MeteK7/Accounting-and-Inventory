@@ -37,6 +37,7 @@ namespace GUI
             InitializeComponent();
             LoadRectangles();
             LoadDataGrid();
+            dtpPosReportTo.SelectedDate = DateTime.Today;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -118,6 +119,11 @@ namespace GUI
                     }
                 }
             }
+        }
+
+        private void dtpPosReportFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MessageBox.Show(Convert.ToString(dtpPosReportFrom.SelectedDate));
         }
     }
 }

@@ -51,45 +51,46 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Rectangle x:Name="rtgNumOfSales" HorizontalAlignment="Left" Height="216" Margin="23,72,0,0" Stroke="Black" VerticalAlignment="Top" Width="311">
+        <Rectangle x:Name="rtgNumOfSales" HorizontalAlignment="Left" Height="216" Margin="20,368,0,0" Stroke="Black" VerticalAlignment="Top" Width="282
+                   ">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="rtgCost" HorizontalAlignment="Left" Height="216" Margin="356,72,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
+        <Rectangle x:Name="rtgCost" HorizontalAlignment="Left" Height="216" Margin="332,368,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.9"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="rtgRevenue" HorizontalAlignment="Left" Height="216" Margin="670,72,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
+        <Rectangle x:Name="rtgRevenue" HorizontalAlignment="Left" Height="216" Margin="20,611,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.9"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="rtgProfit" HorizontalAlignment="Left" Height="216" Margin="993,72,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
+        <Rectangle x:Name="rtgProfit" HorizontalAlignment="Left" Height="216" Margin="332,611,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Label x:Name="lblNumOfSales" Content="NUMBER OF SALES" HorizontalAlignment="Left" Margin="40,90,0,0" VerticalAlignment="Top" Height="38" Width="252" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="390,90,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="702,90,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="1026,90,0,0" VerticalAlignment="Top" Height="38" Width="232" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Left" Margin="40,133,0,0" VerticalAlignment="Top" Height="80" Width="273" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="390,133,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="702,133,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="1026,133,0,0" VerticalAlignment="Top" Height="85" Width="232" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Image x:Name="imgCash" HorizontalAlignment="Left" Height="57" Margin="40,218,0,0" VerticalAlignment="Top" Width="61" Source="/Images/Buttons/cash.png"/>
-        <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="57" Margin="182,218,0,0" VerticalAlignment="Top" Width="62" Source="/Images/Buttons/credit-card.png"/>
-        <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="106,218,0,0" VerticalAlignment="Top" Height="57" Width="71" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
-        <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="249,218,0,0" VerticalAlignment="Top" Height="57" Width="71" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
-        <Rectangle HorizontalAlignment="Left" Height="501" Margin="23,330,0,0" Stroke="Black" VerticalAlignment="Top" Width="615">
+        <Label x:Name="lblNumOfSales" Content="NUMBER OF SALES" HorizontalAlignment="Left" Margin="43,387,0,0" VerticalAlignment="Top" Height="38" Width="237" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="357,387,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="52,629,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="357,629,0,0" VerticalAlignment="Top" Height="38" Width="245" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Left" Margin="43,429,0,0" VerticalAlignment="Top" Height="80" Width="237" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="366,428,0,0" VerticalAlignment="Top" Height="86" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="52,672,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="357,672,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Image x:Name="imgCash" HorizontalAlignment="Left" Height="56" Margin="35,515,0,0" VerticalAlignment="Top" Width="61" Source="/Images/Buttons/cash.png"/>
+        <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="56" Margin="177,515,0,0" VerticalAlignment="Top" Width="62" Source="/Images/Buttons/credit-card.png"/>
+        <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="101,515,0,0" VerticalAlignment="Top" Height="56" Width="60" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
+        <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="244,515,0,0" VerticalAlignment="Top" Height="56" Width="44" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+        <Rectangle HorizontalAlignment="Left" Height="501" Margin="658,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="615">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Label x:Name="lblTopProducts" Content="TOP 20 PRODUCTS" HorizontalAlignment="Left" Margin="40,350,0,0" VerticalAlignment="Top" Height="51" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
-        <ListView x:Name="lvwTopProducts" Margin="40,391,704,50">
+        <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="673,358,0,0" VerticalAlignment="Top" Height="51" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
+        <ListView x:Name="lvwTopProducts" Margin="673,414,72,27">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
@@ -99,5 +100,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Long" SelectedDateChanged="dtpPosReportFrom_SelectedDateChanged"/>
+        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top" Width="246" DisplayDate="11/17/2021 23:07:30"/>
     </Grid>
 </Window>
