@@ -135,6 +135,7 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
