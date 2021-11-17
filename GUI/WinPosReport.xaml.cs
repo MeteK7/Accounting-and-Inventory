@@ -61,7 +61,7 @@ namespace GUI
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
 
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
+            DataTable dtPos = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
 
             for (int rowIndex = 0; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
@@ -83,48 +83,42 @@ namespace GUI
 
             lvwTopProducts.Items.Clear();
 
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
-            DataTable dtPosDetail;
+            DataTable dtPosJoined = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
 
-            for (int posIndex = 0; posIndex < dtPos.Rows.Count; posIndex++)
+            for (int posIndex = 0; posIndex < dtPosJoined.Rows.Count; posIndex++)
             {
-                dtPosDetail = pointOfSaleDetailDAL.Search(Convert.ToInt32(dtPos.Rows[posIndex]["id"]));
+                addNew = true;
+                items = this.lvwTopProducts.Items;
 
-                for (int posDetailIndex = 0; posDetailIndex < dtPosDetail.Rows.Count; posDetailIndex++)
+
+                foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
                 {
-                    addNew = true;
-                    items = this.lvwTopProducts.Items;
-
-
-                    foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
+                    if (product.ProductId == Convert.ToInt32(dtPosJoined.Rows[posIndex]["product_id"]))
                     {
-                        if (product.ProductId==Convert.ToInt32(dtPosDetail.Rows[posDetailIndex]["product_id"]))
+                        product.ProductQuantitySold += Convert.ToDecimal(dtPosJoined.Rows[posIndex]["quantity"]);
+                        product.ProductTotalSalePrice = String.Format("{0:0.00}",
+                            Convert.ToDecimal(product.ProductTotalSalePrice) +
+                            (Convert.ToDecimal(dtPosJoined.Rows[posIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosJoined.Rows[posIndex]["quantity"])));
+                        addNew = false;//No need to run the loop again since there can be only one entry of a unique product.
+                        break;
+                    }
+                }
+
+                if (addNew == true)
+                {
+                    productId = dtPosJoined.Rows[posIndex]["product_id"].ToString();
+                    dtProduct = productDAL.SearchById(productId);
+
+                    lvwTopProducts.Items.Add(
+                        new PosReportDetailCUL()
                         {
-                            product.ProductQuantitySold += Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["quantity"]);
-                            product.ProductTotalSalePrice = String.Format("{0:0.00}",
-                                Convert.ToDecimal(product.ProductTotalSalePrice)+
-                                (Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["quantity"])));
-                            addNew = false;//No need to run the loop again since there can be only one entry of a unique product.
-                            break;
-                        }
-                    }
-
-                    if (addNew == true)
-                    {
-                        productId = dtPosDetail.Rows[posDetailIndex]["product_id"].ToString();
-                        dtProduct = productDAL.SearchById(productId);
-
-                        lvwTopProducts.Items.Add(
-                            new PosReportDetailCUL()
-                            {
-                                //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
-                                ProductId = Convert.ToInt32(dtPosDetail.Rows[posDetailIndex]["product_id"]),
-                                ProductName = dtProduct.Rows[initialIndex]["name"].ToString(),
-                                ProductQuantitySold = Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["quantity"]),
-                                ProductTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosDetail.Rows[posDetailIndex]["quantity"])))
-                            });
-                    }
+                            //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
+                            ProductId = Convert.ToInt32(dtPosJoined.Rows[posIndex]["product_id"]),
+                            ProductName = dtProduct.Rows[initialIndex]["name"].ToString(),
+                            ProductQuantitySold = Convert.ToDecimal(dtPosJoined.Rows[posIndex]["quantity"]),
+                            ProductTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPosJoined.Rows[posIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosJoined.Rows[posIndex]["quantity"])))
+                        });
                 }
             }
         }

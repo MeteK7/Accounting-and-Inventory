@@ -229,14 +229,48 @@ namespace DAL
         }
         #endregion
 
-        #region FETCH BY TODAY METHOD
-        public DataTable FetchReportByDate(string dateFrom, string dateTo)
+        #region JOIN RPORT BY DATE METHOD
+        public DataTable JoinReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dtReport = new DataTable();
 
                 String sqlQuery = "SELECT * FROM tbl_pos FULL OUTER JOIN tbl_pos_detailed ON tbl_pos_detailed.id=tbl_pos.id WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
+        #endregion
+
+        #region JOIN RPORT BY DATE METHOD
+        public DataTable FetchReportByDate(string dateFrom, string dateTo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pos WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
