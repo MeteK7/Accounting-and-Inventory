@@ -94,7 +94,7 @@
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductAmountSold}" Header="Product Amount Sold" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductQuantitySold}" Header="Product Quantity Sold" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Amount in Stock"/>
                 </GridView>
             </ListView.View>
