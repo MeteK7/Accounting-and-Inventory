@@ -106,18 +106,19 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, account_id=@account_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, sub_total=@sub_total, vat=@vat, discount=@discount, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, asset_id=@asset_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, gross_amount=@gross_amount, discount=@discount, sub_total=@sub_total, vat=@vat, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("payment_type_id", pointOfSaleCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("customer_id", pointOfSaleCUL.CustomerId);
-                cmd.Parameters.AddWithValue("account_id", pointOfSaleCUL.AssetId);
+                cmd.Parameters.AddWithValue("asset_id", pointOfSaleCUL.AssetId);
                 cmd.Parameters.AddWithValue("total_product_quantity", pointOfSaleCUL.TotalProductQuantity);
                 cmd.Parameters.AddWithValue("cost_total", pointOfSaleCUL.CostTotal);
+                cmd.Parameters.AddWithValue("gross_amount", pointOfSaleCUL.GrossAmount);
+                cmd.Parameters.AddWithValue("discount", pointOfSaleCUL.Discount);
                 cmd.Parameters.AddWithValue("sub_total", pointOfSaleCUL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfSaleCUL.Vat);
-                cmd.Parameters.AddWithValue("discount", pointOfSaleCUL.Discount);
                 cmd.Parameters.AddWithValue("grand_total", pointOfSaleCUL.GrandTotal);
                 cmd.Parameters.AddWithValue("added_date", pointOfSaleCUL.AddedDate);
                 cmd.Parameters.AddWithValue("added_by", pointOfSaleCUL.AddedBy);

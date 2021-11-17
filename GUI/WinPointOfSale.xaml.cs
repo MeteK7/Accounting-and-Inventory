@@ -485,7 +485,7 @@ namespace GUI
                 pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);
                 pointOfSaleCUL.CustomerId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
                 pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
-                pointOfSaleCUL.TotalProductQuantity = Convert.ToInt32(txtBasketQuantity.Text);
+                pointOfSaleCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
                 pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                 pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
