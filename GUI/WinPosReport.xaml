@@ -100,7 +100,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Long" SelectedDateChanged="dtpPosReportFrom_SelectedDateChanged"/>
-        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top" Width="246"/>
+        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short" SelectedDateChanged="dtpPosReportFrom_SelectedDateChanged"/>
+        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top" Width="246" SelectedDateChanged="dtpPosReportTo_SelectedDateChanged"/>
     </Grid>
 </Window>

@@ -230,13 +230,13 @@ namespace DAL
         #endregion
 
         #region FETCH BY TODAY METHOD
-        public DataTable FetchReportByDate(DateTime dateFrom, DateTime dateTo)
+        public DataTable FetchReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dtReport = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE added_date> " + dateFrom + " AND added_date<" + dateTo + "";
+                String sqlQuery = "SELECT * FROM tbl_pos FULL OUTER JOIN tbl_pos_detailed ON tbl_pos_detailed.id=tbl_pos.id WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -264,7 +264,7 @@ namespace DAL
         #endregion
 
         #region COUNT BY DAY METHOD
-        public int CountPaymentTypeByToday(DateTime dateFrom, DateTime dateTo, bool cashOrCredit)
+        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit)
         {
             SqlConnection conn = new SqlConnection(connString);
 
@@ -275,12 +275,12 @@ namespace DAL
             {
                 if (cashOrCredit == true)//Get the cash sales for today if the cashOrCredit boolean variable is true
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date> " + dateFrom + " AND added_date<" + dateTo + " AND payment_type_id=1";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=1 AND added_date >= '" + dateFrom + "' AND <= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
 
                 }
                 else//Get the credit sales for today if the cashOrCredit boolean variable is false
                 {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date> " + dateFrom + " AND added_date<" + dateTo + " AND payment_type_id=2";//This query counts the records from the beginning of the day to the rest of the day.
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE payment_type_id=2 AND added_date >= '" + dateFrom + "' AND <= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
                 }
 
                 conn.Open();

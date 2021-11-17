@@ -31,31 +31,37 @@ namespace GUI
         PosReportDetailDAL posReportDetailDAL = new PosReportDetailDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
+        string dateFrom, dateTo;
 
         public WinPosReport()
         {
             InitializeComponent();
+            dtpPosReportFrom.SelectedDate = DateTime.Now;
+            dtpPosReportTo.SelectedDate = DateTime.Now;
             LoadRectangles();
             LoadDataGrid();
-            dtpPosReportTo.SelectedDate = DateTime.Today;
+            
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void LoadRectangles()
         {
             bool cash = true, credit = false;
+            
+            dateFrom = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportFrom.SelectedDate);
+            dateTo = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportTo.SelectedDate);
 
-            lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
+            lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
 
-            lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
+            lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
 
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(Convert.ToDateTime(dtpPosReportFrom.SelectedDate), Convert.ToDateTime(dtpPosReportTo.SelectedDate));
+            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
 
             for (int rowIndex = 0; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
@@ -72,10 +78,12 @@ namespace GUI
             int initialIndex = 0;
             bool addNew = true;
             IEnumerable items;
+            dateFrom = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportFrom.SelectedDate);
+            dateTo = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportTo.SelectedDate);
 
             lvwTopProducts.Items.Clear();
 
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(Convert.ToDateTime(dtpPosReportFrom.SelectedDate), Convert.ToDateTime(dtpPosReportTo.SelectedDate));
+            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
             DataTable dtPosDetail;
             DataTable dtProduct;
 
@@ -123,7 +131,14 @@ namespace GUI
 
         private void dtpPosReportFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            MessageBox.Show(Convert.ToString(dtpPosReportFrom.SelectedDate));
+            LoadRectangles();
+            LoadDataGrid();
+        }
+
+        private void dtpPosReportTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadRectangles();
+            LoadDataGrid();
         }
     }
 }
