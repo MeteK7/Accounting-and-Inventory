@@ -508,7 +508,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldItemsRowCount, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
                         pointOfPurchaseDetailDAL.Delete(invoiceId);
@@ -784,7 +784,6 @@ namespace GUI
                     #endregion
 
                     #region REVERT THE STOCK
-                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
                     oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
                     productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion

@@ -99,10 +99,11 @@ namespace GUI
 
         int account = 1, bank = 2, supplier = 3,customer=4;
         int calledByVAT = 1, calledByDiscount = 2;
-        int oldItemsRowCount;
         int clickedArrow, clickedPrev = 0, clickedNext = 1;
-        int oldIdAsset, oldIdAssetCustomer;
+        int oldIdAsset, oldIdAssetCustomer, oldItemsRowCount;
+        int uneditedIdAsset, uneditedIdAssetCustomer;
         decimal oldBasketCostTotal, oldBasketSaleTotal, oldBasketSubTotal, oldBasketGrossAmount, oldBasketGrandTotal, oldBasketQuantity;
+        decimal uneditedBasketCostTotal, uneditedBasketSaleTotal, uneditedBasketSubTotal, uneditedBasketGrossAmount, uneditedBasketGrandTotal, uneditedBasketQuantity;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -446,14 +447,14 @@ namespace GUI
 
                 if (clickedNewOrEdit == clickedEdit)
                 {
-                    #region TABLE OLD ASSET REVERTING SECTION
+                    #region BALANCE REVERTING SECTION FOR ASSET
                     //REVERTING THE TABLE ASSET FOR BALANCE OF THE CUSTOMER.
 
-                    dtAsset = assetDAL.SearchById(oldIdAssetCustomer);
+                    dtAsset = assetDAL.SearchById(uneditedIdAsset);
                     oldSourceBalance = Convert.ToDecimal(dtAsset.Rows[initialIndex][colTxtSourceBalance]);
 
-                    assetCUL.Id = Convert.ToInt32(lblAssetCustomerId.Content);
-                    assetCUL.SourceBalance = oldSourceBalance + oldBasketGrandTotal;//We have to add the old grandTotal to the source balance because the new grand total may be different from it.
+                    assetCUL.SourceBalance = oldSourceBalance - uneditedBasketGrandTotal;//We have to subtract the old grandTotal from the asset's source balance because the new grand total may be different from it.
+                    assetCUL.Id = Convert.ToInt32(uneditedIdAsset);
                     isSuccessAsset = assetDAL.Update(assetCUL);
                     #endregion
                 }
@@ -464,7 +465,6 @@ namespace GUI
 
                 assetCUL.SourceBalance = oldSourceBalance + Convert.ToDecimal(txtBasketGrandTotal.Text);
                 assetCUL.Id = Convert.ToInt32(lblAssetId.Content);
-
                 isSuccessAsset = assetDAL.Update(assetCUL);
                 #endregion
 
@@ -518,7 +518,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit == clickedEdit)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldItemsRowCount, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -805,9 +805,9 @@ namespace GUI
             clickedNewOrEdit = clickedEdit;//1 stands for the user has entered the btnEdit.
             oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
-            oldIdAsset = Convert.ToInt32(lblAssetId.Content);
-            oldIdAssetCustomer = Convert.ToInt32(lblAssetCustomerId.Content);
-            oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+            uneditedIdAsset = Convert.ToInt32(lblAssetId.Content);
+            uneditedIdAssetCustomer = Convert.ToInt32(lblAssetCustomerId.Content);
+            uneditedBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
             ModifyToolsOnClickBtnNewOrEdit();
         }
 
@@ -827,7 +827,6 @@ namespace GUI
                     #endregion
 
                     #region REVERT THE STOCK
-                    oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
                     oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
                     productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
                     #endregion
