@@ -95,6 +95,7 @@ namespace GUI
         {
             btnMenuSave.IsEnabled = false;
             btnMenuCancel.IsEnabled = false;
+            cboSourceTo.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
@@ -107,6 +108,7 @@ namespace GUI
         {
             btnMenuSave.IsEnabled = true;
             btnMenuCancel.IsEnabled = true;
+            cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
