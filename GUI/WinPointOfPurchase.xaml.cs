@@ -96,7 +96,7 @@ namespace GUI
         int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int clickedArrow,clickedPrev=0,clickedNext=1;
-        int oldIdAsset, oldIdAssetSupplier,oldItemsRowCount;
+        int oldIdAsset, oldIdAssetSupplier,oldDgItemsRowCount;
         int uneditedIdAsset, uneditedIdAssetSupplier;
         decimal oldBasketCostTotal,oldBasketGrandTotal, oldBasketQuantity;//This variables are used while we are editing the datagrid in an active invoice page.
         decimal uneditedBasketCostTotal, uneditedBasketGrandTotal, uneditedBasketQuantity;//This variables are used when we click the edit button.
@@ -505,7 +505,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldItemsRowCount, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldDgItemsRowCount, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
                         pointOfPurchaseDetailDAL.Delete(invoiceId);
@@ -757,7 +757,7 @@ namespace GUI
         private void btnEditRecord_Click(object sender, RoutedEventArgs e)
         {
             clickedNewOrEdit = clickedEdit;//1 stands for the user has entered the btnEdit.
-            oldItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
+            oldDgItemsRowCount = dgProducts.Items.Count;//When the user clicks Edit, the index of old(previously saved) items row will be assigned to oldItemsRowCount.
             oldDgProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
 
             //YOU MUST ASSIGN THE OLD VALUES TO THE VARIABLES WITH THE PREFIX "unedited" JUST LIKE BELOW instead of "old" BECAUSE THOSE VARIABLES WITH THE PREFIX "old" ARE FOR DATA GRID CHANGE!!!
