@@ -20,7 +20,7 @@ namespace BLL
             decimal newQuantity;
             int initialRowIndex = 0;
             int colProductId = 0;
-            int colProductQuantity = 6;
+            int colProductQuantity = 5;
             decimal productQuantityFromDB;
             string colQtyNameInDb = "quantity_in_stock";
 
@@ -28,11 +28,11 @@ namespace BLL
 
             for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
             {
-                dataTableProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
+                dataTableProduct = productDAL.SearchById(dgOldProductCells[rowNo, colProductId]);
 
                 productQuantityFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb]);
 
-                if(calledBy=="POS")
+                if(calledBy== "WinPOS")
                     newQuantity = productQuantityFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Add the old amount if it is POS.
                 else
                     newQuantity = productQuantityFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Subtract the old amount if it is POP.
