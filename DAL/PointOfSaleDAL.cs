@@ -196,48 +196,6 @@ namespace DAL
         }
         #endregion
 
-        #region COUNT BY DAY METHOD
-        public int CountPaymentTypeByToday(bool cashOrCredit)
-        {
-            SqlConnection conn = new SqlConnection(connString);
-
-            int counter = 0;
-            string sqlQuery;
-
-            try
-            {
-                if (cashOrCredit == true)//Get the cash sales for today if the cashOrCredit boolean variable is true
-                {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=1";//This query counts the records from the beginning of the day to the rest of the day.
-
-                }
-                else//Get the credit sales for today if the cashOrCredit boolean variable is false
-                {
-                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date>Convert(date, getdate()) AND payment_type_id=2";//This query counts the records from the beginning of the day to the rest of the day.
-                }
-
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-                SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-                if (sqlDataReader.HasRows)
-                {
-                    sqlDataReader.Read(); // read first row
-                    counter = sqlDataReader.GetInt32(0);
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return counter;
-        }
-        #endregion
-
         #region FETCH BY TODAY METHOD
         public DataTable FetchReportByToday()
         {
@@ -302,6 +260,48 @@ namespace DAL
                     return dtReport;
                 }
             }
+        }
+        #endregion
+
+        #region COUNT BY DAY METHOD
+        public int CountPaymentTypeByToday(DateTime dateFrom, DateTime dateTo, bool cashOrCredit)
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            int counter = 0;
+            string sqlQuery;
+
+            try
+            {
+                if (cashOrCredit == true)//Get the cash sales for today if the cashOrCredit boolean variable is true
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date> " + dateFrom + " AND added_date<" + dateTo + " AND payment_type_id=1";//This query counts the records from the beginning of the day to the rest of the day.
+
+                }
+                else//Get the credit sales for today if the cashOrCredit boolean variable is false
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pos WHERE added_date> " + dateFrom + " AND added_date<" + dateTo + " AND payment_type_id=2";//This query counts the records from the beginning of the day to the rest of the day.
+                }
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read(); // read first row
+                    counter = sqlDataReader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return counter;
         }
         #endregion
 
