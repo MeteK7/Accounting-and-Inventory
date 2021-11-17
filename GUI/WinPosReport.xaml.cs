@@ -61,7 +61,7 @@ namespace GUI
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
 
-            DataTable dtPos = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
+            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
 
             for (int rowIndex = 0; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
