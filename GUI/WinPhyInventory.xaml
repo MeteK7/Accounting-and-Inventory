@@ -74,7 +74,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="400"/>
                     <GridViewColumn DisplayMemberBinding="{Binding CategoryName}" Header="Category" Width="150"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Rating}" Header="Rating" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding AmountInStock}" Header="Amount in Stock" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding QuantityInStock}" Header="Quantity in Stock" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding CostPrice}" Header="Cost Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding SalePrice}" Header="SalePrice" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding AddedDate}" Header="Added Date" Width="128"/>
