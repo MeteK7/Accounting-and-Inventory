@@ -274,9 +274,9 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "dependencies": {
-            "Microsoft.Extensions.DependencyInjection": {
+            "Syncfusion.SfInput.WPF": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[19.3.0.54, )"
             }
           },
           "imports": [

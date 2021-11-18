@@ -566,6 +566,7 @@
                 <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
             </Grid>
         </GroupBox>
+        <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Left" Margin="1128,303,0,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Broadway Copyist Text Ext" FontSize="20" />
 
     </Grid>
 </Window>

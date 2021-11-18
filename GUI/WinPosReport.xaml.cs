@@ -62,9 +62,6 @@ namespace GUI
             ClearRectangles();
 
             bool cash = true, credit = false;
-            
-            dateFrom = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportFrom.SelectedDate);
-            dateTo = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportTo.SelectedDate);
 
             lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
 
@@ -89,8 +86,6 @@ namespace GUI
             int initialIndex = 0;
             bool addNew = true;
             IEnumerable items;
-            dateFrom = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportFrom.SelectedDate);
-            dateTo = String.Format("{0:yyyy-MM-dd HH:mm:ss}", dtpPosReportTo.SelectedDate);
 
             lvwTopProducts.Items.Clear();
 
@@ -134,14 +129,11 @@ namespace GUI
             }
         }
 
-        private void dtpPosReportFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-            LoadRectangles();
-            LoadListView();
-        }
+            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
+            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
 
-        private void dtpPosReportTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
             LoadRectangles();
             LoadListView();
         }
