@@ -119,6 +119,7 @@
     <None Remove="Images\Buttons\printer.png" />
     <None Remove="Images\Buttons\printer_colorful.png" />
     <None Remove="Images\Buttons\processing.png" />
+    <None Remove="Images\Buttons\productivity.png" />
     <None Remove="Images\Buttons\qr-code.png" />
     <None Remove="Images\Buttons\receipt.png" />
     <None Remove="Images\Buttons\recycle-bin.png" />
@@ -266,6 +267,7 @@
     <Resource Include="Images\Buttons\printer.png" />
     <Resource Include="Images\Buttons\printer_colorful.png" />
     <Resource Include="Images\Buttons\processing.png" />
+    <Resource Include="Images\Buttons\productivity.png" />
     <Resource Include="Images\Buttons\qr-code.png" />
     <Resource Include="Images\Buttons\receipt.png" />
     <Resource Include="Images\Buttons\recycle-bin.png" />

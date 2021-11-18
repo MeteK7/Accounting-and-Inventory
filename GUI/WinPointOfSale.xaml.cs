@@ -289,7 +289,7 @@ namespace GUI
                     cboMenuPaymentType.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtPaymentTypeId].ToString());//Getting the id of purchase type.
                     cboMenuCustomer.SelectedValue = Convert.ToInt32(dataTablePos.Rows[initialIndex][colTxtCustomerId].ToString());//Getting the id of customer.
                     lblInvoiceId.Content = dataTablePos.Rows[initialIndex][colTxtId].ToString();
-                    lblDateAdded.Content = Convert.ToDateTime(dataTablePos.Rows[initialIndex][colTxtDateAdded]).ToString("f");
+                    lblDateAdded.Content = Convert.ToDateTime(dataTablePos.Rows[initialIndex][colTxtDateAdded]).ToString("MM/dd/yyyy HH:mm:ss");
 
                     #region LOADING THE PRODUCT DATA GRID
                     int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;

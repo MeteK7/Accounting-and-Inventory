@@ -28,6 +28,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ButtonGoStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/Backgrounds/business-analysis.jpg" Stretch="Fill"/>
@@ -100,10 +121,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="437,155,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
-        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="437,221,0,0" VerticalAlignment="Top" Width="246"/>
-        <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="23" Margin="688,155,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
-        <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="23" Margin="688,221,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
-        <Button x:Name="btnGo" Content="GO" HorizontalAlignment="Left" Margin="634,262,0,0" VerticalAlignment="Top" Height="34" Width="88" Click="btnGo_Click"/>
+        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="480,184,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
+        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="480,250,0,0" VerticalAlignment="Top" Width="246"/>
+        <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="730,184,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
+        <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="730,250,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
+        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="GO" HorizontalAlignment="Left" Margin="965,184,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>
