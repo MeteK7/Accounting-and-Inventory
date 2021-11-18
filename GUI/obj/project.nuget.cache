@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uAWocuLauBy4FJvxfEPzwmwTvOXpsKqnWduzVOCfong/dmeD9/OL9vsOC+wOD6DC7i1wa7ADP6bDHsWy2cp7Xw==",
+  "dgSpecHash": "YXc6r0923Difu2k4XSBGM6gfDzGxswpJZgysMR3ypAmRt8FRYd7ITZMribvv24OMif9s22EoCd1EkoeiXrvg7w==",
   "success": true,
   "projectFilePath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,9 @@
     "C:\\Users\\MeteK\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\MeteK\\.nuget\\packages\\syncfusion.licensing\\19.3.0.54\\syncfusion.licensing.19.3.0.54.nupkg.sha512",
+    "C:\\Users\\MeteK\\.nuget\\packages\\syncfusion.sfinput.wpf\\19.3.0.54\\syncfusion.sfinput.wpf.19.3.0.54.nupkg.sha512",
+    "C:\\Users\\MeteK\\.nuget\\packages\\syncfusion.shared.wpf\\19.3.0.54\\syncfusion.shared.wpf.19.3.0.54.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",

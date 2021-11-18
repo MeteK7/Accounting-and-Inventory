@@ -1,15 +1,37 @@
-﻿<Window x:Class="GUI.WinPosReport"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d" Height="861" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="GUI.WinPosReport"
+        mc:Ignorable="d" Height="967" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">
                 <Setter.Value>
                     <ImageBrush ImageSource="/Images/Icons/close.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonGoStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
@@ -51,13 +73,12 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Rectangle x:Name="rtgNumOfSales" HorizontalAlignment="Left" Height="216" Margin="20,368,0,0" Stroke="Black" VerticalAlignment="Top" Width="282
-                   ">
+        <Rectangle x:Name="rtgNumOfSales" HorizontalAlignment="Left" Height="216" Margin="20,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="282                    ">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="rtgCost" HorizontalAlignment="Left" Height="216" Margin="332,368,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
+        <Rectangle x:Name="rtgCost" HorizontalAlignment="Left" Height="216" Margin="332,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="282">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.9"/>
             </Rectangle.Fill>
@@ -72,19 +93,19 @@
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Label x:Name="lblNumOfSales" Content="NUMBER OF SALES" HorizontalAlignment="Left" Margin="43,387,0,0" VerticalAlignment="Top" Height="38" Width="237" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="357,387,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblNumOfSales" Content="NUMBER OF SALES" HorizontalAlignment="Left" Margin="43,357,0,0" VerticalAlignment="Top" Height="35" Width="237" FontSize="24" FontFamily="Times New Roman"/>
+        <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="357,354,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
         <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="52,629,0,0" VerticalAlignment="Top" Height="38" Width="236" FontSize="24" FontFamily="Times New Roman"/>
         <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="357,629,0,0" VerticalAlignment="Top" Height="38" Width="245" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Left" Margin="43,429,0,0" VerticalAlignment="Top" Height="80" Width="237" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="366,428,0,0" VerticalAlignment="Top" Height="86" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Left" Margin="43,400,0,0" VerticalAlignment="Top" Height="92" Width="237" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+        <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="362,400,0,0" VerticalAlignment="Top" Height="92" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
         <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="52,672,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
         <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="357,672,0,0" VerticalAlignment="Top" Height="85" Width="236" FontSize="72" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Image x:Name="imgCash" HorizontalAlignment="Left" Height="56" Margin="35,515,0,0" VerticalAlignment="Top" Width="61" Source="/Images/Buttons/cash.png"/>
-        <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="56" Margin="177,515,0,0" VerticalAlignment="Top" Width="62" Source="/Images/Buttons/credit-card.png"/>
-        <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="101,515,0,0" VerticalAlignment="Top" Height="56" Width="60" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
-        <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="244,515,0,0" VerticalAlignment="Top" Height="56" Width="44" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
-        <Rectangle HorizontalAlignment="Left" Height="501" Margin="658,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="615">
+        <Image x:Name="imgCash" HorizontalAlignment="Left" Height="51" Margin="35,501,0,0" VerticalAlignment="Top" Width="61" Source="/Images/Buttons/cash.png"/>
+        <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="51" Margin="170,501,0,0" VerticalAlignment="Top" Width="62" Source="/Images/Buttons/credit-card.png"/>
+        <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="101,501,0,0" VerticalAlignment="Top" Height="51" Width="60" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
+        <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="236,501,0,0" VerticalAlignment="Top" Height="51" Width="44" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+        <Rectangle HorizontalAlignment="Left" Height="613" Margin="658,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="615">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
             </Rectangle.Fill>
@@ -100,7 +121,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short" SelectedDateChanged="dtpPosReportFrom_SelectedDateChanged"/>
-        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top" Width="246" SelectedDateChanged="dtpPosReportTo_SelectedDateChanged"/>
+        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="480,184,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
+        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="480,250,0,0" VerticalAlignment="Top" Width="246"/>
+        <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="730,184,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
+        <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="730,250,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120"/>
+        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="GO" HorizontalAlignment="Left" Margin="965,184,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

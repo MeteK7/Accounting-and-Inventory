@@ -238,6 +238,9 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-window
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Microsoft.Extensions.Primitives.dll
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Syncfusion.Licensing.dll
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Syncfusion.SfInput.WPF.dll
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Syncfusion.Shared.WPF.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\System.Data.SqlClient.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\win-arm64\native\sni.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\runtimes\win-x64\native\sni.dll

@@ -197,6 +197,37 @@
           }
         }
       },
+      "Syncfusion.Licensing/19.3.0.54": {
+        "runtime": {
+          "lib/net5.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "19.3.0.54",
+            "fileVersion": "19.3.0.54"
+          }
+        }
+      },
+      "Syncfusion.SfInput.WPF/19.3.0.54": {
+        "dependencies": {
+          "Syncfusion.Licensing": "19.3.0.54",
+          "Syncfusion.Shared.WPF": "19.3.0.54"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/Syncfusion.SfInput.WPF.dll": {
+            "assemblyVersion": "19.3500.0.54",
+            "fileVersion": "19.3500.0.54"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/19.3.0.54": {
+        "dependencies": {
+          "Syncfusion.Licensing": "19.3.0.54"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "assemblyVersion": "19.3500.0.54",
+            "fileVersion": "19.3500.0.54"
+          }
+        }
+      },
       "System.Configuration.ConfigurationManager/5.0.0": {
         "dependencies": {
           "System.Security.Cryptography.ProtectedData": "5.0.0",
@@ -471,6 +502,27 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/19.3.0.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZPtwt1L70XuU98tTPhL9bTUmotIoUiTj+SijIKDDNoyX6ecjBINkAA/FKqBBRYOxVU/zsjU9qQB3BDxJlRJJ6Q==",
+      "path": "syncfusion.licensing/19.3.0.54",
+      "hashPath": "syncfusion.licensing.19.3.0.54.nupkg.sha512"
+    },
+    "Syncfusion.SfInput.WPF/19.3.0.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vJSD8T12Sj/kuI9b0zyyKtPtVYJFdDs/QLJAqwz9aXCtinfPjDx4cWoI+bpvjMgtqgx5UV3oBsCw73da/Bp0EA==",
+      "path": "syncfusion.sfinput.wpf/19.3.0.54",
+      "hashPath": "syncfusion.sfinput.wpf.19.3.0.54.nupkg.sha512"
+    },
+    "Syncfusion.Shared.WPF/19.3.0.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+IWYwpykilg63D3QCfhw49HVaJqQlGct3mRkYFhwlLp2H5T1ONqy2PxnsCTdrL9p11PQ4IyOZfKxeSSsoG1gBg==",
+      "path": "syncfusion.shared.wpf/19.3.0.54",
+      "hashPath": "syncfusion.shared.wpf.19.3.0.54.nupkg.sha512"
     },
     "System.Configuration.ConfigurationManager/5.0.0": {
       "type": "package",
