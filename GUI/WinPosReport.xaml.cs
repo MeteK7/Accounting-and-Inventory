@@ -37,16 +37,25 @@ namespace GUI
         public WinPosReport()
         {
             InitializeComponent();
-            dtpPosReportFrom.SelectedDate = DateTime.Now;
-            dtpPosReportTo.SelectedDate = DateTime.Now;
+            LoadDefaultDate();
             LoadRectangles();
             LoadListView();
-            
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void LoadDefaultDate()
+        {
+            dtpPosReportFrom.SelectedDate = DateTime.Today;
+            dtpPosReportTo.SelectedDate = DateTime.Today;
+            timePickerFrom.Value = Convert.ToDateTime("00:00:00");
+            timePickerTo.Value = Convert.ToDateTime("23:59:59");
+
+            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
+            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
         }
 
         private void ClearRectangles()
