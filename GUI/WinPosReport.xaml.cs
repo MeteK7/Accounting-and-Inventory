@@ -94,7 +94,7 @@ namespace GUI
             #endregion
 
             #region USER SALES
-            DataTable dtUserSales = posReportDAL.SumSalesByUserBetweenDates();
+            DataTable dtUserSales = pointOfSaleDAL.SumSalesByUserBetweenDates(dateFrom, dateTo);
             int userId;
             decimal userSaleAmount;
             string userFullName;
