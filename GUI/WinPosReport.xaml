@@ -121,5 +121,17 @@
 
             </Grid>
         </GroupBox>
+        <GroupBox x:Name="grpUserSales" Header="User Sales" Margin="315,191,763,596" FontSize="22" BorderBrush="Black">
+            <Grid>
+                <ListView>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="User" Width="100"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserSaleAmount}" Header="Amount" Width="135"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>   
