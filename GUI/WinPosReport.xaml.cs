@@ -94,6 +94,7 @@ namespace GUI
             #endregion
 
             #region USER SALES
+            lvwUserSales.Items.Clear();//Clearing the listview before loading new datas in case the user changes the dates.
             DataTable dtUserSales = pointOfSaleDAL.SumSalesByUserBetweenDates(dateFrom, dateTo);
             int userId;
             decimal userSaleAmount;
@@ -125,7 +126,7 @@ namespace GUI
             bool addNew = true;
             IEnumerable items;
 
-            lvwTopProducts.Items.Clear();
+            lvwProducts.Items.Clear();
 
             DataTable dtPosJoined = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
@@ -133,7 +134,7 @@ namespace GUI
             for (int rowIndex = 0; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
             {
                 addNew = true;
-                items = this.lvwTopProducts.Items;
+                items = this.lvwProducts.Items;
 
 
                 foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
@@ -154,7 +155,7 @@ namespace GUI
                     productId = dtPosJoined.Rows[rowIndex]["product_id"].ToString();
                     dtProduct = productDAL.SearchById(productId);
 
-                    lvwTopProducts.Items.Add(
+                    lvwProducts.Items.Add(
                         new PosReportDetailCUL()
                         {
                             //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),

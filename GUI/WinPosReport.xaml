@@ -79,7 +79,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="709,50,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
-        <ListView x:Name="lvwTopProducts" Margin="694,106,36,27">
+        <ListView x:Name="lvwProducts" Margin="694,106,36,27">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
