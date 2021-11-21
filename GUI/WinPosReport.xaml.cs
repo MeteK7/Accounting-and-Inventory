@@ -58,7 +58,7 @@ namespace GUI
             dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
         }
 
-        private void ClearRectangles()
+        private void ClearGroupBoxes()
         {
             lblNumOfSalesVar.Content = initialIndex.ToString();
             lblCostVar.Content = initialIndex.ToString();
@@ -68,8 +68,9 @@ namespace GUI
 
         private void LoadPayments()
         {
-            ClearRectangles();
+            ClearGroupBoxes();
 
+            #region NUMBER OF SALES
             bool cash = true, credit = false;
 
             lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
@@ -77,7 +78,9 @@ namespace GUI
             lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
+            #endregion
 
+            #region PAYMENT RESULTS
             DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
 
             for (int rowIndex = 0; rowIndex < dtPos.Rows.Count; rowIndex++)
@@ -87,6 +90,7 @@ namespace GUI
             }
 
             lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
+            #endregion
         }
 
         private void LoadListView()
