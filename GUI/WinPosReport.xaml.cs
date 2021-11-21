@@ -38,7 +38,7 @@ namespace GUI
         {
             InitializeComponent();
             LoadDefaultDate();
-            LoadRectangles();
+            LoadPayments();
             LoadListView();
         }
 
@@ -66,7 +66,7 @@ namespace GUI
             lblProfitVar.Content = initialIndex.ToString();
         }
 
-        private void LoadRectangles()
+        private void LoadPayments()
         {
             ClearRectangles();
 
@@ -143,7 +143,7 @@ namespace GUI
             dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
             dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
 
-            LoadRectangles();
+            LoadPayments();
             LoadListView();
         }
     }
