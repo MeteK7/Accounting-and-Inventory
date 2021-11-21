@@ -78,13 +78,13 @@ namespace DAL
         #endregion
 
         #region FETCH ID BY DATE METHOD
-        public DataTable SumSalesByUser()
+        public DataTable SumSalesByUserBetweenDates(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "Select *, SUM([grand_total]) FROM tbl_pos_report GROUP BY added_by";
+                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pos GROUP BY added_by WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
