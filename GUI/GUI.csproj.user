@@ -46,6 +46,9 @@
     <Compile Update="WinPointOfSale.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WinPopReport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinPosReport.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +103,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinPointOfSale.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinPopReport.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinPosReport.xaml">
