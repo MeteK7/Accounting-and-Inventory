@@ -399,5 +399,40 @@ namespace DAL
             }
         }
         #endregion
+
+        #region TOTAL PURCHASES BY USER BETWEEN TWO DATES
+        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pos WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
     }
 }
