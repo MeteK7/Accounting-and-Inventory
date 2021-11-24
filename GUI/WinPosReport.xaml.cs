@@ -132,7 +132,7 @@ namespace GUI
             for (int rowIndex = 0; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
             {
                 addNew = true;
-                items = this.lvwProducts.Items;
+                items = lvwProducts.Items;
 
 
                 foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.

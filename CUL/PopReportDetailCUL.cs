@@ -15,6 +15,6 @@ namespace CUL
         public decimal ProductQuantityPurchased { get; set; }
         public string ProductTotalCostPrice { get; set; }
         public string UserFullName { get; set; }
-        public decimal UserSaleAmount { get; set; }
+        public decimal UserPurchaseAmount { get; set; }
     }
 }

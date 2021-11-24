@@ -1,6 +1,8 @@
-﻿using DAL;
+﻿using CUL;
+using DAL;
 using KabaAccounting.CUL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace GUI
         UserDAL userDAL = new UserDAL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
+        PopReportDetailCUL popReportDetailCUL = new PopReportDetailCUL();
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
         PointOfPurchaseDetailDAL pointOfPurchaseDetailDAL = new PointOfPurchaseDetailDAL();
         string dateFrom, dateTo;
@@ -72,7 +75,7 @@ namespace GUI
 
             lblCreditPurchases.Content = pointOfPurchaseDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
-            lblNumOfPurchasesVar.Content = Convert.ToInt32(lblCashPurchases.Content) + Convert.ToInt32(lblCreditPurchases.Content);//Sum cash and credit amount to find the total number of sales.
+            lblNumOfPurchasesVar.Content = Convert.ToInt32(lblCashPurchases.Content) + Convert.ToInt32(lblCreditPurchases.Content);//Sum cash and credit amount to find the total number of purchases.
             #endregion
 
             #region PAYMENT RESULTS
@@ -118,7 +121,7 @@ namespace GUI
             bool addNew = true;
             IEnumerable items;
 
-            lvwProducts.Items.Clear();
+            lvwUserPurchases.Items.Clear();
 
             DataTable dtPopJoined = pointOfPurchaseDAL.JoinReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
@@ -126,17 +129,17 @@ namespace GUI
             for (int rowIndex = 0; rowIndex < dtPopJoined.Rows.Count; rowIndex++)
             {
                 addNew = true;
-                items = this.lvwProducts.Items;
+                items = lvwUserPurchases.Items;
 
 
                 foreach (PopReportDetailCUL product in items)//This loop is for preventing duplications.
                 {
                     if (product.ProductId == Convert.ToInt32(dtPopJoined.Rows[rowIndex]["product_id"]))
                     {
-                        product.ProductQuantitySold += Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"]);
-                        product.ProductTotalPurchasePrice = String.Format("{0:0.00}",
-                            Convert.ToDecimal(product.ProductTotalPurchasePrice) +
-                            (Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["product_sale_price"]) * Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"])));
+                        product.ProductQuantityPurchased += Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"]);
+                        product.ProductTotalCostPrice = String.Format("{0:0.00}",
+                            Convert.ToDecimal(product.ProductTotalCostPrice) +
+                            (Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["product_purchase_price"]) * Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"])));
                         addNew = false;//No need to run the loop again since there can be only one entry of a unique product.
                         break;
                     }
@@ -147,14 +150,14 @@ namespace GUI
                     productId = dtPopJoined.Rows[rowIndex]["product_id"].ToString();
                     dtProduct = productDAL.SearchById(productId);
 
-                    lvwProducts.Items.Add(
+                    lvwUserPurchases.Items.Add(
                         new PopReportDetailCUL()
                         {
                             //InvoiceId = Convert.ToInt32(dataTablePopDetailToday.Rows[posDetailIndex]["invoice_no"]),
                             ProductId = Convert.ToInt32(dtPopJoined.Rows[rowIndex]["product_id"]),
                             ProductName = dtProduct.Rows[initialIndex]["name"].ToString(),
-                            ProductQuantitySold = Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"]),
-                            ProductTotalPurchasePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["product_sale_price"]) * Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"])))
+                            ProductQuantityPurchased = Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"]),
+                            ProductTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["product_purchase_price"]) * Convert.ToDecimal(dtPopJoined.Rows[rowIndex]["quantity"])))
                         });
                 }
             }
