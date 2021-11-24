@@ -267,6 +267,7 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-window
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPhyInventory.g.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPointOfPurchase.g.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPointOfSale.g.cs
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPopReport.g.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPosReport.g.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinProducts.g.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinReceipt.g.cs
@@ -288,6 +289,7 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-window
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPhyInventory.baml
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPointOfPurchase.baml
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPointOfSale.baml
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPopReport.baml
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinPosReport.baml
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinProducts.baml
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\WinReceipt.baml

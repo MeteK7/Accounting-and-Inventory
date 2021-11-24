@@ -31,6 +31,7 @@
     <None Remove="Images\Backgrounds\business_background_white-01.jpg" />
     <None Remove="Images\Backgrounds\clouds.jpg" />
     <None Remove="Images\Backgrounds\customer.png" />
+    <None Remove="Images\Backgrounds\futuristic-abstract.jpg" />
     <None Remove="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />
     <None Remove="Images\Backgrounds\glasses-calculator-tablet-white-neat-desk.jpg" />
     <None Remove="Images\Backgrounds\grunge-paint-background.jpg" />
@@ -143,6 +144,7 @@
 
   <ItemGroup>
     <Resource Include="Images\Backgrounds\bg-expenses.jpg" />
+    <Resource Include="Images\Backgrounds\futuristic-abstract.jpg" />
     <Resource Include="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />
   </ItemGroup>
 

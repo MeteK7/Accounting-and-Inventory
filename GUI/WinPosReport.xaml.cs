@@ -28,8 +28,6 @@ namespace GUI
         UserDAL userDAL = new UserDAL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
-        PosReportDAL posReportDAL = new PosReportDAL();
-        PosReportDetailDAL posReportDetailDAL = new PosReportDetailDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         string dateFrom, dateTo;
@@ -46,6 +44,15 @@ namespace GUI
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnGo_Click(object sender, RoutedEventArgs e)
+        {
+            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
+            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
+
+            LoadPayments();
+            LoadListView();
         }
 
         private void LoadDefaultDate()
@@ -95,7 +102,7 @@ namespace GUI
 
             #region USER SALES
             lvwUserSales.Items.Clear();//Clearing the listview before loading new datas in case the user changes the dates.
-            DataTable dtUserSales = pointOfSaleDAL.SumSalesByUserBetweenDates(dateFrom, dateTo);
+            DataTable dtUserSales = pointOfSaleDAL.SumAmountByUserBetweenDates(dateFrom, dateTo);
             int userId;
             decimal userSaleAmount;
             string userFullName;
@@ -134,7 +141,7 @@ namespace GUI
             for (int rowIndex = 0; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
             {
                 addNew = true;
-                items = this.lvwProducts.Items;
+                items = lvwProducts.Items;
 
 
                 foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
@@ -166,15 +173,6 @@ namespace GUI
                         });
                 }
             }
-        }
-
-        private void btnGo_Click(object sender, RoutedEventArgs e)
-        {
-            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
-            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
-
-            LoadPayments();
-            LoadListView();
         }
     }
 }

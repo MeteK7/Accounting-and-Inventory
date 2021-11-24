@@ -322,5 +322,151 @@ namespace DAL
             }
         }
         #endregion
+
+        #region COUNT BY DAY METHOD
+        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            int counter = 0;
+            string sqlQuery;
+
+            try
+            {
+                if (cashOrCredit == true)//Get the cash purchases for today if the cashOrCredit boolean variable is true
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pop WHERE payment_type_id=1 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+
+                }
+                else//Get the credit purchases for today if the cashOrCredit boolean variable is false
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pop WHERE payment_type_id=2 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+                }
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read(); // read first row
+                    counter = sqlDataReader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return counter;
+        }
+        #endregion
+
+
+        #region JOIN RPORT BY DATE METHOD
+        public DataTable FetchReportByDate(string dateFrom, string dateTo) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pop WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
+        #endregion
+
+        #region TOTAL PURCHASES BY USER BETWEEN TWO DATES
+        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pop WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region JOIN REPORT BY DATE METHOD
+        public DataTable JoinReportByDate(string dateFrom, string dateTo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pop FULL OUTER JOIN tbl_pop_detailed ON tbl_pop_detailed.id=tbl_pop.id WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
+        #endregion
     }
 }

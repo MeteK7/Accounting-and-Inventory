@@ -351,7 +351,7 @@
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Id" Width="90">
+                        <DataGridTemplateColumn Header="Id" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -359,7 +359,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Name" Width="475">
+                        <DataGridTemplateColumn Header="Name" Width="455">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -367,7 +367,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Unit" Width="80">
+                        <DataGridTemplateColumn Header="Unit" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox x:Name="dgTxtProductUnit" ItemsSource="{Binding UnitCboItemsSource}"

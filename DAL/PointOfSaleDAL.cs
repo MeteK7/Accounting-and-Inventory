@@ -229,7 +229,7 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN RPORT BY DATE METHOD
+        #region JOIN REPORT BY DATE METHOD
         public DataTable JoinReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -263,7 +263,7 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN RPORT BY DATE METHOD
+        #region JOIN REPORT BY DATE METHOD
         public DataTable FetchReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -421,7 +421,7 @@ namespace DAL
         #endregion
 
         #region TOTAL SALES BY USER BETWEEN TWO DATES
-        public DataTable SumSalesByUserBetweenDates(string dateFrom, string dateTo)
+        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
