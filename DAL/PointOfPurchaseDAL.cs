@@ -322,5 +322,47 @@ namespace DAL
             }
         }
         #endregion
+
+        #region COUNT BY DAY METHOD
+        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit)
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            int counter = 0;
+            string sqlQuery;
+
+            try
+            {
+                if (cashOrCredit == true)//Get the cash purchases for today if the cashOrCredit boolean variable is true
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pop WHERE payment_type_id=1 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+
+                }
+                else//Get the credit purchases for today if the cashOrCredit boolean variable is false
+                {
+                    sqlQuery = "Select COUNT(*) FROM tbl_pop WHERE payment_type_id=2 AND added_date >= '" + dateFrom + "' AND added_date<= '" + dateTo + "'";//This query counts the records from the beginning of the day to the rest of the day.
+                }
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read(); // read first row
+                    counter = sqlDataReader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return counter;
+        }
+        #endregion
     }
 }
