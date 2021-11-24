@@ -75,11 +75,13 @@ namespace GUI
             colTxtInvoiceNo = "invoice_no",
             colTxtId = "id",
             colTxtDateAdded= "added_date",
-            colTxtProductQtyPurchased = "quantity",
+            colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
             colTxtProductSalePrice = "product_sale_price",
+            colTxtProductDiscount="product_discount",
+            colTxtProductVAT="product_vat",
             colTxtBarcodeRetail = "barcode_retail",
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
@@ -178,7 +180,8 @@ namespace GUI
             txtProductName.IsEnabled = false;
             txtProductSalePrice.IsEnabled = false;
             txtProductQuantity.IsEnabled = false;
-            txtProductTotalSalePrice.IsEnabled = false;
+            txtProductDiscount.IsEnabled = false;
+            txtProductVAT.IsEnabled = false;
         }
 
         private void ModifyToolsOnClickBtnNewOrEdit()//Do NOT repeat yourself! You have used IsEnabled function for these toolbox contents many times!
@@ -199,7 +202,8 @@ namespace GUI
             txtProductName.IsEnabled = true;
             txtProductSalePrice.IsEnabled = true;
             txtProductQuantity.IsEnabled = true;
-            txtProductTotalSalePrice.IsEnabled = true;
+            txtProductDiscount.IsEnabled = true;
+            txtProductVAT.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
         }
 
@@ -225,6 +229,9 @@ namespace GUI
             cboProductUnit.ItemsSource = null;
             txtProductSalePrice.Text = "";
             txtProductQuantity.Text = "";
+            txtProductDiscount.Text = "";
+            txtProductVAT.Text = "";
+            txtProductGrossTotalSalePrice.Text = "";
             txtProductTotalSalePrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
@@ -244,7 +251,7 @@ namespace GUI
 
         private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
         {
-            string productId, productName, productSalePrice, productQuantity, productTotalSalePrice;
+            string productId, productName, productSalePrice, productQuantity, productDiscount,productVAT, productGrossTotalSalePrice, productTotalSalePrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
@@ -291,9 +298,12 @@ namespace GUI
                     {
                         productId = dtPosDetail.Rows[currentRow][colTxtProductId].ToString();
                         productCurrentUnitId = Convert.ToInt32(dtPosDetail.Rows[currentRow][colTxtProductUnitId]);
+                        productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQty].ToString();
                         productSalePrice = dtPosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
-                        productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
+                        productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
+                        productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity))-Convert.ToDecimal(productDiscount)+Convert.ToDecimal(productVAT));
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
