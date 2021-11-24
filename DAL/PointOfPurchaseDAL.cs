@@ -324,7 +324,7 @@ namespace DAL
         #endregion
 
         #region COUNT BY DAY METHOD
-        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit)
+        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
         {
             SqlConnection conn = new SqlConnection(connString);
 
@@ -362,6 +362,41 @@ namespace DAL
                 conn.Close();
             }
             return counter;
+        }
+        #endregion
+
+
+        #region JOIN RPORT BY DATE METHOD
+        public DataTable FetchReportByDate(string dateFrom, string dateTo) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pop WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
         }
         #endregion
     }
