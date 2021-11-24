@@ -93,7 +93,7 @@ namespace GUI
 
             #region USER SALES
             lvwUserSales.Items.Clear();//Clearing the listview before loading new datas in case the user changes the dates.
-            DataTable dtUserSales = pointOfSaleDAL.SumSalesByUserBetweenDates(dateFrom, dateTo);
+            DataTable dtUserSales = pointOfSaleDAL.SumAmountByUserBetweenDates(dateFrom, dateTo);
             int userId;
             decimal userSaleAmount;
             string userFullName;
