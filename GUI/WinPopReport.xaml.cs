@@ -46,6 +46,15 @@ namespace GUI
             this.Close();
         }
 
+        private void btnGo_Click(object sender, RoutedEventArgs e)
+        {
+            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPopReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
+            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPopReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
+
+            LoadPayments();
+            LoadListView();
+        }
+
         private void LoadDefaultDate()
         {
             dtpPopReportFrom.SelectedDate = DateTime.Today;
@@ -161,15 +170,6 @@ namespace GUI
                         });
                 }
             }
-        }
-
-        private void btnGo_Click(object sender, RoutedEventArgs e)
-        {
-            dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPopReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
-            dateTo = String.Format("{0:yyyy-MM-dd}", dtpPopReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
-
-            LoadPayments();
-            LoadListView();
         }
     }
 }
