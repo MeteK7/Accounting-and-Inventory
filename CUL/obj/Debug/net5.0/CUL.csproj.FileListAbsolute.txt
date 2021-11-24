@@ -44,3 +44,4 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.AssemblyReference.cache

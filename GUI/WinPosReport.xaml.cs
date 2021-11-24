@@ -28,8 +28,6 @@ namespace GUI
         UserDAL userDAL = new UserDAL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
-        PosReportDAL posReportDAL = new PosReportDAL();
-        PosReportDetailDAL posReportDetailDAL = new PosReportDetailDAL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         string dateFrom, dateTo;

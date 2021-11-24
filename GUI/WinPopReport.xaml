@@ -50,7 +50,7 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Images/Backgrounds/business-analysis.jpg" Stretch="Fill"/>
+        <ImageBrush ImageSource="/Images/Backgrounds/futuristic-abstract.jpg" Stretch="Fill"/>
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
@@ -88,8 +88,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
-        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="65,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
+        <DatePicker x:Name="dtpPopReportFrom" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
+        <DatePicker x:Name="dtpPopReportTo" HorizontalAlignment="Left" Margin="65,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
         <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
         <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,127,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
         <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="GO" HorizontalAlignment="Left" Margin="477,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
@@ -110,21 +110,21 @@
         <Label x:Name="lblDateTo" Content="To:" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
         <GroupBox Header="Number of Purchases" Margin="10,191,1033,596" FontSize="22" BorderBrush="Black">
             <Grid>
-                <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="59" Width="255" FontSize="48" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F" Margin="0,10,0,0"/>
+                <Label x:Name="lblNumOfPurchasesVar" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="59" Width="255" FontSize="48" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F" Margin="0,10,0,0"/>
                 <Image x:Name="imgCash" HorizontalAlignment="Left" Height="50" Margin="9,87,0,0" VerticalAlignment="Top" Width="60" Source="/Images/Buttons/cash.png"/>
                 <Image x:Name="imgCredit" HorizontalAlignment="Left" Height="50" Margin="140,87,0,0" VerticalAlignment="Top" Width="62" Source="/Images/Buttons/credit-card.png"/>
-                <Label x:Name="lblCashSales" Content="0" HorizontalAlignment="Left" Margin="72,87,0,0" VerticalAlignment="Top" Height="50" Width="63" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
-                <Label x:Name="lblCreditSales" Content="0" HorizontalAlignment="Left" Margin="206,87,0,0" VerticalAlignment="Top" Height="50" Width="67" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblCashPurchases" Content="0" HorizontalAlignment="Left" Margin="72,87,0,0" VerticalAlignment="Top" Height="50" Width="63" VerticalContentAlignment="Center" FontFamily="Times New Roman" FontSize="22"/>
+                <Label x:Name="lblCreditPurchases" Content="0" HorizontalAlignment="Left" Margin="206,87,0,0" VerticalAlignment="Top" Height="50" Width="67" FontSize="22" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="grpUserSales" Header="User Sales" Margin="315,191,665,596" FontSize="22" BorderBrush="Black">
+        <GroupBox x:Name="grpUserPurchases" Header="User Purchases" Margin="315,191,665,596" FontSize="22" BorderBrush="Black">
             <Grid>
-                <ListView x:Name="lvwUserSales">
+                <ListView x:Name="lvwUserPurchases">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="User" Width="200"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding UserSaleAmount}" Header="Amount" Width="135"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserPurchaseAmount}" Header="Amount" Width="135"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
