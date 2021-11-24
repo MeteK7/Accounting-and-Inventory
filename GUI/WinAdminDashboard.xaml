@@ -743,7 +743,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonPopReportsStyle}" x:Name="btnPopReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonPopReportsStyle}" x:Name="btnPopReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPopReports_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/chart.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
