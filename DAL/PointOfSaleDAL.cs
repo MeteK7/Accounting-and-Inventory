@@ -229,7 +229,7 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN RPORT BY DATE METHOD
+        #region JOIN REPORT BY DATE METHOD
         public DataTable JoinReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -263,7 +263,7 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN RPORT BY DATE METHOD
+        #region JOIN REPORT BY DATE METHOD
         public DataTable FetchReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))

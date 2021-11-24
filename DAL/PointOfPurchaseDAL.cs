@@ -407,7 +407,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pos WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
+                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pop WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -430,6 +430,40 @@ namespace DAL
                         dataTable.Dispose();
                     }
                     return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region JOIN REPORT BY DATE METHOD
+        public DataTable JoinReportByDate(string dateFrom, string dateTo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pop FULL OUTER JOIN tbl_pop_detailed ON tbl_pop_detailed.id=tbl_pop.id WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
                 }
             }
         }
