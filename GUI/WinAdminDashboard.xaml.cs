@@ -135,6 +135,12 @@ namespace GUI
             winPosReport.Show();
         }
 
+        private void btnPopReports_Click(object sender, RoutedEventArgs e)
+        {
+            WinPopReport winPopReport = new WinPopReport();
+            winPopReport.Show();
+        }
+
         private void btnPointOfPurchase_Click(object sender, RoutedEventArgs e)
         {
             WinPointOfPurchase winPointOfPurchase = new WinPointOfPurchase();
