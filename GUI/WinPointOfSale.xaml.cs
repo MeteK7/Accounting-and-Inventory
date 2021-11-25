@@ -1027,6 +1027,15 @@ namespace GUI
         {
             DgTextChanged();
         }
+        private void dgTxtProductDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
+
+        private void dgTxtProductVAT_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
 
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
@@ -1135,16 +1144,6 @@ namespace GUI
                 txtProductVAT.Text = initialIndex.ToString();
         }
 
-        private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
-        {
-            CalculateProductTotalSalePrice();
-        }
-
-        private void txtProductVAT_KeyUp(object sender, KeyEventArgs e)
-        {
-            CalculateProductTotalSalePrice();
-        }
-
         private void CalculateProductTotalSalePrice()
         {
             decimal number;
@@ -1177,6 +1176,16 @@ namespace GUI
                     txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();//Since the Discount is zero, we only need to calculate the Grand Total without Discount.
                 }
             }
+        }
+
+        private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
+        }
+
+        private void txtProductVAT_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
         }
 
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
