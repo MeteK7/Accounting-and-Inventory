@@ -708,9 +708,13 @@ namespace GUI
 
             txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)- Convert.ToDecimal(txtProductDiscount.Text)).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
+            txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text)+Convert.ToDecimal(txtProductDiscount.Text)).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + ((Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)- Convert.ToDecimal(txtProductDiscount.Text))).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
+
+            txtBasketVat.Text = (Convert.ToDecimal(txtBasketVat.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
 
         }
 
@@ -751,7 +755,7 @@ namespace GUI
 
             txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text)).ToString();
             
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - (Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text))).ToString();
 
             txtBasketDiscount.Text= (Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
 
