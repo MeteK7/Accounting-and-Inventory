@@ -1007,7 +1007,8 @@ namespace GUI
             if (txtDgProductQuantity.Text != "" && txtDgProductSalePrice.Text != "")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductGrossTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductTotalSalePrice.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text))- Convert.ToDecimal(txtDgProductDiscount.Text)+ Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtBasketGrossAmount.Text = (oldBasketGrossAmount + Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text)).ToString();
