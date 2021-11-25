@@ -54,7 +54,7 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_sale_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price, @product_sale_price, @product_discount, @product_vat)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_sale_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_sale_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
