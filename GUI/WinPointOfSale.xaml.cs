@@ -660,8 +660,8 @@ namespace GUI
 
                         //ASSIGNING NEW VALUES TO THE RELATED DATA GRID CELLS.
                         txtDgProductQty.Text = productQuantity.ToString();
-                        txtDgProductTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
-                        txtDgProductGrossTotalSalePrice.Text = (
+                        txtDgProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
+                        txtDgProductTotalSalePrice.Text = (
                             (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)) -
                             Convert.ToDecimal(txtProductDiscount.Text) +
                             Convert.ToDecimal(txtProductVAT.Text)
@@ -682,7 +682,7 @@ namespace GUI
                     Name = txtProductName.Text,
                     SalePrice = txtProductSalePrice.Text,
                     Quantity = txtProductQuantity.Text,
-                    TotalGrossSalePrice=txtProductTotalSalePrice.Text,
+                    GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
                     Discount=txtProductDiscount.Text,
                     VAT=txtProductVAT.Text,
                     TotalSalePrice = txtProductTotalSalePrice.Text,
@@ -705,12 +705,13 @@ namespace GUI
             decimal quantityFromTextEntry = Convert.ToDecimal(txtProductQuantity.Text);
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
-            
+
             txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();//The previous sub total has already discount in it so no need to subtract the discount in this line.
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)- Convert.ToDecimal(txtProductDiscount.Text)).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+
         }
 
         private void SubstractBasket(int selectedRowIndex)
@@ -1100,8 +1101,10 @@ namespace GUI
 
                 txtProductSalePrice.Text = salePrice;
                 txtProductQuantity.Text = productQuantity.ToString();
-                txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity-productDiscount+productVAT).ToString();
-                txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
+                txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
+                txtProductDiscount.Text = productDiscount.ToString();
+                txtProductVAT.Text = productVAT.ToString();
+                txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity-productDiscount+productVAT).ToString();
             }
 
             /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
@@ -1114,6 +1117,17 @@ namespace GUI
 
             else
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
+        }
+
+        private void txtProductDiscount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtProductDiscount.Text == "")
+                txtProductDiscount.Text = initialIndex.ToString();
+        }
+        private void txtProductVAT_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtProductVAT.Text == "")
+                txtProductVAT.Text = initialIndex.ToString();
         }
 
         private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
@@ -1130,9 +1144,13 @@ namespace GUI
         {
             decimal number;
             if (decimal.TryParse(txtProductDiscount.Text, out number) && decimal.TryParse(txtProductVAT.Text, out number) && txtProductDiscount.Text != "" && txtProductVAT.Text != "")
-            {
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
-            }
+            
+            else if(txtProductDiscount.Text == "")            
+                txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+            
+            else if(txtProductVAT.Text == "")
+                txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text)).ToString();
         }
         private void CalculateBasketGrandTotal(int calledByVatOrDiscount)
         {
