@@ -409,7 +409,7 @@
                         <DataGridTemplateColumn Header="Discount" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductDiscount" Text="{Binding Discount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox x:Name="dgTxtProductDiscount" Text="{Binding Discount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductDiscount_KeyUp"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -417,7 +417,7 @@
                         <DataGridTemplateColumn Header="VAT" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductVAT" Text="{Binding VAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox x:Name="dgTxtProductVAT" Text="{Binding VAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductVAT_KeyUp"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
