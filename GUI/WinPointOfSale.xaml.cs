@@ -535,7 +535,7 @@ namespace GUI
                         }
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] contains product id.
+                    dataTableProduct = productDAL.SearchById(cells[initialIndex]);//Cell[0] contains product id.
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
@@ -1027,6 +1027,15 @@ namespace GUI
         {
             DgTextChanged();
         }
+        private void dgTxtProductDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
+
+        private void dgTxtProductVAT_KeyUp(object sender, KeyEventArgs e)
+        {
+            DgTextChanged();
+        }
 
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
@@ -1135,16 +1144,6 @@ namespace GUI
                 txtProductVAT.Text = initialIndex.ToString();
         }
 
-        private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
-        {
-            CalculateProductTotalSalePrice();
-        }
-
-        private void txtProductVAT_KeyUp(object sender, KeyEventArgs e)
-        {
-            CalculateProductTotalSalePrice();
-        }
-
         private void CalculateProductTotalSalePrice()
         {
             decimal number;
@@ -1179,6 +1178,16 @@ namespace GUI
             }
         }
 
+        private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
+        }
+
+        private void txtProductVAT_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
+        }
+
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
         {
             CalculateBasketGrandTotal(calledByVAT);
@@ -1194,18 +1203,35 @@ namespace GUI
             if (dgProducts.SelectedItem != null)
             {
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-                var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
-                TextBox productTotalSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductSalePrice) as TextBox;
+                ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
+                TextBox productGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
                 ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductQuantity = cpProductQuantity.ContentTemplate;
                 TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
 
+                //GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductDiscount = cpProductDiscount.ContentTemplate;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+
+                //GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductVAT = cpProductVAT.ContentTemplate;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+
+                //GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
+                TextBox productTotalSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductSalePrice) as TextBox;
+
                 oldBasketQuantity = Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(productQuantity.Text);
-                oldBasketGrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(productTotalSalePrice.Text);
-                oldBasketSubTotal = Convert.ToDecimal(txtBasketSubTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);
+                oldBasketGrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(productGrossTotalSalePrice.Text);
+                oldBasketSubTotal = Convert.ToDecimal(txtBasketSubTotal.Text) - (Convert.ToDecimal(productGrossTotalSalePrice.Text)-Convert.ToDecimal(txtDgProductDiscount.Text));
+                oldBasketDiscount = Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text);
+                oldBasketVAT = Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text);
                 oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);//Grand total is with VAT.
             }
         }
