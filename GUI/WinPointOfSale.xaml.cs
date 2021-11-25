@@ -1046,7 +1046,7 @@ namespace GUI
 
             else if (productIdFromUser != initialIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != initialIndex)//Validating the barcode if it is a number(except zero) or not.
             {
-                decimal productQuantity;
+                decimal productQuantity,productDiscount=initialIndex,productVAT=initialIndex;
                 int productId;
                 int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
@@ -1100,6 +1100,7 @@ namespace GUI
 
                 txtProductSalePrice.Text = salePrice;
                 txtProductQuantity.Text = productQuantity.ToString();
+                txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity-productDiscount+productVAT).ToString();
                 txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
             }
 
@@ -1115,7 +1116,25 @@ namespace GUI
                 DisableProductEntranceButtons();//Disable buttons in case of nothing was valid above in order not to enter something wrong to the datagrid.
         }
 
-        private void CalculateGrandTotal(int calledByVatOrDiscount)
+        private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
+        }
+
+        private void txtProductVAT_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculateProductTotalSalePrice();
+        }
+
+        private void CalculateProductTotalSalePrice()
+        {
+            decimal number;
+            if (decimal.TryParse(txtProductDiscount.Text, out number) && decimal.TryParse(txtProductVAT.Text, out number) && txtProductDiscount.Text != "" && txtProductVAT.Text != "")
+            {
+                txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+            }
+        }
+        private void CalculateBasketGrandTotal(int calledByVatOrDiscount)
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")//TRY TO SEPERATE VAT AND DISCOUNT SECTION IN THE FOLLOWING IF STATEMENT!
             {
@@ -1139,12 +1158,12 @@ namespace GUI
 
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
         {
-            CalculateGrandTotal(calledByVAT);
+            CalculateBasketGrandTotal(calledByVAT);
         }
 
         private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
         {
-            CalculateGrandTotal(calledByDiscount);
+            CalculateBasketGrandTotal(calledByDiscount);
         }
 
         private void dgProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
