@@ -56,11 +56,11 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const int initialIndex = 0, unitValue = 1;
-        const int colLength =6;
+        const int colLength =9;
         int clickedNewOrEdit;
         const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colNoProductSalePrice=4,colNoProductQuantity = 5,colNoProductTotalSalePrice=7;
-        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductSalePrice", "dgTxtProductQuantity", "dgTxtProductTotalSalePrice" };
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductSalePrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice" };
         string[,] oldDgProductCells = new string[,] { };
 
         string calledBy = "WinPOS";
@@ -74,11 +74,11 @@ namespace GUI
             colTxtCustomerId = "customer_id",
             colTxtInvoiceNo = "invoice_no",
             colTxtId = "id",
-            colTxtDateAdded= "added_date",
+            colTxtName = "name",
+            colTxtDateAdded = "added_date",
             colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
-            colTxtProductUnitId = "product_unit_id",
-            colTxtName = "name",
+            colTxtProductUnitId = "product_unit_id",            
             colTxtProductSalePrice = "product_sale_price",
             colTxtProductDiscount="product_discount",
             colTxtProductVAT="product_vat",
@@ -300,10 +300,10 @@ namespace GUI
                         productCurrentUnitId = Convert.ToInt32(dtPosDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQty].ToString();
                         productSalePrice = dtPosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
-                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
-                        productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity))-Convert.ToDecimal(productDiscount)+Convert.ToDecimal(productVAT));
+                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity))-Convert.ToDecimal(productDiscount)+Convert.ToDecimal(productVAT));
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
@@ -325,6 +325,9 @@ namespace GUI
                             Name = productName,
                             SalePrice = productSalePrice,
                             Quantity = productQuantity,
+                            GrossTotalSalePrice=productGrossTotalSalePrice,
+                            Discount=productDiscount,
+                            VAT=productVAT,
                             TotalSalePrice = productTotalSalePrice,
 
                             //BINDING DATAGRID COMBOBOX
@@ -391,12 +394,12 @@ namespace GUI
                     cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
 
-                    if (colNo != cellUnit)
+                    if (colNo != cellUnit)//If it is not a cbo value, then fetch the data in the default way.
                     {
                         tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                         dgProductCells[rowNo, colNo] = tbCellContent.Text;
                     }
-                    else
+                    else//If it is a cbo value, then fetch the selected value.
                     {
                         tbCellContentCbo = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as ComboBox;
                         dgProductCells[rowNo, colNo] = tbCellContentCbo.SelectedValue.ToString();
@@ -429,7 +432,7 @@ namespace GUI
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false, isSuccessAsset = false;
-                int cellUnit = 2, cellSalePrice=4, cellProductQuantity = 5;
+                int cellProductUnit = 2, cellProductQuantity = 3, cellProductSalePrice=4, cellProductDiscount=6, cellProductVAT=7;
                 int productId;
                 int unitId;
                 decimal productOldQtyInStock, newQuantity, newSalePrice;
@@ -520,7 +523,7 @@ namespace GUI
                         cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                         var tmpProduct = cpProduct.ContentTemplate;
 
-                        if (colNo != cellUnit)
+                        if (colNo != cellProductUnit)
                         {
                             tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                             cells[colNo] = tbCellContent.Text;
@@ -532,11 +535,11 @@ namespace GUI
                         }
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialIndex]);//Cell[0] contains product id.
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[cellUnit]));//Cell[2] contains the unit id in the combobox.
+                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[cellProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     pointOfSaleDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
@@ -544,8 +547,9 @@ namespace GUI
                     pointOfSaleDetailCUL.AddedBy = addedBy;
                     pointOfSaleDetailCUL.ProductRate = productRate;
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
-                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellSalePrice]);//cells[4] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
+                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellProductSalePrice]);//cells[4] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
                     pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductQuantity]);
+                    pointOfSaleDetailCUL.
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
