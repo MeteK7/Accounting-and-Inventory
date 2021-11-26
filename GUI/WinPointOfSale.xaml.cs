@@ -1188,6 +1188,32 @@ namespace GUI
             }
         }
 
+        private void CalculateDgDiscountPerProduct()
+        {
+            int rowQuntity = dgProducts.Items.Count;
+
+            for (int i = 0; i < rowQuntity; i++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+                ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
+                TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
+                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
+                var tmpProductDiscount = cpProductDiscount.ContentTemplate;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+
+                if (txtBasketDiscount.Text != "")
+                    //DISCOUNT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * DISCOUNT TOTAL
+                    txtDgProductDiscount.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketGrossAmount.Text)) * Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                else
+                    txtDgProductDiscount.Text = initialIndex.ToString();
+            }
+        }
+
         private void CalculateDgVatPerProduct()
         {
             int rowQuntity = dgProducts.Items.Count;
@@ -1201,25 +1227,10 @@ namespace GUI
                 var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
                 TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
 
-                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-                ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
-                TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
-
-                //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
-                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
-                var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
-
                 //GETTING THE CELL CONTENT OF THE PRODUCT VAT
                 ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
                 var tmpProductVAT = cpProductVAT.ContentTemplate;
                 TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
-
-                //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL SALE PRICE
-                ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
-                TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
                 if (txtBasketVat.Text != "")
                     //VAT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * VAT TOTAL
@@ -1272,6 +1283,7 @@ namespace GUI
 
         private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
         {
+            CalculateDgDiscountPerProduct();
             CalculateDgProductTotalSalePrice();//Because VAT is divided per product in CalculateDgDiscountPerProduct() method above, we need to recalculate the total product sale price in the datagrid.
             CalculateBasketGrandTotal(calledByDiscount);
         }
