@@ -56,10 +56,10 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const int initialIndex = 0, unitValue = 1;
-        const int colLength =9;
+        const int colLength = 9;
         int clickedNewOrEdit;
         const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int colNoProductQuantity = 3,colNoProductSalePrice=4,colNoProductGrossTotalSalePrice=5,colNoProductDiscount=6,colNoProductVAT=7, colNoProductTotalSalePrice=8;
+        int colNoProductQuantity = 3, colNoProductSalePrice = 4, colNoProductGrossTotalSalePrice = 5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductTotalSalePrice = 8;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductSalePrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice" };
         string[,] oldDgProductCells = new string[,] { };
 
@@ -78,10 +78,10 @@ namespace GUI
             colTxtDateAdded = "added_date",
             colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
-            colTxtProductUnitId = "product_unit_id",            
+            colTxtProductUnitId = "product_unit_id",
             colTxtProductSalePrice = "product_sale_price",
-            colTxtProductDiscount="product_discount",
-            colTxtProductVAT="product_vat",
+            colTxtProductDiscount = "product_discount",
+            colTxtProductVAT = "product_vat",
             colTxtBarcodeRetail = "barcode_retail",
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
@@ -92,12 +92,12 @@ namespace GUI
             colTxtVat = "vat",
             colTxtDiscount = "discount",
             colTxtGrandTotal = "grand_total",
-            colTxtSourceBalance= "source_balance",
+            colTxtSourceBalance = "source_balance",
             colTxtIdSourceType = "id_source_type",
             colTxtIdSource = "id_source",
             coTxtAssetId = "asset_id";
 
-        int account = 1, bank = 2, supplier = 3, customer=4;
+        int account = 1, bank = 2, supplier = 3, customer = 4;
         int calledByVAT = 1, calledByDiscount = 2;
         int clickedArrow, clickedPrev = 0, clickedNext = 1;
         int oldIdAsset, oldIdAssetCustomer, oldDgItemsRowCount;
@@ -251,7 +251,7 @@ namespace GUI
 
         private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
         {
-            string productId, productName, productSalePrice, productQuantity, productDiscount,productVAT, productGrossTotalSalePrice, productTotalSalePrice;
+            string productId, productName, productSalePrice, productQuantity, productDiscount, productVAT, productGrossTotalSalePrice, productTotalSalePrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
@@ -303,7 +303,7 @@ namespace GUI
                         productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
-                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity))-Convert.ToDecimal(productDiscount)+Convert.ToDecimal(productVAT));
+                        productTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT));
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
@@ -319,15 +319,15 @@ namespace GUI
                         DataTable dtUnitInfo = unitDAL.GetProductUnitId(unitIds);
                         #endregion
 
-                        dgProducts.Items.Add(new 
+                        dgProducts.Items.Add(new
                         {
                             Id = productId,
                             Name = productName,
                             SalePrice = productSalePrice,
                             Quantity = productQuantity,
-                            GrossTotalSalePrice=productGrossTotalSalePrice,
-                            Discount=productDiscount,
-                            VAT=productVAT,
+                            GrossTotalSalePrice = productGrossTotalSalePrice,
+                            Discount = productDiscount,
+                            VAT = productVAT,
                             TotalSalePrice = productTotalSalePrice,
 
                             //BINDING DATAGRID COMBOBOX
@@ -432,7 +432,7 @@ namespace GUI
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false, isSuccessAsset = false;
-                int cellProductUnit = 2, cellProductQuantity = 3, cellProductSalePrice=4, cellProductDiscount=6, cellProductVAT=7;
+                int cellProductUnit = 2, cellProductQuantity = 3, cellProductSalePrice = 4, cellProductDiscount = 6, cellProductVAT = 7;
                 int productId;
                 int unitId;
                 decimal productOldQtyInStock, newQuantity, newSalePrice;
@@ -566,7 +566,7 @@ namespace GUI
                 #endregion
 
                 //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-                if (isSuccess == true && isSuccessDetail == true && isSuccessAsset==true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
+                if (isSuccess == true && isSuccessDetail == true && isSuccessAsset == true)//IsSuccessDetail is always CHANGING in every loop above! IMPROVE THIS!!!!
                 {
                     //ClearBasketTextBox();
                     //ClearPointOfSaleDataGrid();
@@ -612,8 +612,8 @@ namespace GUI
                 txtProductQuantity.Text = productQuantity.ToString();
                 txtProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
                 txtProductTotalSalePrice.Text = (
-                    (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text))-
-                    Convert.ToDecimal(txtProductDiscount.Text)+
+                    (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)) -
+                    Convert.ToDecimal(txtProductDiscount.Text) +
                     Convert.ToDecimal(txtProductVAT.Text)
                     ).ToString();
             }
@@ -674,7 +674,7 @@ namespace GUI
             }
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
-            {                
+            {
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
                 dgProducts.Items.Add(new
                 {
@@ -683,8 +683,8 @@ namespace GUI
                     SalePrice = txtProductSalePrice.Text,
                     Quantity = txtProductQuantity.Text,
                     GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
-                    Discount=txtProductDiscount.Text,
-                    VAT=txtProductVAT.Text,
+                    Discount = txtProductDiscount.Text,
+                    VAT = txtProductVAT.Text,
                     TotalSalePrice = txtProductTotalSalePrice.Text,
 
                     //BINDING DATAGRID COMBOBOX
@@ -708,9 +708,9 @@ namespace GUI
 
             txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text)+Convert.ToDecimal(txtProductDiscount.Text)).ToString();
+            txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtProductDiscount.Text)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + ((Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)- Convert.ToDecimal(txtProductDiscount.Text))).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + ((Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text))).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
 
             txtBasketVat.Text = (Convert.ToDecimal(txtBasketVat.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
 
@@ -754,12 +754,12 @@ namespace GUI
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(txtDgProductQty.Text)).ToString();
 
             txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text)).ToString();
-            
+
             txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) - (Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text))).ToString();
 
-            txtBasketDiscount.Text= (Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
+            txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
 
-            txtBasketVat.Text= (Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+            txtBasketVat.Text = (Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
 
             txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(txtDgProductTotalSalePrice.Text)).ToString();
         }
@@ -1008,7 +1008,7 @@ namespace GUI
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
                 txtDgProductGrossTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtDgProductTotalSalePrice.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text))- Convert.ToDecimal(txtDgProductDiscount.Text)+ Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+                txtDgProductTotalSalePrice.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtBasketGrossAmount.Text = (oldBasketGrossAmount + Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text)).ToString();
@@ -1061,7 +1061,7 @@ namespace GUI
 
             else if (productIdFromUser != initialIndex.ToString() && long.TryParse(productIdFromUser, out number) && dtProduct.Rows.Count != initialIndex)//Validating the barcode if it is a number(except zero) or not.
             {
-                decimal productQuantity,productDiscount=initialIndex,productVAT=initialIndex;
+                decimal productQuantity, productDiscount = initialIndex, productVAT = initialIndex;
                 int productId;
                 int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
@@ -1118,7 +1118,7 @@ namespace GUI
                 txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
                 txtProductDiscount.Text = productDiscount.ToString();
                 txtProductVAT.Text = productVAT.ToString();
-                txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity-productDiscount+productVAT).ToString();
+                txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity - productDiscount + productVAT).ToString();
             }
 
             /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
@@ -1149,37 +1149,43 @@ namespace GUI
             decimal number;
             if (decimal.TryParse(txtProductDiscount.Text, out number) && decimal.TryParse(txtProductVAT.Text, out number) && txtProductDiscount.Text != "" && txtProductVAT.Text != "")
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
-            
-            else if(txtProductDiscount.Text == "")            
+
+            else if (txtProductDiscount.Text == "")
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
-            
-            else if(txtProductVAT.Text == "")
+
+            else if (txtProductVAT.Text == "")
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text)).ToString();
         }
 
         private void CalculateDgProductTotalSalePrice()
         {
-            //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-            ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
-            TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
+            int rowQuntity = dgProducts.Items.Count;
 
-            //GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+            for (int i = 0; i < rowQuntity; i++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+                ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
 
-            //GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductVAT = cpProductVAT.ContentTemplate;
-            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+                //GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
+                var tmpProductDiscount = cpProductDiscount.ContentTemplate;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
 
-            //GETTING TEXTBOX FROM DATAGRID
-            ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
-            var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
-            TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+                //GETTING TEXTBOX FROM DATAGRID.
+                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
+                var tmpProductVAT = cpProductVAT.ContentTemplate;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
 
-            txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+                //GETTING TEXTBOX FROM DATAGRID
+                ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+
+                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+            }
         }
 
         private void CalculateDgVatPerProduct()
