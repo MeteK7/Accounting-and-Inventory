@@ -633,9 +633,9 @@ namespace GUI
 
                 ContentPresenter cpProduct = dgProducts.Columns[initialIndex].GetCellContent(row) as ContentPresenter;
                 var tmpProduct = cpProduct.ContentTemplate;
-                TextBox tbBarcodeCellContent = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
+                TextBox txtDgProductId = tmpProduct.FindName(dgCellNames[initialIndex], cpProduct) as TextBox;
 
-                if (tbBarcodeCellContent.Text == productId.ToString())
+                if (txtDgProductId.Text == productId.ToString())
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
@@ -1156,6 +1156,45 @@ namespace GUI
             else if(txtProductVAT.Text == "")
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text)).ToString();
         }
+
+        private void CalculateDgVatPerProduct()
+        {
+            int rowQuntity = dgProducts.Items.Count;
+
+            for (int i = 0; i < rowQuntity; i++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+                ContentPresenter cpProductSalePrice = dgProducts.Columns[colNoProductSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
+                TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[colNoProductSalePrice], cpProductSalePrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+                ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
+                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
+                var tmpProductDiscount = cpProductDiscount.ContentTemplate;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+                
+                //GETTING THE CELL CONTENT OF THE PRODUCT VAT
+                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
+                var tmpProductVAT = cpProductVAT.ContentTemplate;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL SALE PRICE
+                ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+
+                //VAT PER PRODUCT = PRODUCT UNIT PRICE/SUB TOTAL * VAT TOTAL (SUB TOTAL IS GROSS TOTAL - DISCOUNT TOTAL)
+                txtDgProductVAT.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketSubTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text)).ToString();
+            }
+        }
+
         private void CalculateBasketGrandTotal(int calledByVatOrDiscount)
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")//TRY TO SEPERATE VAT AND DISCOUNT SECTION IN THE FOLLOWING IF STATEMENT!
@@ -1190,11 +1229,14 @@ namespace GUI
 
         private void txtBasketVat_KeyUp(object sender, KeyEventArgs e)
         {
+            CalculateDgVatPerProduct();
+            CalculateDgProductTotalSalePrice();//Because VAT is divided per product in CalculateDgVatPerProduct() method above, we need to recalculate the total product sale price in the datagrid.
             CalculateBasketGrandTotal(calledByVAT);
         }
 
         private void txtBasketDiscount_KeyUp(object sender, KeyEventArgs e)
         {
+            CalculateDgProductTotalSalePrice();//Because VAT is divided per product in CalculateDgDiscountPerProduct() method above, we need to recalculate the total product sale price in the datagrid.
             CalculateBasketGrandTotal(calledByDiscount);
         }
 
@@ -1234,6 +1276,39 @@ namespace GUI
                 oldBasketVAT = Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text);
                 oldBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(productTotalSalePrice.Text);//Grand total is with VAT.
             }
+        }
+
+        private void cboMenuCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            int sourceType = customer;
+
+            sourceId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
+            lblAssetCustomerId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
+        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int sourceId;
+            int sourceType;
+
+            if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
+                sourceType = account;
+            else
+                sourceType = bank;
+
+            sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
+            lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
+        }
+
+        private void rbAccount_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboMenuAsset(account);
+        }
+
+        private void rbBank_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadCboMenuAsset(bank);
         }
 
         private void LoadCboMenuAsset(int checkStatus)
@@ -1285,37 +1360,6 @@ namespace GUI
             cboMenuCustomer.SelectedValuePath = colTxtId;
         }
 
-        private void cboMenuCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int sourceId;
-            int sourceType = customer;
 
-            sourceId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
-            lblAssetCustomerId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-        }
-
-        private void cboMenuAsset_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int sourceId;
-            int sourceType;
-
-            if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
-                sourceType = account;
-            else
-                sourceType = bank;
-
-            sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
-            lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
-        }
-
-        private void rbAccount_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboMenuAsset(account);
-        }
-
-        private void rbBank_Checked(object sender, RoutedEventArgs e)
-        {
-            LoadCboMenuAsset(bank);
-        }
     }
 }
