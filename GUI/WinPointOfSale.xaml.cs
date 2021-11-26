@@ -1252,14 +1252,15 @@ namespace GUI
                 if (calledByVatOrDiscount == calledByVAT)
                 {
                     txtBasketVat.Text = initialIndex.ToString();//We need to assign zero in order to prevent null entry into the database.
-                    txtBasketVat.SelectAll();//Select all automatically for the user to re-enter new value easily.
                     txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();//Since the VAT is zero, we only need to calculate the Grand Total without VAT.
+                    txtBasketVat.SelectAll();//Select all automatically for the user to re-enter new value easily.
                 }
                 else
                 {
                     txtBasketDiscount.Text = initialIndex.ToString();
-                    txtBasketDiscount.SelectAll();
+                    txtBasketSubTotal.Text = txtBasketGrossAmount.Text;//Since the Discount is zero, we only need to assign the total gross amount into the sub total. Normally, sub total = total gross amount - total discount.
                     txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();//Since the Discount is zero, we only need to calculate the Grand Total without Discount.
+                    txtBasketDiscount.SelectAll();
                 }
             }
         }
