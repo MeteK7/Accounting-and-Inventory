@@ -1210,7 +1210,7 @@ namespace GUI
                 ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
                 var tmpProductDiscount = cpProductDiscount.ContentTemplate;
                 TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
-                
+
                 //GETTING THE CELL CONTENT OF THE PRODUCT VAT
                 ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
                 var tmpProductVAT = cpProductVAT.ContentTemplate;
@@ -1221,8 +1221,9 @@ namespace GUI
                 var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
                 TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
-                //VAT PER PRODUCT = PRODUCT UNIT PRICE/SUB TOTAL * VAT TOTAL (SUB TOTAL IS GROSS TOTAL - DISCOUNT TOTAL)
-                txtDgProductVAT.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketSubTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                if (txtBasketVat.Text != "")
+                    //VAT PER PRODUCT = PRODUCT UNIT PRICE/SUB TOTAL * VAT TOTAL (SUB TOTAL IS GROSS TOTAL - DISCOUNT TOTAL)
+                    txtDgProductVAT.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketSubTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text)).ToString();
             }
         }
 
