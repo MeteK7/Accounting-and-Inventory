@@ -1004,7 +1004,7 @@ namespace GUI
             var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
             TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
-            if (txtDgProductQuantity.Text != "" && txtDgProductSalePrice.Text != "")
+            if (txtDgProductQuantity.Text != "" && txtDgProductSalePrice.Text != "" && txtDgProductDiscount.Text!="" &&txtDgProductVAT.Text!="")
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
                 txtDgProductGrossTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
