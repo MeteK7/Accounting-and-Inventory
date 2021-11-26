@@ -1222,8 +1222,8 @@ namespace GUI
                 TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
 
                 if (txtBasketVat.Text != "")
-                    //VAT PER PRODUCT = PRODUCT UNIT PRICE/SUB TOTAL * VAT TOTAL (SUB TOTAL IS GROSS TOTAL - DISCOUNT TOTAL)
-                    txtDgProductVAT.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketSubTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                    //VAT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * VAT TOTAL
+                    txtDgProductVAT.Text = ((Convert.ToDecimal(txtDgProductSalePrice.Text) / Convert.ToDecimal(txtBasketGrossAmount.Text)) * Convert.ToDecimal(txtBasketVat.Text)).ToString();
                 else
                     txtDgProductVAT.Text = initialIndex.ToString();
             }
