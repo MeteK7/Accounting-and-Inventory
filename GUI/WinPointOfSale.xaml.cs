@@ -1157,6 +1157,31 @@ namespace GUI
                 txtProductTotalSalePrice.Text = Convert.ToDecimal(Convert.ToDecimal(txtProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtProductDiscount.Text)).ToString();
         }
 
+        private void CalculateDgProductTotalSalePrice()
+        {
+            //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+            ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[colNoProductGrossTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
+            TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[colNoProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID.
+            ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductDiscount = cpProductDiscount.ContentTemplate;
+            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID.
+            ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductVAT = cpProductVAT.ContentTemplate;
+            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+
+            //GETTING TEXTBOX FROM DATAGRID
+            ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[colNoProductTotalSalePrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+            TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[colNoProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+
+            txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalSalePrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+        }
+
         private void CalculateDgVatPerProduct()
         {
             int rowQuntity = dgProducts.Items.Count;
