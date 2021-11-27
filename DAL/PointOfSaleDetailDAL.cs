@@ -64,7 +64,6 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailCUL.ProductRate);
                 cmd.Parameters.AddWithValue("@quantity", pointOfSaleDetailCUL.ProductQuantity);
-                cmd.Parameters.AddWithValue("@product_cost_price", pointOfSaleDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", pointOfSaleDetailCUL.ProductSalePrice);
                 cmd.Parameters.AddWithValue("@product_discount", pointOfSaleDetailCUL.ProductDiscount);
                 cmd.Parameters.AddWithValue("@product_vat", pointOfSaleDetailCUL.ProductVAT);

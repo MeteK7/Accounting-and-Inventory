@@ -16,7 +16,6 @@ namespace KabaAccounting.CUL
         public decimal ProductQuantity { get; set; }
         public decimal ProductDiscount { get; set; }
         public decimal ProductVAT { get; set; }
-        public decimal ProductCostPrice { get; set; }
         public decimal ProductSalePrice { get; set; }
         //public DateTime AddedDate { get; set; }
         public int AddedBy { get; set; }
