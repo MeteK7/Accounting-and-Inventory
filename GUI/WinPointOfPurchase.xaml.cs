@@ -1178,10 +1178,10 @@ namespace GUI
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-                TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
+                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
                 ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
@@ -1190,7 +1190,7 @@ namespace GUI
 
                 if (txtBasketDiscount.Text != "")
                     //DISCOUNT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * DISCOUNT TOTAL
-                    txtDgProductDiscount.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketDiscount.Text));
+                    txtDgProductDiscount.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketDiscount.Text));
                 else
                     txtDgProductDiscount.Text = initialIndex.ToString();
             }
@@ -1204,10 +1204,10 @@ namespace GUI
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
-                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-                TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
+                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT VAT
                 ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
@@ -1216,7 +1216,7 @@ namespace GUI
 
                 if (txtBasketVat.Text != "")
                     //VAT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * VAT TOTAL
-                    txtDgProductVAT.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text));
+                    txtDgProductVAT.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text));
                 else
                     txtDgProductVAT.Text = initialIndex.ToString();
             }
@@ -1309,8 +1309,6 @@ namespace GUI
                 txtInvoiceNo.Text = initialIndex.ToString();
             }
         }
-
-
 
         private void txtProductDiscount_KeyUp(object sender, KeyEventArgs e)
         {
