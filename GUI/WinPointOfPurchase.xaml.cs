@@ -57,11 +57,11 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const int initialIndex = 0,unitValue = 1;
-        const int colLength = 6;
+        const int colLength = 9;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         int colNoProductQuantity=3, colNoProductCostPrice=4, colNoProductGrossTotalCostPrice=5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductTotalCostPrice = 8;
-        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductCostPrice", "dgTxtProductQuantity", "dgTxtProductTotalCostPrice" };
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductCostPrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "WinPOP";
 
@@ -642,11 +642,11 @@ namespace GUI
         {
             bool addNewProductLine = true;
             int productQuantity;
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
             int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -1164,9 +1164,9 @@ namespace GUI
 
         private void CalculateDgProductTotalCostPrice()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
                 //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
@@ -1195,9 +1195,9 @@ namespace GUI
 
         private void CalculateDgDiscountPerProduct()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -1221,9 +1221,9 @@ namespace GUI
 
         private void CalculateDgVatPerProduct()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 

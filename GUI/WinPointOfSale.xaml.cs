@@ -623,11 +623,11 @@ namespace GUI
         {
             bool addNewProductLine = true;
             int productQuantity;
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
             int productId = Convert.ToInt32(dtProduct.Rows[initialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -1159,9 +1159,9 @@ namespace GUI
 
         private void CalculateDgProductTotalSalePrice()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
                 //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
@@ -1190,9 +1190,9 @@ namespace GUI
 
         private void CalculateDgDiscountPerProduct()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -1216,9 +1216,9 @@ namespace GUI
 
         private void CalculateDgVatPerProduct()
         {
-            int rowQuntity = dgProducts.Items.Count;
+            int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = 0; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
