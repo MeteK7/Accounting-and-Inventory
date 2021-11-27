@@ -1009,7 +1009,7 @@ namespace GUI
             {
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
                 txtDgProductGrossTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
+                txtDgProductTotalCostPrice.Text = ((Convert.ToDecimal(txtDgProductCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
