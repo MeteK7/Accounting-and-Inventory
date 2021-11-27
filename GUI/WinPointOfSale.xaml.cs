@@ -251,7 +251,7 @@ namespace GUI
 
         private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
         {
-            string productId, productName, productSalePrice, productQuantity, productDiscount, productVAT, productGrossTotalSalePrice, productTotalSalePrice;
+            string productId, productName, productQuantity, productSalePrice, productGrossTotalSalePrice, productDiscount, productVAT, productTotalSalePrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {

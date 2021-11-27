@@ -79,6 +79,8 @@ namespace GUI
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
             colTxtProductCostPrice = "product_cost_price",
+            colTxtProductDiscount = "product_discount",
+            colTxtProductVAT = "product_vat",
             colTxtBarcodeRetail = "barcode_retail",
             colTxtBarcodeWholesale = "barcode_wholesale",
             colTxtUnitRetailId = "unit_retail_id",
@@ -252,7 +254,7 @@ namespace GUI
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
         private void LoadPastInvoice(int invoiceId = initialIndex, int invoiceArrow = -unitValue)//Optional parameter
         {
-            string productId, productName, productCostPrice, productQuantity, productTotalCostPrice;
+            string productId, productName, productQuantity, productCostPrice, productGrossTotalCostPrice, productDiscount, productVAT, productTotalCostPrice;
 
             if (invoiceId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -299,9 +301,12 @@ namespace GUI
                     {
                         productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
                         productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
-                        productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
-                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
+                        productGrossTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productDiscount = dtPopDetail.Rows[currentRow][colTxtProductDiscount].ToString();
+                        productVAT = dtPopDetail.Rows[currentRow][colTxtProductVAT].ToString();
+                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[initialIndex][colTxtName].ToString();//We used initialIndex because there can be only one row in the datatable for a specific product.
@@ -323,6 +328,9 @@ namespace GUI
                             Name = productName,
                             CostPrice = productCostPrice,
                             Quantity = productQuantity,
+                            GrossTotalCostPrice = productGrossTotalCostPrice,
+                            Discount = productDiscount,
+                            VAT = productVAT,
                             TotalCostPrice = productTotalCostPrice,
 
                             //BINDING DATAGRID COMBOBOX
