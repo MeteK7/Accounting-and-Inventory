@@ -54,7 +54,7 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_sale_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_sale_price, @product_discount, @product_vat)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_cost_price, product_sale_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price, @product_sale_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -64,6 +64,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfSaleDetailCUL.ProductRate);
                 cmd.Parameters.AddWithValue("@quantity", pointOfSaleDetailCUL.ProductQuantity);
+                cmd.Parameters.AddWithValue("@product_cost_price", pointOfSaleDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_sale_price", pointOfSaleDetailCUL.ProductSalePrice);
                 cmd.Parameters.AddWithValue("@product_discount", pointOfSaleDetailCUL.ProductDiscount);
                 cmd.Parameters.AddWithValue("@product_vat", pointOfSaleDetailCUL.ProductVAT);

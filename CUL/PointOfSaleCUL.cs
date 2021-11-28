@@ -15,6 +15,7 @@ namespace KabaAccounting.CUL
         public decimal TotalProductQuantity { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Discount { get; set; }
+        public decimal CostTotal { get; set; }
         public decimal GrossAmount { get; set; }
         public decimal Vat { get; set; }
         public decimal GrandTotal { get; set; }
