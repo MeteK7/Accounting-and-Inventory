@@ -59,7 +59,7 @@ namespace GUI
         const int colLength = 11;
         int clickedNewOrEdit;
         const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int colNoProductQuantity = 3, colNoProductCostPrice=4, colNoProductSalePrice = 5, colNoProductTotalCostPrice=6, colNoProductGrossTotalSalePrice = 7, colNoProductDiscount = 8, colNoProductVAT = 9, colNoProductTotalSalePrice = 10;
+        int colNoProductUnit=2, colNoProductQuantity = 3, colNoProductCostPrice=4, colNoProductSalePrice = 5, colNoProductTotalCostPrice=6, colNoProductGrossTotalSalePrice = 7, colNoProductDiscount = 8, colNoProductVAT = 9, colNoProductTotalSalePrice = 10;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductCostPrice", "dgTxtProductSalePrice", "dgTxtProductTotalCostPrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice" };
         string[,] oldDgProductCells = new string[,] { };
 
@@ -444,13 +444,11 @@ namespace GUI
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
                 int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false, isSuccessAsset = false;
-                int cellProductUnit = 2, cellProductQuantity = 3, cellProductCostPrice = 4, cellProductSalePrice = 5, cellProductDiscount = 8, cellProductVAT = 9;
                 int productId;
                 int unitId;
                 decimal productOldQtyInStock, newQuantity,newCostPrice, newSalePrice;
-                int cellLength = 8;
                 int addedBy = userId;
-                string[] cells = new string[cellLength];
+                string[] cells = new string[colLength];
                 DateTime dateTime = DateTime.Now;
                 int productRate = initialIndex;//Modify this code dynamically!!!!!!!!!
 
@@ -520,7 +518,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit == clickedEdit)//If the user clicked the btnEdit, then edit the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldDgItemsRowCount, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldDgItemsRowCount,colNoProductQuantity, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending invoiceNo as a parameter to the "Delete" Method. So that we can erase all the products which have the specific invoice number.
                         pointOfSaleDetailDAL.Delete(invoiceId);
@@ -531,12 +529,12 @@ namespace GUI
 
                     dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                    for (int colNo = initialIndex; colNo < cellLength; colNo++)
+                    for (int colNo = initialIndex; colNo < colLength; colNo++)
                     {
                         cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                         var tmpProduct = cpProduct.ContentTemplate;
 
-                        if (colNo != cellProductUnit)
+                        if (colNo != colNoProductUnit)
                         {
                             tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                             cells[colNo] = tbCellContent.Text;
@@ -552,7 +550,7 @@ namespace GUI
                     productId = Convert.ToInt32(dataTableProduct.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[cellProductUnit]));//Cell[2] contains the unit id in the combobox.
+                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[colNoProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[initialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     pointOfSaleDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
@@ -560,18 +558,18 @@ namespace GUI
                     pointOfSaleDetailCUL.AddedBy = addedBy;
                     pointOfSaleDetailCUL.ProductRate = productRate;
                     pointOfSaleDetailCUL.ProductUnitId = unitId;
-                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellProductCostPrice]);//cells[3] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
-                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellProductSalePrice]);//cells[4] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
-                    pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[cellProductQuantity]);
-                    pointOfSaleDetailCUL.ProductDiscount = Convert.ToDecimal(cells[cellProductDiscount]);
-                    pointOfSaleDetailCUL.ProductVAT = Convert.ToDecimal(cells[cellProductVAT]);
+                    pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[colNoProductCostPrice]);//cells[3] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
+                    pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[colNoProductSalePrice]);//cells[4] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
+                    pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[colNoProductQuantity]);
+                    pointOfSaleDetailCUL.ProductDiscount = Convert.ToDecimal(cells[colNoProductDiscount]);
+                    pointOfSaleDetailCUL.ProductVAT = Convert.ToDecimal(cells[colNoProductVAT]);
 
                     isSuccessDetail = pointOfSaleDetailDAL.Insert(pointOfSaleDetailCUL);
 
                     #region PRODUCT QUANTITY UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[initialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
-                    newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[cellProductQuantity]);
+                    newQuantity = productOldQtyInStock - Convert.ToDecimal(cells[colNoProductQuantity]);
 
                     productDAL.UpdateSpecificColumn(productId, colTxtQtyInStock, newQuantity.ToString());
                     #endregion
@@ -871,7 +869,7 @@ namespace GUI
 
                     #region REVERT THE STOCK
                     oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
-                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, calledBy);
+                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count,colNoProductQuantity, calledBy);
                     #endregion
 
                     #region REVERT THE ASSET

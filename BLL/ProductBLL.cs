@@ -14,13 +14,12 @@ namespace BLL
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
 
-        public void RevertOldQuantityInStock(string[,] dgOldProductCells, int oldItemsRowCount, string calledBy)
+        public void RevertOldQuantityInStock(string[,] dgOldProductCells, int oldItemsRowCount,int colProductQuantity, string calledBy)
         {
             int productId;
             decimal newQuantity;
             int initialRowIndex = 0;
             int colProductId = 0;
-            int colProductQuantity = 5;
             decimal productQuantityFromDB;
             string colQtyNameInDb = "quantity_in_stock";
 
