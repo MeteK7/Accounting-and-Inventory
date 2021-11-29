@@ -1,6 +1,6 @@
 ﻿using CUL;
 using DAL;
-using KabaAccounting.CUL;
+using CUL;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -8,7 +8,7 @@ namespace CUL.Enums
 {
     public enum Numbers
     {
-        initialIndex,
-        unitValue
+        InitialIndex,
+        UnitValue
     }
 }

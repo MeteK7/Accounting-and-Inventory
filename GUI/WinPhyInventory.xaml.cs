@@ -1,5 +1,5 @@
 ﻿using BLL;
-using KabaAccounting.CUL;
+using CUL;
 using DAL;
 using System;
 using System.Collections.Generic;

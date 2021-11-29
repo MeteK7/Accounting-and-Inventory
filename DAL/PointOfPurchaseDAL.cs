@@ -1,4 +1,4 @@
-﻿using KabaAccounting.CUL;
+﻿using CUL;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
