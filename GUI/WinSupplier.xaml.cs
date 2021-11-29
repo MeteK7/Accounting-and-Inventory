@@ -42,6 +42,9 @@ namespace GUI
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            #region NEW SUPPLIER INSERTION
+
+            #endregion
             //Get the values from the Supplier Window and fill them into the supplierCUL.
 
             supplierCUL.Name = txtName.Text;
@@ -53,10 +56,10 @@ namespace GUI
 
 
             //Creating a Boolean variable to insert data into the database.
-            bool isSuccess = supplierDAL.Insert(supplierCUL);
+            bool isSuccessSupplier = supplierDAL.Insert(supplierCUL);
 
             //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-            if (isSuccess == true)
+            if (isSuccessSupplier == true)
             {
                 MessageBox.Show("New data inserted successfully.");
                 dtgSuppliers.Items.Clear();

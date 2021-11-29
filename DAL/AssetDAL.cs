@@ -56,11 +56,10 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_assets (id, id_source_type, id_source, source_balance) VALUES (@id, @id_source_type, @id_source, @source_balance)";
+                string sqlQuery = "INSERT INTO tbl_assets (id_source_type, id_source, source_balance) VALUES (@id_source_type, @id_source, @source_balance)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", assetCUL.Id);//The column id in the database is not auto incremental.
                 cmd.Parameters.AddWithValue("@id_source_type", assetCUL.IdSourceType);
                 cmd.Parameters.AddWithValue("@id_source", assetCUL.IdSource);
                 cmd.Parameters.AddWithValue("@source_balance", assetCUL.SourceBalance);
