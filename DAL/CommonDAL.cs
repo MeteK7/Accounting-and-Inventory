@@ -23,7 +23,7 @@ namespace DAL
 
                 if (id == 0)//If the id is 0 which means user did not send any argument, then get the last Id using the following query.
                 {
-                    sql = "SELECT * FROM "+calledBy+" WHERE id=(SELECT max(id) FROM tbl_pos)";
+                    sql = "SELECT * FROM "+calledBy+ " WHERE id=(SELECT max(id) FROM " + calledBy + ")";
                     //sql = "SELECT * FROM tbl_pos WHERE id=IDENT_CURRENT('tbl_pos')";//SQL query to get the last id of rows in the table.
                 }
 
