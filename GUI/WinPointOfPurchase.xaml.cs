@@ -57,11 +57,11 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const int initialIndex = 0,unitValue = 1;
-        const int colLength = 9;
+        const int colLength = 10;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int colNoProductQuantity=3, colNoProductCostPrice=4, colNoProductGrossTotalCostPrice=5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductTotalCostPrice = 8;
-        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductCostPrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalCostPrice" };
+        int colNoProductQuantity=3, colNoProductGrossCostPrice=4, colNoProductGrossTotalCostPrice=5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductCostPrice = 8, colNoProductTotalCostPrice = 9;
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductGrossCostPrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductCostPrice", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "WinPOP";
 
@@ -78,6 +78,7 @@ namespace GUI
             colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
+            colTxtProductGrossCostPrice = "product_gross_cost_price",
             colTxtProductCostPrice = "product_cost_price",
             colTxtProductDiscount = "product_discount",
             colTxtProductVAT = "product_vat",
@@ -725,7 +726,7 @@ namespace GUI
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtProductTotalCostPrice.Text)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtProductGrossTotalCostPrice.Text)).ToString();
 
             txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtProductDiscount.Text)).ToString();
 
@@ -917,62 +918,6 @@ namespace GUI
                 SubstractBasket(selectedRowIndex);
 
                 dgProducts.Items.Remove(selectedRow);
-            }
-        }
-
-        /*----THIS IS NOT AN EFFICIENT CODE----*/
-        private void txtProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (txtProductQuantity.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
-            {
-                if (txtProductQuantity.Text != "")
-                {
-                    decimal number;
-                    string productQuantity = txtProductQuantity.Text;
-
-                    char lastCharacter = char.Parse(productQuantity.Substring(productQuantity.Length - unitValue));//Getting the last character to check if the user has entered a missing quantity like " 3, "
-
-                    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
-
-                    if (decimal.TryParse(productQuantity, out number) && result == true)
-                    {
-                        string unitKg = "Kilogram", unitLt = "Liter";
-                        string productCostPrice = txtProductCostPrice.Text;
-
-                        if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
-                        {
-                            /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
-                            So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
-                            productQuantity = Convert.ToInt32(txtProductQuantity.Text).ToString();
-                            txtProductQuantity.Text = productQuantity.ToString();
-                        }
-                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal quantity like "3,5 liter."
-                        {
-                            productQuantity = Convert.ToDecimal(txtProductQuantity.Text).ToString();
-                        }
-
-                        txtProductGrossTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
-                        txtProductTotalCostPrice.Text = (
-                            (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)) -
-                            Convert.ToDecimal(txtProductDiscount.Text) +
-                            Convert.ToDecimal(txtProductVAT.Text)
-                            ).ToString();
-                        btnProductAdd.IsEnabled = true;
-                    }
-
-                    else//Reverting the quantity to the default value.
-                    {
-                        MessageBox.Show("Please enter a valid number");
-                        txtProductQuantity.Text = unitValue.ToString();//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".  
-                    }
-                }
-
-                /* If the user left the txtProductQuantity as empty, wait for him to enter a new value and block the btnProductAdd. 
-                   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
-                else
-                {
-                    btnProductAdd.IsEnabled = false;
-                }
             }
         }
 
@@ -1275,21 +1220,20 @@ namespace GUI
         }
 
         /*----THIS IS NOT AN EFFICIENT CODE----*/
-        private void TextMenuCostPriceChanged()
+        private void TextMenuGrossCostPriceChanged()
         {
             if (txtProductCostPrice.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
             {
                 if (txtProductCostPrice.Text != "")
                 {
                     decimal number;
+                    decimal productQuantity = Convert.ToDecimal(txtProductQuantity.Text);
                     string productCostPrice = txtProductCostPrice.Text;
                     char lastCharacter = char.Parse(productCostPrice.Substring(productCostPrice.Length - unitValue));//Getting the last character to check if the user has entered a missing cost price like " 3, ".
                     bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
 
                     if (decimal.TryParse(productCostPrice, out number) && result == true)
                     {
-                        decimal productQuantity = Convert.ToDecimal(txtProductQuantity.Text);
-
                         txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * productQuantity).ToString();
 
                         btnProductAdd.IsEnabled = true;
@@ -1305,6 +1249,15 @@ namespace GUI
                             txtProductCostPrice.Text = dataTable.Rows[rowIndex][colTxtCostPrice].ToString();//We are reverting the cost price of the product to default if the user has pressed a wrong key such as "a-b-c".
                         }
                     }
+
+
+                    txtProductGrossTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
+                    txtProductTotalCostPrice.Text = (
+                        (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)) -
+                        Convert.ToDecimal(txtProductDiscount.Text) +
+                        Convert.ToDecimal(txtProductVAT.Text)
+                        ).ToString();
+                    btnProductAdd.IsEnabled = true; //YOU MAY WISH TO DELETE THIS AND MAKE A CONTROL ONCE A USER CLICK ON ADD!
                 }
 
                 /* If the user left the txtProductCostPrice as empty, wait for him to enter a new value and block the btnProductAdd. 
@@ -1316,9 +1269,66 @@ namespace GUI
             }
         }
 
-        private void txtProductCostPrice_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtProductGrossCostPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextMenuCostPriceChanged();
+            TextMenuGrossCostPriceChanged();
+        }
+
+
+        /*----THIS IS NOT AN EFFICIENT CODE----*/
+        private void txtProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtProductQuantity.IsFocused == true)//If the cursor is not focused on this textbox, then no need to check this code.
+            {
+                if (txtProductQuantity.Text != "")
+                {
+                    decimal number;
+                    string productQuantity = txtProductQuantity.Text;
+
+                    char lastCharacter = char.Parse(productQuantity.Substring(productQuantity.Length - unitValue));//Getting the last character to check if the user has entered a missing quantity like " 3, "
+
+                    bool result = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
+
+                    if (decimal.TryParse(productQuantity, out number) && result == true)
+                    {
+                        string unitKg = "Kilogram", unitLt = "Liter";
+                        string productCostPrice = txtProductCostPrice.Text;
+
+                        if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
+                        {
+                            /*If the user entered any unit except kilogram or liter, there cannot be a decimal quantity. 
+                            So, convert the quantity to integer even the user has entered a decimal quantity as a mistake.*/
+                            productQuantity = Convert.ToInt32(txtProductQuantity.Text).ToString();
+                            txtProductQuantity.Text = productQuantity.ToString();
+                        }
+                        else//If the user has defined the unit as kilogram or liter, then there can be a decimal quantity like "3,5 liter."
+                        {
+                            productQuantity = Convert.ToDecimal(txtProductQuantity.Text).ToString();
+                        }
+
+                        txtProductGrossTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
+                        txtProductTotalCostPrice.Text = (
+                            (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)) -
+                            Convert.ToDecimal(txtProductDiscount.Text) +
+                            Convert.ToDecimal(txtProductVAT.Text)
+                            ).ToString();
+                        btnProductAdd.IsEnabled = true;
+                    }
+
+                    else//Reverting the quantity to the default value.
+                    {
+                        MessageBox.Show("Please enter a valid number");
+                        txtProductQuantity.Text = unitValue.ToString();//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".  
+                    }
+                }
+
+                /* If the user left the txtProductQuantity as empty, wait for him to enter a new value and block the btnProductAdd. 
+                   Note: Because the "TextChanged" function works immediately, we don't revert the value into the default. User may click on the "backspace" to correct it by himself"*/
+                else
+                {
+                    btnProductAdd.IsEnabled = false;
+                }
+            }
         }
 
         private void txtInvoiceNo_GotFocus(object sender, RoutedEventArgs e)
