@@ -951,8 +951,12 @@ namespace GUI
                             productQuantity = Convert.ToDecimal(txtProductQuantity.Text).ToString();
                         }
 
-                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
-
+                        txtProductGrossTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString();
+                        txtProductTotalCostPrice.Text = (
+                            (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)) -
+                            Convert.ToDecimal(txtProductDiscount.Text) +
+                            Convert.ToDecimal(txtProductVAT.Text)
+                            ).ToString();
                         btnProductAdd.IsEnabled = true;
                     }
 
