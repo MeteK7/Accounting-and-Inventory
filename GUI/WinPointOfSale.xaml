@@ -395,7 +395,7 @@
                         <DataGridTemplateColumn Header="Cost Price" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
