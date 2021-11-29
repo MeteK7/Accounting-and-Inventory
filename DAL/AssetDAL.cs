@@ -47,6 +47,50 @@ namespace DAL
         }
         #endregion
 
+        #region INSERT METHOD
+        public bool Insert(AssetCUL assetCUL)
+        {
+            bool isSuccess = false;
+
+            SqlConnection conn = new SqlConnection(connString);
+
+            try
+            {
+                string sqlQuery = "INSERT INTO tbl_assets (id, id_source_type, id_source, source_balance) VALUES (@id, @id_source_type, @id_source, @source_balance)";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+                cmd.Parameters.AddWithValue("@id", assetCUL.Id);//The column id in the database is not auto incremental.
+                cmd.Parameters.AddWithValue("@id_source_type", assetCUL.IdSourceType);
+                cmd.Parameters.AddWithValue("@id_source", assetCUL.IdSource);
+                cmd.Parameters.AddWithValue("@source_balance", assetCUL.SourceBalance);
+
+
+                conn.Open();
+
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    isSuccess = true;
+                }
+                else
+                {
+                    isSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return isSuccess;
+        }
+        #endregion
+
         #region UPDATE METHOD
         public bool Update(AssetCUL assetCUL)
         {
