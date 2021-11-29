@@ -11,28 +11,14 @@ namespace BLL
 {
     public class CommonBLL
     {
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
-        PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
-        ExpenseDAL expenseDAL = new ExpenseDAL();
-        ReceiptDAL receiptDAL = new ReceiptDAL();
+        CommonDAL commonDAL = new CommonDAL();
         public int GetLastRecordById(string calledBy)
         {
             int initialIndex = 0, recordId;
 
             DataTable dataTable;
 
-            if (calledBy == "WinPOS")
-
-                dataTable = pointOfSaleDAL.GetByIdOrLastId();//Searching the last id number in the tbl_pos which actually stands for the current invoice number to save it to tbl_pos_details as an invoice number for this sale.
-
-            else if (calledBy == "WinPOP")
-                dataTable = pointOfPurchaseDAL.GetByIdOrLastId();
-
-            else if (calledBy == "WinExpense")
-                dataTable = expenseDAL.GetByIdOrLastId();
-
-            else
-                dataTable = receiptDAL.GetByIdOrLastId();
+                dataTable = commonDAL.GetByIdOrLastId(calledBy);
 
             if (dataTable.Rows.Count != 0)//If there is an invoice number in the database, that means the datatable's first row cannot be null, and the datatable's first index is 0.
             {
