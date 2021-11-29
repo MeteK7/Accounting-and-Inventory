@@ -13,6 +13,7 @@ namespace KabaAccounting.CUL
         public int ProductUnitId { get; set; }
         public decimal ProductRate { get; set; }
         public decimal ProductQuantity { get; set; }
+        public decimal ProductGrossCostPrice { get; set; }
         public decimal ProductDiscount { get; set; }
         public decimal ProductVAT { get; set; }
         public decimal ProductCostPrice { get; set; }
