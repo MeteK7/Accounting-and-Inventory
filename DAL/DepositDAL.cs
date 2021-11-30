@@ -57,7 +57,7 @@ namespace DAL
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", depositCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                cmd.Parameters.AddWithValue("@id", depositCUL.Id);//The column id in the database is not auto incremental.
                 cmd.Parameters.AddWithValue("@account_id", depositCUL.AccountId);
                 cmd.Parameters.AddWithValue("@total_amount", depositCUL.TotalAmount);
                 cmd.Parameters.AddWithValue("@added_date", depositCUL.AddedDate);

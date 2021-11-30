@@ -1,6 +1,7 @@
 ﻿using BLL;
-using KabaAccounting.CUL;
 using DAL;
+using CUL;
+using CUL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,10 +32,12 @@ namespace GUI
 
         SupplierCUL supplierCUL = new SupplierCUL();
         SupplierDAL supplierDAL = new SupplierDAL();
-
+        AssetCUL assetCUL = new AssetCUL();
+        AssetDAL assetDAL = new AssetDAL();
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
-
+        CommonBLL commonBLL = new CommonBLL();
+        string calledBy = "tbl_supplier";
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -42,6 +45,7 @@ namespace GUI
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            #region NEW SUPPLIER INSERTION
             //Get the values from the Supplier Window and fill them into the supplierCUL.
 
             supplierCUL.Name = txtName.Text;
@@ -53,10 +57,24 @@ namespace GUI
 
 
             //Creating a Boolean variable to insert data into the database.
-            bool isSuccess = supplierDAL.Insert(supplierCUL);
+            bool isSuccessSupplier = supplierDAL.Insert(supplierCUL);
+            #endregion
+
+            #region FETCH THE LAST ID
+            int id;
+            id = commonBLL.GetLastRecordById(calledBy);//Fetching the latest id which was newly added above.
+            #endregion
+
+            #region NEW ASSET RECORD INSERTION
+            assetCUL.IdSourceType = Convert.ToInt32(Assets.Supplier);
+            assetCUL.IdSource =id;
+            assetCUL.SourceBalance = Convert.ToInt32(Numbers.InitialIndex);
+
+            bool isSuccessAsset = assetDAL.Insert(assetCUL);
+            #endregion
 
             //If the data is inserted successfully, then the value of the variable isSuccess will be true; otherwise it will be false.
-            if (isSuccess == true)
+            if (isSuccessSupplier == true && isSuccessAsset==true)
             {
                 MessageBox.Show("New data inserted successfully.");
                 dtgSuppliers.Items.Clear();
@@ -124,7 +142,7 @@ namespace GUI
             //dtgSupplier.AutoGenerateColumns = true;
             //dtgSupplier.CanUserAddRows = false;
 
-            int firstRowIndex = 0, supplierId, addedById;
+            int supplierId, addedById;
             string supplierName, supplierEmail, supplierContact, supplierAddress, addedDate, addedByUsername;
             DataTable dataTable = supplierDAL.Select();
             DataTable dataTableUserInfo;
@@ -135,7 +153,7 @@ namespace GUI
 
             #region LOADING THE PRODUCT DATA GRID
 
-            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            for (int currentRow = Convert.ToInt32(Numbers.InitialIndex); currentRow < dataTable.Rows.Count; currentRow++)
             {
                 supplierId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
                 supplierName = dataTable.Rows[currentRow]["name"].ToString();
@@ -145,7 +163,7 @@ namespace GUI
                 addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
                 addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
-                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+                addedByUsername = dataTableUserInfo.Rows[Convert.ToInt32(Numbers.InitialIndex)]["first_name"].ToString() + " " + dataTableUserInfo.Rows[Convert.ToInt32(Numbers.InitialIndex)]["last_name"].ToString();
 
                 dtgSuppliers.Items.Add(new { Id = supplierId, Name = supplierName, Email = supplierEmail, Contact = supplierContact, Address = supplierAddress, AddedDate = addedDate, AddedBy = addedByUsername });
             }

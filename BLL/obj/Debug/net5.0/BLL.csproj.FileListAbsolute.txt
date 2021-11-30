@@ -44,6 +44,10 @@ F:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
 F:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
 F:\Projects\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.AssemblyReference.cache
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfo.cs
+C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.deps.json
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\ref\BLL.dll
@@ -53,10 +57,6 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.dl
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.pdb
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\bin\Debug\net5.0\CUL.pdb
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.AssemblyReference.cache
-C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
-C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache
-C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfo.cs
-C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CopyComplete
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll

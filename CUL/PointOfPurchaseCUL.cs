@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KabaAccounting.CUL
+namespace CUL
 {
     public class PointOfPurchaseCUL
     {
