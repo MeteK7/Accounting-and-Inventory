@@ -179,8 +179,8 @@ namespace GUI
 
         private void ClearBasketTextBox()
         {
-            txtBasketQuantity.Text = Numbers.InitialIndex.ToString();
-            txtBasketGrandTotal.Text = Numbers.InitialIndex.ToString();
+            txtBasketQuantity.Text = ((int)Numbers.InitialIndex).ToString();
+            txtBasketGrandTotal.Text = ((int)Numbers.InitialIndex).ToString();
         }
 
         private void ClearInventoryAdjustmentDataGrid()
@@ -363,8 +363,8 @@ namespace GUI
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         TextBlock tbCellQuantityContent = dgProducts.Columns[colProductQuantityInReal].GetCellContent(row) as TextBlock;
-                        TextBlock tbCellTotalCostContent = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(row) as TextBlock;
-                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalSalePriceContent = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(row) as TextBlock;
 
                         quantity = Convert.ToInt32(tbCellQuantityContent.Text);
                         quantity += Convert.ToInt32(txtProductQuantityInReal.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
@@ -372,9 +372,9 @@ namespace GUI
                         tbCellQuantityContent.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
                         
                         
-                        tbCellTotalCostContent.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
+                        tbCellTotalCostPriceContent.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
                         totalPrice = quantity * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
-                        tbCellTotalPriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
+                        tbCellTotalSalePriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
                     }
@@ -598,7 +598,7 @@ namespace GUI
 
                 userClickedNewOrEdit = btnNewOrEdit;// We are reassigning the btnNewOrEdit value into userClickedNewOrEdit.
 
-                if (userClickedNewOrEdit == 1)//If the user clicked the btnEditRecord, then update the specific invoice information in tbl_pos at once.
+                if (userClickedNewOrEdit == (int)Numbers.UnitValue)//If the user clicked the btnEditRecord, then update the specific invoice information in tbl_pos at once.
                 {
                     isSuccess = inventoryAdjustmentDAL.Update(inventoryAdjustmentCUL);
                 }
@@ -688,9 +688,8 @@ namespace GUI
                         DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
-                        int numberZero = 0;
                         decimal productQuantity, productQuantityInStock = Convert.ToDecimal(txtProductQuantityInStock.Text);
-                        string productSalePrice = dataTable.Rows[numberZero]["saleprice"].ToString();
+                        string productSalePrice = dataTable.Rows[(int)Numbers.InitialIndex]["saleprice"].ToString();
 
                         #region Checking the unit type
                         if (txtProductUnit.Text != unitKg && txtProductUnit.Text != unitLt)
@@ -707,7 +706,7 @@ namespace GUI
                         #endregion
 
                         #region Checking the sign of the quantity in stock.
-                        if (productQuantityInStock < numberZero) //If it is a negative quantity, convert it into positive.
+                        if (productQuantityInStock < (int)Numbers.InitialIndex) //If it is a negative quantity, convert it into positive.
                             productQuantityInStock = Math.Abs(productQuantityInStock);
                         #endregion
 
@@ -718,7 +717,7 @@ namespace GUI
                     else//Reverting the quantity to the default value.
                     {
                         MessageBox.Show("Please enter a valid number");
-                        txtProductQuantityInReal.Text = "1";//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".
+                        txtProductQuantityInReal.Text = Numbers.UnitValue.ToString();//We are reverting the quantity of the product to default if the user has pressed a wrong key such as "a-b-c".
                         btnProductAdd.IsEnabled = true;//Once the mistake has been corrected, enable btnProductAdd.
                     }
                 }
