@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CUL.Enums;
 
 namespace GUI
 {
@@ -45,7 +46,6 @@ namespace GUI
 
         int depositArrow;
         int btnNewOrEdit;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int account = 1, bank = 2, supplier = 3;
         string[,] dgOldProductCells = new string[,] { };
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -417,8 +417,7 @@ namespace GUI
                 DateTime dateTime = DateTime.Now;
                 bool isSuccessDetail = false, isSuccessAssetBank=false;
                 int sourceId, assetId;
-                int sourceType = bank;
-                int rowIndex = 0;
+                int sourceType = Convert.ToInt32(Assets.Bank);
 
                 for (int rowNo = 0; rowNo < dgDeposits.Items.Count; rowNo++)
                 {
@@ -456,7 +455,7 @@ namespace GUI
                     #region UPDATING BANK ASSET BALANCE SECTION
                     DataTable dtAsset = assetDAL.SearchById(assetId);
 
-                    balance = dtAsset.Rows[rowIndex]["source_balance"].ToString();
+                    balance = dtAsset.Rows[Convert.ToInt32(Numbers.InitialIndex)]["source_balance"].ToString();
 
                     //UPDATING THE ASSET FOR BALANCE OF THE BANK.
                     assetCUL.Id = Convert.ToInt32(assetId);

@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CUL.Enums;
 
 namespace GUI
 {
@@ -63,7 +64,7 @@ namespace GUI
         int colNoProductUnit=2, colNoProductQuantity = 3, colNoProductGrossCostPrice=4, colNoProductGrossTotalCostPrice=5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductCostPrice = 8, colNoProductTotalCostPrice = 9;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductGrossCostPrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductCostPrice", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
-        string calledBy = "WinPOP";
+        string calledBy = "tbl_pop";
 
         string
             colTxtQtyInUnit = "quantity_in_unit",
@@ -97,7 +98,6 @@ namespace GUI
             colTxtIdSource="id_source",
             coTxtAssetId="asset_id";
 
-        int account = 1, bank = 2, supplier = 3;
         int calledByVAT = 1, calledByDiscount = 2;
         int clickedArrow,clickedPrev=0,clickedNext=1;
         int oldIdAsset, oldIdAssetSupplier,oldDgItemsRowCount;
@@ -287,7 +287,7 @@ namespace GUI
                     DataTable dtAsset = assetDAL.SearchById(assetId);
                     int sourceType = Convert.ToInt32(dtAsset.Rows[initialIndex][colTxtIdSourceType]);
 
-                    if (sourceType == account)
+                    if (sourceType == Convert.ToInt32(Assets.Account))
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
@@ -1456,7 +1456,7 @@ namespace GUI
         private void LoadCboMenuAsset(int checkStatus)
         {
             DataTable dtAccount;
-            if (checkStatus == account)
+            if (checkStatus == Convert.ToInt32(Assets.Account))
                 dtAccount = accountDAL.Select();
 
             else
@@ -1505,7 +1505,7 @@ namespace GUI
         private void cboMenuSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int sourceId;
-            int sourceType=supplier;
+            int sourceType= Convert.ToInt32(Assets.Supplier);
 
             sourceId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
             lblAssetSupplierId.Content = assetDAL.GetAssetIdBySource(sourceId, sourceType);
@@ -1517,9 +1517,9 @@ namespace GUI
             int sourceType;
 
             if (rbAccount.IsChecked == true)//DO NOT REPEAT YOURSELF!!!!! YOU HAVE ALREADY HAVE THESE SECTION ABOVE!
-                sourceType = account;
+                sourceType = Convert.ToInt32(Assets.Account);
             else
-                sourceType = bank;
+                sourceType = Convert.ToInt32(Assets.Bank);
 
             sourceId = Convert.ToInt32(cboMenuAsset.SelectedValue);
             lblAssetId.Content = assetDAL.GetAssetIdBySource(sourceId,sourceType);
@@ -1528,13 +1528,13 @@ namespace GUI
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
             //cboMenuAsset.ItemsSource = null;
-            LoadCboMenuAsset(account);
+            LoadCboMenuAsset(Convert.ToInt32(Assets.Account));
         }
 
         private void rbBank_Checked(object sender, RoutedEventArgs e)
         {
             //cboMenuAsset.ItemsSource = null;
-            LoadCboMenuAsset(bank);
+            LoadCboMenuAsset(Convert.ToInt32(Assets.Bank));
         }
     }
 }

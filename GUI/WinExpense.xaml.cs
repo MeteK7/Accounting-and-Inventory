@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using DAL;
 using System;
@@ -37,10 +38,9 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinExpense", colTxtName = "name", colTxtId = "id", colTxtIdFrom = "id_from", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtDateAdded = "added_date";
+        const string calledBy = "tbl_expenses", colTxtName = "name", colTxtId = "id", colTxtIdFrom = "id_from", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtDateAdded = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        const int account = 1, bank = 2, supplier = 3;
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
         int clickedNewOrEdit, clickedArrow;
@@ -183,7 +183,7 @@ namespace GUI
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
                     int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
 
-                    if (idSourceTypeFrom == account)//This code trigs the method LoadCboFrom in the methods rbAccount_Checked and rbBank_Checked!
+                    if (idSourceTypeFrom == Convert.ToInt32(Assets.Account))//This code trigs the method LoadCboFrom in the methods rbAccount_Checked and rbBank_Checked!
                         rbAccount.IsChecked = true;
                     else
                         rbBank.IsChecked = true;
@@ -445,7 +445,7 @@ namespace GUI
             if (isCboSelectionEnabled == true)
             {
                 ClearLabels();
-                LoadCboFrom(account);
+                LoadCboFrom(Convert.ToInt32(Assets.Account));
             }
         }
 
@@ -454,7 +454,7 @@ namespace GUI
             if (isCboSelectionEnabled == true)
             {
                 ClearLabels();
-                LoadCboFrom(bank);
+                LoadCboFrom(Convert.ToInt32(Assets.Bank));
             }
         }
 
@@ -465,9 +465,9 @@ namespace GUI
                 int sourceType;
 
                 if (rbAccount.IsChecked == true)
-                    sourceType = account;
+                    sourceType = (int)Assets.Account;
                 else
-                    sourceType = bank;
+                    sourceType = (int)Assets.Bank;
 
                 sourceId = Convert.ToInt32(cboFrom.SelectedValue);
                 assetId = assetDAL.GetAssetIdBySource(sourceId, sourceType);
@@ -519,13 +519,13 @@ namespace GUI
 
             switch (idSourceType)
             {
-                case account:
+                case (int)Assets.Account:
                     dtSource = accountDAL.Select();
                     break;
-                case bank:
+                case (int)Assets.Bank:
                     dtSource = bankDAL.Select();
                     break;
-                case supplier:
+                case (int)Assets.Supplier:
                     dtSource = supplierDAL.Select();
                     break;
                 default:
@@ -559,7 +559,7 @@ namespace GUI
             isCboSelectionEnabled = false;//Disabling the selection changed method in order to prevent them to work when we reassign the combobox with unselected status.
 
             DataTable dtFrom;//Creating Data Table to hold the products from Database.
-            if (idSourceType == account)
+            if (idSourceType == (int)Assets.Account)
                 dtFrom = accountDAL.Select();
 
             else
