@@ -39,7 +39,6 @@ namespace GUI
         CommonBLL commonBLL = new CommonBLL();
 
         const string calledBy = "tbl_expenses", colTxtName = "name", colTxtId = "id", colTxtIdFrom = "id_from", colTxtIdTo = "id_to", colTxtIdAssetFrom = "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtDateAdded = "added_date";
-        const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1,clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int expenseSize = 5;
         const int oldBalanceFrom=0, oldBalanceTo=1, oldAssetIdFrom=2, oldAssetIdTo=3, oldAmount=4;
@@ -152,36 +151,36 @@ namespace GUI
             int expenseNo;
 
             expenseNo = expenseBLL.GetLastExpenseNumber();//Getting the last expense number and assign it to the variable called expenseNo.
-            expenseNo += unitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
+            expenseNo +=(int)Numbers.UnitValue;//We are adding one to the last expense number because every new expense number is one greater tham the previous expense number.
             lblExpenseId.Content = expenseNo;//Assigning expenseNo to the content of the expenseNo Label.
         }
 
         //-1 means user did not clicked either previous or next button which means user just clicked the point of purchase button to open it.
-        private void LoadPastExpense(int expenseId = initialIndex, int expenseArrow = clickedNothing)//Optional parameter
+        private void LoadPastExpense(int expenseId = (int)Numbers.InitialIndex, int expenseArrow = clickedNothing)//Optional parameter
         {
             int idAssetFrom, idAssetTo, idFrom, idTo;
 
-            if (expenseId == initialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
+            if (expenseId == (int)Numbers.InitialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
                 expenseId = commonBLL.GetLastRecordById(calledBy);//Getting the last invoice id and assign it to the variable called invoiceId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (expenseId != initialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (expenseId != (int)Numbers.InitialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dtExpense = expenseDAL.GetByExpenseId(expenseId);
 
-                if (dtExpense.Rows.Count != initialIndex)
+                if (dtExpense.Rows.Count != (int)Numbers.InitialIndex)
                 {
-                    expenseId = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtId].ToString());//Getting the id of account.
+                    expenseId = Convert.ToInt32(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtId].ToString());//Getting the id of account.
                     lblExpenseId.Content = expenseId;
 
                     #region SOURCE TYPE CBO INFORMATION FILLING REGION
                     //RB SOURCE-FROM FILLING
-                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
+                    idAssetFrom = Convert.ToInt32(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtIdAssetFrom].ToString()); //Fetching the id_asset_from in order to get full details about the specific asset later.
 
                     DataTable dtAssetFrom = assetDAL.SearchById(idAssetFrom);//Sending the idAssetFrom in order the fetch full details of the asset.
-                    int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[initialIndex]["id_source_type"]);
+                    int idSourceTypeFrom = Convert.ToInt32(dtAssetFrom.Rows[(int)Numbers.InitialIndex]["id_source_type"]);
 
                     if (idSourceTypeFrom == Convert.ToInt32(Assets.Account))//This code trigs the method LoadCboFrom in the methods rbAccount_Checked and rbBank_Checked!
                         rbAccount.IsChecked = true;
@@ -189,41 +188,41 @@ namespace GUI
                         rbBank.IsChecked = true;
 
                     //CBO SOURCE-TO FILLING
-                    idAssetTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
+                    idAssetTo = Convert.ToInt32(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtIdAssetTo].ToString()); //Fetching the id_asset_to in order to get full details about the specific asset later.
 
                     DataTable dtAssetTo = assetDAL.SearchById(idAssetTo);//Sending the idAssetFrom in order the fetch full details of the asset.
-                    int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[initialIndex]["id_source_type"]);
+                    int idSourceTypeTo = Convert.ToInt32(dtAssetTo.Rows[(int)Numbers.InitialIndex]["id_source_type"]);
 
                     LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
                     cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo in the method cboSourceTo_SelectionChanged!
                     #endregion
 
                     #region SOURCE CBO INFORMATION FILLING REGION 
-                    idFrom = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdFrom].ToString());
+                    idFrom = Convert.ToInt32(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtIdFrom].ToString());
                     //LoadCboFrom(idSourceTypeFrom);No need for this code because it is automatically trigged by the code line --cboSourceFrom.SelectedValue = idSourceTypeFrom-- above.
                     cboFrom.SelectedValue = idFrom;
 
-                    idTo = Convert.ToInt32(dtExpense.Rows[initialIndex][colTxtIdTo].ToString());
+                    idTo = Convert.ToInt32(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtIdTo].ToString());
                     //LoadCboTo(idSourceTypeTo);No need for this code because it is automatically trigged by the code line --cboSourceTo.SelectedValue = idSourceTypeTo-- above.
                     cboTo.SelectedValue = idTo;
                     #endregion
 
-                    txtAmount.Text = dtExpense.Rows[initialIndex][colTxtAmount].ToString();
-                    txtDetails.Text = dtExpense.Rows[initialIndex][colTxtDetails].ToString();
-                    lblDateAdded.Content = Convert.ToDateTime(dtExpense.Rows[initialIndex][colTxtDateAdded]).ToString("f");
+                    txtAmount.Text = dtExpense.Rows[(int)Numbers.InitialIndex][colTxtAmount].ToString();
+                    txtDetails.Text = dtExpense.Rows[(int)Numbers.InitialIndex][colTxtDetails].ToString();
+                    lblDateAdded.Content = Convert.ToDateTime(dtExpense.Rows[(int)Numbers.InitialIndex][colTxtDateAdded]).ToString("f");
                 }
-                else if (dtExpense.Rows.Count == initialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dtExpense.Rows.Count == (int)Numbers.InitialIndex)//If the pop detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
-                    if (expenseArrow == initialIndex)//If the invoice arrow is 0, that means user clicked the previous button.
+                    if (expenseArrow == (int)Numbers.InitialIndex)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        expenseId = expenseId - unitValue;
+                        expenseId = expenseId - (int)Numbers.UnitValue;
                     }
                     else
                     {
-                        expenseId = expenseId + unitValue;
+                        expenseId = expenseId + (int)Numbers.UnitValue;
                     }
 
-                    if (expenseArrow != -unitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (expenseArrow != -(int)Numbers.UnitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
                         LoadPastExpense(expenseId, expenseArrow);//Call the method again to get the new past invoice.
                     }
@@ -238,11 +237,11 @@ namespace GUI
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstExpenseId = unitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content);
+            int firstExpenseId = (int)Numbers.UnitValue, currentExpenseId = Convert.ToInt32(lblExpenseId.Content);
 
             if (currentExpenseId != firstExpenseId)
             {
-                int prevExpenseId = currentExpenseId - unitValue;
+                int prevExpenseId = currentExpenseId - (int)Numbers.UnitValue;
 
                 clickedArrow = clickedPrev;//0 means customer has clicked the previous button.
                 ClearTools();
@@ -258,7 +257,7 @@ namespace GUI
 
             if (currentInvoiceId != lastExpenseId)
             {
-                int nextInvoice = currentInvoiceId + unitValue;
+                int nextInvoice = currentInvoiceId + (int)Numbers.UnitValue;
 
                 clickedArrow = clickedNext;//1 means customer has clicked the next button.
                 ClearTools();
@@ -477,7 +476,7 @@ namespace GUI
                 #region LBLBALANCEFROM POPULATING SECTION
                 DataTable dtAsset = assetDAL.SearchById(assetId);
 
-                string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+                string balance = dtAsset.Rows[(int)Numbers.InitialIndex]["source_balance"].ToString();
 
                 lblBalanceFrom.Content = balance;
                 #endregion
@@ -497,7 +496,7 @@ namespace GUI
             #region LBLBALANCETO POPULATING SECTION
             DataTable dtAsset = assetDAL.SearchById(assetId);
 
-            string balance = dtAsset.Rows[initialIndex]["source_balance"].ToString();
+            string balance = dtAsset.Rows[(int)Numbers.InitialIndex]["source_balance"].ToString();
 
             lblBalanceTo.Content = balance;
             #endregion
@@ -507,7 +506,7 @@ namespace GUI
         {
             DataTable dtAsset = assetDAL.SearchById(assetId);
 
-            decimal balance = Convert.ToDecimal(dtAsset.Rows[initialIndex]["source_balance"]);
+            decimal balance = Convert.ToDecimal(dtAsset.Rows[(int)Numbers.InitialIndex]["source_balance"]);
 
             return balance;
         }

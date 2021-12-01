@@ -70,13 +70,11 @@ namespace GUI
 
         private void txtId_KeyUp(object sender, KeyEventArgs e)
         {
-            int rowIndex = 0;
-
             DataTable dtBank = bankDAL.SearchById(Convert.ToInt32(txtEntranceBankId.Text));
 
-            if (dtBank.Rows.Count!=rowIndex)//If there is a data in the db, there cannot be a datatable with index of 0.
+            if (dtBank.Rows.Count!= (int)Numbers.InitialIndex)//If there is a data in the db, there cannot be a datatable with index of 0.
             {
-                cboEntranceBankName.SelectedValue = Convert.ToInt32(dtBank.Rows[rowIndex]["id"]);
+                cboEntranceBankName.SelectedValue = Convert.ToInt32(dtBank.Rows[(int)Numbers.InitialIndex]["id"]);
             }
             else
             {
@@ -95,7 +93,7 @@ namespace GUI
             {
                 bool addNewProductLine = true;
                 int colId = 0, colAmount = 3;
-                int amount = 0;
+                int amount;
                 int rowQuntity = dgDeposits.Items.Count;
 
                 for (int i = 0; i < rowQuntity; i++)
@@ -158,7 +156,7 @@ namespace GUI
 
         private void btnMenuNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            btnNewOrEdit = (int)Numbers.InitialIndex;//0 stands for the user has entered the btnNew.
             LoadNewInvoice();
             ToolsOnClickBtnNewEdit();
         }
@@ -171,34 +169,34 @@ namespace GUI
 
         private void LoadPastRecord(int depositId = 0, int depositArrow = -1)
         {
-            int firstRowIndex = 0, bankId;
+            int bankId;
             string bankName, depositDescription, depositAmount;
 
-            if (depositId == 0)
+            if (depositId == (int)Numbers.InitialIndex)
             {
                 depositId = depositBLL.GetLastDepositId();//Getting the last deposit id and assign it to the variable called depositId.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (depositId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (depositId != (int)Numbers.InitialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTableDeposit = depositDAL.GetByIdOrLastId(depositId);
 
-                if (dataTableDeposit.Rows.Count != 0)
+                if (dataTableDeposit.Rows.Count != (int)Numbers.InitialIndex)
                 {
                     DataTable dataTableDepositDetail = depositDetailDAL.SearchById(depositId);
                     DataTable dataTableBankInfo;
 
-                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTableDeposit.Rows[firstRowIndex]["account_id"].ToString());//Getting the id of account.
-                    lblDepositNumber.Content = dataTableDeposit.Rows[firstRowIndex]["id"].ToString();
+                    cboMenuAccount.SelectedValue = Convert.ToInt32(dataTableDeposit.Rows[(int)Numbers.InitialIndex]["account_id"].ToString());//Getting the id of account.
+                    lblDepositNumber.Content = dataTableDeposit.Rows[(int)Numbers.InitialIndex]["id"].ToString();
 
                     #region LOADING THE DEPOSIT DATA GRID
-                    for (int currentRow = firstRowIndex; currentRow < dataTableDepositDetail.Rows.Count; currentRow++)
+                    for (int currentRow = (int)Numbers.InitialIndex; currentRow < dataTableDepositDetail.Rows.Count; currentRow++)
                     {
                         bankId = Convert.ToInt32(dataTableDepositDetail.Rows[currentRow]["bank_id"]);
 
                         dataTableBankInfo = bankDAL.SearchById(bankId);//Getting the bank name by bank id.
-                        bankName = dataTableBankInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one bank name of a specific id.
+                        bankName = dataTableBankInfo.Rows[(int)Numbers.InitialIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one bank name of a specific id.
                         
                         depositDescription= dataTableDepositDetail.Rows[currentRow]["description"].ToString();
                         depositAmount = dataTableDepositDetail.Rows[currentRow]["amount"].ToString();
@@ -208,22 +206,22 @@ namespace GUI
                     #endregion
 
                     #region FILLING THE PREVIOUS SUMMARY INFORMATIONS
-                    txtSummaryTotalAmount.Text = dataTableDeposit.Rows[firstRowIndex]["total_amount"].ToString();
+                    txtSummaryTotalAmount.Text = dataTableDeposit.Rows[(int)Numbers.InitialIndex]["total_amount"].ToString();
                     #endregion
                 }
 
-                else if (dataTableDeposit.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTableDeposit.Rows.Count == (int)Numbers.InitialIndex)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (depositArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        depositId = depositId - 1;
+                        depositId = depositId - (int)Numbers.UnitValue;
                     }
                     else
                     {
-                        depositId = depositId + 1;
+                        depositId = depositId + (int)Numbers.UnitValue;
                     }
 
-                    if (depositArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (depositArrow != -(int)Numbers.UnitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
                         LoadPastRecord(depositId, depositArrow);//Call the method again to get the new past invoice.
                     }
@@ -312,11 +310,11 @@ namespace GUI
             int colLength = 4;
             string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
+            for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < rowLength; rowIndex++)
             {
                 DataGridRow dgRow = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(rowIndex);
 
-                for (int colNo = 0; colNo < colLength; colNo++)
+                for (int colNo = (int)Numbers.InitialIndex; colNo < colLength; colNo++)
                 {
                     TextBlock tbCellContent = dgDeposits.Columns[colNo].GetCellContent(dgRow) as TextBlock;
 
@@ -347,7 +345,7 @@ namespace GUI
             if (txtEntranceAmount.Text != "")
             {
                 string amount = txtEntranceAmount.Text;
-                char lastCharacter = char.Parse(amount.Substring(amount.Length - 1));//Getting the last character to check if the user has entered a missing amount like " 3, ".
+                char lastCharacter = char.Parse(amount.Substring(amount.Length - (int)Numbers.UnitValue));//Getting the last character to check if the user has entered a missing amount like " 3, ".
                 bool isValidAmount = Char.IsDigit(lastCharacter);//Checking if the last digit of the number is a number or not.
                 bool isNumeric = int.TryParse(amount, out _);
 
@@ -362,7 +360,7 @@ namespace GUI
 
         private void btnMenuSave_Click(object sender, RoutedEventArgs e)
         {
-            int emptyIndex = -1;
+            int emptyIndex = -(int)Numbers.UnitValue;
             string[,] dgNewProductCells = new string[,] { };
 
             dgNewProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
@@ -419,9 +417,9 @@ namespace GUI
                 int sourceId, assetId;
                 int sourceType = Convert.ToInt32(Assets.Bank);
 
-                for (int rowNo = 0; rowNo < dgDeposits.Items.Count; rowNo++)
+                for (int rowNo = (int)Numbers.InitialIndex; rowNo < dgDeposits.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEdit, then edit the specific deposit's items in tbl_deposit_detailed at once.
+                    if (userClickedNewOrEdit == (int)Numbers.UnitValue)//If the user clicked the btnEdit, then edit the specific deposit's items in tbl_deposit_detailed at once.
                     {
                         //We are sending deposit id as a parameter to the "Delete" Method. So that we can erase all the entrances which have the specific deposit id.
                         depositDetailDAL.Delete(depositId);
@@ -432,7 +430,7 @@ namespace GUI
 
                     DataGridRow row = (DataGridRow)dgDeposits.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                    for (int colNo = 0; colNo < colLength; colNo++)
+                    for (int colNo = (int)Numbers.InitialIndex; colNo < colLength; colNo++)
                     {
                         TextBlock cellContent = dgDeposits.Columns[colNo].GetCellContent(row) as TextBlock;
 
@@ -455,7 +453,7 @@ namespace GUI
                     #region UPDATING BANK ASSET BALANCE SECTION
                     DataTable dtAsset = assetDAL.SearchById(assetId);
 
-                    balance = dtAsset.Rows[Convert.ToInt32(Numbers.InitialIndex)]["source_balance"].ToString();
+                    balance = dtAsset.Rows[(int)Numbers.InitialIndex]["source_balance"].ToString();
 
                     //UPDATING THE ASSET FOR BALANCE OF THE BANK.
                     assetCUL.Id = Convert.ToInt32(assetId);
@@ -512,7 +510,7 @@ namespace GUI
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 1;//1 stands for the user has entered the btnEdit.
+            btnNewOrEdit = (int)Numbers.UnitValue;//1 stands for the user has entered the btnEdit.
             dgOldProductCells = (string[,])(GetDataGridContent().Clone());//Cloning one array into another array.
             ToolsOnClickBtnNewEdit();
         }

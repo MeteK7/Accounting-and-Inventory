@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -123,7 +124,7 @@ namespace GUI
             //dtgCustomer.AutoGenerateColumns = true;
             //dtgCustomer.CanUserAddRows = false;
 
-            int firstRowIndex = 0, customerId, addedById;
+            int customerId, addedById;
             string customerName,customerEmail, customerContact,customerAddress, addedDate, addedByUsername;
             DataTable dataTable = customerDAL.Select();
             DataTable dataTableUserInfo;
@@ -134,7 +135,7 @@ namespace GUI
 
             #region LOADING THE PRODUCT DATA GRID
 
-            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            for (int currentRow = (int)Numbers.InitialIndex; currentRow < dataTable.Rows.Count; currentRow++)
             {
                 customerId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
                 customerName = dataTable.Rows[currentRow]["name"].ToString();
@@ -144,7 +145,7 @@ namespace GUI
                 addedDate = dataTable.Rows[currentRow]["added_date"].ToString();
                 addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
-                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+                addedByUsername = dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["last_name"].ToString();
 
                 dtgCustomers.Items.Add(new { Id = customerId, Name = customerName,Email=customerEmail,Contact=customerContact,Address=customerAddress, AddedDate = addedDate, AddedBy = addedByUsername });
             }
@@ -211,7 +212,7 @@ namespace GUI
                 //Show customer informations based on the keyword.
                 DataTable dtCustomer = customerDAL.Search(keyword);
 
-                for (int rowIndex = 0; rowIndex < dtCustomer.Rows.Count; rowIndex++)
+                for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtCustomer.Rows.Count; rowIndex++)
                 {
                     dtgCustomers.Items.Add(
                         new CustomerCUL()

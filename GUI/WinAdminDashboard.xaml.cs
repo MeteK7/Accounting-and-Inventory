@@ -1,4 +1,5 @@
 ﻿using CUL;
+using CUL.Enums;
 using DAL;
 using DAL;
 using System;
@@ -67,7 +68,7 @@ namespace GUI
 
         private void StartClock()
         {
-            int second = 1;
+            int second = (int)Numbers.UnitValue;
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromSeconds(second);
             dispatcherTimer.Tick += TickEvent;

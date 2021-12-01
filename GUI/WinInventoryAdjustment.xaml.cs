@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CUL.Enums;
 
 namespace GUI
 {
@@ -56,6 +57,8 @@ namespace GUI
         int oldItemsRowCount;
         string colQtyNameInDb = "quantity_in_stock", colCostPriceNameInDb = "costprice";
         decimal newQuantity;
+        int colLength = 10;
+        int cellUnit = 2, colProductCostPrice = 3, colProductSalePrice = 4, colProductQuantityInReal = 5, colProductQuantityInStock = 6, colProductQuantityDifference = 7,colProductTotalCostPrice=8,colProductTotalSalePrice=9;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -68,38 +71,38 @@ namespace GUI
             txtUserType.Text = WinLogin.loggedInUserType;
         }
 
-        private void LoadPastInventoryAdjustmentPage(int inventoryAdjustmentId = 0, int invoiceArrow = -1)//Optional parameter
+        private void LoadPastInventoryAdjustmentPage(int inventoryAdjustmentId = (int)Numbers.InitialIndex, int invoiceArrow = -(int)Numbers.UnitValue)//Optional parameter
         {
-            int firstRowIndex = 0, productUnitId;
+            int productUnitId;
             string productId, productName, productUnitName;
             decimal productCostPrice, productSalePrice, productQuantityInReal, productQuantityInStock, productQuantityDifference, productTotalCostPrice, productTotalSalePrice;
 
-            if (inventoryAdjustmentId == 0)
+            if (inventoryAdjustmentId == (int)Numbers.InitialIndex)
             {
                 inventoryAdjustmentId = GetLastInventoryAdjustmentId();//Getting the last invoice number and assign it to the variable called invoiceNo.
             }
 
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
-            if (inventoryAdjustmentId != 0)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
+            if (inventoryAdjustmentId != (int)Numbers.InitialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
                 DataTable dataTableInventoryAdjustment = inventoryAdjustmentDAL.Search(inventoryAdjustmentId);
                 DataTable dataTableInventoryAdjustmentDetail = inventoryAdjustmentDetailDAL.Search(inventoryAdjustmentId);
                 DataTable dataTableUnitInfo;
                 DataTable dataTableProduct;
 
-                if (dataTableInventoryAdjustmentDetail.Rows.Count != 0)
+                if (dataTableInventoryAdjustmentDetail.Rows.Count != (int)Numbers.InitialIndex)
                 {
                     #region LOADING THE PRODUCT DATA GRID
 
-                    for (int currentRow = firstRowIndex; currentRow < dataTableInventoryAdjustmentDetail.Rows.Count; currentRow++)
+                    for (int currentRow = (int)Numbers.InitialIndex; currentRow < dataTableInventoryAdjustmentDetail.Rows.Count; currentRow++)
                     {
-                        lblIventoryAdjustmentId.Content = dataTableInventoryAdjustment.Rows[firstRowIndex]["id"].ToString();
+                        lblIventoryAdjustmentId.Content = dataTableInventoryAdjustment.Rows[(int)Numbers.InitialIndex]["id"].ToString();
 
                         productId = dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_id"].ToString();
                         productUnitId = Convert.ToInt32(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_unit_id"]);
 
                         dataTableUnitInfo = unitDAL.GetUnitInfoById(productUnitId);//Getting the unit name by unit id.
-                        productUnitName = dataTableUnitInfo.Rows[firstRowIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
+                        productUnitName = dataTableUnitInfo.Rows[(int)Numbers.InitialIndex]["name"].ToString();//We use firstRowIndex value for the index number in every loop because there can be only one unit name of a specific id.
 
                         productCostPrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_cost_price"]);
                         productSalePrice = Convert.ToDecimal(dataTableInventoryAdjustmentDetail.Rows[currentRow]["product_sale_price"]);
@@ -111,7 +114,7 @@ namespace GUI
 
                         dataTableProduct = productDAL.SearchById(productId);
 
-                        productName = dataTableProduct.Rows[firstRowIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
+                        productName = dataTableProduct.Rows[(int)Numbers.InitialIndex]["name"].ToString();//We used firstRowIndex because there can be only one row in the datatable for a specific product.
 
                         dgProducts.Items.Add(new { Id = productId, Name = productName, Unit = productUnitName, CostPrice = productCostPrice, SalePrice = productSalePrice, QuantityInReal = productQuantityInReal, QuantityInStock = productQuantityInStock, QuantityDifference= productQuantityDifference, TotalCostPrice = productTotalCostPrice, TotalSalePrice = productTotalSalePrice });
                     }
@@ -120,23 +123,23 @@ namespace GUI
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used firstRowIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTableInventoryAdjustment.Rows[firstRowIndex]["total_product_quantity"].ToString();
-                    txtBasketGrandTotal.Text = dataTableInventoryAdjustment.Rows[firstRowIndex]["grand_total"].ToString();
+                    txtBasketQuantity.Text = dataTableInventoryAdjustment.Rows[(int)Numbers.InitialIndex]["total_product_quantity"].ToString();
+                    txtBasketGrandTotal.Text = dataTableInventoryAdjustment.Rows[(int)Numbers.InitialIndex]["grand_total"].ToString();
 
                     #endregion
                 }
-                else if (dataTableInventoryAdjustmentDetail.Rows.Count == 0)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
+                else if (dataTableInventoryAdjustmentDetail.Rows.Count == (int)Numbers.InitialIndex)//If the pos detail row quantity is 0, that means there is no such row so decrease or increase the invoice number according to user preference.
                 {
                     if (invoiceArrow == 0)//If the invoice arrow is 0, that means user clicked the previous button.
                     {
-                        inventoryAdjustmentId = inventoryAdjustmentId - 1;
+                        inventoryAdjustmentId = inventoryAdjustmentId - (int)Numbers.UnitValue;
                     }
                     else
                     {
-                        inventoryAdjustmentId = inventoryAdjustmentId + 1;
+                        inventoryAdjustmentId = inventoryAdjustmentId + (int)Numbers.UnitValue;
                     }
 
-                    if (invoiceArrow != -1)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
+                    if (invoiceArrow != -(int)Numbers.UnitValue)//If the user has not clicked either previous or next button, then the invoiceArrow will be -1 and no need for recursion.
                     {
                         LoadPastInventoryAdjustmentPage(inventoryAdjustmentId, invoiceArrow);//Call the method again to get the new past invoice.
                     }
@@ -176,8 +179,8 @@ namespace GUI
 
         private void ClearBasketTextBox()
         {
-            txtBasketQuantity.Text = "0";
-            txtBasketGrandTotal.Text = "0";
+            txtBasketQuantity.Text = Numbers.InitialIndex.ToString();
+            txtBasketGrandTotal.Text = Numbers.InitialIndex.ToString();
         }
 
         private void ClearInventoryAdjustmentDataGrid()
@@ -187,17 +190,17 @@ namespace GUI
 
         private int GetLastInventoryAdjustmentId()
         {
-            int specificRowIndex = 0, inventoryAdjustmentId;
+            int inventoryAdjustmentId;
 
             DataTable dataTable = inventoryAdjustmentDAL.Search();//Searching the last id number in the tbl_inventory_adjustment.
 
-            if (dataTable.Rows.Count != 0)//If there is an inventory adjustment id in the database, that means the database table's first row cannot be null, and the datatable table's first index is 0.
+            if (dataTable.Rows.Count != (int)Numbers.InitialIndex)//If there is an inventory adjustment id in the database, that means the database table's first row cannot be null, and the datatable table's first index is 0.
             {
-                inventoryAdjustmentId = Convert.ToInt32(dataTable.Rows[specificRowIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
+                inventoryAdjustmentId = Convert.ToInt32(dataTable.Rows[(int)Numbers.InitialIndex]["id"]);//We defined this code out of the for loop below because all of the products has the same invoice number in every sale. So, no need to call this method for every products again and again.
             }
             else//If there is no any inventory adjustment id in the db, that means it is the first record. So, assing inventoryAdjustmentId with 0;
             {
-                inventoryAdjustmentId = 0;
+                inventoryAdjustmentId = (int)Numbers.InitialIndex;
             }
             return inventoryAdjustmentId;
         }
@@ -207,10 +210,10 @@ namespace GUI
             ClearBasketTextBox();
             ClearInventoryAdjustmentDataGrid();
 
-            int inventoryAdjustmentId, increment = 1;
+            int inventoryAdjustmentId;
 
             inventoryAdjustmentId = GetLastInventoryAdjustmentId();//Getting the last inventory adjustment record id and assign it to the variable called inventoryAdjustmentId.
-            inventoryAdjustmentId += increment;//We are adding one to the last inventory adjustment record id because every new inventory adjustment record id is one greater tham the previous one.
+            inventoryAdjustmentId += (int)Numbers.UnitValue;//We are adding one to the last inventory adjustment record id because every new inventory adjustment record id is one greater tham the previous one.
             lblIventoryAdjustmentId.Content = inventoryAdjustmentId;//Assigning inventory adjustment record id to the content of the inventory adjustment record id label.
         }
 
@@ -284,34 +287,33 @@ namespace GUI
             int number;
             DataTable dataTableProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
-            if (txtProductId.Text != 0.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != 0)//Validating the barcode if it is a number(except zero) or not.
+            if (txtProductId.Text != Numbers.InitialIndex.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != (int)Numbers.InitialIndex)//Validating the barcode if it is a number(except zero) or not.
             {
                 int productQuantityInStock;
-                int rowIndex = 0;
                 int productUnitId;
                 string productId, productBarcodeRetail, productName, productUnitName;
                 string costPrice, salePrice;
 
-                productId = dataTableProduct.Rows[rowIndex]["id"].ToString();
-                productBarcodeRetail = dataTableProduct.Rows[rowIndex]["barcode_retail"].ToString();
-                productName = dataTableProduct.Rows[rowIndex]["name"].ToString();//Filling the product name textbox from the database.
-                costPrice = dataTableProduct.Rows[rowIndex]["costprice"].ToString();
-                salePrice = dataTableProduct.Rows[rowIndex]["saleprice"].ToString();
-                productQuantityInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex][colQtyNameInDb]);
+                productId = dataTableProduct.Rows[(int)Numbers.InitialIndex]["id"].ToString();
+                productBarcodeRetail = dataTableProduct.Rows[(int)Numbers.InitialIndex]["barcode_retail"].ToString();
+                productName = dataTableProduct.Rows[(int)Numbers.InitialIndex]["name"].ToString();//Filling the product name textbox from the database.
+                costPrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["costprice"].ToString();
+                salePrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["saleprice"].ToString();
+                productQuantityInStock = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex][colQtyNameInDb]);
 
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
                 {
-                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_retail_id"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex]["unit_retail_id"]);
                 }
 
                 else //If the barcode equals to the barcode_wholesale, then take the product's wholesale unit id.
                 {
-                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["unit_wholesale_id"]);
+                    productUnitId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex]["unit_wholesale_id"]);
                 }
 
                 DataTable dataTableProductUnit = unitDAL.GetUnitInfoById(productUnitId);//Datatable for finding the unit name by unit id.
-                productUnitName = dataTableProductUnit.Rows[rowIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
+                productUnitName = dataTableProductUnit.Rows[(int)Numbers.InitialIndex]["name"].ToString();//Populating the textbox with the related unit name from dataTableUnit.
 
                 txtProductName.Text = productName;
                 txtProductUnit.Text = productUnitName;
@@ -337,7 +339,7 @@ namespace GUI
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            btnNewOrEdit = 0;//0 stands for the user has entered the btnNew.
+            btnNewOrEdit = (int)Numbers.InitialIndex;//0 stands for the user has entered the btnNew.
             LoadNewInventoryAdjustment();
             ModifyToolsOnClickBtnNewOrEdit();
         }
@@ -345,15 +347,12 @@ namespace GUI
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)
         {
             bool addNewProductLine = true;
-            int barcodeColNo = 0;
-            int quantityColNo = 5;
-            int totalCostColNo = 6;
-            int totalPriceColNo = 7;
-            int quantity = 0;
+            int barcodeColNo = (int)Numbers.InitialIndex;
+            int quantity;
             decimal totalPrice;
             int rowQuntity = dgProducts.Items.Count;
 
-            for (int i = 0; i < rowQuntity; i++)
+            for (int i = (int)Numbers.InitialIndex; i < rowQuntity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -363,9 +362,9 @@ namespace GUI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[quantityColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!!                         
-                        TextBlock tbCellTotalCostContent = dgProducts.Columns[totalCostColNo].GetCellContent(row) as TextBlock;    //Try to understand this code!!! 
-                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[totalPriceColNo].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityContent = dgProducts.Columns[colProductQuantityInReal].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalCostContent = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalPriceContent = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(row) as TextBlock;
 
                         quantity = Convert.ToInt32(tbCellQuantityContent.Text);
                         quantity += Convert.ToInt32(txtProductQuantityInReal.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
@@ -429,13 +428,13 @@ namespace GUI
         int inventoryAdjustmentArrow;
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            int firstInventoryAdjustmentId = 0, currentInvoiceNo = Convert.ToInt32(lblIventoryAdjustmentId.Content);
+            int currentInvoiceNo = Convert.ToInt32(lblIventoryAdjustmentId.Content);
 
-            if (currentInvoiceNo != firstInventoryAdjustmentId)
+            if (currentInvoiceNo != (int)Numbers.InitialIndex)
             {
                 ClearInventoryAdjustmentDataGrid();
-                int prevInventoryAdjustment = Convert.ToInt32(lblIventoryAdjustmentId.Content) - 1;
-                inventoryAdjustmentArrow = 0;//0 means customer has clicked the previous button.
+                int prevInventoryAdjustment = Convert.ToInt32(lblIventoryAdjustmentId.Content) - (int)Numbers.UnitValue;
+                inventoryAdjustmentArrow = (int)Numbers.InitialIndex;//0 means customer has clicked the previous button.
                 LoadPastInventoryAdjustmentPage(prevInventoryAdjustment, inventoryAdjustmentArrow);
             }
         }
@@ -447,8 +446,8 @@ namespace GUI
             if (currentInvoiceNo != lastInventoryAdjustmentId)
             {
                 ClearInventoryAdjustmentDataGrid();
-                int nextInvoice = Convert.ToInt32(lblIventoryAdjustmentId.Content) + 1;
-                inventoryAdjustmentArrow = 1;//1 means customer has clicked the next button.
+                int nextInvoice = Convert.ToInt32(lblIventoryAdjustmentId.Content) + (int)Numbers.UnitValue;
+                inventoryAdjustmentArrow = (int)Numbers.UnitValue;//1 means customer has clicked the next button.
                 LoadPastInventoryAdjustmentPage(nextInvoice, inventoryAdjustmentArrow);
             }
         }
@@ -456,14 +455,13 @@ namespace GUI
         private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
             int rowLength = dgProducts.Items.Count;
-            int colLength = 8;
             string[,] dgProductCells = new string[rowLength, colLength];
 
-            for (int rowNo = 0; rowNo < rowLength; rowNo++)
+            for (int rowNo = (int)Numbers.InitialIndex; rowNo < rowLength; rowNo++)
             {
                 DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                for (int colNo = 0; colNo < colLength; colNo++)
+                for (int colNo = (int)Numbers.InitialIndex; colNo < colLength; colNo++)
                 {
                     TextBlock tbCellContent = dgProducts.Columns[colNo].GetCellContent(dgRow) as TextBlock;
 
@@ -488,19 +486,17 @@ namespace GUI
         private void RevertOldQuantityInStock()
         {
             int productId;
-            int initialRowIndex = 0;
-            int colProductId = 0;
-            int colProductQuantityDifference = 7;
+            int colProductId = (int)Numbers.InitialIndex;
             decimal productQtyFromDB;
 
 
             DataTable dtProduct = new DataTable();
 
-            for (int rowNo = initialRowIndex; rowNo < oldItemsRowCount; rowNo++)
+            for (int rowNo = (int)Numbers.InitialIndex; rowNo < oldItemsRowCount; rowNo++)
             {
                 dtProduct = productDAL.SearchProductByIdBarcode(dgOldProductCells[rowNo, colProductId]);
 
-                productQtyFromDB = Convert.ToInt32(dtProduct.Rows[initialRowIndex][colQtyNameInDb]);
+                productQtyFromDB = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colQtyNameInDb]);
 
                 newQuantity = productQtyFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantityDifference]);//Revert the quantity in stock.
 
@@ -546,19 +542,16 @@ namespace GUI
                 #region TABLE INVENTORY ADJUSTMENT DETAILS SAVING SECTION
 
                 int userClickedNewOrEdit = btnNewOrEdit;
-                int cellUnit = 2, cellProductCostPrice=3, cellProductSalePrice=4, cellProductQuantityInReal = 5, cellProductQuantityInStock=6, cellProductQuantityDifference=7;
                 int productId;
                 int unitId;
-                int initialRowIndex = 0;
-                int cellLength = 10;
-                string[] cells = new string[cellLength];
+                string[] cells = new string[colLength];
                 bool isSuccessProductQty = false;
                 bool isSuccessDetail = false;
                 bool isSuccess = false;
 
-                for (int rowNo = 0; rowNo < dgProducts.Items.Count; rowNo++)
+                for (int rowNo = (int)Numbers.InitialIndex; rowNo < dgProducts.Items.Count; rowNo++)
                 {
-                    if (userClickedNewOrEdit == 1)//If the user clicked the btnEditRecord, then edit the specific invoice's products in tbl_inventory_adjustment_detailed at once.
+                    if (userClickedNewOrEdit == (int)Numbers.UnitValue)//If the user clicked the btnEditRecord, then edit the specific invoice's products in tbl_inventory_adjustment_detailed at once.
                     {
                         RevertOldQuantityInStock();//Reverting the old products' quantity in stock.
 
@@ -571,33 +564,33 @@ namespace GUI
 
                     DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                    for (int colNo = 0; colNo < cellLength; colNo++)
+                    for (int colNo = (int)Numbers.InitialIndex; colNo < colLength; colNo++)
                     {
                         TextBlock cellContent = dgProducts.Columns[colNo].GetCellContent(row) as TextBlock;
 
                         cells[colNo] = cellContent.Text;
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[initialRowIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
-                    productId = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[(int)Numbers.InitialIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
+                    productId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
                     dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
-                    unitId = Convert.ToInt32(dataTableUnit.Rows[initialRowIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
+                    unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     inventoryAdjustmentDetailCUL.ProductId = productId;
                     inventoryAdjustmentDetailCUL.InventoryAdjustmentId = inventoryAdjustmentId;
                     inventoryAdjustmentDetailCUL.ProductUnitId = unitId;
-                    inventoryAdjustmentDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[cellProductCostPrice]);
-                    inventoryAdjustmentDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[cellProductSalePrice]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityInReal = Convert.ToDecimal(cells[cellProductQuantityInReal]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityInStock = Convert.ToDecimal(cells[cellProductQuantityInStock]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityDifference = Convert.ToDecimal(cells[cellProductQuantityDifference]);
+                    inventoryAdjustmentDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[colProductCostPrice]);
+                    inventoryAdjustmentDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[colProductSalePrice]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityInReal = Convert.ToDecimal(cells[colProductQuantityInReal]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityInStock = Convert.ToDecimal(cells[colProductQuantityInStock]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityDifference = Convert.ToDecimal(cells[colProductQuantityDifference]);
 
                     isSuccessDetail = inventoryAdjustmentDetailDAL.Insert(inventoryAdjustmentDetailCUL);
 
                     #region TABLE PRODUCT INVENTORY ADJUSTMENT SECTION
-                    newQuantity = Convert.ToDecimal(cells[cellProductQuantityInReal]);//Assigning the real quantity of the product in the facility to the system's stock.
+                    newQuantity = Convert.ToDecimal(cells[colProductQuantityInReal]);//Assigning the real quantity of the product in the facility to the system's stock.
                     isSuccessProductQty = productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
                     #endregion
                 }
