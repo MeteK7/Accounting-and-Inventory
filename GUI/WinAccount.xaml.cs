@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using DAL;
 using System;
@@ -110,7 +111,7 @@ namespace GUI
             //dtgAccounts.AutoGenerateColumns = true;
             //dtgAccounts.CanUserAddRows = false;
 
-            int firstRowIndex = 0, accountId, addedById;
+            int accountId, addedById;
             string accountName, addedDate, addedByUsername;
             DataTable dataTable = accountDAL.Select();
             DataTable dataTableUserInfo;
@@ -121,7 +122,7 @@ namespace GUI
 
             #region LOADING THE PRODUCT DATA GRID
 
-            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            for (int currentRow = (int)Numbers.InitialIndex; currentRow < dataTable.Rows.Count; currentRow++)
             {
                 accountId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
                 accountName = dataTable.Rows[currentRow]["name"].ToString();
@@ -129,7 +130,7 @@ namespace GUI
 
                 addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
-                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+                addedByUsername = dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["last_name"].ToString();
 
                 dtgAccounts.Items.Add(new { Id = accountId, Name = accountName, AddedDate = addedDate, AddedBy = addedByUsername});
             }
@@ -184,7 +185,7 @@ namespace GUI
                 //Show account informations based on the keyword.
                 DataTable dtAccount = accountDAL.Search(keyword);
 
-                for (int rowIndex = 0; rowIndex < dtAccount.Rows.Count; rowIndex++)
+                for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtAccount.Rows.Count; rowIndex++)
                 {
                     dtgAccounts.Items.Add(
                         new AccountCUL()

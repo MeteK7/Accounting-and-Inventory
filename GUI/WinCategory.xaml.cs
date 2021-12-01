@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -118,7 +119,7 @@ namespace GUI
             //dtgCategories.AutoGenerateColumns = true;
             //dtgCategories.CanUserAddRows = false;
 
-            int firstRowIndex = 0, categoryId, addedById;
+            int categoryId, addedById;
             string categoryName,categoryDescription, addedDate, addedByUsername;
             DataTable dataTable = categoryDAL.Select();
             DataTable dataTableUserInfo;
@@ -129,7 +130,7 @@ namespace GUI
 
             #region LOADING THE PRODUCT DATA GRID
 
-            for (int currentRow = firstRowIndex; currentRow < dataTable.Rows.Count; currentRow++)
+            for (int currentRow = (int)Numbers.InitialIndex; currentRow < dataTable.Rows.Count; currentRow++)
             {
                 categoryId = Convert.ToInt32(dataTable.Rows[currentRow]["id"]);
                 categoryName = dataTable.Rows[currentRow]["name"].ToString();
@@ -138,7 +139,7 @@ namespace GUI
 
                 addedById = Convert.ToInt32(dataTable.Rows[currentRow]["added_by"]);
                 dataTableUserInfo = userDAL.GetUserInfoById(addedById);
-                addedByUsername = dataTableUserInfo.Rows[firstRowIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[firstRowIndex]["last_name"].ToString();
+                addedByUsername = dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["first_name"].ToString() + " " + dataTableUserInfo.Rows[(int)Numbers.InitialIndex]["last_name"].ToString();
 
                 dtgCategories.Items.Add(new { Id = categoryId, Name = categoryName, Description= categoryDescription, AddedDate = addedDate, AddedBy = addedByUsername });
             }
@@ -197,7 +198,7 @@ namespace GUI
                 //Show category informations based on the keyword.
                 DataTable dtCategory = categoryDAL.Search(keyword);
 
-                for (int rowIndex = 0; rowIndex < dtCategory.Rows.Count; rowIndex++)
+                for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtCategory.Rows.Count; rowIndex++)
                 {
                     dtgCategories.Items.Add(
                         new CategoryCUL()

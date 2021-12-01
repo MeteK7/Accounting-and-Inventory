@@ -36,7 +36,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "WinReceipt", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtIdAssetFrom= "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "tbl_receipts", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtIdAssetFrom= "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3,customer=4;
