@@ -8,5 +8,17 @@ namespace CUL.Enums
 {
     public enum PosColumns
     {
+        ColProductId,
+        ColProductName,
+        ColProductUnit, 
+        ColProductQuantity, 
+        ColProductCostPrice, 
+        ColProductSalePrice, 
+        ColProductTotalCostPrice, 
+        ColProductGrossTotalSalePrice, 
+        ColProductDiscount, 
+        ColProductVAT, 
+        ColProductTotalSalePrice
+
     }
 }
