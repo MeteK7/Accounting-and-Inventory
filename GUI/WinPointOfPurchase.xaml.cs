@@ -86,7 +86,7 @@ namespace GUI
             colTxtUnitRetailId = "unit_retail_id",
             colTxtUnitWholesaleId = "unit_wholesale_id",
             colTxtTotalPQuantity = "total_product_quantity",
-            colTxtCostTotal = "cost_total",
+            colTxtGrossCostTotal = "gross_cost_total",
             colTxtVat = "vat",
             colTxtDiscount = "discount",
             colTxtSubTotal="sub_total",
@@ -100,8 +100,8 @@ namespace GUI
         int clickedArrow,clickedPrev=0,clickedNext=1;
         int oldIdAsset, oldIdAssetSupplier,oldDgItemsRowCount;
         int uneditedIdAsset, uneditedIdAssetSupplier;
-        decimal oldBasketQuantity, oldBasketCostTotal, oldBasketDiscount, oldBasketSubTotal, oldBasketVAT, oldBasketGrandTotal;//This variables are used while we are editing the datagrid in an active invoice page.
-        decimal uneditedBasketCostTotal, uneditedBasketGrandTotal, uneditedBasketQuantity;//This variables are used when we click the edit button.
+        decimal oldBasketQuantity, oldBasketGrossCostTotal, oldBasketDiscount, oldBasketSubTotal, oldBasketVAT, oldBasketGrandTotal;//This variables are used while we are editing the datagrid in an active invoice page.
+        decimal uneditedBasketGrandTotal;//This variables are used when we click the edit button.
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -356,7 +356,7 @@ namespace GUI
 
                     //We used (int)Numbers.InitialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketQuantity.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtTotalPQuantity].ToString();
-                    txtBasketGrossCostTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtCostTotal].ToString();
+                    txtBasketGrossCostTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtGrossCostTotal].ToString();
                     txtBasketDiscount.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtDiscount].ToString();
                     txtBasketSubTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtSubTotal].ToString();
                     txtBasketVat.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtVat].ToString();
@@ -492,7 +492,7 @@ namespace GUI
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
                 pointOfPurchaseCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
-                pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text);
+                pointOfPurchaseCUL.GrossCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text);
                 pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                 pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -976,7 +976,7 @@ namespace GUI
                 txtDgProductTotalCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString("0.00");
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtBasketGrossCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
+                txtBasketGrossCostTotal.Text = (oldBasketGrossCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
                 txtBasketSubTotal.Text = (oldBasketSubTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
                 txtBasketDiscount.Text = (oldBasketDiscount + Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
                 txtBasketVat.Text = (oldBasketVAT + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
@@ -1443,7 +1443,7 @@ namespace GUI
                 TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                 oldBasketQuantity = Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(productQuantity.Text);
-                oldBasketCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(productGrossTotalCostPrice.Text);
+                oldBasketGrossCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(productGrossTotalCostPrice.Text);
                 oldBasketSubTotal = Convert.ToDecimal(txtBasketSubTotal.Text) - (Convert.ToDecimal(productGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text));
                 oldBasketDiscount = Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text);
                 oldBasketVAT = Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text);

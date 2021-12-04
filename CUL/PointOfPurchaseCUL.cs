@@ -13,7 +13,7 @@ namespace CUL
         public int PaymentTypeId { get; set; }
         public int SupplierId { get; set; }
         public decimal TotalProductQuantity { get; set; }
-        public decimal CostTotal { get; set; }
+        public decimal GrossCostTotal { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Vat { get; set; }
         public decimal Discount { get; set; }
