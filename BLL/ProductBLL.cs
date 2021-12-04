@@ -1,4 +1,5 @@
 ﻿using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace BLL
         {
             int productId;
             decimal newQuantity;
-            int initialRowIndex = 0;
-            int colProductId = 0;
+            int initialRowIndex = (int)Numbers.InitialIndex;
+            int colProductId = (int)Numbers.InitialIndex;
             decimal productQuantityFromDB;
             string colQtyNameInDb = "quantity_in_stock";
 
@@ -31,7 +32,7 @@ namespace BLL
 
                 productQuantityFromDB = Convert.ToInt32(dataTableProduct.Rows[initialRowIndex][colQtyNameInDb]);
 
-                if(calledBy== "WinPOS")
+                if(calledBy== "tbl_pos")
                     newQuantity = productQuantityFromDB + Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Add the old amount if it is POS.
                 else
                     newQuantity = productQuantityFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantity]);//Subtract the old amount if it is POP.
