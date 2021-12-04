@@ -54,7 +54,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_quantity, cost_total, discount, sub_total, vat, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_quantity, @cost_total, @discount, @sub_total, @vat, @grand_total, @asset_id, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_pop (id, invoice_no, payment_type_id, supplier_id, total_product_quantity, gross_cost_total, discount, sub_total, vat, grand_total, asset_id, added_date, added_by) VALUES (@id, @invoice_no, @payment_type_id, @supplier_id, @total_product_quantity, @gross_cost_total, @discount, @sub_total, @vat, @grand_total, @asset_id, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -63,7 +63,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@supplier_id", pointOfPurchaseCUL.SupplierId);
                 cmd.Parameters.AddWithValue("@total_product_quantity", pointOfPurchaseCUL.TotalProductQuantity);
-                cmd.Parameters.AddWithValue("@cost_total", pointOfPurchaseCUL.CostTotal);
+                cmd.Parameters.AddWithValue("@gross_cost_total", pointOfPurchaseCUL.GrossCostTotal);
                 cmd.Parameters.AddWithValue("@discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("@sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("@vat", pointOfPurchaseCUL.Vat);
@@ -106,14 +106,14 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, discount=@discount, sub_total=@sub_total, vat=@vat, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_pop SET payment_type_id=@payment_type_id, supplier_id=@supplier_id, total_product_quantity=@total_product_quantity, gross_cost_total=@gross_cost_total, discount=@discount, sub_total=@sub_total, vat=@vat, grand_total=@grand_total, asset_id=@asset_id, added_date=@added_date, added_by=@added_by WHERE id=@id";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("payment_type_id", pointOfPurchaseCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("supplier_id", pointOfPurchaseCUL.SupplierId);
                 cmd.Parameters.AddWithValue("total_product_quantity", pointOfPurchaseCUL.TotalProductQuantity);
-                cmd.Parameters.AddWithValue("cost_total", pointOfPurchaseCUL.CostTotal);
+                cmd.Parameters.AddWithValue("gross_cost_total", pointOfPurchaseCUL.GrossCostTotal);
                 cmd.Parameters.AddWithValue("discount", pointOfPurchaseCUL.Discount);
                 cmd.Parameters.AddWithValue("sub_total", pointOfPurchaseCUL.SubTotal);
                 cmd.Parameters.AddWithValue("vat", pointOfPurchaseCUL.Vat);
@@ -366,7 +366,6 @@ namespace DAL
             return counter;
         }
         #endregion
-
 
         #region JOIN RPORT BY DATE METHOD
         public DataTable FetchReportByDate(string dateFrom, string dateTo) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!

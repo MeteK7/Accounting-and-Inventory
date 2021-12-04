@@ -337,7 +337,7 @@
                 <TextBox x:Name="txtProductGrossTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="557,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="#FF002EFF" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductDiscount" HorizontalAlignment="Left" Height="40" Margin="699,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductDiscount_KeyUp" LostFocus="txtProductDiscount_LostFocus"/>
                 <TextBox x:Name="txtProductVAT" HorizontalAlignment="Left" Height="40" Margin="774,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductVAT_KeyUp" LostFocus="txtProductVAT_LostFocus"/>
-                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="849,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="849,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True" FontWeight="Bold" FontSize="14"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="998,41,0,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
@@ -357,7 +357,7 @@
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Id" Width="50">
+                        <DataGridTemplateColumn Header="Id" Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -365,7 +365,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Name" Width="455">
+                        <DataGridTemplateColumn Header="Name" Width="330">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -419,7 +419,7 @@
                         <DataGridTemplateColumn Header="Gross Total Sale Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductGrossTotalSalePrice" Text="{Binding GrossTotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox x:Name="dgTxtProductGrossTotalSalePrice" Text="{Binding GrossTotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF002EFF"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -443,17 +443,12 @@
                         <DataGridTemplateColumn Header="Total Sale Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductTotalSalePrice" Text="{Binding TotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="14" />
+                                    <TextBox x:Name="dgTxtProductTotalSalePrice" Text="{Binding TotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="14" FontWeight="Bold" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
                         <DataGridTemplateColumn Header="Delete" >
-                            <DataGridTemplateColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="HorizontalAlignment"  Value="Right"/>
-                                </Style>
-                            </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Name="btnDeleteDataGridRow" Content="Delete" Click="btnDeleteDataGridRow_Click"/>
@@ -483,14 +478,14 @@
                 <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,126,0,0" Width="80" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" Width="80" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,187,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketGrandTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="35" FontFamily="DejaVu Serif" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrandTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" FontSize="10"/>
+                <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" Foreground="#FF002EFF"/>
                 <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="35" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="40" Margin="95,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center" FontWeight="Bold"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
