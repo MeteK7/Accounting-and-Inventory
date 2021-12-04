@@ -558,7 +558,7 @@ namespace GUI
                         inventoryAdjustmentDetailDAL.Delete(inventoryAdjustmentId);
 
                         //2 means null for this code. We used this in order to prevent running the if block again and again. Because, we erase all of the products belong to one invoice number at once.
-                        userClickedNewOrEdit = 2;
+                        userClickedNewOrEdit = (int)Buttons.Null;
                     }
 
                     DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
