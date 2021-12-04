@@ -223,7 +223,7 @@ namespace GUI
         private void ClearBasketTextBox()
         {
             txtBasketQuantity.Text = ((int)Numbers.InitialIndex).ToString();
-            txtBasketCostTotal.Text = ((int)Numbers.InitialIndex).ToString();
+            txtBasketGrossCostTotal.Text = ((int)Numbers.InitialIndex).ToString();
             txtBasketDiscount.Text = ((int)Numbers.InitialIndex).ToString();
             txtBasketSubTotal.Text = ((int)Numbers.InitialIndex).ToString();
             txtBasketVat.Text = ((int)Numbers.InitialIndex).ToString();
@@ -356,7 +356,7 @@ namespace GUI
 
                     //We used (int)Numbers.InitialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
                     txtBasketQuantity.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtTotalPQuantity].ToString();
-                    txtBasketCostTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtCostTotal].ToString();
+                    txtBasketGrossCostTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtCostTotal].ToString();
                     txtBasketDiscount.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtDiscount].ToString();
                     txtBasketSubTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtSubTotal].ToString();
                     txtBasketVat.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtVat].ToString();
@@ -492,7 +492,7 @@ namespace GUI
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
                 pointOfPurchaseCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
-                pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
+                pointOfPurchaseCUL.CostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text);
                 pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                 pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                 pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
@@ -731,7 +731,7 @@ namespace GUI
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtProductGrossTotalCostPrice.Text)).ToString();
+            txtBasketGrossCostTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) + Convert.ToDecimal(txtProductGrossTotalCostPrice.Text)).ToString();
 
             txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtProductDiscount.Text)).ToString();
 
@@ -739,7 +739,7 @@ namespace GUI
 
             txtBasketVat.Text = (Convert.ToDecimal(txtBasketVat.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
             
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
         }
 
         private void SubstractBasket(int selectedRowIndex)
@@ -777,7 +777,7 @@ namespace GUI
             //ASSIGNING NEW VALUES TO THE BASKET'S RELATED TEXT BOXES.
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
+            txtBasketGrossCostTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
 
             txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
 
@@ -976,7 +976,7 @@ namespace GUI
                 txtDgProductTotalCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString("0.00");
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
+                txtBasketGrossCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
                 txtBasketSubTotal.Text = (oldBasketSubTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
                 txtBasketDiscount.Text = (oldBasketDiscount + Convert.ToDecimal(txtDgProductDiscount.Text)).ToString();
                 txtBasketVat.Text = (oldBasketVAT + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
@@ -1195,7 +1195,7 @@ namespace GUI
 
                 if (txtBasketDiscount.Text != "")
                     //DISCOUNT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * DISCOUNT TOTAL
-                    txtDgProductDiscount.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketDiscount.Text));
+                    txtDgProductDiscount.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketGrossCostTotal.Text)) * Convert.ToDecimal(txtBasketDiscount.Text));
                 else
                     txtDgProductDiscount.Text = ((int)Numbers.InitialIndex).ToString();
             }
@@ -1221,7 +1221,7 @@ namespace GUI
 
                 if (txtBasketVat.Text != "")
                     //VAT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * VAT TOTAL
-                    txtDgProductVAT.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketCostTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text));
+                    txtDgProductVAT.Text = String.Format("{0:0.00}", (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) / Convert.ToDecimal(txtBasketGrossCostTotal.Text)) * Convert.ToDecimal(txtBasketVat.Text));
                 else
                     txtDgProductVAT.Text = ((int)Numbers.InitialIndex).ToString();
             }
@@ -1231,22 +1231,22 @@ namespace GUI
         {
             if (decimal.TryParse(txtBasketVat.Text, out decimal number) && txtBasketVat.Text != "" && txtBasketDiscount.Text != "")
             {
-                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
-                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
             }
             else
             {
                 if (calledByVatOrDiscount==calledByVAT)
                 {
                     txtBasketVat.Text = ((int)Numbers.InitialIndex).ToString();//We need to assign zero in order to prevent null entry into the database.
-                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(txtBasketDiscount.Text)).ToString();
                     txtBasketVat.SelectAll();//Select all automatically for the user to re-enter new value easily.
                 }
                 else
                 {
                     txtBasketDiscount.Text = ((int)Numbers.InitialIndex).ToString();
-                    txtBasketSubTotal.Text = txtBasketCostTotal.Text;//Since the Discount is zero, we only need to assign the basket cost total into the sub total. Normally, sub total = cost total - total discount.
-                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
+                    txtBasketSubTotal.Text = txtBasketGrossCostTotal.Text;//Since the Discount is zero, we only need to assign the basket cost total into the sub total. Normally, sub total = cost total - total discount.
+                    txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrossCostTotal.Text) + Convert.ToDecimal(txtBasketVat.Text)).ToString();
                     txtBasketDiscount.SelectAll();
                 }
             }
@@ -1443,7 +1443,7 @@ namespace GUI
                 TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                 oldBasketQuantity = Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(productQuantity.Text);
-                oldBasketCostTotal = Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(productGrossTotalCostPrice.Text);
+                oldBasketCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text) - Convert.ToDecimal(productGrossTotalCostPrice.Text);
                 oldBasketSubTotal = Convert.ToDecimal(txtBasketSubTotal.Text) - (Convert.ToDecimal(productGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text));
                 oldBasketDiscount = Convert.ToDecimal(txtBasketDiscount.Text) - Convert.ToDecimal(txtDgProductDiscount.Text);
                 oldBasketVAT = Convert.ToDecimal(txtBasketVat.Text) - Convert.ToDecimal(txtDgProductVAT.Text);

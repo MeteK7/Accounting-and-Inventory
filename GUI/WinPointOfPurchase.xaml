@@ -404,7 +404,7 @@
                         <DataGridTemplateColumn Header="Gross Total Cost Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF002EFF"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -466,17 +466,17 @@
         <GroupBox Header="Basket Informations" Height="259" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-2,0" Height="226">
                 <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketCostTotal" Content="Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Width="80" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrossCostTotal" Content="G. Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Width="80" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,79,0,0" Width="80" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,113,0,0" Width="80" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0" Width="80" Foreground="Red" FontSize="14" Height="40" FontFamily="DejaVu Serif" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0" Width="80" Foreground="Red" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketGrossCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" Foreground="#FF002EFF"/>
                 <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketSubTotal" HorizontalAlignment="Left" Height="26" Margin="95,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketVat" HorizontalAlignment="Left" Height="26" Margin="95,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketVat_KeyUp" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="40" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="40" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center" FontWeight="Bold"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
