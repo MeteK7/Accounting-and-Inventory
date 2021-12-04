@@ -179,8 +179,6 @@ namespace GUI
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
-            txtProductCostPrice.IsEnabled = false;
-            txtProductSalePrice.IsEnabled = false;
             txtProductQuantity.IsEnabled = false;
             txtProductDiscount.IsEnabled = false;
             txtProductVAT.IsEnabled = false;
@@ -202,8 +200,6 @@ namespace GUI
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
-            txtProductCostPrice.IsEnabled = true;
-            txtProductSalePrice.IsEnabled = true;
             txtProductQuantity.IsEnabled = true;
             txtProductDiscount.IsEnabled = true;
             txtProductVAT.IsEnabled = true;
