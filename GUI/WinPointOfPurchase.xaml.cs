@@ -60,7 +60,6 @@ namespace GUI
         const int colLength = 10;
         int clickedNewOrEdit;
         const int clickedNothing=-1, clickedNew = 0, clickedEdit = 1,clickedNull=2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        int colNoProductUnit=2, colNoProductQuantity = 3, colNoProductGrossCostPrice=4, colNoProductGrossTotalCostPrice=5, colNoProductDiscount = 6, colNoProductVAT = 7, colNoProductCostPrice = 8, colNoProductTotalCostPrice = 9;
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductGrossCostPrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductCostPrice", "dgTxtProductTotalCostPrice" };
         string[,] oldDgProductCells = new string[,] { };
         string calledBy = "tbl_pop";
@@ -525,7 +524,7 @@ namespace GUI
                 {
                     if (clickedNewOrEdit ==clickedEdit)//If the user clicked the btnEdit, then delete the specific invoice's products in tbl_pos_detailed at once.
                     {
-                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldDgItemsRowCount, colNoProductQuantity, calledBy);//Reverting the old products' quantity in stock.
+                        productBLL.RevertOldQuantityInStock(oldDgProductCells, oldDgItemsRowCount, (int)PopColumns.ColProductQuantity, calledBy);//Reverting the old products' quantity in stock.
 
                         //We are sending pointOfPurchaseDetailCUL as a parameter to the Delete method just to use the Id property in the SQL Query. So that we can erase all the products which have the specific id.
                         pointOfPurchaseDetailDAL.Delete(invoiceId);
@@ -541,7 +540,7 @@ namespace GUI
                         cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                         var tmpProduct = cpProduct.ContentTemplate;
 
-                        if (colNo != colNoProductUnit)
+                        if (colNo != (int)PopColumns.ColProductUnit)
                         {
                             tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                             cells[colNo] = tbCellContent.Text;
@@ -557,7 +556,7 @@ namespace GUI
                     productId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[colNoProductUnit]));//Cell[2] contains the unit id in the combobox.
+                    dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[(int)PopColumns.ColProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     pointOfPurchaseDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
@@ -565,24 +564,24 @@ namespace GUI
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
-                    pointOfPurchaseDetailCUL.ProductGrossCostPrice = Convert.ToDecimal(cells[colNoProductGrossCostPrice]);//cells[4] contains gross cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
-                    pointOfPurchaseDetailCUL.ProductQuantity = Convert.ToDecimal(cells[colNoProductQuantity]);
-                    pointOfPurchaseDetailCUL.ProductDiscount = Convert.ToDecimal(cells[colNoProductDiscount]);
-                    pointOfPurchaseDetailCUL.ProductVAT = Convert.ToDecimal(cells[colNoProductVAT]);
-                    pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[colNoProductCostPrice]);//cells[8] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
+                    pointOfPurchaseDetailCUL.ProductGrossCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductGrossCostPrice]);//cells[4] contains gross cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
+                    pointOfPurchaseDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);
+                    pointOfPurchaseDetailCUL.ProductDiscount = Convert.ToDecimal(cells[(int)PopColumns.ColProductDiscount]);
+                    pointOfPurchaseDetailCUL.ProductVAT = Convert.ToDecimal(cells[(int)PopColumns.ColProductVAT]);
+                    pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductCostPrice]);//cells[8] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
 
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
                     #region PRODUCT QUANTITY AND COST UPDATE
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
-                    newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[colNoProductQuantity]);
+                    newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);
 
                     productDAL.UpdateSpecificColumn(productId, colTxtQtyInStock, newQuantity.ToString());
 
                     if (chkUpdateProductCosts.IsChecked == true)
                     {
-                        newCostPrice = Convert.ToDecimal(cells[colNoProductCostPrice]);
+                        newCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductCostPrice]);
                         productDAL.UpdateSpecificColumn(productId, colTxtCostPrice, newCostPrice.ToString());
                     }
                     #endregion
@@ -665,19 +664,19 @@ namespace GUI
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
-                        ContentPresenter cpProductQty = dgProducts.Columns[colNoProductQuantity].GetCellContent(row) as ContentPresenter;
+                        ContentPresenter cpProductQty = dgProducts.Columns[(int)PopColumns.ColProductQuantity].GetCellContent(row) as ContentPresenter;
                         var tmpProductQty = cpProductQty.ContentTemplate;
-                        TextBox txtDgProductQty = tmpProductQty.FindName(dgCellNames[colNoProductQuantity], cpProductQty) as TextBox;
+                        TextBox txtDgProductQty = tmpProductQty.FindName(dgCellNames[(int)PopColumns.ColProductQuantity], cpProductQty) as TextBox;
 
                         //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
-                        ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                        ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
                         var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                        TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                        TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                         //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-                        ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                        ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
                         var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-                        TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+                        TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                         //CALCULATING NEW PRODUCT QUANTITY IN DATAGRID
                         productQuantity = Convert.ToInt32(txtDgProductQty.Text);
@@ -750,29 +749,29 @@ namespace GUI
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
             //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
-            ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dataGridRow) as ContentPresenter;
+            ContentPresenter cpProductQuantity = dgProducts.Columns[(int)PopColumns.ColProductQuantity].GetCellContent(dataGridRow) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
-            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[(int)PopColumns.ColProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
-            ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
+            ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
             var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-            TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+            TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
-            ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dataGridRow) as ContentPresenter;
+            ContentPresenter cpProductDiscount = dgProducts.Columns[(int)PopColumns.ColProductDiscount].GetCellContent(dataGridRow) as ContentPresenter;
             var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[(int)PopColumns.ColProductDiscount], cpProductDiscount) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT VAT
-            ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dataGridRow) as ContentPresenter;
+            ContentPresenter cpProductVAT = dgProducts.Columns[(int)PopColumns.ColProductVAT].GetCellContent(dataGridRow) as ContentPresenter;
             var tmpProductVAT = cpProductVAT.ContentTemplate;
-            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[(int)PopColumns.ColProductVAT], cpProductVAT) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductTotalCostPrice].GetCellContent(dataGridRow) as ContentPresenter;
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
 
             //ASSIGNING NEW VALUES TO THE BASKET'S RELATED TEXT BOXES.
@@ -848,7 +847,7 @@ namespace GUI
 
                     #region REVERT THE STOCK
                     oldDgProductCells = (string[,])GetDataGridContent().Clone();//Cloning one array into another array.
-                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, colNoProductQuantity, calledBy);
+                    productBLL.RevertOldQuantityInStock(oldDgProductCells, dgProducts.Items.Count, (int)PopColumns.ColProductQuantity, calledBy);
                     #endregion
 
                     #region REVERT THE ASSET
@@ -931,39 +930,39 @@ namespace GUI
         private void DgTextChanged()
         {
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductCostPrice = dgProducts.Columns[(int)PopColumns.ColProductCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-            TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+            TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductCostPrice], cpProductCostPrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductGrossCostPrice = dgProducts.Columns[colNoProductGrossCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductGrossCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductGrossCostPrice = cpProductGrossCostPrice.ContentTemplate;
-            TextBox txtDgProductGrossCostPrice = tmpProductGrossCostPrice.FindName(dgCellNames[colNoProductGrossCostPrice], cpProductGrossCostPrice) as TextBox;
+            TextBox txtDgProductGrossCostPrice = tmpProductGrossCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossCostPrice], cpProductGrossCostPrice) as TextBox;
 
             ////GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductQuantity = dgProducts.Columns[(int)PopColumns.ColProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductQuantity = cpProductQuantity.ContentTemplate;
-            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+            TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[(int)PopColumns.ColProductQuantity], cpProductQuantity) as TextBox;
 
             //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-            ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-            TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+            TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductDiscount = dgProducts.Columns[(int)PopColumns.ColProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+            TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[(int)PopColumns.ColProductDiscount], cpProductDiscount) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID.
-            ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductVAT = dgProducts.Columns[(int)PopColumns.ColProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductVAT = cpProductVAT.ContentTemplate;
-            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+            TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[(int)PopColumns.ColProductVAT], cpProductVAT) as TextBox;
 
             //GETTING TEXTBOX FROM DATAGRID
-            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+            ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
             var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+            TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
             if (txtDgProductQuantity.Text != "" && txtDgProductGrossCostPrice.Text != "" && txtDgProductDiscount.Text != "" && txtDgProductVAT.Text != "")
             {
@@ -1142,34 +1141,34 @@ namespace GUI
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
                 ////GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductQuantity = dgProducts.Columns[(int)PopColumns.ColProductQuantity].GetCellContent(row) as ContentPresenter;
                 var tmpProductQuantity = cpProductQuantity.ContentTemplate;
-                TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+                TextBox txtDgProductQuantity = tmpProductQuantity.FindName(dgCellNames[(int)PopColumns.ColProductQuantity], cpProductQuantity) as TextBox;
 
                 ////GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[colNoProductCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductCostPrice = dgProducts.Columns[(int)PopColumns.ColProductCostPrice].GetCellContent(row) as ContentPresenter;
                 var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-                TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[colNoProductCostPrice], cpProductCostPrice) as TextBox;
+                TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductCostPrice], cpProductCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
-                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
                 var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductDiscount = dgProducts.Columns[(int)PopColumns.ColProductDiscount].GetCellContent(row) as ContentPresenter;
                 var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[(int)PopColumns.ColProductDiscount], cpProductDiscount) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductVAT = dgProducts.Columns[(int)PopColumns.ColProductVAT].GetCellContent(row) as ContentPresenter;
                 var tmpProductVAT = cpProductVAT.ContentTemplate;
-                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[(int)PopColumns.ColProductVAT], cpProductVAT) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID
-                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
                 var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-                TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+                TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                 txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString("0.00");
                 txtDgProductCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)) / Convert.ToDecimal(txtDgProductQuantity.Text)).ToString("0.00");
@@ -1185,14 +1184,14 @@ namespace GUI
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
-                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
                 var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT DISCOUNT
-                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductDiscount = dgProducts.Columns[(int)PopColumns.ColProductDiscount].GetCellContent(row) as ContentPresenter;
                 var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[(int)PopColumns.ColProductDiscount], cpProductDiscount) as TextBox;
 
                 if (txtBasketDiscount.Text != "")
                     //DISCOUNT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * DISCOUNT TOTAL
@@ -1211,14 +1210,14 @@ namespace GUI
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL COST PRICE
-                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
                 var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                TextBox txtDgProductGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT VAT
-                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductVAT = dgProducts.Columns[(int)PopColumns.ColProductVAT].GetCellContent(row) as ContentPresenter;
                 var tmpProductVAT = cpProductVAT.ContentTemplate;
-                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[(int)PopColumns.ColProductVAT], cpProductVAT) as TextBox;
 
                 if (txtBasketVat.Text != "")
                     //VAT PER PRODUCT = PRODUCT UNIT PRICE/GROSS TOTAL * VAT TOTAL
@@ -1419,29 +1418,29 @@ namespace GUI
             if (dgProducts.SelectedItem!=null)
             {
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductQuantity = dgProducts.Columns[colNoProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ContentPresenter cpProductQuantity = dgProducts.Columns[(int)PopColumns.ColProductQuantity].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductQuantity = cpProductQuantity.ContentTemplate;
-                TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[colNoProductQuantity], cpProductQuantity) as TextBox;
+                TextBox productQuantity = tmpProductQuantity.FindName(dgCellNames[(int)PopColumns.ColProductQuantity], cpProductQuantity) as TextBox;
                 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[colNoProductGrossTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductGrossTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                TextBox productGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[colNoProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                TextBox productGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductDiscount = dgProducts.Columns[colNoProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ContentPresenter cpProductDiscount = dgProducts.Columns[(int)PopColumns.ColProductDiscount].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductDiscount = cpProductDiscount.ContentTemplate;
-                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[colNoProductDiscount], cpProductDiscount) as TextBox;
+                TextBox txtDgProductDiscount = tmpProductDiscount.FindName(dgCellNames[(int)PopColumns.ColProductDiscount], cpProductDiscount) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductVAT = dgProducts.Columns[colNoProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ContentPresenter cpProductVAT = dgProducts.Columns[(int)PopColumns.ColProductVAT].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductVAT = cpProductVAT.ContentTemplate;
-                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[colNoProductVAT], cpProductVAT) as TextBox;
+                TextBox txtDgProductVAT = tmpProductVAT.FindName(dgCellNames[(int)PopColumns.ColProductVAT], cpProductVAT) as TextBox;
 
                 //GETTING TEXTBOX FROM DATAGRID.
-                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[colNoProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
+                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PopColumns.ColProductTotalCostPrice].GetCellContent(dgProducts.SelectedItem) as ContentPresenter;
                 var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-                TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+                TextBox productTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PopColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
                 oldBasketQuantity = Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(productQuantity.Text);
                 oldBasketCostTotal = Convert.ToDecimal(txtBasketCostTotal.Text) - Convert.ToDecimal(productGrossTotalCostPrice.Text);
