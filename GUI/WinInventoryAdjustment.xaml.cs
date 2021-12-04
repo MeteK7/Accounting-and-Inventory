@@ -289,17 +289,16 @@ namespace GUI
 
             if (txtProductId.Text != Numbers.InitialIndex.ToString() && int.TryParse(txtProductId.Text, out number) && dataTableProduct.Rows.Count != (int)Numbers.InitialIndex)//Validating the barcode if it is a number(except zero) or not.
             {
-                int productQuantityInStock;
                 int productUnitId;
-                string productId, productBarcodeRetail, productName, productUnitName;
-                string costPrice, salePrice;
+                decimal productQuantityInStock;
+                string productId, productBarcodeRetail, productName, productUnitName, productCostPrice, productSalePrice;
 
                 productId = dataTableProduct.Rows[(int)Numbers.InitialIndex]["id"].ToString();
                 productBarcodeRetail = dataTableProduct.Rows[(int)Numbers.InitialIndex]["barcode_retail"].ToString();
                 productName = dataTableProduct.Rows[(int)Numbers.InitialIndex]["name"].ToString();//Filling the product name textbox from the database.
-                costPrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["costprice"].ToString();
-                salePrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["saleprice"].ToString();
-                productQuantityInStock = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex][colQtyNameInDb]);
+                productCostPrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["costprice"].ToString();
+                productSalePrice = dataTableProduct.Rows[(int)Numbers.InitialIndex]["saleprice"].ToString();
+                productQuantityInStock = Convert.ToDecimal(dataTableProduct.Rows[(int)Numbers.InitialIndex][colQtyNameInDb]);
 
 
                 if (productBarcodeRetail == txtProductId.Text || productId.ToString() == txtProductId.Text)//If the barcode equals the product's barcode_retail or id, then take the product's retail unit id.
@@ -317,8 +316,8 @@ namespace GUI
 
                 txtProductName.Text = productName;
                 txtProductUnit.Text = productUnitName;
-                txtProductCostPrice.Text = costPrice;
-                txtProductSalePrice.Text = salePrice;
+                txtProductCostPrice.Text = productCostPrice;
+                txtProductSalePrice.Text = productSalePrice;
                 txtProductQuantityInStock.Text = productQuantityInStock.ToString();
 
 
