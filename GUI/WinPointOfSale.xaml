@@ -337,7 +337,7 @@
                 <TextBox x:Name="txtProductGrossTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="557,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="#FF002EFF" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductDiscount" HorizontalAlignment="Left" Height="40" Margin="699,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductDiscount_KeyUp" LostFocus="txtProductDiscount_LostFocus"/>
                 <TextBox x:Name="txtProductVAT" HorizontalAlignment="Left" Height="40" Margin="774,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductVAT_KeyUp" LostFocus="txtProductVAT_LostFocus"/>
-                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="849,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="849,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True" FontWeight="Bold" FontSize="14"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="998,41,0,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
@@ -365,7 +365,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Name" Width="335">
+                        <DataGridTemplateColumn Header="Name" Width="330">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -443,17 +443,12 @@
                         <DataGridTemplateColumn Header="Total Sale Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductTotalSalePrice" Text="{Binding TotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="14" />
+                                    <TextBox x:Name="dgTxtProductTotalSalePrice" Text="{Binding TotalSalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="14" FontWeight="Bold" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
                         <DataGridTemplateColumn Header="Delete" >
-                            <DataGridTemplateColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="HorizontalAlignment"  Value="Right"/>
-                                </Style>
-                            </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Name="btnDeleteDataGridRow" Content="Delete" Click="btnDeleteDataGridRow_Click"/>
