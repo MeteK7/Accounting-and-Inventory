@@ -685,12 +685,12 @@ namespace GUI
 
                         //ASSIGNING NEW VALUES TO THE RELATED DATA GRID CELLS.
                         txtDgProductQty.Text = productQuantity.ToString();
-                        txtDgProductGrossTotalCostPrice.Text = (productQuantity * Convert.ToDecimal(txtProductGrossCostPrice.Text)).ToString();
+                        txtDgProductGrossTotalCostPrice.Text = (productQuantity * Convert.ToDecimal(txtProductGrossCostPrice.Text)).ToString("0.00");
                         txtDgProductTotalCostPrice.Text = (
                             (productQuantity * Convert.ToDecimal(txtProductGrossCostPrice.Text)) -
                             Convert.ToDecimal(txtProductDiscount.Text) +
                             Convert.ToDecimal(txtProductVAT.Text)
-                            ).ToString();
+                            ).ToString("0.00");
 
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
@@ -973,8 +973,8 @@ namespace GUI
                     Convert.ToDecimal(txtDgProductVAT.Text)) / Convert.ToDecimal(txtDgProductQuantity.Text)).ToString("0.00");
 
                 txtDgProductQuantity.Text = txtDgProductQuantity.Text.ToString();//We need to reassign it otherwise it will not be affected.
-                txtDgProductGrossTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
-                txtDgProductTotalCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+                txtDgProductGrossTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)).ToString("0.00");
+                txtDgProductTotalCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossCostPrice.Text) * Convert.ToDecimal(txtDgProductQuantity.Text)) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString("0.00");
 
                 txtBasketQuantity.Text = (oldBasketQuantity + Convert.ToDecimal(txtDgProductQuantity.Text)).ToString();
                 txtBasketCostTotal.Text = (oldBasketCostTotal + Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text)).ToString();
@@ -1171,7 +1171,7 @@ namespace GUI
                 var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
                 TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[colNoProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
-                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString();
+                txtDgProductTotalCostPrice.Text = (Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)).ToString("0.00");
                 txtDgProductCostPrice.Text = ((Convert.ToDecimal(txtDgProductGrossTotalCostPrice.Text) - Convert.ToDecimal(txtDgProductDiscount.Text) + Convert.ToDecimal(txtDgProductVAT.Text)) / Convert.ToDecimal(txtDgProductQuantity.Text)).ToString("0.00");
             }
         }
