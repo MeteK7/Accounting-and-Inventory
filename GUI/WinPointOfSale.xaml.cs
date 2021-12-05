@@ -58,7 +58,7 @@ namespace GUI
 
         const int colLength = 11;
         int clickedNewOrEdit;
-        const int clickedNothing = -1, clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
+        const int clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductCostPrice", "dgTxtProductSalePrice", "dgTxtProductTotalCostPrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice" };
         string[,] oldDgProductCells = new string[,] { };
 
@@ -179,8 +179,6 @@ namespace GUI
             cboProductUnit.IsEnabled = false;
             txtProductId.IsEnabled = false;
             txtProductName.IsEnabled = false;
-            txtProductCostPrice.IsEnabled = false;
-            txtProductSalePrice.IsEnabled = false;
             txtProductQuantity.IsEnabled = false;
             txtProductDiscount.IsEnabled = false;
             txtProductVAT.IsEnabled = false;
@@ -202,8 +200,6 @@ namespace GUI
             cboProductUnit.IsEnabled = true;
             txtProductId.IsEnabled = true;
             txtProductName.IsEnabled = true;
-            txtProductCostPrice.IsEnabled = true;
-            txtProductSalePrice.IsEnabled = true;
             txtProductQuantity.IsEnabled = true;
             txtProductDiscount.IsEnabled = true;
             txtProductVAT.IsEnabled = true;
