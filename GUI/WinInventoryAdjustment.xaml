@@ -307,7 +307,7 @@
                 <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="559,10,0,0" VerticalAlignment="Top" Width="70"/>
                 <Label x:Name="lblProductQuantityInStock" Content="Quantity in Stock" HorizontalAlignment="Left" Margin="634,10,0,0" VerticalAlignment="Top" Width="97" RenderTransformOrigin="-0.124,0.489"/>
                 <Label x:Name="lblProductQuantityDifference" Content="Quantity Difference" HorizontalAlignment="Left" Margin="736,10,0,0" VerticalAlignment="Top" Width="111"/>
-                <Label x:Name="lblProductTotalSalePrice" Content="Total" HorizontalAlignment="Left" Margin="852,10,0,0" VerticalAlignment="Top" Width="64"/>
+                <Label x:Name="lblProductTotalCostPrice" Content="Total Cost Price" HorizontalAlignment="Left" Margin="852,10,0,0" VerticalAlignment="Top" Width="130"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="23" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="23" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237"/>
                 <TextBox x:Name="txtProductUnit" HorizontalAlignment="Left" Height="23" Margin="349,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" IsReadOnly="True"/>
@@ -316,7 +316,7 @@
                 <TextBox x:Name="txtProductQuantityInReal" HorizontalAlignment="Left" Height="23" Margin="559,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" TextChanged="txtProductQuantityInReal_TextChanged"/>
                 <TextBox x:Name="txtProductQuantityInStock" HorizontalAlignment="Left" Height="23" Margin="634,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductQuantityDifference" HorizontalAlignment="Left" Height="23" Margin="736,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" IsReadOnly="True"/>
-                <TextBox x:Name="txtProductTotalSalePrice" HorizontalAlignment="Left" Height="23" Margin="852,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductTotalCostPrice" HorizontalAlignment="Left" Height="23" Margin="852,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Foreground="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <Button Style="{StaticResource ButtonProductAddStyle}" x:Name="btnProductAdd" Content="" HorizontalAlignment="Left" Margin="991,41,0,0" VerticalAlignment="Top" Width="22" Height="22" BorderBrush="White" Click="btnProductAdd_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-product.png" Stretch="Uniform"/>
