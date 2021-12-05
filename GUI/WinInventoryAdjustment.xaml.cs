@@ -171,7 +171,7 @@ namespace GUI
             txtProductQuantityInReal.Text = "";
             txtProductQuantityInStock.Text = "";
             txtProductQuantityDifference.Text = "";
-            txtProductTotalSalePrice.Text = "";
+            txtProductTotalCostPrice.Text = "";
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
@@ -234,7 +234,7 @@ namespace GUI
             txtProductQuantityInReal.IsEnabled = true;
             txtProductQuantityInStock.IsEnabled = true;
             txtProductQuantityDifference.IsEnabled = true;
-            txtProductTotalSalePrice.IsEnabled = true;
+            txtProductTotalCostPrice.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
         }
 
@@ -253,7 +253,7 @@ namespace GUI
             txtProductQuantityInReal.IsEnabled = false;
             txtProductQuantityInStock.IsEnabled = false;
             txtProductQuantityDifference.IsEnabled = false;
-            txtProductTotalSalePrice.IsEnabled = false;
+            txtProductTotalCostPrice.IsEnabled = false;
             dgProducts.IsHitTestVisible = false;//Disabling the datagrid clicking.
         }
 
@@ -274,11 +274,11 @@ namespace GUI
 
         private void PopulateBasket()
         {
-            decimal quantityFromProductEntry = Convert.ToDecimal(txtProductQuantityInReal.Text);
+            decimal quantityDifference = Convert.ToDecimal(txtProductQuantityDifference.Text);
 
-            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromProductEntry).ToString();
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityDifference).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromProductEntry)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityDifference)).ToString();
         }
 
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
@@ -346,8 +346,7 @@ namespace GUI
         {
             bool addNewProductLine = true;
             int barcodeColNo = (int)Numbers.InitialIndex;
-            int quantity;
-            decimal totalPrice;
+            int quantityInReal,quantityDifference;
             int rowQuntity = dgProducts.Items.Count;
 
             for (int i = (int)Numbers.InitialIndex; i < rowQuntity; i++)
@@ -360,19 +359,25 @@ namespace GUI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityInRealContent = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityDifferenceContent = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityDifference].GetCellContent(row) as TextBlock;
                         TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalCostPrice].GetCellContent(row) as TextBlock;
                         TextBlock tbCellTotalSalePriceContent = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalSalePrice].GetCellContent(row) as TextBlock;
 
-                        quantity = Convert.ToInt32(tbCellQuantityContent.Text);
-                        quantity += Convert.ToInt32(txtProductQuantityInReal.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
+                        quantityInReal = Convert.ToInt32(tbCellQuantityInRealContent.Text);
+                        quantityInReal += Convert.ToInt32(txtProductQuantityInReal.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's content.
 
-                        tbCellQuantityContent.Text = quantity.ToString();//Assignment of the new quantity to the related cell.
-                        
-                        
-                        tbCellTotalCostPriceContent.Text = (quantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
-                        totalPrice = quantity * Convert.ToDecimal(txtProductSalePrice.Text);//Calculating the new total price according to the new entry. Then, assigning the result into the total price variable. User may have entered a new price in the entry box.
-                        tbCellTotalSalePriceContent.Text = totalPrice.ToString();//Assignment of the total price to the related cell.
+                        tbCellQuantityInRealContent.Text = quantityInReal.ToString();//Assignment of the new quantity to the related cell.
+
+                        quantityDifference = Convert.ToInt32(tbCellQuantityDifferenceContent.Text);
+                        quantityDifference += Convert.ToInt32(txtProductQuantityDifference.Text);//We are adding the quantity entered in the "txtProductQuantityDifference" to the previous quantity difference cell's content.
+
+                        tbCellQuantityDifferenceContent.Text = quantityDifference.ToString();//Assignment of the new quantity difference to the related cell.
+
+
+                        tbCellTotalCostPriceContent.Text = (quantityDifference * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
+                        tbCellTotalSalePriceContent.Text = (quantityDifference * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();//Calculating the new total price according to the new entry.
+
                         addNewProductLine = false;
                         break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
                     }
@@ -382,8 +387,19 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantityInReal.Text);
-                dgProducts.Items.Add(new { Id = txtProductId.Text, Name = txtProductName.Text, Unit = txtProductUnit.Text, CostPrice = txtProductCostPrice.Text, SalePrice = txtProductSalePrice.Text, QuantityInReal = txtProductQuantityInReal.Text, QuantityInStock=txtProductQuantityInStock.Text, QuantityDifference=txtProductQuantityDifference.Text, TotalCostPrice = totalCostPrice.ToString(), TotalSalePrice = txtProductTotalSalePrice.Text });
+                dgProducts.Items.Add(new 
+                { 
+                    Id = txtProductId.Text, 
+                    Name = txtProductName.Text, 
+                    Unit = txtProductUnit.Text, 
+                    CostPrice = txtProductCostPrice.Text, 
+                    SalePrice = txtProductSalePrice.Text, 
+                    QuantityInReal = txtProductQuantityInReal.Text, 
+                    QuantityInStock=txtProductQuantityInStock.Text, 
+                    QuantityDifference=txtProductQuantityDifference.Text, 
+                    TotalCostPrice = (Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantityDifference.Text)).ToString("0.00"), 
+                    TotalSalePrice = (Convert.ToDecimal(txtProductSalePrice.Text) * Convert.ToDecimal(txtProductQuantityDifference.Text)).ToString("0.00")
+                });
             }
 
             dgProducts.UpdateLayout();
@@ -683,11 +699,11 @@ namespace GUI
 
                     if (decimal.TryParse(textProductQuantityInReal, out number) && result == true)
                     {
-                        DataTable dataTable = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+                        DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
 
                         string unitKg = "Kilogram", unitLt = "Liter";
                         decimal productQuantity, productQuantityInStock = Convert.ToDecimal(txtProductQuantityInStock.Text);
-                        string productSalePrice = dataTable.Rows[(int)Numbers.InitialIndex]["saleprice"].ToString();
+                        string productCostPrice = dtProduct.Rows[(int)Numbers.InitialIndex]["costprice"].ToString();
 
                         #region Checking the unit type
                         if (txtProductUnit.Text != unitKg && txtProductUnit.Text != unitLt)
@@ -709,7 +725,7 @@ namespace GUI
                         //#endregion
 
                         txtProductQuantityDifference.Text = (productQuantity - productQuantityInStock).ToString();//Getting the quantity difference by subtracting the quantity in stock from the current quantity.
-                        txtProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice) * productQuantity).ToString();
+                        txtProductTotalCostPrice.Text = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(txtProductQuantityDifference.Text)).ToString("0.00");
                     }
 
                     else//Reverting the quantity to the default value.
@@ -746,17 +762,17 @@ namespace GUI
         {
             DataGridRow dataGridRow;
             TextBlock tbCellQuantityInReal;
-            TextBlock tbCellTotalPrice;
+            TextBlock tbCellTotalCostPrice;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
             tbCellQuantityInReal = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(dataGridRow) as TextBlock;
 
-            tbCellTotalPrice = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalSalePrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbCellTotalCostPrice = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalCostPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantityInReal.Text)).ToString();
 
-            txtBasketGrandTotal.Text = ((Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(tbCellTotalPrice)).ToString());
+            txtBasketGrandTotal.Text = ((Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(tbCellTotalCostPrice)).ToString());
         }
     }
 }
