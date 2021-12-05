@@ -58,7 +58,6 @@ namespace GUI
         string colQtyNameInDb = "quantity_in_stock", colCostPriceNameInDb = "costprice";
         decimal newQuantity;
         int colLength = 10;
-        int cellUnit = 2, colProductCostPrice = 3, colProductSalePrice = 4, colProductQuantityInReal = 5, colProductQuantityInStock = 6, colProductQuantityDifference = 7,colProductTotalCostPrice=8,colProductTotalSalePrice=9;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -361,9 +360,9 @@ namespace GUI
                 {
                     if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TextBlock tbCellQuantityContent = dgProducts.Columns[colProductQuantityInReal].GetCellContent(row) as TextBlock;
-                        TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[colProductTotalCostPrice].GetCellContent(row) as TextBlock;
-                        TextBlock tbCellTotalSalePriceContent = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellQuantityContent = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalCostPriceContent = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalCostPrice].GetCellContent(row) as TextBlock;
+                        TextBlock tbCellTotalSalePriceContent = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalSalePrice].GetCellContent(row) as TextBlock;
 
                         quantity = Convert.ToInt32(tbCellQuantityContent.Text);
                         quantity += Convert.ToInt32(txtProductQuantityInReal.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
@@ -497,7 +496,7 @@ namespace GUI
 
                 productQtyFromDB = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colQtyNameInDb]);
 
-                newQuantity = productQtyFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, colProductQuantityDifference]);//Revert the quantity in stock.
+                newQuantity = productQtyFromDB - Convert.ToDecimal(dgOldProductCells[rowNo, (int)InvAdjColumns.ColProductQuantityDifference]);//Revert the quantity in stock.
 
                 productId = Convert.ToInt32(dgOldProductCells[rowNo, colProductId]);
 
@@ -574,22 +573,22 @@ namespace GUI
                     productId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
 
-                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[cellUnit]);//Cell[2] contains the unit name.
+                    dataTableUnit = unitDAL.GetUnitInfoByName(cells[(int)InvAdjColumns.ColProductUnit]);//Cell[2] contains the unit name.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex]["id"]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                     inventoryAdjustmentDetailCUL.ProductId = productId;
                     inventoryAdjustmentDetailCUL.InventoryAdjustmentId = inventoryAdjustmentId;
                     inventoryAdjustmentDetailCUL.ProductUnitId = unitId;
-                    inventoryAdjustmentDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[colProductCostPrice]);
-                    inventoryAdjustmentDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[colProductSalePrice]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityInReal = Convert.ToDecimal(cells[colProductQuantityInReal]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityInStock = Convert.ToDecimal(cells[colProductQuantityInStock]);
-                    inventoryAdjustmentDetailCUL.ProductQuantityDifference = Convert.ToDecimal(cells[colProductQuantityDifference]);
+                    inventoryAdjustmentDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductCostPrice]);
+                    inventoryAdjustmentDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductSalePrice]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityInReal = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductQuantityInReal]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityInStock = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductQuantityInStock]);
+                    inventoryAdjustmentDetailCUL.ProductQuantityDifference = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductQuantityDifference]);
 
                     isSuccessDetail = inventoryAdjustmentDetailDAL.Insert(inventoryAdjustmentDetailCUL);
 
                     #region TABLE PRODUCT INVENTORY ADJUSTMENT SECTION
-                    newQuantity = Convert.ToDecimal(cells[colProductQuantityInReal]);//Assigning the real quantity of the product in the facility to the system's stock.
+                    newQuantity = Convert.ToDecimal(cells[(int)InvAdjColumns.ColProductQuantityInReal]);//Assigning the real quantity of the product in the facility to the system's stock.
                     isSuccessProductQty = productDAL.UpdateSpecificColumn(productId, colQtyNameInDb, newQuantity.ToString());
                     #endregion
                 }
@@ -748,14 +747,12 @@ namespace GUI
             DataGridRow dataGridRow;
             TextBlock tbCellQuantityInReal;
             TextBlock tbCellTotalPrice;
-            int colProductQuantityInReal = 5;
-            int colProductTotalSalePrice = 9;
 
             dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbCellQuantityInReal = dgProducts.Columns[colProductQuantityInReal].GetCellContent(dataGridRow) as TextBlock;
+            tbCellQuantityInReal = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(dataGridRow) as TextBlock;
 
-            tbCellTotalPrice = dgProducts.Columns[colProductTotalSalePrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbCellTotalPrice = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalSalePrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantityInReal.Text)).ToString();
 
