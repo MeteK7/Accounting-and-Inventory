@@ -272,15 +272,6 @@ namespace GUI
             btnProductClear.IsEnabled = false; //Disabling the clear button if all text boxes are cleared.
         }
 
-        private void PopulateBasket()
-        {
-            decimal quantityDifference = Convert.ToDecimal(txtProductQuantityDifference.Text);
-
-            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityDifference).ToString();
-
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityDifference)).ToString();
-        }
-
         private void txtProductId_KeyUp(object sender, KeyEventArgs e)
         {
             int number;
@@ -758,19 +749,28 @@ namespace GUI
             }
         }
 
+        private void PopulateBasket()
+        {
+            decimal quantityDifference = Convert.ToDecimal(txtProductQuantityDifference.Text);
+
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityDifference).ToString();
+
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityDifference)).ToString();
+        }
+
         private void SubstractBasket(int selectedRowIndex)
         {
-            DataGridRow dataGridRow;
-            TextBlock tbCellQuantityInReal;
+            DataGridRow dtProduct;
+            TextBlock tbCellQuantityDifference;
             TextBlock tbCellTotalCostPrice;
 
-            dataGridRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
+            dtProduct = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(selectedRowIndex);
 
-            tbCellQuantityInReal = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityInReal].GetCellContent(dataGridRow) as TextBlock;
+            tbCellQuantityDifference = dgProducts.Columns[(int)InvAdjColumns.ColProductQuantityDifference].GetCellContent(dtProduct) as TextBlock;
 
-            tbCellTotalCostPrice = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalCostPrice].GetCellContent(dataGridRow) as TextBlock;    //Try to understand this code!!!  
+            tbCellTotalCostPrice = dgProducts.Columns[(int)InvAdjColumns.ColProductTotalCostPrice].GetCellContent(dtProduct) as TextBlock;    //Try to understand this code!!!  
 
-            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantityInReal.Text)).ToString();
+            txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) - Convert.ToDecimal(tbCellQuantityDifference.Text)).ToString();
 
             txtBasketGrandTotal.Text = ((Convert.ToDecimal(txtBasketGrandTotal.Text) - Convert.ToDecimal(tbCellTotalCostPrice)).ToString());
         }
