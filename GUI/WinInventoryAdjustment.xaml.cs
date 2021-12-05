@@ -703,10 +703,10 @@ namespace GUI
                         }
                         #endregion
 
-                        #region Checking the sign of the quantity in stock.
-                        if (productQuantityInStock < (int)Numbers.InitialIndex) //If it is a negative quantity, convert it into positive.
-                            productQuantityInStock = Math.Abs(productQuantityInStock);
-                        #endregion
+                        //#region Checking the sign of the quantity in stock. NO NEED FOR THIS!!!!!
+                        //if (productQuantityInStock < (int)Numbers.InitialIndex) //If it is a negative quantity, convert it into positive.
+                        //    productQuantityInStock = Math.Abs(productQuantityInStock);
+                        //#endregion
 
                         txtProductQuantityDifference.Text = (productQuantity - productQuantityInStock).ToString();//Getting the quantity difference by subtracting the quantity in stock from the current quantity.
                         txtProductTotalSalePrice.Text = (Convert.ToDecimal(productSalePrice) * productQuantity).ToString();

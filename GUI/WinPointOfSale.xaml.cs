@@ -240,6 +240,7 @@ namespace GUI
 
         private void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
+            lblDateAdded.Content = "";//Because it is only a single line of code, no need to make a special function for it.
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
