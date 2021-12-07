@@ -1081,7 +1081,7 @@ namespace GUI
             long number;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
 
-            if (e.Key == Key.Enter && productIdFromUser != ((int)Numbers.InitialIndex).ToString())
+            if (e.Key == Key.Enter && productIdFromUser != "")
             {
                 if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
                 {
@@ -1090,7 +1090,8 @@ namespace GUI
                 else
                 {
                     MessageBox.Show("You cannot enter because the Id/Barcode is wrong!");
-                    Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
+                    ClearProductEntranceTextBox();
+                    //Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
                     //txtProductId.Focus();
                     //txtProductId.SelectAll();//Selecting all of the text to correct it easily at once.
                 }

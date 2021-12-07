@@ -1011,16 +1011,17 @@ namespace GUI
 
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
 
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && productIdFromUser != "")
             {
-                if (btnProductAdd.IsEnabled == true)
+                if (btnProductAdd.IsEnabled == true && productIdFromUser != "")
                 {
                     btnProductAdd_Click(sender, e);
                 }
                 else
                 {
                     MessageBox.Show("You cannot enter because the Id/Barcode is wrong!");
-                    Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
+                    ClearProductEntranceTextBox();
+                    //Keyboard.ClearFocus();//It is necessary to clear focus from the txtId because this method works recursively once we click the enter button after getting the error message.
                     //txtProductId.Focus();
                     //txtProductId.SelectAll();//Selecting all of the text to correct it easily at once.
                 }
