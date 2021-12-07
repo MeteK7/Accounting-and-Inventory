@@ -1079,10 +1079,9 @@ namespace GUI
         {
             string productIdFromUser = txtProductId.Text;
             long number;
-
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
 
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && productIdFromUser != ((int)Numbers.InitialIndex).ToString())
             {
                 if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
                 {
