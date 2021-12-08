@@ -361,7 +361,7 @@
                         <DataGridTemplateColumn Header="Id" Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox x:Name="dgTxtProductId" Text="{Binding Id, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -369,7 +369,7 @@
                         <DataGridTemplateColumn Header="Name" Width="430">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -388,7 +388,7 @@
                         <DataGridTemplateColumn Header="Quantity" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductQuantity" Text="{Binding Quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductQuantity_KeyUp" />
+                                    <TextBox x:Name="dgTxtProductQuantity" Text="{Binding Quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductQuantity_KeyUp" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -396,7 +396,7 @@
                         <DataGridTemplateColumn Header="G. Cost Price" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductGrossCostPrice" Text="{Binding GrossCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductGrossCostPrice_KeyUp" />
+                                    <TextBox x:Name="dgTxtProductGrossCostPrice" Text="{Binding GrossCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductGrossCostPrice_KeyUp" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -404,7 +404,7 @@
                         <DataGridTemplateColumn Header="Gross Total Cost Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF002EFF"/>
+                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF002EFF" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -412,7 +412,7 @@
                         <DataGridTemplateColumn Header="Discount" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductDiscount" Text="{Binding Discount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductDiscount_KeyUp"/>
+                                    <TextBox x:Name="dgTxtProductDiscount" Text="{Binding Discount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductDiscount_KeyUp" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -420,7 +420,7 @@
                         <DataGridTemplateColumn Header="VAT" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductVAT" Text="{Binding VAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductVAT_KeyUp"/>
+                                    <TextBox x:Name="dgTxtProductVAT" Text="{Binding VAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductVAT_KeyUp" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -428,7 +428,7 @@
                         <DataGridTemplateColumn Header="Cost Price" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -436,7 +436,7 @@
                         <DataGridTemplateColumn Header="Total Cost Price" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="14" FontWeight="Bold"/>
+                                    <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
