@@ -126,8 +126,22 @@ namespace GUI
 
         private void btnPointOfSale_Click(object sender, RoutedEventArgs e)
         {
-            WinPointOfSale winPointOfSale = new WinPointOfSale();
-            winPointOfSale.Show();
+            bool isWindowOpen = false;
+
+            foreach (Window w in Application.Current.Windows)
+            {
+                if (w is WinPointOfSale)
+                {
+                    isWindowOpen = true;
+                    w.Activate();
+                }
+            }
+
+            if (!isWindowOpen)
+            {
+                WinPointOfSale winPointOfSale = new WinPointOfSale();
+                winPointOfSale.Show();
+            }
         }
 
         private void btnPosReports_Click(object sender, RoutedEventArgs e)

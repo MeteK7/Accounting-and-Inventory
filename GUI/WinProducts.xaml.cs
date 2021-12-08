@@ -428,6 +428,7 @@ namespace GUI
             if (e.Key == Key.Enter)
             {
                 txtProductCostPriceRetail.Focus();
+                txtProductCostPriceRetail.SelectAll();
             }
         }
 
@@ -436,6 +437,7 @@ namespace GUI
             if (e.Key == Key.Enter)
             {
                 txtProductSalePriceRetail.Focus();
+                txtProductSalePriceRetail.SelectAll();
             }
         }
     }
