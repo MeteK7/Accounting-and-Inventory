@@ -411,6 +411,7 @@ namespace GUI
             if (e.Key == Key.Enter)
             {
                 PromptBarcodeRetail();
+                txtProductName.Focus();
             }
         }
 
@@ -419,6 +420,22 @@ namespace GUI
             if (e.Key == Key.Enter)
             {
                 PromptBarcodeWholesale();
+            }
+        }
+
+        private void txtProductName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                txtProductCostPriceRetail.Focus();
+            }
+        }
+
+        private void txtProductCostPriceRetail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                txtProductSalePriceRetail.Focus();
             }
         }
     }

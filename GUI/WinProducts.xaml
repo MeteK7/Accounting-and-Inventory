@@ -72,9 +72,9 @@
                     <Label x:Name="lblProductBarcodeRetail" Content="Barcode" HorizontalAlignment="Left" Margin="7,42,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductBarcodeRetail" HorizontalAlignment="Left" Height="27" Margin="115,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductBarcodeRetail_KeyDown"/>
                     <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
-                    <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75"/>
+                    <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="27" Margin="115,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Opacity="0.75" KeyDown="txtProductName_KeyDown"/>
                     <Label x:Name="lblProductCostPriceRetail" Content="Cost Price" HorizontalAlignment="Left" Margin="7,106,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
-                    <TextBox x:Name="txtProductCostPriceRetail" HorizontalAlignment="Left" Height="27" Margin="115,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductCostPriceRetail_TextChanged" Opacity="0.75"/>
+                    <TextBox x:Name="txtProductCostPriceRetail" HorizontalAlignment="Left" Height="27" Margin="115,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductCostPriceRetail_TextChanged" Opacity="0.75" KeyDown="txtProductCostPriceRetail_KeyDown"/>
                     <Label x:Name="lblProductSalePriceRetail" Content="Sale Price" HorizontalAlignment="Left" Margin="7,138,0,0" VerticalAlignment="Top" Width="103" Height="27"/>
                     <TextBox x:Name="txtProductSalePriceRetail" HorizontalAlignment="Left" Height="27" Margin="115,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" TextChanged="txtProductSalePriceRetail_TextChanged" Opacity="0.75"/>
                 </Grid>
