@@ -84,7 +84,13 @@ namespace GUI
             txtAmount.Text = "";
         }
 
-        private void ClearLabels()
+        private void ClearLabelsFrom()
+        {
+            lblBalanceFrom.Content = "";
+            lblAssetIdFrom.Content = "";
+        }
+
+        private void ClearLabelsTo()
         {
             lblBalanceTo.Content = "";
             lblAssetIdTo.Content = "";
@@ -413,16 +419,6 @@ namespace GUI
             }
         }
 
-        private void cboSourceTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (isCboSelectionEnabled == true)
-            {
-                ClearLabels();
-
-                LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
-            }
-        }
-
         private void cboFrom_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
@@ -438,12 +434,21 @@ namespace GUI
                 CboToSelectionChanged();
             }
         }
+        
+        private void cboSourceTo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isCboSelectionEnabled == true)
+            {
+                ClearLabelsTo();
 
+                LoadCboTo(Convert.ToInt32(cboSourceTo.SelectedValue));
+            }
+        }
         private void rbAccount_Checked(object sender, RoutedEventArgs e)
         {
             if (isCboSelectionEnabled == true)
             {
-                ClearLabels();
+                ClearLabelsFrom();
                 LoadCboFrom(Convert.ToInt32(Assets.Account));
             }
         }
@@ -452,7 +457,7 @@ namespace GUI
         {
             if (isCboSelectionEnabled == true)
             {
-                ClearLabels();
+                ClearLabelsFrom();
                 LoadCboFrom(Convert.ToInt32(Assets.Bank));
             }
         }
