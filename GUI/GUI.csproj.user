@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Example.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="TEST.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -66,6 +69,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Example.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="TEST.xaml">
       <SubType>Designer</SubType>
     </Page>

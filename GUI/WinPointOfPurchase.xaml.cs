@@ -390,7 +390,7 @@ namespace GUI
 
         private string[,] GetDataGridContent()//This method stores the previous list in a global array variable called "cells" when we press the Edit button.
         {
-            int rowLength = dgProducts.Items.Count, cellUnit = 2;
+            int rowLength = dgProducts.Items.Count;
             string[,] dgProductCells = new string[rowLength, colLength];
 
             DataGridRow dgRow;
@@ -407,7 +407,7 @@ namespace GUI
                     cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
 
-                    if (colNo != cellUnit)
+                    if (colNo != (int)PopColumns.ColProductUnit)
                     {
                         tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                         dgProductCells[rowNo, colNo] = tbCellContent.Text;

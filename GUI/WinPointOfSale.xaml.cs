@@ -384,7 +384,7 @@ namespace GUI
 
         private string[,] GetDataGridContent()
         {
-            int rowLength = dgProducts.Items.Count, cellUnit = 2;
+            int rowLength = dgProducts.Items.Count;
             string[,] dgProductCells = new string[rowLength, colLength];
 
             DataGridRow dgRow;
@@ -401,7 +401,7 @@ namespace GUI
                     cpProduct = dgProducts.Columns[colNo].GetCellContent(dgRow) as ContentPresenter;
                     var tmpProduct = cpProduct.ContentTemplate;
 
-                    if (colNo != cellUnit)//If it is not a cbo value, then fetch the data in the default way.
+                    if (colNo != (int)PosColumns.ColProductUnit)//If it is not a cbo value, then fetch the data in the default way.
                     {
                         tbCellContent = tmpProduct.FindName(dgCellNames[colNo], cpProduct) as TextBox;
                         dgProductCells[rowNo, colNo] = tbCellContent.Text;
