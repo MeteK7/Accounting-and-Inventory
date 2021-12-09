@@ -105,18 +105,18 @@ namespace GUI
             txtDetails.IsEnabled = false;
         }
 
-        public void EnableTools()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            cboSourceFrom.IsEnabled = true;
-            cboSourceTo.IsEnabled = true;
-            cboPaymentType.IsEnabled = true;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            txtDetails.IsEnabled = true;
-        }
+        //public void EnableTools()
+        //{
+        //    btnMenuSave.IsEnabled = true;
+        //    btnMenuCancel.IsEnabled = true;
+        //    cboSourceFrom.IsEnabled = true;
+        //    cboSourceTo.IsEnabled = true;
+        //    cboPaymentType.IsEnabled = true;
+        //    cboFrom.IsEnabled = true;
+        //    cboTo.IsEnabled = true;
+        //    txtAmount.IsEnabled = true;
+        //    txtDetails.IsEnabled = true;
+        //}
 
         private void EnableButtonsOnClickSaveCancel()
         {
@@ -136,6 +136,7 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            cboPaymentType.IsEnabled = true;
             cboSourceFrom.IsEnabled = true;
             cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
@@ -371,7 +372,7 @@ namespace GUI
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
-            EnableTools();
+            ModifyToolsOnClickBtnNewEdit();
 
             oldReceipt[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
             oldReceipt[oldBalanceTo] = lblBalanceTo.Content.ToString();

@@ -104,24 +104,26 @@ namespace GUI
             cboSourceTo.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
+            cboPaymentType.IsEnabled = false;
             txtAmount.IsEnabled = false;
             txtDetails.IsEnabled = false;
             rbAccount.IsEnabled = false;
             rbBank.IsEnabled = false;
         }
 
-        public void EnableTools()
-        {
-            btnMenuSave.IsEnabled = true;
-            btnMenuCancel.IsEnabled = true;
-            cboSourceTo.IsEnabled = true;
-            cboFrom.IsEnabled = true;
-            cboTo.IsEnabled = true;
-            txtAmount.IsEnabled = true;
-            txtDetails.IsEnabled = true;
-            rbAccount.IsEnabled = true;
-            rbBank.IsEnabled = true;
-        }
+        //public void EnableTools()
+        //{
+        //    btnMenuSave.IsEnabled = true;
+        //    btnMenuCancel.IsEnabled = true;
+        //    cboSourceTo.IsEnabled = true;
+        //    cboPaymentType.IsEnabled = true;
+        //    cboFrom.IsEnabled = true;
+        //    cboTo.IsEnabled = true;
+        //    txtAmount.IsEnabled = true;
+        //    txtDetails.IsEnabled = true;
+        //    rbAccount.IsEnabled = true;
+        //    rbBank.IsEnabled = true;
+        //}
 
         private void EnableButtonsOnClickSaveCancel()
         {
@@ -141,6 +143,7 @@ namespace GUI
             btnMenuDelete.IsEnabled = false;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            cboPaymentType.IsEnabled = true;
             cboSourceTo.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
@@ -297,6 +300,7 @@ namespace GUI
 
                 #region ASSIGNING CUL SECTION
                 expenseCUL.Id = expenseId;
+                expenseCUL.IdPaymentType= Convert.ToInt32(cboPaymentType.SelectedValue);
                 expenseCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
                 expenseCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
                 expenseCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
@@ -376,7 +380,7 @@ namespace GUI
 
         private void btnMenuEdit_Click(object sender, RoutedEventArgs e)
         {
-            EnableTools();
+            ModifyToolsOnClickBtnNewEdit();
 
             oldExpense[oldBalanceFrom] = lblBalanceFrom.Content.ToString();
             oldExpense[oldBalanceTo] = lblBalanceTo.Content.ToString();
