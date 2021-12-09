@@ -228,5 +228,33 @@ namespace DAL
             return dataTable;
         }
         #endregion
+
+        #region Getting Customer Infos from User Id
+        public DataTable GetCustomerInfoById(int customerId)
+        {
+            UserCUL usrCUL = new UserCUL();
+            SqlConnection conn = new SqlConnection(connString);
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                string sqlQuery = "SELECT * FROM tbl_customers WHERE id='" + customerId + "'";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);//For executing the command 
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
+                conn.Open();//Opening the database connection
+                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
+        }
+        #endregion
     }
 }
