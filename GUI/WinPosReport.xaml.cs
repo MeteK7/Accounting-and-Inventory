@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CUL.Enums;
 
 namespace GUI
 {
@@ -31,14 +32,23 @@ namespace GUI
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         string dateFrom, dateTo;
-        const int initialIndex = 0;
+        string
+            colTxtProductId = "product_id",
+            colTxtProductQty = "quantity",
+            colTxtProductSalePrice = "product_sale_price",
+            colTxtCostTotal = "cost_total",
+            colTxtGrandTotal = "grand_total",
+            colTxtName = "name",
+            colTxtAddedBy = "added_by",
+            colTxtFirstName = "first_name",
+            colTxtLastName = "last_name";
 
         public WinPosReport()
         {
             InitializeComponent();
             LoadDefaultDate();
             LoadPayments();
-            LoadListView();
+            LoadProductListView();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -52,7 +62,7 @@ namespace GUI
             dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
 
             LoadPayments();
-            LoadListView();
+            LoadProductListView();
         }
 
         private void LoadDefaultDate()
@@ -68,10 +78,10 @@ namespace GUI
 
         private void ClearGroupBoxes()
         {
-            lblNumOfSalesVar.Content = initialIndex.ToString();
-            lblCostVar.Content = initialIndex.ToString();
-            lblRevenueVar.Content = initialIndex.ToString();
-            lblProfitVar.Content = initialIndex.ToString();
+            lblNumOfSalesVar.Content = ((int)Numbers.InitialIndex).ToString();
+            lblCostVar.Content = ((int)Numbers.InitialIndex).ToString();
+            lblRevenueVar.Content = ((int)Numbers.InitialIndex).ToString();
+            lblProfitVar.Content = ((int)Numbers.InitialIndex).ToString();
         }
 
         private void LoadPayments()
@@ -91,10 +101,10 @@ namespace GUI
             #region PAYMENT RESULTS
             DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
 
-            for (int rowIndex = 0; rowIndex < dtPos.Rows.Count; rowIndex++)
+            for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
-                lblCostVar.Content = Convert.ToDecimal(lblCostVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex]["cost_total"]);
-                lblRevenueVar.Content = Convert.ToDecimal(lblRevenueVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex]["grand_total"]);
+                lblCostVar.Content = Convert.ToDecimal(lblCostVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtCostTotal]);
+                lblRevenueVar.Content = Convert.ToDecimal(lblRevenueVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtGrandTotal]);
             }
 
             lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
@@ -107,14 +117,14 @@ namespace GUI
             decimal userSaleAmount;
             string userFullName;
 
-            for (int rowIndex = 0; rowIndex < dtUserSales.Rows.Count; rowIndex++)
+            for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtUserSales.Rows.Count; rowIndex++)
             {
-                userId = Convert.ToInt32(dtUserSales.Rows[rowIndex]["added_by"]);
+                userId = Convert.ToInt32(dtUserSales.Rows[rowIndex][colTxtAddedBy]);
                 DataTable dtUsers = userDAL.GetUserInfoById(userId);
 
-                userFullName = dtUsers.Rows[initialIndex]["first_name"].ToString() + " " + dtUsers.Rows[initialIndex]["last_name"].ToString();
+                userFullName = dtUsers.Rows[(int)Numbers.InitialIndex][colTxtFirstName].ToString() + " " + dtUsers.Rows[(int)Numbers.InitialIndex][colTxtLastName].ToString();
 
-                userSaleAmount = Convert.ToDecimal(dtUserSales.Rows[rowIndex]["grand_total"]);
+                userSaleAmount = Convert.ToDecimal(dtUserSales.Rows[rowIndex][colTxtGrandTotal]);
 
                 lvwUserSales.Items.Add(
                     new PosReportDetailCUL()
@@ -126,10 +136,9 @@ namespace GUI
             #endregion
         }
 
-        private void LoadListView()
+        private void LoadProductListView()
         {
             string productId;
-            int initialIndex = 0;
             bool addNew = true;
             IEnumerable items;
 
@@ -138,20 +147,19 @@ namespace GUI
             DataTable dtPosJoined = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
 
-            for (int rowIndex = 0; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
+            for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
             {
                 addNew = true;
                 items = lvwProducts.Items;
 
-
                 foreach (PosReportDetailCUL product in items)//This loop is for preventing duplications.
                 {
-                    if (product.ProductId == Convert.ToInt32(dtPosJoined.Rows[rowIndex]["product_id"]))
+                    if (product.ProductId == Convert.ToInt32(dtPosJoined.Rows[rowIndex][colTxtProductId]))
                     {
-                        product.ProductQuantitySold += Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["quantity"]);
+                        product.ProductQuantitySold += Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductQty]);
                         product.ProductTotalSalePrice = String.Format("{0:0.00}",
                             Convert.ToDecimal(product.ProductTotalSalePrice) +
-                            (Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["quantity"])));
+                            (Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductSalePrice]) * Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductQty])));
                         addNew = false;//No need to run the loop again since there can be only one entry of a unique product.
                         break;
                     }
@@ -159,20 +167,25 @@ namespace GUI
 
                 if (addNew == true)
                 {
-                    productId = dtPosJoined.Rows[rowIndex]["product_id"].ToString();
+                    productId = dtPosJoined.Rows[rowIndex][colTxtProductId].ToString();
                     dtProduct = productDAL.SearchById(productId);
 
                     lvwProducts.Items.Add(
                         new PosReportDetailCUL()
                         {
                             //InvoiceId = Convert.ToInt32(dataTablePosDetailToday.Rows[posDetailIndex]["invoice_no"]),
-                            ProductId = Convert.ToInt32(dtPosJoined.Rows[rowIndex]["product_id"]),
-                            ProductName = dtProduct.Rows[initialIndex]["name"].ToString(),
-                            ProductQuantitySold = Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["quantity"]),
-                            ProductTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["product_sale_price"]) * Convert.ToDecimal(dtPosJoined.Rows[rowIndex]["quantity"])))
+                            ProductId = Convert.ToInt32(dtPosJoined.Rows[rowIndex][colTxtProductId]),
+                            ProductName = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName].ToString(),
+                            ProductQuantitySold = Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductQty]),
+                            ProductTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductSalePrice]) * Convert.ToDecimal(dtPosJoined.Rows[rowIndex][colTxtProductQty])))
                         });
                 }
             }
+        }
+
+        private void LoadSaleListView()
+        {
+
         }
     }
 }

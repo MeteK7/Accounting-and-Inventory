@@ -73,22 +73,6 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Rectangle HorizontalAlignment="Left" Height="919" Margin="677,38,0,0" Stroke="Black" VerticalAlignment="Top" Width="632">
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
-            </Rectangle.Fill>
-        </Rectangle>
-        <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="709,50,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
-        <ListView x:Name="lvwProducts" Margin="694,106,36,27">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductQuantitySold}" Header="Quantity Sold" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Total Amount"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
         <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
         <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="65,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
         <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
@@ -133,5 +117,41 @@
                 </ListView>
             </Grid>
         </GroupBox>
+        <TabControl x:Name="tabReport" Margin="670,34,10,10">
+            <TabItem x:Name="tbiProducts" Header="PRODUCTS">
+                <Grid Background="#FFE5E5E5">
+                    <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
+                    <ListView x:Name="lvwProducts" Margin="10,61,10,10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductQuantitySold}" Header="Quantity Sold" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Total Amount"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tbiSales" Header="SALES">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="lvwSales">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleId}" Header="Id"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleTotalProduct}" Header="Total Product"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleGrossAmount}" Header="Gross Amount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleDiscount}" Header="Discount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleVAT}" Header="VAT"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleGrandTotal}" Header="Grand Total"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleCustomer}" Header="Customer"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleStaff}" Header="Staff"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SaleDate}" Header="Date"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>   
