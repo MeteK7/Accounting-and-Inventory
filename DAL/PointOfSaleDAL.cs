@@ -229,8 +229,8 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN REPORT BY DATE METHOD
-        public DataTable JoinReportByDate(string dateFrom, string dateTo)
+        #region JOIN PRODUCT REPORT BY DATE METHOD
+        public DataTable JoinProductReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
