@@ -64,7 +64,7 @@ namespace DAL
 
                 cmd.Parameters.AddWithValue("@report_id", posReportDetailCUL.SaleDateId);
                 cmd.Parameters.AddWithValue("@product_id", posReportDetailCUL.ProductId);
-                cmd.Parameters.AddWithValue("@product_amount_sold", posReportDetailCUL.ProductQuantitySold);
+                cmd.Parameters.AddWithValue("@product_amount_sold", posReportDetailCUL.ProductQuantity);
 
                 conn.Open();
 

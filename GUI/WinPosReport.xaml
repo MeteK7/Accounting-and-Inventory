@@ -138,15 +138,15 @@
                     <ListView x:Name="lvwSales">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleId}" Header="Id"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleTotalProduct}" Header="Total Product"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleGrossAmount}" Header="Gross Amount"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleDiscount}" Header="Discount"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleVAT}" Header="VAT"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleGrandTotal}" Header="Grand Total"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleCustomer}" Header="Customer"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleStaff}" Header="Staff"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding SaleDate}" Header="Date"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="Total Product"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosGrossAmount}" Header="Gross Amount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="Discount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="VAT"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosGrandTotal}" Header="Grand Total"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosCustomer}" Header="Customer"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="Staff"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDate}" Header="Date"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
