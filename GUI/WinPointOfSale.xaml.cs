@@ -907,6 +907,7 @@ namespace GUI
                     ClearProductsDataGrid();
                     LoadPastInvoice();
                     EnableButtonsOnClickSaveCancel();
+                    ModifyShortcutsOnClickSaveCancel();//This is for preventing the user to click on F5(Save) when the user has already clicked.
                     break;
                 case MessageBoxResult.No:
                     MessageBox.Show("Enjoy!", "Enjoy");
@@ -929,6 +930,7 @@ namespace GUI
             uneditedBasketGrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
 
             ModifyToolsOnClickBtnNewOrEdit();
+            ModifyShortcutsOnClickNewEdit();//This is for preventing the user to click on F2(New) when the user has already clicked.
         }
 
         private void btnDeleteRecord_Click(object sender, RoutedEventArgs e)
