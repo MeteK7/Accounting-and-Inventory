@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace GUI
         AccountDAL accountDAL = new AccountDAL();
         SupplierDAL supplierDAL = new SupplierDAL();
         CustomerDAL customerDAL = new CustomerDAL();
+        PaymentDAL paymentDAL = new PaymentDAL();
         SourceTypeDAL sourceTypeDAL = new SourceTypeDAL();
         UserBLL userBLL = new UserBLL();
         ReceiptCUL receiptCUL = new ReceiptCUL();
@@ -36,7 +38,7 @@ namespace GUI
         BankDAL bankDAL = new BankDAL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const string calledBy = "tbl_receipts", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtIdAssetFrom= "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date";
+        const string calledBy = "tbl_receipts", colTxtName = "name", colTxtId = "id",colTxtIdFrom="id_from", colTxtIdTo="id_to", colTxtIdAssetFrom= "id_asset_from", colTxtIdAssetTo = "id_asset_to", colTxtAmount = "amount", colTxtDetails = "details", colTxtAddedDate = "added_date", colTxtPaymentType = "payment_type", colTxtPaymentTypeId = "id_payment_type";
         const int initialIndex = 0, unitValue = 1;
         const int clickedNothing = -1, clickedNew = 0, clickedPrev = 0, clickedNext = 1, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
         const int account = 1, bank = 2, supplier = 3,customer=4;
@@ -96,6 +98,7 @@ namespace GUI
             btnMenuCancel.IsEnabled = false;
             cboSourceFrom.IsEnabled = false;
             cboSourceTo.IsEnabled = false;
+            cboPaymentType.IsEnabled = false;
             cboFrom.IsEnabled = false;
             cboTo.IsEnabled = false;
             txtAmount.IsEnabled = false;
@@ -108,6 +111,7 @@ namespace GUI
             btnMenuCancel.IsEnabled = true;
             cboSourceFrom.IsEnabled = true;
             cboSourceTo.IsEnabled = true;
+            cboPaymentType.IsEnabled = true;
             cboFrom.IsEnabled = true;
             cboTo.IsEnabled = true;
             txtAmount.IsEnabled = true;
@@ -192,6 +196,9 @@ namespace GUI
                     LoadCboSourceTo();//We need to load the cboSourceTo first in order to get which source type the user has clicked below.
                     cboSourceTo.SelectedValue = idSourceTypeTo;//This code trigs the method LoadCboTo in the method cboSourceTo_SelectionChanged!
                     #endregion
+
+                    LoadCboPaymentType();//Loading payment types.
+                    cboPaymentType.SelectedValue= Convert.ToInt32(dtReceipt.Rows[(int)Numbers.InitialIndex][colTxtPaymentTypeId].ToString());//Getting the id of payment type.
 
                     #region SOURCE CBO INFORMATION FILLING REGION 
                     idFrom = Convert.ToInt32(dtReceipt.Rows[initialIndex][colTxtIdFrom].ToString());
@@ -284,6 +291,7 @@ namespace GUI
 
                 #region ASSIGNING CUL SECTION
                 receiptCUL.Id = receiptId;
+                receiptCUL.IdPaymentType= Convert.ToInt32(cboPaymentType.SelectedValue);
                 receiptCUL.IdFrom = Convert.ToInt32(cboFrom.SelectedValue);
                 receiptCUL.IdTo = Convert.ToInt32(cboTo.SelectedValue);
                 receiptCUL.IdAssetFrom = Convert.ToInt32(lblAssetIdFrom.Content);
@@ -553,6 +561,21 @@ namespace GUI
             cboSourceTo.SelectedValuePath = colTxtId;
 
             isCboSelectionEnabled = true;//Enabling the selection changed method in order to allow them to work in case of any future selections.
+        }
+
+        private void LoadCboPaymentType()
+        {
+            //Creating Data Table to hold the products from Database
+            DataTable dtPayment = paymentDAL.Select();
+
+            //Specifying Items Source for product combobox
+            cboPaymentType.ItemsSource = dtPayment.DefaultView;
+
+            //Here DisplayMemberPath helps to display Text in the ComboBox.
+            cboPaymentType.DisplayMemberPath = colTxtPaymentType;
+
+            //SelectedValuePath helps to store values like a hidden field.
+            cboPaymentType.SelectedValuePath = colTxtId;
         }
 
         private void LoadCboFrom(int idSourceType)
