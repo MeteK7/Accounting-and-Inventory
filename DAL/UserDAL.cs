@@ -243,9 +243,8 @@ namespace DAL
         #region Getting User Infos from User Id
         public DataTable GetUserInfoById(int userId)
         {
-            UserCUL usrCUL = new UserCUL();
             SqlConnection conn = new SqlConnection(connString);
-            DataTable dataTable = new DataTable();
+            DataTable dtUser = new DataTable();
 
             try
             {
@@ -254,7 +253,7 @@ namespace DAL
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);//For executing the command 
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);//Getting data from database           
                 conn.Open();//Opening the database connection
-                dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                dataAdapter.Fill(dtUser);//Passing values from adapter to Data Table
             }
             catch (Exception ex)
             {
@@ -264,7 +263,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return dataTable;
+            return dtUser;
         }
         #endregion
     }

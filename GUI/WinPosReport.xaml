@@ -118,6 +118,37 @@
             </Grid>
         </GroupBox>
         <TabControl x:Name="tabReport" Margin="670,34,10,10">
+            <TabItem x:Name="tbiSales" Header="SALES">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="lvwSales">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="Total Product"/>
+                                <GridViewColumn Header="Gross Amount">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock x:Name="txtPosGrossAmount" Text="{Binding Path=PosGrossAmount}" Foreground="Blue" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="Discount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="VAT"/>
+                                <GridViewColumn Header="Grand Total">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock x:Name="txtPosGrandTotal" Text="{Binding Path=PosGrandTotal}" Foreground="Red" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosCustomer}" Header="Customer"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="Staff"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDate}" Header="Date"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="tbiProducts" Header="PRODUCTS">
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
@@ -128,25 +159,6 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductQuantitySold}" Header="Quantity Sold" />
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Total Amount"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="tbiSales" Header="SALES">
-                <Grid Background="#FFE5E5E5">
-                    <ListView x:Name="lvwSales">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="Total Product"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosGrossAmount}" Header="Gross Amount"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="Discount"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="VAT"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosGrandTotal}" Header="Grand Total"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosCustomer}" Header="Customer"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="Staff"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosDate}" Header="Date"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

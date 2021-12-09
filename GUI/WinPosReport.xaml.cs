@@ -27,6 +27,7 @@ namespace GUI
     public partial class WinPosReport : Window
     {
         UserDAL userDAL = new UserDAL();
+        CustomerDAL customerDAL = new CustomerDAL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
         PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
@@ -45,6 +46,7 @@ namespace GUI
             colTxtPosDiscount="discount",
             colTxtPosVAT="vat",
             colPosDate="added_date",
+            colTxtCustomerId="customer_id",
             colTxtName = "name",
             colTxtAddedBy = "added_by",
             colTxtFirstName = "first_name",
@@ -196,16 +198,25 @@ namespace GUI
         private void LoadSaleListView()
         {
             DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
-            DataTable dtUsers;
-            int userId;
-            string userFullName;
+            DataTable dtUsers,dtCustomers;
+            int userId,customerId;
+            string userFullName,customerFullName;
 
             for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
+                #region USER FULL NAME
                 userId = Convert.ToInt32(dtPos.Rows[rowIndex][colTxtAddedBy]);
                 dtUsers = userDAL.GetUserInfoById(userId);
 
                 userFullName = dtUsers.Rows[(int)Numbers.InitialIndex][colTxtFirstName].ToString() + " " + dtUsers.Rows[(int)Numbers.InitialIndex][colTxtLastName].ToString();
+                #endregion
+
+                #region CUSTOMER
+                customerId = Convert.ToInt32(dtPos.Rows[rowIndex][colTxtCustomerId]);
+                dtCustomers = customerDAL.GetCustomerInfoById(customerId);
+
+                customerFullName = dtCustomers.Rows[(int)Numbers.InitialIndex][colTxtName].ToString();
+                #endregion
 
                 lvwSales.Items.Add(
                     new PosReportDetailCUL()
@@ -216,7 +227,7 @@ namespace GUI
                         PosDiscount=Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtPosDiscount]),
                         PosVAT=Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtPosVAT]),
                         PosGrandTotal=Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtPosGrandTotal]),
-                        PosCustomer=(dtPos.Rows[rowIndex][colPosCustomerId]).ToString(),
+                        PosCustomer=customerFullName,
                         UserFullName = userFullName,
                         PosDate=Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate])
                     });
