@@ -272,6 +272,7 @@ namespace GUI
             txtProductDiscount.IsEnabled = true;
             txtProductVAT.IsEnabled = true;
             dgProducts.IsHitTestVisible = true;//Enabling the datagrid clicking.
+            txtProductId.Focus();//Focusing automatically to the id entry for fast sale.
         }
 
         private void ClearProductsDataGrid()
