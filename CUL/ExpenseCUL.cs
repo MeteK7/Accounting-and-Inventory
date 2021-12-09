@@ -9,6 +9,7 @@ namespace CUL
     public class ExpenseCUL
     {
         public int Id { get; set; }
+        public int IdPaymentType { get; set; }
         public int IdFrom { get; set; }
         public int IdTo { get; set; }
         public int IdAssetFrom { get; set; }

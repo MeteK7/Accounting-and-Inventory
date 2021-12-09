@@ -23,11 +23,12 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_expenses (id, id_from, id_to, id_asset_from, id_asset_to, amount, details, added_date, added_by) VALUES (@id, @id_from, @id_to, @id_asset_from, @id_asset_to, @amount, @details, @added_date, @added_by)";
+                string sqlQuery = "INSERT INTO tbl_expenses (id,id_payment_type, id_from, id_to, id_asset_from, id_asset_to, amount, details, added_date, added_by) VALUES (@id,@id_payment_type, @id_from, @id_to, @id_asset_from, @id_asset_to, @amount, @details, @added_date, @added_by)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@id", expenseCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
+                cmd.Parameters.AddWithValue("@id_payment_type", expenseCUL.IdPaymentType);
                 cmd.Parameters.AddWithValue("@id_from", expenseCUL.IdFrom);
                 cmd.Parameters.AddWithValue("@id_to", expenseCUL.IdTo);
                 cmd.Parameters.AddWithValue("@id_asset_from", expenseCUL.IdAssetFrom);
@@ -71,10 +72,11 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_expenses SET id_from=@id_from, id_to=@id_to, id_asset_from=@id_asset_from, id_asset_to=@id_asset_to, amount=@amount, details=@details, added_date=@added_date, added_by=@added_by WHERE id=@id";
+                string sqlQuery = "UPDATE tbl_expenses SET id_payment_type=@id_payment_type, id_from=@id_from, id_to=@id_to, id_asset_from=@id_asset_from, id_asset_to=@id_asset_to, amount=@amount, details=@details, added_date=@added_date, added_by=@added_by WHERE id=@id";
                  
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
+                cmd.Parameters.AddWithValue("id_payment_type", expenseCUL.IdPaymentType);
                 cmd.Parameters.AddWithValue("id_from", expenseCUL.IdFrom);
                 cmd.Parameters.AddWithValue("id_to", expenseCUL.IdTo);
                 cmd.Parameters.AddWithValue("id_asset_from", expenseCUL.IdAssetFrom);
