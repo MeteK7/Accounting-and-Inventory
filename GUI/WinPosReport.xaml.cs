@@ -144,7 +144,7 @@ namespace GUI
 
             lvwProducts.Items.Clear();
 
-            DataTable dtPosJoined = pointOfSaleDAL.JoinReportByDate(dateFrom, dateTo);
+            DataTable dtPosJoined = pointOfSaleDAL.JoinProductReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
 
             for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
