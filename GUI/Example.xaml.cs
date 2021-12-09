@@ -30,16 +30,16 @@ namespace GUI
         }
     }
 
-    public class CommandsContext
-    {
-        public ICommand RunCommand
-        {
-            get
-            {
-                return new ExitKey();
-            }
-        }
-    }
+    //public class CommandsContext
+    //{
+    //    public ICommand RunCommand
+    //    {
+    //        get
+    //        {
+    //            return new ExitKey();
+    //        }
+    //    }
+    //}
 
     /// <summary>
     /// Interaction logic for Example.xaml
@@ -52,17 +52,6 @@ namespace GUI
             this.DataContext = new CommandsContext()
             {
             };
-        }
-
-        private void CommandBindingNew_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (e != null)
-                e.CanExecute = true;
-        }
-
-        public void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Hello");
         }
     }
 }
