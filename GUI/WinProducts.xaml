@@ -98,7 +98,7 @@
             </TabItem>
         </TabControl>
         <Label x:Name="lblProductSearch" Content="Product Search" HorizontalAlignment="Left" Margin="317,51,0,0" VerticalAlignment="Top" Width="102"/>
-        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="424,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="623" TextChanged="txtProductSearch_TextChanged">
+        <TextBox x:Name="txtProductSearch" HorizontalAlignment="Left" Height="26" Margin="424,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="623" TextChanged="txtProductSearch_TextChanged" KeyDown="txtProductSearch_KeyDown">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.4"/>
             </TextBox.Background>

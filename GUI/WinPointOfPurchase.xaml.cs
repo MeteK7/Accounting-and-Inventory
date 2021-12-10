@@ -440,7 +440,7 @@ namespace GUI
 
             //If the old datagrid equals new datagrid and the old grand and the old asset id equals new asset id, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (int.TryParse(txtInvoiceNo.Text, out int number) && txtInvoiceNo.Text != ((int)Numbers.InitialIndex).ToString() && isDgEqual == false & oldIdAsset != Convert.ToInt32(lblAssetId.Content) & oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) && cboMenuPaymentType.SelectedIndex != emptyCboIndex && cboMenuSupplier.SelectedIndex != emptyCboIndex && cboMenuAsset.SelectedIndex != emptyCboIndex && dgProducts.Items.Count != (int)Numbers.InitialIndex)
+            if (int.TryParse(txtInvoiceNo.Text, out int number) && isDgEqual == false & oldIdAsset != Convert.ToInt32(lblAssetId.Content) & oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) && cboMenuPaymentType.SelectedIndex != emptyCboIndex && cboMenuSupplier.SelectedIndex != emptyCboIndex && cboMenuAsset.SelectedIndex != emptyCboIndex && dgProducts.Items.Count != (int)Numbers.InitialIndex)
             {
                 int invoiceNo = (int)Numbers.InitialIndex;//Defaulty, we are assigning 0 to the variable called invoiceNo in case the user would not enter any number.
                 if (txtInvoiceNo.Text != "")

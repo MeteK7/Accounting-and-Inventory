@@ -440,5 +440,11 @@ namespace GUI
                 txtProductSalePriceRetail.SelectAll();
             }
         }
+
+        private void txtProductSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                txtProductSearch.SelectAll();
+        }
     }
 }

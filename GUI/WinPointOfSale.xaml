@@ -601,7 +601,7 @@
             </Grid>
         </GroupBox>
         <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Right" Margin="0,299,10,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Calisto MT" FontSize="20" />
-        <GroupBox Header="Controls" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Controls" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235" Visibility="Hidden">
             <Grid>
                 <CheckBox x:Name="chkIsPaid" Content="Paid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="142" Foreground="#FF000CFF" FontSize="22" FontFamily="Calisto MT" FontWeight="Bold"/>
             </Grid>
