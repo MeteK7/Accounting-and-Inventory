@@ -182,6 +182,20 @@ namespace GUI
             ClearProductEntranceTextBox();
 
         }
+        private void btnProductOne_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnProductTwo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnProductThree_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void FirstTimeRun()
         {
@@ -190,11 +204,6 @@ namespace GUI
             btnDeleteRecord.IsEnabled = false;//There cannot be any deletible records for the first run.
             btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
-        }
-
-        private void btnProductOne_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void LoadUserInformations()
@@ -248,7 +257,7 @@ namespace GUI
             btnPrint.IsEnabled = false;
             btnProductOne.IsEnabled = false;
             btnProductTwo.IsEnabled = false;
-            btnProductThree.IsEnambled = false;
+            btnProductThree.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = false;
             cboMenuCustomer.IsEnabled = false;
             cboMenuAsset.IsEnabled = false;
@@ -272,7 +281,7 @@ namespace GUI
             btnNext.IsEnabled = false;
             btnProductOne.IsEnabled = true;
             btnProductTwo.IsEnabled = true;
-            btnProductThree.IsEnambled = true;
+            btnProductThree.IsEnabled = true;
             cboMenuPaymentType.IsEnabled = true;
             cboMenuCustomer.IsEnabled = true;
             cboMenuAsset.IsEnabled = true;
