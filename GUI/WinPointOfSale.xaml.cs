@@ -192,6 +192,11 @@ namespace GUI
             btnNext.IsEnabled = false;//Disabling the btnNext button because there is no any records in the database for the first time.
         }
 
+        private void btnProductOne_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void LoadUserInformations()
         {
             txtUsername.Text = WinLogin.loggedInUserName;
@@ -241,6 +246,9 @@ namespace GUI
             btnSave.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnPrint.IsEnabled = false;
+            btnProductOne.IsEnabled = false;
+            btnProductTwo.IsEnabled = false;
+            btnProductThree.IsEnambled = false;
             cboMenuPaymentType.IsEnabled = false;
             cboMenuCustomer.IsEnabled = false;
             cboMenuAsset.IsEnabled = false;
@@ -262,6 +270,9 @@ namespace GUI
             btnPrint.IsEnabled = true;
             btnPrev.IsEnabled = false;
             btnNext.IsEnabled = false;
+            btnProductOne.IsEnabled = true;
+            btnProductTwo.IsEnabled = true;
+            btnProductThree.IsEnambled = true;
             cboMenuPaymentType.IsEnabled = true;
             cboMenuCustomer.IsEnabled = true;
             cboMenuAsset.IsEnabled = true;

@@ -82,17 +82,6 @@
                 <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
             </Button.Background>
         </Button>
-        <Rectangle x:Name="rtgProfit" HorizontalAlignment="Left" Height="216" Margin="31,737,0,0" Stroke="Black" VerticalAlignment="Top" Width="283">
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FFF4F4F5" Opacity="0.5"/>
-            </Rectangle.Fill>
-        </Rectangle>
-        <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="47,787,0,0" VerticalAlignment="Top" Height="38" Width="125" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="47,830,0,0" VerticalAlignment="Top" Height="38" Width="125" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="47,873,0,0" VerticalAlignment="Top" Height="38" Width="125" FontSize="24" FontFamily="Times New Roman"/>
-        <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="173,787,0,0" VerticalAlignment="Top" Height="38" Width="138" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFF30000"/>
-        <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="173,830,0,0" VerticalAlignment="Top" Height="38" Width="138" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-        <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="173,873,0,0" VerticalAlignment="Top" Height="38" Width="138" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
         <Label x:Name="lblDateFrom" Content="From:" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="Red"/>
         <Label x:Name="lblDateTo" Content="To:" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
         <GroupBox Header="Number of Sales" Margin="10,191,1033,596" FontSize="22" BorderBrush="Black">
@@ -117,10 +106,19 @@
                 </ListView>
             </Grid>
         </GroupBox>
-        <TabControl x:Name="tabReport" Margin="670,34,10,10">
+        <TabControl x:Name="tabReport" Margin="670,34,10,99">
+            <TabControl.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
+            </TabControl.Background>
             <TabItem x:Name="tbiSales" Header="SALES">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
+                    </Grid.Background>
                     <ListView x:Name="lvwSales">
+                        <ListView.Background>
+                            <SolidColorBrush Color="White" Opacity="0.5"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
@@ -153,11 +151,14 @@
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
                     <ListView x:Name="lvwProducts" Margin="10,61,10,10">
+                        <ListView.Background>
+                            <SolidColorBrush Color="White" Opacity="0.5"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding ProductQuantitySold}" Header="Quantity Sold" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductQuantity}" Header="Quantity Sold" />
                                 <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Total Amount"/>
                             </GridView>
                         </ListView.View>
@@ -165,5 +166,15 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <GroupBox Header="SUMMARY" Margin="670,873,10,10" BorderBrush="Black">
+            <Grid>
+                <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" Height="38" Width="124" FontSize="24" FontFamily="Times New Roman"/>
+                <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="139,13,0,0" VerticalAlignment="Top" Height="38" Width="118" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+                <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="262,13,0,0" VerticalAlignment="Top" Height="38" Width="66" FontSize="14" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="333,13,0,0" VerticalAlignment="Top" Height="38" Width="60" FontSize="14" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+                <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="418,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="20" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFF30000"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>   
