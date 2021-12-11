@@ -212,7 +212,7 @@ namespace GUI
             //cboMenuSupplier.SelectedIndex = -1;//-1 Means nothing is selected.
 
             if (clickedBtn == clickedNew)
-                txtInvoiceNo.Text = "";
+                txtInvoiceNo.Text = ((int)Numbers.InitialIndex).ToString();
         }
 
         private void ClearProductsDataGrid()
