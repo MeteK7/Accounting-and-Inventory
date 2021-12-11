@@ -71,6 +71,7 @@ namespace GUI
             dateFrom = String.Format("{0:yyyy-MM-dd}", dtpPosReportFrom.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerFrom.Value);
             dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
 
+            lvwSales.Items.Clear();
             LoadPayments();
             LoadProductListView();
             LoadSaleListView();

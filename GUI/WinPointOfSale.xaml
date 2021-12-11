@@ -601,9 +601,20 @@
             </Grid>
         </GroupBox>
         <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Right" Margin="0,299,10,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Calisto MT" FontSize="20" />
-        <GroupBox Header="Controls" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="Controls" Margin="0,617,10,312" HorizontalAlignment="Right" Width="235" Visibility="Hidden">
             <Grid>
                 <CheckBox x:Name="chkIsPaid" Content="Paid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="142" Foreground="#FF000CFF" FontSize="22" FontFamily="Calisto MT" FontWeight="Bold"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Barcodeless Products" Margin="1128,347,10,380">
+            <Grid>
+                <Button x:Name="btnProductOne" Content="EKMEK" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductOne_Click"/>
+                <Button x:Name="btnProductTwo" HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductTwo_Click">
+                    <TextBlock x:Name="tbProductTwo" Text="HOBBY TEKLİ" TextWrapping="Wrap" TextAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnProductThree" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductThree_Click">
+                    <TextBlock x:Name="tbProductThree" Text="TOPİTOP" TextWrapping="Wrap" TextAlignment="Center" FontSize="22"/>
+                </Button>
             </Grid>
         </GroupBox>
     </Grid>

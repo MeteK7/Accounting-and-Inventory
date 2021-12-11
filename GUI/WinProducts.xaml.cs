@@ -1,5 +1,6 @@
 ﻿using BLL;
 using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections;
@@ -102,14 +103,14 @@ namespace GUI
         private void ClearProductTextBox()
         {
             txtProductId.Text = "";
-            cboProductCategory.SelectedIndex = -1;
+            cboProductCategory.SelectedIndex = -(int)Numbers.UnitValue;
             txtProductDescription.Text = "";
-            cboProductUnitRetail.SelectedIndex = -1;
+            cboProductUnitRetail.SelectedIndex = -(int)Numbers.UnitValue;
             txtProductBarcodeRetail.Text = "";
             txtProductName.Text = "";
             txtProductCostPriceRetail.Text = "";
             txtProductSalePriceRetail.Text = "";
-            cboProductUnitWholesale.SelectedIndex = -1;
+            cboProductUnitWholesale.SelectedIndex = -(int)Numbers.UnitValue;
             txtProductBarcodeWholesale.Text = "";
             txtProductQuantityInUnitWholesale.Text = "";
             txtProductCostPriceWholesale.Text = "";
@@ -119,20 +120,21 @@ namespace GUI
 
         private void DtgProductsIndexChanged()//Getting the index of a particular row and fill the text boxes with the related columns of the row.
         {
-            object row = dtgProducts.SelectedItem;
-            int rowId = 0, rowBarcodeRetail = 1, rowBarcodeWholesale = 2, rowProductName = 3, rowProductCategory = 4, rowProductDescription = 5, rowPrQuantityInUnWhol = 6, rowPrCostPriceRet = 8, rowPrSalePriceRet = 9, rowProductUnitRet = 12, rowProductUnitWhol = 13;
+            btnProductAdd.IsEnabled = false;//Disabling this button since the user can only update the product infos filled to the entry.
 
-            txtProductId.Text = (dtgProducts.Columns[rowId].GetCellContent(row) as TextBlock).Text;
-            txtProductBarcodeRetail.Text = (dtgProducts.Columns[rowBarcodeRetail].GetCellContent(row) as TextBlock).Text;
-            txtProductBarcodeWholesale.Text = (dtgProducts.Columns[rowBarcodeWholesale].GetCellContent(row) as TextBlock).Text;
-            txtProductName.Text = (dtgProducts.Columns[rowProductName].GetCellContent(row) as TextBlock).Text;
-            cboProductCategory.Text = (dtgProducts.Columns[rowProductCategory].GetCellContent(row) as TextBlock).Text;
-            txtProductDescription.Text = (dtgProducts.Columns[rowProductDescription].GetCellContent(row) as TextBlock).Text;//ANOTHER METHOD: (dtgProducts.SelectedCells[rowProductDescription].Column.GetCellContent(row) as TextBlock).Text;
-            txtProductQuantityInUnitWholesale.Text = (dtgProducts.Columns[rowPrQuantityInUnWhol].GetCellContent(row) as TextBlock).Text;
-            txtProductCostPriceRetail.Text = (dtgProducts.Columns[rowPrCostPriceRet].GetCellContent(row) as TextBlock).Text;
-            txtProductSalePriceRetail.Text = (dtgProducts.Columns[rowPrSalePriceRet].GetCellContent(row) as TextBlock).Text;
-            cboProductUnitRetail.Text = (dtgProducts.Columns[rowProductUnitRet].GetCellContent(row) as TextBlock).Text;
-            cboProductUnitWholesale.Text = (dtgProducts.Columns[rowProductUnitWhol].GetCellContent(row) as TextBlock).Text;
+            object row = dtgProducts.SelectedItem;
+
+            txtProductId.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductId].GetCellContent(row) as TextBlock).Text;
+            txtProductBarcodeRetail.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductBarcodeRetail].GetCellContent(row) as TextBlock).Text;
+            txtProductBarcodeWholesale.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductBarcodeWholesale].GetCellContent(row) as TextBlock).Text;
+            txtProductName.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductName].GetCellContent(row) as TextBlock).Text;
+            cboProductCategory.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductCategory].GetCellContent(row) as TextBlock).Text;
+            txtProductDescription.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductDescription].GetCellContent(row) as TextBlock).Text;//ANOTHER METHOD: (dtgProducts.SelectedCells[rowProductDescription].Column.GetCellContent(row) as TextBlock).Text;
+            txtProductQuantityInUnitWholesale.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductQuantityInUnit].GetCellContent(row) as TextBlock).Text;
+            txtProductCostPriceRetail.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductCostPrice].GetCellContent(row) as TextBlock).Text;
+            txtProductSalePriceRetail.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductSalePrice].GetCellContent(row) as TextBlock).Text;
+            cboProductUnitRetail.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductUnitRetail].GetCellContent(row) as TextBlock).Text;
+            cboProductUnitWholesale.Text = (dtgProducts.Columns[(int)ProductColumns.ColProductUnitWholeSale].GetCellContent(row) as TextBlock).Text;
             txtProductCostPriceWholesale.Text = CalculateTotalCostPrice().ToString();
             txtProductSalePriceWholesale.Text = CalculateTotalSalePrice().ToString();
         }
@@ -439,6 +441,12 @@ namespace GUI
                 txtProductSalePriceRetail.Focus();
                 txtProductSalePriceRetail.SelectAll();
             }
+        }
+
+        private void txtProductSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                txtProductSearch.SelectAll();
         }
     }
 }
