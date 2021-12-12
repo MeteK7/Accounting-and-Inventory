@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="Backup" Height="569" Width="785" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label x:Name="lblPath" Content="Path" HorizontalAlignment="Left" Margin="160,31,0,0" VerticalAlignment="Top" Height="27" Width="78"/>
+        <Label x:Name="lblPath" Content="Path" HorizontalAlignment="Left" Margin="160,31,0,0" VerticalAlignment="Top" Height="27" Width="398"/>
         <Button x:Name="btnPath" Content="Specify Path" HorizontalAlignment="Left" Margin="31,31,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
+        <Button x:Name="btnBackup" Content="BACKUP" HorizontalAlignment="Left" Margin="160,114,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
 
     </Grid>
 </Window>

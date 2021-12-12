@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CUL;
+using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,8 @@ namespace GUI
     /// </summary>
     public partial class WinBackup : Window
     {
+        BackupDAL backupDAL = new BackupDAL();
+        BackupCUL backupCUL = new BackupCUL();
         public WinBackup()
         {
             InitializeComponent();
@@ -31,6 +35,13 @@ namespace GUI
             {
                 lblPath.Content = dialog.SelectedPath;
             }
+        }
+
+        private void btnBackup_Click(object sender, RoutedEventArgs e)
+        {
+            backupCUL.DatabasePath = lblPath.Content.ToString();
+            backupCUL.DatabaseName = "Example";
+            backupDAL.BackupDatabase(backupCUL);
         }
     }
 }
