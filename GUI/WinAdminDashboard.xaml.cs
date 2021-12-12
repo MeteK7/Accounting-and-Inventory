@@ -197,5 +197,11 @@ namespace GUI
             WinReceipt winReceipt = new WinReceipt();
             winReceipt.Show();
         }
+
+        private void btnBackup_Click(object sender, RoutedEventArgs e)
+        {
+            WinBackup winBackup = new WinBackup();
+            winBackup.Show();
+        }
     }
 }

@@ -19,6 +19,9 @@
     <Compile Update="WinAdminDashboard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WinBackup.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WinBank.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +82,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinAdminDashboard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WinBackup.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WinBank.xaml">

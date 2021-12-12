@@ -274,6 +274,10 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "dependencies": {
+            "Ookii.Dialogs.Wpf": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "Syncfusion.SfInput.WPF": {
               "target": "Package",
               "version": "[19.3.0.54, )"

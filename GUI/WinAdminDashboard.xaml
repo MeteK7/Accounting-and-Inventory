@@ -581,7 +581,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonBackupStyle}" x:Name="btnBackup" Content="BACK-UP" HorizontalAlignment="Left" Width="101" Margin="321,0,0,0" RenderTransformOrigin="1.4,0.539" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonBackupStyle}" x:Name="btnBackup" Content="BACK-UP" HorizontalAlignment="Left" Width="101" Margin="321,0,0,0" RenderTransformOrigin="1.4,0.539" VerticalContentAlignment="Bottom" Click="btnBackup_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/backup-1.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>

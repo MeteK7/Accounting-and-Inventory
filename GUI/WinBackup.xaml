@@ -1,0 +1,15 @@
+﻿<Window x:Class="GUI.WinBackup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="Backup" Height="569" Width="785" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label x:Name="lblPath" Content="Path" HorizontalAlignment="Left" Margin="160,31,0,0" VerticalAlignment="Top" Height="27" Width="398"/>
+        <Button x:Name="btnPath" Content="Specify Path" HorizontalAlignment="Left" Margin="31,31,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
+        <Button x:Name="btnBackup" Content="BACKUP" HorizontalAlignment="Left" Margin="160,114,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
+
+    </Grid>
+</Window>

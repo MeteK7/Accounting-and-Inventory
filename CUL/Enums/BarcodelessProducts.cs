@@ -10,6 +10,7 @@ namespace CUL.Enums
     {
         Bread=483,
         Topitop=489,
-        HobbyMini=162
+        HobbyMini=162,
+        FalimMini=491
     }
 }
