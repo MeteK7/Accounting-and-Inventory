@@ -72,6 +72,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\Languages\Lng.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Example.xaml">
       <SubType>Designer</SubType>
     </Page>

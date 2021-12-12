@@ -56,6 +56,7 @@
     <None Remove="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
     <None Remove="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <None Remove="Images\Backgrounds\wooden-floor-background.jpg" />
+    <None Remove="Images\Backgrounds\worldwide.jpg" />
     <None Remove="Images\Buttons\add-file.png" />
     <None Remove="Images\Buttons\add-product.png" />
     <None Remove="Images\Buttons\add-to-cart.png" />
@@ -206,6 +207,7 @@
     <Resource Include="Images\Backgrounds\white-background-with-abstract-lines-copy-space.jpg" />
     <Resource Include="Images\Backgrounds\white-background-with-wavy-lines.jpg" />
     <Resource Include="Images\Backgrounds\wooden-floor-background.jpg" />
+    <Resource Include="Images\Backgrounds\worldwide.jpg" />
     <Resource Include="Images\Buttons\add-file.png" />
     <Resource Include="Images\Buttons\add-product.png" />
     <Resource Include="Images\Buttons\add-to-cart.png" />
@@ -290,6 +292,36 @@
     <Resource Include="Images\Buttons\users.png" />
     <Resource Include="Images\Icons\close-onmousehover.png" />
     <Resource Include="Images\Icons\close.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Languages\Lng.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lng.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Languages\Lng.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lng.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Languages\Lng.tr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
