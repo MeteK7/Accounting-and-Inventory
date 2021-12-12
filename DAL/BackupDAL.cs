@@ -15,9 +15,9 @@ namespace DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
 
-        public bool BackupDatabase(BackupCUL backupCUL)
+        public string BackupDatabase(BackupCUL backupCUL)
         {
-            bool isSuccess = false;
+            string isSuccess = "";
             var backupCombined = Path.Combine(backupCUL.DatabasePath, backupCUL.DatabaseName);
             // Create the backup in the temp directory (the server should have access there)
             var sqlQuery = "BACKUP DATABASE KabaAccounting TO DISK = @backup";
@@ -26,22 +26,26 @@ namespace DAL
             { 
                 using (var cmd = new SqlCommand(sqlQuery, conn))
                 {
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@databaseName", backupCUL.DatabaseName);
-                    cmd.Parameters.AddWithValue("@backup", backupCombined);
-                    int rows=cmd.ExecuteNonQuery();
+                    try
+                    {
+                        conn.Open();
 
-                    conn.Close();
-
-                    if (rows > (int)Numbers.InitialIndex)
-                        isSuccess = true;
-                    else
-                        isSuccess = false;
+                        cmd.Parameters.AddWithValue("@databaseName", backupCUL.DatabaseName);
+                        cmd.Parameters.AddWithValue("@backup", backupCombined);
+                        int rows = cmd.ExecuteNonQuery();
+                        isSuccess = "Backed up!";
+                    }
+                    catch (Exception)
+                    {
+                        isSuccess = "Something went wrong :/";
+                    }
+                    finally
+                    {
+                        File.Copy(backupCombined, backupCUL.DatabaseName); // Copy file to final location
+                        conn.Close();
+                    }  
                 }
             }
-
-            File.Copy(backupCombined, backupCUL.DatabaseName); // Copy file to final location
-
             return isSuccess;
         }
     }

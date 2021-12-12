@@ -40,8 +40,11 @@ namespace GUI
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
             backupCUL.DatabasePath = lblPath.Content.ToString();
-            backupCUL.DatabaseName = "Example";
-            backupDAL.BackupDatabase(backupCUL);
+            backupCUL.DatabaseName = "KabaAccounting" + DateTime.Now.ToString("M-dd-yyyy-HH-mm-ss");
+            string isSuccess=backupDAL.BackupDatabase(backupCUL);
+
+            MessageBox.Show(isSuccess);
+
         }
     }
 }
