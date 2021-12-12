@@ -197,6 +197,11 @@ namespace GUI
             EnterBarcodelessProduct((int)BarcodelessProducts.Topitop);
         }
 
+        private void btnProductFour_Click(object sender, RoutedEventArgs e)
+        {
+            EnterBarcodelessProduct((int)BarcodelessProducts.FalimMini);
+        }
+
         private void FirstTimeRun()
         {
             MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
@@ -269,6 +274,7 @@ namespace GUI
             btnProductOne.IsEnabled = false;
             btnProductTwo.IsEnabled = false;
             btnProductThree.IsEnabled = false;
+            btnProductFour.IsEnabled = false;
             cboMenuPaymentType.IsEnabled = false;
             cboMenuCustomer.IsEnabled = false;
             cboMenuAsset.IsEnabled = false;
@@ -293,6 +299,7 @@ namespace GUI
             btnProductOne.IsEnabled = true;
             btnProductTwo.IsEnabled = true;
             btnProductThree.IsEnabled = true;
+            btnProductFour.IsEnabled = true;
             cboMenuPaymentType.IsEnabled = true;
             cboMenuCustomer.IsEnabled = true;
             cboMenuAsset.IsEnabled = true;
