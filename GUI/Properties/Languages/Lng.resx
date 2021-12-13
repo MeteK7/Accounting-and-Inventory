@@ -126,6 +126,15 @@
   <data name="accounts" xml:space="preserve">
     <value>ACCOUNTS</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>ADD</value>
+  </data>
+  <data name="addedBy" xml:space="preserve">
+    <value>Added By</value>
+  </data>
+  <data name="addedDate" xml:space="preserve">
+    <value>Added Date</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Amount</value>
   </data>
@@ -144,8 +153,17 @@
   <data name="banks" xml:space="preserve">
     <value>BANKS</value>
   </data>
+  <data name="barcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
   <data name="barcodelessProducts" xml:space="preserve">
     <value>Barcodeless Products</value>
+  </data>
+  <data name="barcodeRetail" xml:space="preserve">
+    <value>Barcode Retail</value>
+  </data>
+  <data name="barcodeWholesale" xml:space="preserve">
+    <value>Barcode Wholesale</value>
   </data>
   <data name="basketInformations" xml:space="preserve">
     <value>Basket Informations</value>
@@ -161,6 +179,9 @@
   </data>
   <data name="categories" xml:space="preserve">
     <value>CATEGORIES</value>
+  </data>
+  <data name="category" xml:space="preserve">
+    <value>Category</value>
   </data>
   <data name="controls" xml:space="preserve">
     <value>Controls</value>
@@ -191,6 +212,9 @@
   </data>
   <data name="deposit" xml:space="preserve">
     <value>Deposit</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="discount" xml:space="preserve">
     <value>Discount</value>
@@ -303,6 +327,9 @@
   <data name="products" xml:space="preserve">
     <value>PRODUCTS</value>
   </data>
+  <data name="productSearch" xml:space="preserve">
+    <value>Product Search</value>
+  </data>
   <data name="profit" xml:space="preserve">
     <value>PROFIT</value>
   </data>
@@ -312,6 +339,15 @@
   <data name="quantity" xml:space="preserve">
     <value>Quantity</value>
   </data>
+  <data name="quantityInStock" xml:space="preserve">
+    <value>Quantity in Stock</value>
+  </data>
+  <data name="quantityInUnit" xml:space="preserve">
+    <value>Quantity in Unit</value>
+  </data>
+  <data name="quantityInUnitWholesale" xml:space="preserve">
+    <value>Quantity in Unit Wholesale</value>
+  </data>
   <data name="quantitySold" xml:space="preserve">
     <value>Quantity Sold</value>
   </data>
@@ -320,6 +356,9 @@
   </data>
   <data name="reports" xml:space="preserve">
     <value>Reports</value>
+  </data>
+  <data name="retail" xml:space="preserve">
+    <value>Retail</value>
   </data>
   <data name="revenue" xml:space="preserve">
     <value>REVENUE</value>
@@ -378,6 +417,15 @@
   <data name="unit" xml:space="preserve">
     <value>Unit</value>
   </data>
+  <data name="unitRetail" xml:space="preserve">
+    <value>Unit Retail</value>
+  </data>
+  <data name="unitWholesale" xml:space="preserve">
+    <value>Unit Wholesale</value>
+  </data>
+  <data name="update" xml:space="preserve">
+    <value>UPDATE</value>
+  </data>
   <data name="updateProductCosts" xml:space="preserve">
     <value>Update Product Costs</value>
   </data>
@@ -404,5 +452,8 @@
   </data>
   <data name="welcome" xml:space="preserve">
     <value>WELCOME</value>
+  </data>
+  <data name="wholesale" xml:space="preserve">
+    <value>Wholesale</value>
   </data>
 </root>

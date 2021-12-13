@@ -88,6 +88,33 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ADD.
+        /// </summary>
+        public static string add {
+            get {
+                return ResourceManager.GetString("add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added By.
+        /// </summary>
+        public static string addedBy {
+            get {
+                return ResourceManager.GetString("addedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added Date.
+        /// </summary>
+        public static string addedDate {
+            get {
+                return ResourceManager.GetString("addedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string amount {
@@ -142,11 +169,38 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string barcode {
+            get {
+                return ResourceManager.GetString("barcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Barcodeless Products.
         /// </summary>
         public static string barcodelessProducts {
             get {
                 return ResourceManager.GetString("barcodelessProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Retail.
+        /// </summary>
+        public static string barcodeRetail {
+            get {
+                return ResourceManager.GetString("barcodeRetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Wholesale.
+        /// </summary>
+        public static string barcodeWholesale {
+            get {
+                return ResourceManager.GetString("barcodeWholesale", resourceCulture);
             }
         }
         
@@ -192,6 +246,15 @@ namespace GUI.Properties.Languages {
         public static string categories {
             get {
                 return ResourceManager.GetString("categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string category {
+            get {
+                return ResourceManager.GetString("category", resourceCulture);
             }
         }
         
@@ -282,6 +345,15 @@ namespace GUI.Properties.Languages {
         public static string deposit {
             get {
                 return ResourceManager.GetString("deposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
             }
         }
         
@@ -619,6 +691,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product Search.
+        /// </summary>
+        public static string productSearch {
+            get {
+                return ResourceManager.GetString("productSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PROFIT.
         /// </summary>
         public static string profit {
@@ -646,6 +727,33 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity in Stock.
+        /// </summary>
+        public static string quantityInStock {
+            get {
+                return ResourceManager.GetString("quantityInStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity in Unit.
+        /// </summary>
+        public static string quantityInUnit {
+            get {
+                return ResourceManager.GetString("quantityInUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity in Unit Wholesale.
+        /// </summary>
+        public static string quantityInUnitWholesale {
+            get {
+                return ResourceManager.GetString("quantityInUnitWholesale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity Sold.
         /// </summary>
         public static string quantitySold {
@@ -669,6 +777,15 @@ namespace GUI.Properties.Languages {
         public static string reports {
             get {
                 return ResourceManager.GetString("reports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail.
+        /// </summary>
+        public static string retail {
+            get {
+                return ResourceManager.GetString("retail", resourceCulture);
             }
         }
         
@@ -844,6 +961,33 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit Retail.
+        /// </summary>
+        public static string unitRetail {
+            get {
+                return ResourceManager.GetString("unitRetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Wholesale.
+        /// </summary>
+        public static string unitWholesale {
+            get {
+                return ResourceManager.GetString("unitWholesale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE.
+        /// </summary>
+        public static string update {
+            get {
+                return ResourceManager.GetString("update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Product Costs.
         /// </summary>
         public static string updateProductCosts {
@@ -921,6 +1065,15 @@ namespace GUI.Properties.Languages {
         public static string welcome {
             get {
                 return ResourceManager.GetString("welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wholesale.
+        /// </summary>
+        public static string wholesale {
+            get {
+                return ResourceManager.GetString("wholesale", resourceCulture);
             }
         }
     }

@@ -126,6 +126,15 @@
   <data name="accounts" xml:space="preserve">
     <value>HESAPLAR</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>EKLE</value>
+  </data>
+  <data name="addedBy" xml:space="preserve">
+    <value>Ekleyen</value>
+  </data>
+  <data name="addedDate" xml:space="preserve">
+    <value>Eklenme Tarihi</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Miktar</value>
   </data>
@@ -144,8 +153,17 @@
   <data name="banks" xml:space="preserve">
     <value>BANKALAR</value>
   </data>
+  <data name="barcode" xml:space="preserve">
+    <value>Barkod</value>
+  </data>
   <data name="barcodelessProducts" xml:space="preserve">
     <value>Barkodsuz Ürünler</value>
+  </data>
+  <data name="barcodeRetail" xml:space="preserve">
+    <value>Perakende Barkodu</value>
+  </data>
+  <data name="barcodeWholesale" xml:space="preserve">
+    <value>Toptan Barkodu</value>
   </data>
   <data name="basketInformations" xml:space="preserve">
     <value>Sepet Bilgileri</value>
@@ -161,6 +179,9 @@
   </data>
   <data name="categories" xml:space="preserve">
     <value>KATEGORİLER</value>
+  </data>
+  <data name="category" xml:space="preserve">
+    <value>Kadegori</value>
   </data>
   <data name="controls" xml:space="preserve">
     <value>Kontroller</value>
@@ -191,6 +212,9 @@
   </data>
   <data name="deposit" xml:space="preserve">
     <value>Mevduat</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Açıklama</value>
   </data>
   <data name="discount" xml:space="preserve">
     <value>İndirim</value>
@@ -303,6 +327,9 @@
   <data name="products" xml:space="preserve">
     <value>ÜRÜNLER</value>
   </data>
+  <data name="productSearch" xml:space="preserve">
+    <value>Ürün Arama</value>
+  </data>
   <data name="profit" xml:space="preserve">
     <value>KAR</value>
   </data>
@@ -312,6 +339,15 @@
   <data name="quantity" xml:space="preserve">
     <value>Adet</value>
   </data>
+  <data name="quantityInStock" xml:space="preserve">
+    <value>Stoktaki Adet</value>
+  </data>
+  <data name="quantityInUnit" xml:space="preserve">
+    <value>Birim Adet</value>
+  </data>
+  <data name="quantityInUnitWholesale" xml:space="preserve">
+    <value>Toptan Birimdeki Adet</value>
+  </data>
   <data name="quantitySold" xml:space="preserve">
     <value>Satılan Adet</value>
   </data>
@@ -320,6 +356,9 @@
   </data>
   <data name="reports" xml:space="preserve">
     <value>Raporlar</value>
+  </data>
+  <data name="retail" xml:space="preserve">
+    <value>Perakende</value>
   </data>
   <data name="revenue" xml:space="preserve">
     <value>GELİR</value>
@@ -378,6 +417,15 @@
   <data name="unit" xml:space="preserve">
     <value>Birim</value>
   </data>
+  <data name="unitRetail" xml:space="preserve">
+    <value>Perakende Birimi</value>
+  </data>
+  <data name="unitWholesale" xml:space="preserve">
+    <value>Toptan Birimi</value>
+  </data>
+  <data name="update" xml:space="preserve">
+    <value>GÜNCELLE</value>
+  </data>
   <data name="updateProductCosts" xml:space="preserve">
     <value>Ürün Maliyetlerini Güncelle</value>
   </data>
@@ -404,5 +452,8 @@
   </data>
   <data name="welcome" xml:space="preserve">
     <value>HOŞ GELDİNİZ</value>
+  </data>
+  <data name="wholesale" xml:space="preserve">
+    <value>Toptan</value>
   </data>
 </root>

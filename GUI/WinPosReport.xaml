@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUI"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="GUI.WinPosReport"
         mc:Ignorable="d" Height="967" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-    xmlns:language="clr-namespace:GUI.Properties.Languages">
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">
