@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="GUI.WinPosReport"
-        mc:Ignorable="d" Height="967" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        mc:Ignorable="d" Height="967" Width="1329.607" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+    xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">
@@ -55,7 +56,7 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
-            <Label x:Name="lblTop" Content="Point of Sale Report" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.pointOfSaleReport}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -77,14 +78,14 @@
         <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="65,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
         <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
         <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,127,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
-        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="GO" HorizontalAlignment="Left" Margin="477,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
+        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="{x:Static language:Lng.go}" HorizontalAlignment="Left" Margin="477,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
             </Button.Background>
         </Button>
-        <Label x:Name="lblDateFrom" Content="From:" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="Red"/>
-        <Label x:Name="lblDateTo" Content="To:" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
-        <GroupBox Header="Number of Sales" Margin="10,191,1033,596" FontSize="22" BorderBrush="Black">
+        <Label x:Name="lblDateFrom" Content="{x:Static language:Lng.fromDate}" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="Red"/>
+        <Label x:Name="lblDateTo" Content="{x:Static language:Lng.toDate}" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
+        <GroupBox Header="{x:Static language:Lng.numberOfSales}" Margin="10,191,1033,596" FontSize="22" BorderBrush="Black">
             <Grid>
                 <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="59" Width="255" FontSize="48" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F" Margin="0,10,0,0"/>
                 <Image x:Name="imgCash" HorizontalAlignment="Left" Height="50" Margin="9,87,0,0" VerticalAlignment="Top" Width="60" Source="/Images/Buttons/cash.png"/>
@@ -94,13 +95,13 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="grpUserSales" Header="User Sales" Margin="315,191,665,596" FontSize="22" BorderBrush="Black">
+        <GroupBox x:Name="grpUserSales" Header="{x:Static language:Lng.userSales}" Margin="315,191,665,596" FontSize="22" BorderBrush="Black">
             <Grid>
                 <ListView x:Name="lvwUserSales">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="User" Width="200"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding UserSaleAmount}" Header="Amount" Width="135"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="{x:Static language:Lng.user}" Width="200"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserSaleAmount}" Header="{x:Static language:Lng.amount}" Width="135"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -110,7 +111,7 @@
             <TabControl.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </TabControl.Background>
-            <TabItem x:Name="tbiSales" Header="SALES">
+            <TabItem x:Name="tbiSales" Header="{x:Static language:Lng.sales}">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
@@ -122,57 +123,57 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="Total Product"/>
-                                <GridViewColumn Header="Gross Amount">
+                                <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="{x:Static language:Lng.quantity}"/>
+                                <GridViewColumn Header="{x:Static language:Lng.grossAmount}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock x:Name="txtPosGrossAmount" Text="{Binding Path=PosGrossAmount}" Foreground="Blue" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="Discount"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="VAT"/>
-                                <GridViewColumn Header="Grand Total">
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="{x:Static language:Lng.discount}"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="{x:Static language:Lng.vat}"/>
+                                <GridViewColumn Header="{x:Static language:Lng.grandTotal}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock x:Name="txtPosGrandTotal" Text="{Binding Path=PosGrandTotal}" Foreground="Red" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosCustomer}" Header="Customer"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="Staff"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding PosDate}" Header="Date"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosCustomer}" Header="{x:Static language:Lng.customer}"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="{x:Static language:Lng.staff}"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosDate}" Header="{x:Static language:Lng.date}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tbiProducts" Header="PRODUCTS">
+            <TabItem x:Name="tbiProducts" Header="{x:Static language:Lng.products}">
                 <Grid Background="#FFE5E5E5">
-                    <Label x:Name="lblProducts" Content="SOLD PRODUCTS" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
+                    <Label x:Name="lblProducts" Content="{x:Static language:Lng.soldProducts}" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="50" Width="380" VerticalContentAlignment="Center" FontSize="24" FontFamily="Reprise Stamp Std"/>
                     <ListView x:Name="lvwProducts" Margin="10,61,10,10">
                         <ListView.Background>
                             <SolidColorBrush Color="White" Opacity="0.5"/>
                         </ListView.Background>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="Product Id" Width="0"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width="350"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding ProductQuantity}" Header="Quantity Sold" />
-                                <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="Total Amount"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="{x:Static language:Lng.productId}" Width="0"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="{x:Static language:Lng.productName}" Width="350"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductQuantity}" Header="{x:Static language:Lng.quantitySold}" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ProductTotalSalePrice}" Header="{x:Static language:Lng.totalAmount}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Header="SUMMARY" Margin="670,873,10,10" BorderBrush="Black">
+        <GroupBox Header="{x:Static language:Lng.summary}" Margin="670,873,10,10" BorderBrush="Black">
             <Grid>
-                <Label x:Name="lblCost" Content="COST" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" Height="38" Width="124" FontSize="24" FontFamily="Times New Roman"/>
+                <Label x:Name="lblCost" Content="{x:Static language:Lng.cost}" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" Height="30" Width="124" FontSize="24" FontFamily="Times New Roman"/>
                 <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="139,13,0,0" VerticalAlignment="Top" Height="38" Width="118" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-                <Label x:Name="lblProfit" Content="PROFIT" HorizontalAlignment="Left" Margin="262,13,0,0" VerticalAlignment="Top" Height="38" Width="66" FontSize="14" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblProfit" Content="{x:Static language:Lng.profit}" HorizontalAlignment="Left" Margin="262,13,0,0" VerticalAlignment="Top" Height="38" Width="66" FontSize="14" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="333,13,0,0" VerticalAlignment="Top" Height="38" Width="60" FontSize="14" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-                <Label x:Name="lblRevenue" Content="REVENUE" HorizontalAlignment="Left" Margin="418,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="20" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblRevenue" Content="{x:Static language:Lng.revenue}" HorizontalAlignment="Left" Margin="418,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="20" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFF30000"/>
             </Grid>
         </GroupBox>

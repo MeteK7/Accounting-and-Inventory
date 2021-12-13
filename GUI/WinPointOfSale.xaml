@@ -456,7 +456,7 @@
                         <DataGridTemplateColumn Header="{x:Static language:Lng.delete}" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="btnDeleteDataGridRow" Content="Delete" Click="btnDeleteDataGridRow_Click"/>
+                                    <Button Name="btnDeleteDataGridRow" Content="{x:Static language:Lng.delete}" Click="btnDeleteDataGridRow_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -465,7 +465,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.invoiceNumber}" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <Label x:Name="lblInvoiceId" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
+            <Label x:Name="lblInvoiceId" Content="{x:Static language:Lng.welcome}" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.userInformations}" Height="116" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
@@ -477,13 +477,13 @@
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.basketInformations}" Height="297" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-2,0" Height="263">
-                <Label x:Name="lblBasketQuantity" Content="{x:Static language:Lng.quantity}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketCostTotal" Content="{x:Static language:Lng.costTotal}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketGrossAmount" Content="{x:Static language:Lng.grossAmount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,95,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketDiscount" Content="{x:Static language:Lng.discount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,126,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketSubTotal" Content="{x:Static language:Lng.subTotal}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketVat" Content="{x:Static language:Lng.vat}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,187,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketGrandTotal" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="80" Foreground="#FFE61818" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketQuantity" Content="{x:Static language:Lng.quantity}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketCostTotal" Content="{x:Static language:Lng.costTotal}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,35,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrossAmount" Content="{x:Static language:Lng.grossAmount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,95,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketDiscount" Content="{x:Static language:Lng.discount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,126,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketSubTotal" Content="{x:Static language:Lng.subTotal}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,157,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketVat" Content="{x:Static language:Lng.vat}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,187,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrandTotal" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,218,0,0" Width="90" Foreground="#FFE61818" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" FontSize="10"/>
                 <TextBox x:Name="txtBasketGrossAmount" HorizontalAlignment="Left" Height="26" Margin="95,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" Foreground="#FF002EFF" FontSize="18"/>

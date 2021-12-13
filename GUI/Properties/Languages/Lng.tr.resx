@@ -126,6 +126,9 @@
   <data name="accounts" xml:space="preserve">
     <value>HESAPLAR</value>
   </data>
+  <data name="amount" xml:space="preserve">
+    <value>Miktar</value>
+  </data>
   <data name="asset" xml:space="preserve">
     <value>Varlık</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="basketInformations" xml:space="preserve">
     <value>Sepet Bilgileri</value>
   </data>
+  <data name="bread" xml:space="preserve">
+    <value>EKMEK</value>
+  </data>
   <data name="calculator" xml:space="preserve">
     <value>Hesap Makinesi</value>
   </data>
@@ -155,6 +161,12 @@
   </data>
   <data name="categories" xml:space="preserve">
     <value>KATEGORİLER</value>
+  </data>
+  <data name="controls" xml:space="preserve">
+    <value>Kontroller</value>
+  </data>
+  <data name="cost" xml:space="preserve">
+    <value>MALİYET</value>
   </data>
   <data name="costPrice" xml:space="preserve">
     <value>Maliyet Fiyatı</value>
@@ -171,6 +183,9 @@
   <data name="dailySummary" xml:space="preserve">
     <value>Günlük Özet</value>
   </data>
+  <data name="date" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
   <data name="delete" xml:space="preserve">
     <value>SİL</value>
   </data>
@@ -186,17 +201,38 @@
   <data name="en" xml:space="preserve">
     <value>İngilizce</value>
   </data>
+  <data name="enter" xml:space="preserve">
+    <value>GİR</value>
+  </data>
   <data name="enteredProducts" xml:space="preserve">
     <value>Girilen Ürünler</value>
   </data>
   <data name="expense" xml:space="preserve">
     <value>Masraf</value>
   </data>
+  <data name="falimSingle" xml:space="preserve">
+    <value>FALIM TEKLİ</value>
+  </data>
   <data name="fileManagement" xml:space="preserve">
     <value>Dosya Yönetimi</value>
   </data>
+  <data name="fromDate" xml:space="preserve">
+    <value>Şu Tarihten:</value>
+  </data>
+  <data name="go" xml:space="preserve">
+    <value>GİT</value>
+  </data>
+  <data name="grandTotal" xml:space="preserve">
+    <value>Genel Toplam</value>
+  </data>
   <data name="grossAmount" xml:space="preserve">
     <value>Brüt Miktar</value>
+  </data>
+  <data name="grossCostPrice" xml:space="preserve">
+    <value>Brüt Maliyet Fiyatı</value>
+  </data>
+  <data name="grossTotalCostPrice" xml:space="preserve">
+    <value>Brüt Toplam Maliyet Fiyatı</value>
   </data>
   <data name="grossTotalSalePrice" xml:space="preserve">
     <value>Brüt Toplam Satış Fiyatı</value>
@@ -213,6 +249,9 @@
   <data name="language" xml:space="preserve">
     <value>Dil:</value>
   </data>
+  <data name="login" xml:space="preserve">
+    <value>GİRİŞ</value>
+  </data>
   <data name="menu" xml:space="preserve">
     <value>MENÜ</value>
   </data>
@@ -221,6 +260,12 @@
   </data>
   <data name="newRecord" xml:space="preserve">
     <value>YENİ (F2)</value>
+  </data>
+  <data name="numberOfSales" xml:space="preserve">
+    <value>Satış Sayısı</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Şifre:</value>
   </data>
   <data name="paymentType" xml:space="preserve">
     <value>Ödeme Türü</value>
@@ -234,6 +279,9 @@
   <data name="pointOfSale" xml:space="preserve">
     <value>Satış Noktası</value>
   </data>
+  <data name="pointOfSaleReport" xml:space="preserve">
+    <value>Satış Noktası Raporu</value>
+  </data>
   <data name="portal" xml:space="preserve">
     <value>PORTAL</value>
   </data>
@@ -246,8 +294,17 @@
   <data name="product" xml:space="preserve">
     <value>Ürün</value>
   </data>
+  <data name="productId" xml:space="preserve">
+    <value>Ürün Id</value>
+  </data>
+  <data name="productName" xml:space="preserve">
+    <value>Ürün Adı</value>
+  </data>
   <data name="products" xml:space="preserve">
     <value>ÜRÜNLER</value>
+  </data>
+  <data name="profit" xml:space="preserve">
+    <value>KAR</value>
   </data>
   <data name="purchases" xml:space="preserve">
     <value>SATIN ALMALAR</value>
@@ -255,11 +312,17 @@
   <data name="quantity" xml:space="preserve">
     <value>Adet</value>
   </data>
+  <data name="quantitySold" xml:space="preserve">
+    <value>Satılan Adet</value>
+  </data>
   <data name="receipt" xml:space="preserve">
     <value>Tahsil</value>
   </data>
   <data name="reports" xml:space="preserve">
     <value>Raporlar</value>
+  </data>
+  <data name="revenue" xml:space="preserve">
+    <value>GELİR</value>
   </data>
   <data name="salePrice" xml:space="preserve">
     <value>Satış Fiyatı</value>
@@ -273,8 +336,20 @@
   <data name="services" xml:space="preserve">
     <value>SERVİSLER</value>
   </data>
+  <data name="soldProducts" xml:space="preserve">
+    <value>Satılan Ürünler</value>
+  </data>
+  <data name="staff" xml:space="preserve">
+    <value>Çalışan</value>
+  </data>
   <data name="subTotal" xml:space="preserve">
     <value>Ara Toplam</value>
+  </data>
+  <data name="summary" xml:space="preserve">
+    <value>ÖZET</value>
+  </data>
+  <data name="supplier" xml:space="preserve">
+    <value>Tedarikçi</value>
   </data>
   <data name="suppliers" xml:space="preserve">
     <value>TEDARİKÇİLER</value>
@@ -282,8 +357,14 @@
   <data name="systemPreferences" xml:space="preserve">
     <value>Sistem Tercihleri</value>
   </data>
+  <data name="toDate" xml:space="preserve">
+    <value>Şu Tarihe:</value>
+  </data>
   <data name="total" xml:space="preserve">
     <value>TOPLAM</value>
+  </data>
+  <data name="totalAmount" xml:space="preserve">
+    <value>Toplam Miktar</value>
   </data>
   <data name="totalCostPrice" xml:space="preserve">
     <value>Toplam Maliyet Fiyatı</value>
@@ -297,6 +378,9 @@
   <data name="unit" xml:space="preserve">
     <value>Birim</value>
   </data>
+  <data name="updateProductCosts" xml:space="preserve">
+    <value>Ürün Maliyetlerini Güncelle</value>
+  </data>
   <data name="user" xml:space="preserve">
     <value>Kullanıcı:</value>
   </data>
@@ -304,12 +388,21 @@
     <value>Kullanıcı Bilgileri</value>
   </data>
   <data name="username" xml:space="preserve">
-    <value>Kullanıcı Adı</value>
+    <value>Kullanıcı Adı:</value>
   </data>
   <data name="users" xml:space="preserve">
     <value>Kullanıcılar</value>
   </data>
+  <data name="userSales" xml:space="preserve">
+    <value>Kullanıcı Satışları</value>
+  </data>
+  <data name="userType" xml:space="preserve">
+    <value>Kullanıcı Türü:</value>
+  </data>
   <data name="vat" xml:space="preserve">
     <value>KDV</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>HOŞ GELDİNİZ</value>
   </data>
 </root>

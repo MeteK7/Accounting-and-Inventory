@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="992" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="992" Width="1373.107" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -304,7 +305,7 @@
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
             <Grid Width="1371">
-                <Label x:Name="lblTop" Content="POINT OF PURCHASE" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+                <Label x:Name="lblTop" Content="{x:Static language:Lng.pointOfPurchase}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
                 <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Height="29" Width="30" HorizontalAlignment="Right" Click="btnClose_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Icons/close.png"/>
@@ -317,18 +318,18 @@
                 </Button>
             </Grid>
         </DockPanel>
-        <GroupBox Header="PRODUCT" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
+        <GroupBox Header="{x:Static language:Lng.product}" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
             <Grid Margin="10,0,-2,0">
                 <Label x:Name="lblProductId" Content="Id/Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
-                <Label x:Name="lblProductName" Content="Name" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
-                <Label x:Name="lblProductUnit" Content="Unit" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
-                <Label x:Name="lblProductGrossCostPrice" Content="G. Cost Price" HorizontalAlignment="Left" Margin="482,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
-                <Label x:Name="lblProductQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="407,10,0,0" VerticalAlignment="Top" Width="70"/>
-                <Label x:Name="lblProductGrossTotalCostPrice" Content="Gross Total Cost Price" HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="125" Foreground="#FF002EFF"/>
-                <Label x:Name="lblProductDiscount" Content="Discount" HorizontalAlignment="Left" Margin="687,10,0,0" VerticalAlignment="Top" Width="65"/>
-                <Label x:Name="lblProductVAT" Content="VAT" HorizontalAlignment="Left" Margin="757,10,0,0" VerticalAlignment="Top" Width="65"/>
-                <Label x:Name="lblProductCostPrice" Content="C. Price" HorizontalAlignment="Left" Margin="827,10,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0,0.458"/>
-                <Label x:Name="lblProductTotalCostPrice" Content="Total" HorizontalAlignment="Left" Margin="887,10,0,0" VerticalAlignment="Top" Width="99" Foreground="Red"/>
+                <Label x:Name="lblProductName" Content="{x:Static language:Lng.name}" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
+                <Label x:Name="lblProductUnit" Content="{x:Static language:Lng.unit}" HorizontalAlignment="Left" Margin="349,10,0,0" VerticalAlignment="Top" Width="55"/>
+                <Label x:Name="lblProductGrossCostPrice" Content="{x:Static language:Lng.grossCostPrice}" HorizontalAlignment="Left" Margin="482,10,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0,0.458"/>
+                <Label x:Name="lblProductQuantity" Content="{x:Static language:Lng.quantity}" HorizontalAlignment="Left" Margin="407,10,0,0" VerticalAlignment="Top" Width="70"/>
+                <Label x:Name="lblProductGrossTotalCostPrice" Content="{x:Static language:Lng.grossTotalCostPrice}" HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="125" Foreground="#FF002EFF"/>
+                <Label x:Name="lblProductDiscount" Content="{x:Static language:Lng.discount}" HorizontalAlignment="Left" Margin="687,10,0,0" VerticalAlignment="Top" Width="65"/>
+                <Label x:Name="lblProductVAT" Content="{x:Static language:Lng.vat}" HorizontalAlignment="Left" Margin="757,10,0,0" VerticalAlignment="Top" Width="65"/>
+                <Label x:Name="lblProductCostPrice" Content="{x:Static language:Lng.costPrice}" HorizontalAlignment="Left" Margin="827,10,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0,0.458"/>
+                <Label x:Name="lblProductTotalCostPrice" Content="{x:Static language:Lng.totalCostPrice}" HorizontalAlignment="Left" Margin="887,10,0,0" VerticalAlignment="Top" Width="99" Foreground="Red"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="40" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="40" Margin="107,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="237" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Height="40" Margin="349,41,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -351,7 +352,7 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="10,273,250,10">
+        <GroupBox Header="{x:Static language:Lng.enteredProducts}" Margin="10,273,250,10">
             <Grid Margin="10,0,-2,0">
                 <DataGrid x:Name="dgProducts" IsReadOnly="True" SelectionChanged="dgProducts_SelectionChanged" Margin="5,10,5,10">
                     <DataGrid.Background>
@@ -366,7 +367,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Name" Width="430">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.name}" Width="430">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductName" Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
@@ -374,7 +375,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Unit" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.unit}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox x:Name="dgTxtProductUnit" ItemsSource="{Binding UnitCboItemsSource}"
@@ -385,7 +386,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Quantity" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.quantity}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductQuantity" Text="{Binding Quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductQuantity_KeyUp" VerticalContentAlignment="Center" />
@@ -393,7 +394,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="G. Cost Price" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossCostPrice}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductGrossCostPrice" Text="{Binding GrossCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductGrossCostPrice_KeyUp" VerticalContentAlignment="Center" />
@@ -401,7 +402,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Gross Total Cost Price" Width="100">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossTotalCostPrice}" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#FF002EFF" VerticalContentAlignment="Center"/>
@@ -409,7 +410,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Discount" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.discount}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductDiscount" Text="{Binding Discount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductDiscount_KeyUp" VerticalContentAlignment="Center"/>
@@ -417,7 +418,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="VAT" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.vat}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductVAT" Text="{Binding VAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductVAT_KeyUp" VerticalContentAlignment="Center"/>
@@ -425,7 +426,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Cost Price" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.costPrice}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" VerticalContentAlignment="Center"/>
@@ -433,7 +434,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Total Cost Price" Width="100">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.totalCostPrice}" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center"/>
@@ -441,10 +442,10 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Delete">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.delete}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="btnDeleteDataGridRow" Content="Delete" Click="btnDeleteDataGridRow_Click"/>
+                                    <Button Name="btnDeleteDataGridRow" Content="{x:Static language:Lng.delete}" Click="btnDeleteDataGridRow_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -452,25 +453,25 @@
                 </DataGrid>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Invoice Number" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <Label x:Name="lblInvoiceId" Content="Label" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
+        <GroupBox Header="{x:Static language:Lng.invoiceNumber}" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+            <Label x:Name="lblInvoiceId" Content="{x:Static language:Lng.welcome}" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
         </GroupBox>
-        <GroupBox Header="User Informations" Height="116" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="{x:Static language:Lng.userInformations}" Height="116" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
-                <Label x:Name="lblUserPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
-                <Label x:Name="lblUsername" Content="Username" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <Label x:Name="lblUserPosition" Content="{x:Static language:Lng.position}" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+                <Label x:Name="lblUsername" Content="{x:Static language:Lng.username}" Margin="10,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
                 <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="90,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="90,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="259" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="{x:Static language:Lng.basketInformations}" Height="259" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,0,-2,0" Height="226">
-                <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,4,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketGrossCostTotal" Content="G. Cost Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketDiscount" Content="Discount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,79,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketSubTotal" Content="Sub Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,113,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketVat" Content="V.A.T." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" Width="80" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0" Width="80" Foreground="Red" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketQuantity" Content="{x:Static language:Lng.quantity}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,4,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketGrossTotalCostPrice" Content="{x:Static language:Lng.grossTotalCostPrice}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,48,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketDiscount" Content="{x:Static language:Lng.discount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,79,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketSubTotal" Content="{x:Static language:Lng.subTotal}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,113,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketVat" Content="{x:Static language:Lng.vat}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,145,0,0" Width="90" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblBasketTotal" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,176,0,0" Width="90" Foreground="Red" FontSize="30" Height="40" FontFamily="Bernard MT Condensed" FontWeight="SemiBold" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="25.6" Margin="95,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtBasketGrossCostTotal" HorizontalAlignment="Left" Height="26" Margin="95,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" IsReadOnly="True" VerticalContentAlignment="Center" Foreground="#FF002EFF"/>
                 <TextBox x:Name="txtBasketDiscount" HorizontalAlignment="Left" Height="26" Margin="95,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" KeyUp="txtBasketDiscount_KeyUp" VerticalContentAlignment="Center"/>
@@ -479,9 +480,9 @@
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="40" Margin="95,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Foreground="Red" FontSize="30" FontFamily="SimSun" IsReadOnly="True" VerticalContentAlignment="Center" FontWeight="Bold"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
+        <GroupBox Header="{x:Static language:Lng.menu}" Height="118" Margin="9,34,250,0" VerticalAlignment="Top">
             <Grid x:Name="___No_Name_" Margin="0,0,-1.8,-4">
-                <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnNew_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -495,7 +496,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnSave_Click" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="{x:Static language:Lng.save}" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnSave_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/floppy-disk.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -509,7 +510,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonCancelStyle}" x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnCancel_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonCancelStyle}" x:Name="btnCancel" Content="{x:Static language:Lng.cancel}" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnCancel_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancel.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -523,7 +524,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEditRecord" Content="EDIT" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnEditRecord_Click" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEditRecord" Content="{x:Static language:Lng.edit}" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnEditRecord_Click" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -537,7 +538,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDeleteRecord" Content="DELETE" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnDeleteRecord_Click" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDeleteRecord" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" Click="btnDeleteRecord_Click" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -551,7 +552,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrintStyle}" x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="1.824,0.147" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonPrintStyle}" x:Name="btnPrint" Content="{x:Static language:Lng.print}" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="1.824,0.147" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/printer.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -575,13 +576,13 @@
                         <ImageBrush ImageSource="/Images/Buttons/next.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblMenuPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="78" Height="25" FontSize="11"/>
+                <Label x:Name="lblMenuPaymentType" Content="{x:Static language:Lng.paymentType}" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="78" Height="25" FontSize="11"/>
                 <ComboBox x:Name="cboMenuPaymentType" HorizontalAlignment="Left" Margin="777,10,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
-                <Label x:Name="lblMenuSupplierId" Content="Supplier" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
+                <Label x:Name="lblMenuSupplierId" Content="{x:Static language:Lng.supplier}" HorizontalAlignment="Left" Margin="671,40,0,0" VerticalAlignment="Top" Width="101" FontSize="11" Height="25"/>
                 <ComboBox x:Name="cboMenuSupplier" HorizontalAlignment="Left" Margin="777,40,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuSupplier_SelectionChanged"/>
-                <Label x:Name="lblMenuAsset" Content="Asset" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
-                <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
-                <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
+                <Label x:Name="lblMenuAsset" Content="{x:Static language:Lng.asset}" HorizontalAlignment="Left" Margin="671,70,0,0" VerticalAlignment="Top" Width="51" FontSize="11" Height="25"/>
+                <RadioButton x:Name="rbAccount" Content="{x:Static language:Lng.account}" HorizontalAlignment="Left" Margin="722,67,0,0" VerticalAlignment="Top" Width="50" Checked="rbAccount_Checked"/>
+                <RadioButton x:Name="rbBank" Content="{x:Static language:Lng.bank}" HorizontalAlignment="Left" Margin="722,80,0,0" VerticalAlignment="Top" Width="50" Checked="rbBank_Checked"/>
                 <ComboBox x:Name="cboMenuAsset" HorizontalAlignment="Left" Margin="777,70,0,0" VerticalAlignment="Top" Width="120" Height="25" SelectionChanged="cboMenuAsset_SelectionChanged"/>
                 <Label x:Name="lblAssetSupplierId" Content="" HorizontalAlignment="Left" Margin="902,40,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
                 <Label x:Name="lblAssetId" Content="" HorizontalAlignment="Left" Margin="902,70,0,0" VerticalAlignment="Top" Height="25" Width="23"/>
@@ -593,9 +594,9 @@
             </Grid>
         </GroupBox>
         <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Right" Margin="0,299,10,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Calisto MT" FontSize="20" />
-        <GroupBox Header="Controls" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235">
+        <GroupBox Header="{x:Static language:Lng.controls}" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235">
             <Grid>
-                <CheckBox x:Name="chkUpdateProductCosts" Content="Update Product Costs" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="213" Foreground="#FF000CFF" FontSize="19" FontFamily="Calisto MT" FontWeight="Bold"/>
+                <CheckBox x:Name="chkUpdateProductCosts" Content="{x:Static language:Lng.updateProductCosts}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="213" Foreground="#FF000CFF" FontSize="19" FontFamily="Calisto MT" FontWeight="Bold"/>
             </Grid>
         </GroupBox>
 
