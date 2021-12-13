@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+        Title="Admin Dashboard" Height="615.6" Width="1008.8" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -522,17 +523,17 @@
     </Window.Background>
     <Grid>
         <StackPanel x:Name="pnlFooter" Height="25" Margin="0,0,-0.4,0" VerticalAlignment="Bottom" Background="#FF2471A3">
-            <Label x:Name="lblFooter" Content="Developed by Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="lblFooter" Content="Mete KABA" Margin="10,0,5.2,0" Height="25" Background="{x:Null}" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
         </StackPanel>
-        <Label x:Name="lblUser" Content="User:" HorizontalAlignment="Left" Margin="78,129,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.785,1.417" Width="47" Height="46" VerticalContentAlignment="Center" Foreground="White" FontFamily="SimSun-ExtB" FontWeight="Normal" HorizontalContentAlignment="Center"/>
-        <Label x:Name="lblLoggedInUser" Content="SAMPLE NAME" HorizontalAlignment="Left" Margin="125,129,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FF0118FF" Width="287" Height="46" FontFamily="Javanese Text" VerticalContentAlignment="Center" FontWeight="Normal"/>
+        <Label x:Name="lblUser" Content="{x:Static language:Lng.user}" HorizontalAlignment="Left" Margin="89,129,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.785,1.417" Width="84" Height="46" VerticalContentAlignment="Center" FontSize="16" Foreground="White" FontFamily="SimSun-ExtB" FontWeight="Normal" HorizontalContentAlignment="Left"/>
+        <Label x:Name="lblLoggedInUser" Content="SAMPLE NAME" HorizontalAlignment="Left" Margin="178,129,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FF0118FF" Width="287" Height="46" FontFamily="Javanese Text" VerticalContentAlignment="Center" FontWeight="Normal"/>
         <Label x:Name="lblHead" Content="KABA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Height="60" FontWeight="Normal" FontFamily="Times New Roman" Margin="0,77,0,0"/>
-        <Label x:Name="lblSubHead" Content="Accounting and Inventory" FontSize="22" Foreground="#FF1272C1" FontWeight="SemiBold" Width="281" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Mongolian Baiti" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,175,0,0"/>
+        <Label x:Name="lblSubHead" Content="{x:Static language:Lng.accountingAndInventory}" FontSize="22" Foreground="#FF1272C1" FontWeight="SemiBold" Width="281" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Mongolian Baiti" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,175,0,0"/>
         <TabControl x:Name="tabHeader" Height="124" VerticalAlignment="Top" Margin="0,0,-1,0" HorizontalContentAlignment="Center">
             <TabControl.Background>
                 <SolidColorBrush Color="White" Opacity="0.5"/>
             </TabControl.Background>
-            <TabItem x:Name="tabItemServices" Header="SERVICES" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
+            <TabItem x:Name="tabItemServices" Header="{x:Static language:Lng.services}" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
@@ -553,7 +554,7 @@
                             <ImageBrush ImageSource="/Images/Icons/close.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonFileManagementStyle}" x:Name="btnFileManagement" Content="File Management" HorizontalAlignment="Left" Width="113" VerticalContentAlignment="Bottom" Margin="97,0,0,0">
+                    <Button Style="{StaticResource ButtonFileManagementStyle}" x:Name="btnFileManagement" Content="{x:Static language:Lng.fileManagement}" HorizontalAlignment="Left" Width="113" VerticalContentAlignment="Bottom" Margin="97,0,0,0">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/file-management.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -567,7 +568,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonSysPrefStyle}" x:Name="btnSysPref" Content="System Preferences" HorizontalAlignment="Left" Width="111" Margin="210,0,0,0" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonSysPrefStyle}" x:Name="btnSysPref" Content="{x:Static language:Lng.systemPreferences}" HorizontalAlignment="Left" Width="111" Margin="210,0,0,0" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/system-preferences.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -581,7 +582,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonBackupStyle}" x:Name="btnBackup" Content="BACK-UP" HorizontalAlignment="Left" Width="101" Margin="321,0,0,0" RenderTransformOrigin="1.4,0.539" VerticalContentAlignment="Bottom" Click="btnBackup_Click">
+                    <Button Style="{StaticResource ButtonBackupStyle}" x:Name="btnBackup" Content="{x:Static language:Lng.backup}" HorizontalAlignment="Left" Width="101" Margin="321,0,0,0" RenderTransformOrigin="1.4,0.539" VerticalContentAlignment="Bottom" Click="btnBackup_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/backup-1.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -595,7 +596,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonUserStyle}" x:Name="btnUser" Content="USERS" HorizontalAlignment="Left" Width="103" Click="btnUser_Click" Margin="422,0,0,0" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonUserStyle}" x:Name="btnUser" Content="{x:Static language:Lng.users}" HorizontalAlignment="Left" Width="103" Click="btnUser_Click" Margin="422,0,0,0" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/users.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -609,7 +610,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonCalcStyle}" Content="CALCULATOR" HorizontalAlignment="Left" Width="97" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonCalcStyle}" Content="{x:Static language:Lng.calculator}" HorizontalAlignment="Left" Width="97" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/maths.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -625,12 +626,12 @@
                     </Button>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemAccounts" Header="ACCOUNTS" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
+            <TabItem x:Name="tabItemAccounts" Header="{x:Static language:Lng.accounts}" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button Style="{StaticResource ButtonReportsStyle}" x:Name="btnReports" Content="REPORTS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="91" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonReportsStyle}" x:Name="btnReports" Content="{x:Static language:Lng.reports}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="91" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/spreadsheet-app.png">
                                 <ImageBrush.RelativeTransform>
@@ -644,7 +645,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonDailySummaryStyle}" x:Name="btnDailySum" Content="Daily Summary" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Top" Width="117" Height="91" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonDailySummaryStyle}" x:Name="btnDailySum" Content="{x:Static language:Lng.dailySummary}" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Top" Width="117" Height="91" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/calendar.png">
                                 <ImageBrush.RelativeTransform>
@@ -658,7 +659,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonAssetsStyle}" x:Name="btnAssets" Content="Assets" HorizontalAlignment="Left" Width="117" Margin="229,0,0,0" VerticalContentAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+                    <Button Style="{StaticResource ButtonAssetsStyle}" x:Name="btnAssets" Content="{x:Static language:Lng.assets}" HorizontalAlignment="Left" Width="117" Margin="229,0,0,0" VerticalContentAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform ScaleY="1"/>
@@ -680,7 +681,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnDeposit" Style="{StaticResource ButtonDepositStyle}" Content="Deposit" HorizontalAlignment="Left" Margin="346,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnDeposit_Click">
+                    <Button x:Name="btnDeposit" Style="{StaticResource ButtonDepositStyle}" Content="{x:Static language:Lng.deposit}" HorizontalAlignment="Left" Margin="346,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnDeposit_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/safe-box.png">
                                 <ImageBrush.RelativeTransform>
@@ -694,7 +695,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnExpense" Style="{StaticResource ButtonExpenseStyle}" Content="Expense" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnExpense_Click">
+                    <Button x:Name="btnExpense" Style="{StaticResource ButtonExpenseStyle}" Content="{x:Static language:Lng.expense}" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnExpense_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/pay.png">
                                 <ImageBrush.RelativeTransform>
@@ -708,7 +709,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnReceipt" Style="{StaticResource ButtonReceiptStyle}" Content="Receipt" HorizontalAlignment="Left" Margin="580,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnReceipt_Click">
+                    <Button x:Name="btnReceipt" Style="{StaticResource ButtonReceiptStyle}" Content="{x:Static language:Lng.receipt}" HorizontalAlignment="Left" Margin="580,0,0,0" VerticalAlignment="Center" Height="91" Width="117" VerticalContentAlignment="Bottom" Click="btnReceipt_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/receipt.png">
                                 <ImageBrush.RelativeTransform>
@@ -724,12 +725,12 @@
                     </Button>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemPurchases" Header="PURCHASES" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
+            <TabItem x:Name="tabItemPurchases" Header="{x:Static language:Lng.purchases}" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="Point of Purchase" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnPointOfPurchase_Click">
+                    <Button Style="{StaticResource ButtonPopStyle}" x:Name="btnPointOfPurchase" Content="{x:Static language:Lng.pointOfPurchase}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnPointOfPurchase_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/inventory (2).png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -743,7 +744,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonPopReportsStyle}" x:Name="btnPopReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPopReports_Click">
+                    <Button Style="{StaticResource ButtonPopReportsStyle}" x:Name="btnPopReports" Content="{x:Static language:Lng.reports}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPopReports_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/chart.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -759,12 +760,12 @@
                     </Button>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemSales" Header="SALES" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
+            <TabItem x:Name="tabItemSales" Header="{x:Static language:Lng.sales}" HorizontalContentAlignment="Stretch" Width="165" Height="25" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button Style="{StaticResource ButtonPosStyle}" x:Name="btnPointOfSale" Content="Point of Sale" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Click="btnPointOfSale_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonPosStyle}" x:Name="btnPointOfSale" Content="{x:Static language:Lng.pointOfSale}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Click="btnPointOfSale_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/payment-terminal.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -778,7 +779,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonPosReportsStyle}" x:Name="btnPosReports" Content="Reports" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPosReports_Click">
+                    <Button Style="{StaticResource ButtonPosReportsStyle}" x:Name="btnPosReports" Content="{x:Static language:Lng.reports}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="140,0,0,0" VerticalContentAlignment="Bottom" Click="btnPosReports_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/analysis.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -798,12 +799,12 @@
                     <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="91" Margin="700,0,0,0"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemInventory" Header="INVENTORY" HorizontalContentAlignment="Stretch" Width="165"  Height="25" Margin="0,-1,0,1">
+            <TabItem x:Name="tabItemInventory" Header="{x:Static language:Lng.inventory}" HorizontalContentAlignment="Stretch" Width="165"  Height="25" Margin="0,-1,0,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button x:Name="btnPhyInventory" Content="Physical Inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="91" VerticalContentAlignment="Bottom" Click="btnPhyInventory_Click">
+                    <Button x:Name="btnPhyInventory" Content="{x:Static language:Lng.physicalInventory}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Height="91" VerticalContentAlignment="Bottom" Click="btnPhyInventory_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/physical-inventory.png">
                                 <ImageBrush.RelativeTransform>
@@ -817,7 +818,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btnInvAdjustment" Content="Inventory Adjustment" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" Click="btnInvAdjustment_Click">
+                    <Button x:Name="btnInvAdjustment" Content="{x:Static language:Lng.inventoryAdjustment}" HorizontalAlignment="Left" Width="126" Margin="133,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" Click="btnInvAdjustment_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/checklist.png">
                                 <ImageBrush.RelativeTransform>
@@ -836,12 +837,12 @@
                     <Button Content="Button" HorizontalAlignment="Left" Width="126" Margin="511,0,0,0"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemPortal" Header="PORTAL" HorizontalContentAlignment="Stretch" Height="25" Margin="0,-1,-90,1">
+            <TabItem x:Name="tabItemPortal" Header="{x:Static language:Lng.portal}" HorizontalContentAlignment="Stretch" Height="25" Margin="0,-1,-90,1">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" Opacity="0"/>
                     </Grid.Background>
-                    <Button Style="{StaticResource ButtonBankStyle}" x:Name="btnBank" Content="BANKS" Width="114" HorizontalAlignment="Left" Click="btnBank_Click" Margin="346,0,0,0" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonBankStyle}" x:Name="btnBank" Content="{x:Static language:Lng.banks}" Width="114" HorizontalAlignment="Left" Click="btnBank_Click" Margin="346,0,0,0" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/bank.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -855,7 +856,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonSupplierStyle}" x:Name="btnSupplier" Content="SUPPLIERS" Margin="116,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnSupplier_Click" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonSupplierStyle}" x:Name="btnSupplier" Content="{x:Static language:Lng.suppliers}" Margin="116,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnSupplier_Click" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/supplier.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -869,7 +870,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonCustomerStyle}" x:Name="btnCustomer" Content="CUSTOMERS" Margin="231,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCustomer_Click" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonCustomerStyle}" x:Name="btnCustomer" Content="{x:Static language:Lng.customers}" Margin="231,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCustomer_Click" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/customers.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -883,7 +884,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonProductStyle}" x:Name="btnProduct" Content="PRODUCTS" Width="115" HorizontalAlignment="Left" Click="btnProduct_Click" Margin="1,0,0,0" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonProductStyle}" x:Name="btnProduct" Content="{x:Static language:Lng.products}" Width="115" HorizontalAlignment="Left" Click="btnProduct_Click" Margin="1,0,0,0" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/qr-code.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -897,7 +898,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonCategoryStyle}" x:Name="btnCategory" Content="CATEGORIES" Margin="574,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click" VerticalContentAlignment="Bottom">
+                    <Button Style="{StaticResource ButtonCategoryStyle}" x:Name="btnCategory" Content="{x:Static language:Lng.categories}" Margin="574,0,0,0" Width="115" HorizontalAlignment="Left" Click="btnCategory_Click" VerticalContentAlignment="Bottom">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/category.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -911,7 +912,7 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Button Style="{StaticResource ButtonAccountStyle}" x:Name="btnAccount" Content="ACCOUNTS" Width="114" HorizontalAlignment="Left" Margin="460,0,0,0" VerticalContentAlignment="Bottom" Click="btnAccount_Click" Foreground="Black">
+                    <Button Style="{StaticResource ButtonAccountStyle}" x:Name="btnAccount" Content="{x:Static language:Lng.accounts}" Width="114" HorizontalAlignment="Left" Margin="460,0,0,0" VerticalContentAlignment="Bottom" Click="btnAccount_Click" Foreground="Black">
                         <Button.Background>
                             <ImageBrush ImageSource="/Images/Buttons/calculations.png" Stretch="Uniform">
                                 <ImageBrush.RelativeTransform>
@@ -929,7 +930,12 @@
             </TabItem>
         </TabControl>
         <Label x:Name="lblCurrentDateTime" Content="DATE-TIME" HorizontalAlignment="Right" Margin="0,143,10,0" VerticalAlignment="Top" Width="360" Height="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Foreground="#FFDC0000" FontFamily="SimSun"/>
-        <Label x:Name="lblUserType" Content="" HorizontalAlignment="Left" Margin="7,129,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.785,1.417" Width="71" Height="46" VerticalContentAlignment="Center" Foreground="Red" FontFamily="SimSun-ExtB" FontWeight="Normal" HorizontalContentAlignment="Center"/>
+        <Label x:Name="lblUserType" Content="" HorizontalAlignment="Left" Margin="7,129,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.785,1.417" Width="77" Height="46" VerticalContentAlignment="Center" Foreground="Red" FontFamily="SimSun-ExtB" FontWeight="Normal" HorizontalContentAlignment="Center"/>
+        <Label Content="{x:Static language:Lng.language}" HorizontalAlignment="Left" Margin="89,180,0,0" VerticalAlignment="Top" Width="84" FontSize="16" Foreground="White" FontFamily="SimSun-ExtB" FontWeight="Normal" VerticalContentAlignment="Center" />
+        <ComboBox x:Name="cboLanguage" HorizontalAlignment="Left" Margin="178,180,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="cboLanguage_SelectionChanged">
+            <ComboBoxItem Content="{x:Static language:Lng.en}"/>
+            <ComboBoxItem Content="{x:Static language:Lng.tr}"/>
+        </ComboBox>
     </Grid>
 </Window>
 

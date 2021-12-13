@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="Login" Height="634.2" Width="474.4" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Foreground="{x:Null}" Background="Transparent" AllowsTransparency="True">
+        Title="Login" Height="634.2" Width="474.4" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Foreground="{x:Null}" Background="Transparent" AllowsTransparency="True"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
 
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
@@ -53,23 +54,23 @@
                     <ImageBrush ImageSource="/Images/actions/entry_2.png" Stretch="Uniform"/>
                 </Label.Background>
             </Label>
-            <Label x:Name="lblLogin" Content="LOGIN" Height="64" DockPanel.Dock="Top" Width="136" Margin="171,197,166,372" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="PMingLiU-ExtB" Foreground="White" FontWeight="Bold"/>
-            <Label x:Name="lblUserName" Content="Username:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,275,0,329" Foreground="White"/>
+            <Label x:Name="lblLogin" Content="{x:Static language:Lng.login}" Height="64" DockPanel.Dock="Top" Width="136" Margin="171,197,166,372" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="PMingLiU-ExtB" Foreground="White" FontWeight="Bold"/>
+            <Label x:Name="lblUserName" Content="{x:Static language:Lng.username}" Height="29" VerticalAlignment="Top" Width="144" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,275,0,0" Foreground="White"/>
             <Border BorderBrush="Black"  CornerRadius="5" BorderThickness="1" HorizontalAlignment="Left" Height="31" Margin="97,304,0,0" VerticalAlignment="Top" Width="277" Background="White">
                 <TextBox x:Name="txtUserName" Height="31" TextWrapping="Wrap" Width="277" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-1" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0"/>
             </Border>
-            <Label x:Name="lblUserPassword" Content="Password:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,345,0,259" Foreground="White"/>
+            <Label x:Name="lblUserPassword" Content="{x:Static language:Lng.password}" Height="29" VerticalAlignment="Top" Width="144" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,345,0,0" Foreground="White"/>
             <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" HorizontalAlignment="Left" Height="31" Margin="97,374,0,0" VerticalAlignment="Top" Width="277" Background="White">
                 <PasswordBox x:Name="pswUserPassword" Height="31" VerticalAlignment="Center" HorizontalAlignment="Center" Width="277" Margin="-1" BorderBrush="#FF777779" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0"/>
             </Border>
-            <Label x:Name="lblUserType" Content="User Type:" Height="29" VerticalAlignment="Center" Width="72" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,415,0,189" Foreground="White"/>
+            <Label x:Name="lblUserType" Content="{x:Static language:Lng.userType}" Height="29" VerticalAlignment="Top" Width="144" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="70,415,0,0" Foreground="White"/>
             <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" HorizontalAlignment="Left" Height="31" Margin="97,444,0,0" VerticalAlignment="Top" Width="277">
                 <ComboBox x:Name="cboUserType" Height="30" VerticalAlignment="Center" Width="277" HorizontalAlignment="Center" Margin="-1,-1,-1,0" Background="White" BorderThickness="0">
                     <ComboBoxItem Content="Admin"/>
                     <ComboBoxItem Content="User"/>
                 </ComboBox>
             </Border>
-            <Button x:Name="btnLogin" Height="53" VerticalAlignment="Bottom" Width="141" Margin="166,0,166,65" HorizontalAlignment="Center" Click="btnLogin_Click" Content="ENTER" FontSize="24" FontFamily="Source Serif Pro Light" Foreground="White" BorderBrush="{x:Null}">
+            <Button x:Name="btnLogin" Height="53" VerticalAlignment="Bottom" Width="141" Margin="166,0,166,65" HorizontalAlignment="Center" Click="btnLogin_Click" Content="{x:Static language:Lng.enter}" FontSize="24" FontFamily="Source Serif Pro Light" Foreground="White" BorderBrush="{x:Null}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#FF3F809C"/>

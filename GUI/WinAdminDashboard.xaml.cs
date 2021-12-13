@@ -203,5 +203,19 @@ namespace GUI
             WinBackup winBackup = new WinBackup();
             winBackup.Show();
         }
+
+        private void cboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboLanguage.SelectedIndex==(int)Numbers.InitialIndex)
+            {
+                Properties.Settings.Default.languageCode = "en-US";
+            }
+            else
+            {
+                Properties.Settings.Default.languageCode = "tr-TR";
+            }
+
+            Properties.Settings.Default.Save();
+        }
     }
 }

@@ -16,6 +16,11 @@
         },
         "runtime": {
           "GUI.dll": {}
+        },
+        "resources": {
+          "tr/GUI.resources.dll": {
+            "locale": "tr"
+          }
         }
       },
       "Microsoft.Extensions.Configuration/5.0.0": {
