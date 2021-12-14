@@ -94,6 +94,40 @@ namespace DAL
         }
         #endregion
 
+        #region JOIN REPORT BY DATE METHOD
+        public DataTable FetchReportByDate(string dateFrom, string dateTo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "'";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
+        #endregion
+
         /*#region UPDATE METHOD
         public bool Update(PointOfSaleDetailCUL pointOfSaleDetailCUL)
         {
