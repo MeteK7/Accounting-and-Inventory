@@ -334,8 +334,8 @@ namespace GUI
             txtProductId.Text = "";
             txtProductName.Text = "";
             cboProductUnit.ItemsSource = null;
-            txtProductCostPrice.Text = "";
-            txtProductSalePrice.Text = "";
+            txtProductGrossCostPrice.Text = "";
+            txtProductGrossSalePrice.Text = "";
             txtProductQuantity.Text = "";
             txtProductDiscount.Text = "";
             txtProductVAT.Text = "";
@@ -602,8 +602,8 @@ namespace GUI
                         productId = dtPosDetail.Rows[currentRow][colTxtProductId].ToString();
                         productCurrentUnitId = Convert.ToInt32(dtPosDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQty].ToString();
-                        productCostPrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("0.00");
-                        productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductSalePrice]).ToString("0.00");
+                        productCostPrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductCostPrice]).ToString();
+                        productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductSalePrice]).ToString();
                         productGrossTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
                         productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
@@ -756,9 +756,9 @@ namespace GUI
                 }
 
                 txtProductQuantity.Text = productQuantity.ToString();
-                txtProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
+                txtProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductGrossSalePrice.Text)).ToString();
                 txtProductTotalSalePrice.Text = (
-                    (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)) -
+                    (productQuantity * Convert.ToDecimal(txtProductGrossSalePrice.Text)) -
                     Convert.ToDecimal(txtProductDiscount.Text) +
                     Convert.ToDecimal(txtProductVAT.Text)
                     ).ToString();
@@ -776,17 +776,17 @@ namespace GUI
 
             txtBasketQuantity.Text = (Convert.ToDecimal(txtBasketQuantity.Text) + quantityFromTextEntry).ToString();
 
-            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductCostPrice.Text) * quantityFromTextEntry)).ToString();
+            txtBasketCostTotal.Text = (Convert.ToDecimal(txtBasketCostTotal.Text) + (Convert.ToDecimal(txtProductGrossCostPrice.Text) * quantityFromTextEntry)).ToString();
 
-            txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry)).ToString();
+            txtBasketGrossAmount.Text = (Convert.ToDecimal(txtBasketGrossAmount.Text) + (Convert.ToDecimal(txtProductGrossSalePrice.Text) * quantityFromTextEntry)).ToString();
 
             txtBasketDiscount.Text = (Convert.ToDecimal(txtBasketDiscount.Text) + Convert.ToDecimal(txtProductDiscount.Text)).ToString();
 
-            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + ((Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text))).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
+            txtBasketSubTotal.Text = (Convert.ToDecimal(txtBasketSubTotal.Text) + ((Convert.ToDecimal(txtProductGrossSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text))).ToString();//The previous sub total has already basket discount in it so we only need to subtract the new product's discount.
 
             txtBasketVat.Text = (Convert.ToDecimal(txtBasketVat.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
 
-            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
+            txtBasketGrandTotal.Text = (Convert.ToDecimal(txtBasketGrandTotal.Text) + (Convert.ToDecimal(txtProductGrossSalePrice.Text) * quantityFromTextEntry) - Convert.ToDecimal(txtProductDiscount.Text) + Convert.ToDecimal(txtProductVAT.Text)).ToString();
 
         }
 
@@ -1016,7 +1016,7 @@ namespace GUI
                     if (decimal.TryParse(productQuantity, out number) && result == true)
                     {
                         string unitKg = "Kilogram", unitLt = "Liter";
-                        string productSalePrice = txtProductSalePrice.Text;
+                        string productSalePrice = txtProductGrossSalePrice.Text;
 
                         if (cboProductUnit.Text != unitKg && cboProductUnit.Text != unitLt)
                         {
@@ -1115,7 +1115,7 @@ namespace GUI
             }
         }
 
-        private void dgTxtProductSalePrice_KeyUp(object sender, KeyEventArgs e)
+        private void dgTxtProductGrossSalePrice_KeyUp(object sender, KeyEventArgs e)
         {
             DgTextChanged();
         }
@@ -1197,10 +1197,10 @@ namespace GUI
 
                         //ASSIGNING NEW VALUES TO THE RELATED DATA GRID CELLS.
                         txtDgProductQty.Text = productQuantity.ToString();
-                        txtProductDgTotalCostPrice.Text = (productQuantity * Convert.ToDecimal(txtProductCostPrice.Text)).ToString();
-                        txtDgProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)).ToString();
+                        txtProductDgTotalCostPrice.Text = (productQuantity * Convert.ToDecimal(txtProductGrossCostPrice.Text)).ToString();
+                        txtDgProductGrossTotalSalePrice.Text = (productQuantity * Convert.ToDecimal(txtProductGrossSalePrice.Text)).ToString();
                         txtDgProductTotalSalePrice.Text = (
-                            (productQuantity * Convert.ToDecimal(txtProductSalePrice.Text)) -
+                            (productQuantity * Convert.ToDecimal(txtProductGrossSalePrice.Text)) -
                             Convert.ToDecimal(txtProductDiscount.Text) +
                             Convert.ToDecimal(txtProductVAT.Text)
                             ).ToString();
@@ -1213,7 +1213,7 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
-                decimal totalCostPrice = Convert.ToDecimal(txtProductCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
+                decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
                 dgProducts.Items.Add(new
@@ -1221,9 +1221,9 @@ namespace GUI
                     Id = productId,
                     Name = txtProductName.Text,
                     Quantity = txtProductQuantity.Text,
-                    CostPrice = txtProductCostPrice.Text,
-                    SalePrice = txtProductSalePrice.Text,
-                    TotalCostPrice = totalCostPrice.ToString(),
+                    CostPrice = txtProductGrossCostPrice.Text,
+                    SalePrice = txtProductGrossSalePrice.Text,
+                    GrossTotalCostPrice = grossTotalCostPrice.ToString(),
                     GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
                     Discount = txtProductDiscount.Text,
                     VAT = txtProductVAT.Text,
@@ -1319,8 +1319,8 @@ namespace GUI
                 costPrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtCostPrice].ToString();
                 salePrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtSalePrice].ToString();
 
-                txtProductCostPrice.Text = costPrice;
-                txtProductSalePrice.Text = salePrice;
+                txtProductGrossCostPrice.Text = costPrice;
+                txtProductGrossSalePrice.Text = salePrice;
                 txtProductQuantity.Text = productQuantity.ToString();
                 txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
                 txtProductDiscount.Text = productDiscount.ToString();

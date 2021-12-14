@@ -255,6 +255,9 @@
   <data name="grossCostPrice" xml:space="preserve">
     <value>Gross Cost Price</value>
   </data>
+  <data name="grossSalePrice" xml:space="preserve">
+    <value>Gross Sale Price</value>
+  </data>
   <data name="grossTotalCostPrice" xml:space="preserve">
     <value>Gross Total Cost Price</value>
   </data>
