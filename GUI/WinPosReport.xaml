@@ -95,19 +95,19 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="grpUserSales" Header="{x:Static language:Lng.userSales}" Margin="315,191,665,596" FontSize="22" BorderBrush="Black">
+        <GroupBox x:Name="grpUserSales" Header="{x:Static language:Lng.userSales}" Margin="315,191,708,596" FontSize="22" BorderBrush="Black">
             <Grid>
                 <ListView x:Name="lvwUserSales">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="{x:Static language:Lng.user}" Width="200"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding UserFullName}" Header="{x:Static language:Lng.user}" Width="150"/>
                             <GridViewColumn DisplayMemberBinding="{Binding UserSaleAmount}" Header="{x:Static language:Lng.amount}" Width="135"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
         </GroupBox>
-        <TabControl x:Name="tabReport" Margin="670,34,10,99">
+        <TabControl x:Name="tabReport" Margin="627,34,10,99">
             <TabControl.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </TabControl.Background>
@@ -124,14 +124,16 @@
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosId}" Header="Id"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosTotalProductQuantity}" Header="{x:Static language:Lng.quantity}"/>
-                                <GridViewColumn Header="{x:Static language:Lng.grossAmount}">
+                                <GridViewColumn DisplayMemberBinding="{Binding PosGrossTotalCostPrice}" Header="{x:Static language:Lng.grossTotalCostPrice}" Width="90"/>
+                                <GridViewColumn Header="{x:Static language:Lng.grossTotalSalePrice}" Width="90">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock x:Name="txtPosGrossAmount" Text="{Binding Path=PosGrossAmount}" Foreground="Blue" />
+                                            <TextBlock x:Name="txtPosGrossTotalSalePrice" Text="{Binding Path=PosGrossTotalSalePrice}" Foreground="Blue" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosDiscount}" Header="{x:Static language:Lng.discount}"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PosSubTotal}" Header="{x:Static language:Lng.subTotal}"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding PosVAT}" Header="{x:Static language:Lng.vat}"/>
                                 <GridViewColumn Header="{x:Static language:Lng.grandTotal}">
                                     <GridViewColumn.CellTemplate>

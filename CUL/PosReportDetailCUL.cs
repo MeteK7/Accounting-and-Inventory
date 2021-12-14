@@ -15,8 +15,10 @@ namespace CUL
         public decimal ProductQuantity { get; set; }
         public string ProductTotalSalePrice { get; set; }
         public decimal PosTotalProductQuantity { get; set; }
-        public decimal PosGrossAmount { get; set; }
+        public decimal PosGrossTotalCostPrice { get; set; }
+        public decimal PosGrossTotalSalePrice { get; set; }
         public decimal PosDiscount { get; set; }
+        public decimal PosSubTotal { get; set; }
         public decimal PosVAT { get; set; }
         public decimal PosGrandTotal { get; set; }
         public string PosCustomer { get; set; }

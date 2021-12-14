@@ -263,7 +263,43 @@ namespace DAL
         }
         #endregion
 
-        #region JOIN REPORT BY DATE METHOD
+        #region TOTAL SALES BY USER BETWEEN TWO DATES
+        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dataTable = new DataTable();
+
+                String sqlQuery = "Select A.added_by, SUM(quantity*product_sale_price) AS grand_total FROM tbl_pos FULL OUTER JOIN tbl_pos_detailed A ON A.id=tbl_pos.id WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY A.added_by";
+                //String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pos WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        dataTable.Dispose();
+                    }
+                    return dataTable;
+                }
+            }
+        }
+        #endregion
+
+        #region FETCH REPORT BY DATE METHOD
         public DataTable FetchReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -393,41 +429,6 @@ namespace DAL
                 DataTable dataTable = new DataTable();
 
                 String sqlQuery = "SELECT TOP 1 * FROM tbl_pos ORDER BY id DESC";
-
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
-                {
-                    try
-                    {
-                        conn.Open();//Opening the database connection
-
-                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
-                        {
-                            dataAdapter.Fill(dataTable);//Passing values from adapter to Data Table
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show(ex.Message);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                        dataTable.Dispose();
-                    }
-                    return dataTable;
-                }
-            }
-        }
-        #endregion
-
-        #region TOTAL SALES BY USER BETWEEN TWO DATES
-        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo)
-        {
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                DataTable dataTable = new DataTable();
-
-                String sqlQuery = "Select added_by, SUM(grand_total) AS grand_total FROM tbl_pos WHERE added_date >= '" + dateFrom + "' AND added_date <= '" + dateTo + "' GROUP BY added_by";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {

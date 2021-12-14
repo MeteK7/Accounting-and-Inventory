@@ -140,7 +140,7 @@ namespace GUI
 
                 userFullName = dtUsers.Rows[(int)Numbers.InitialIndex][colTxtFirstName].ToString() + " " + dtUsers.Rows[(int)Numbers.InitialIndex][colTxtLastName].ToString();
 
-                userSaleAmount = Convert.ToDecimal(dtUserSales.Rows[rowIndex][colTxtPosGrandTotal]);
+                userSaleAmount = Convert.ToDecimal(String.Format("{0:0.00}",dtUserSales.Rows[rowIndex][colTxtPosGrandTotal]));
 
                 lvwUserSales.Items.Add(
                     new PosReportDetailCUL()
@@ -202,7 +202,7 @@ namespace GUI
         private void LoadSaleListView()
         {
             DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
-            DataTable dtPosDetail = pointOfSaleDAL.JoinProductReportByDate(dateFrom, dateTo);
+            DataTable dtPosDetail;
             DataTable dtUsers,dtCustomers;
             int userId,customerId;
             string userFullName,customerFullName;
@@ -244,15 +244,17 @@ namespace GUI
                 basketVAT = (int)Numbers.InitialIndex;
                 basketGrandTotal = (int)Numbers.InitialIndex;
 
-                for (int invoiceIndex = (int)Numbers.InitialIndex; invoiceIndex < dtPos.Rows.Count; invoiceIndex++)
-                {
-                    productQuantity= Convert.ToInt32(dtPosDetail.Rows[rowIndex][colTxtProductQty]);
-                    productCostPrice = Convert.ToInt32(dtPosDetail.Rows[rowIndex][colTxtProductCostPrice]);
-                    productSalePrice = Convert.ToInt32(dtPosDetail.Rows[rowIndex][colTxtProductSalePrice]);
-                    productDiscount= Convert.ToInt32(dtPosDetail.Rows[rowIndex][colTxtProductDiscount]);
-                    productVAT = Convert.ToInt32(dtPosDetail.Rows[rowIndex][colTxtProductVAT]);
+                dtPosDetail = pointOfSaleDetailDAL.Search(Convert.ToInt32(dtPos.Rows[rowIndex][colTxtPosId]));
 
-                    basketQuantity = basketQuantity+ Convert.ToDecimal(dtPosDetail.Rows[rowIndex][colTxtPosTotalProductQuantity]);
+                for (int invoiceIndex = (int)Numbers.InitialIndex; invoiceIndex < dtPosDetail.Rows.Count; invoiceIndex++)
+                {
+                    productQuantity= Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductQty]);
+                    productCostPrice = Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductCostPrice]);
+                    productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductSalePrice]);
+                    productDiscount= Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductDiscount]);
+                    productVAT = Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductVAT]);
+
+                    basketQuantity = basketQuantity+ productQuantity;
                     basketGrossTotalCostPrice =  basketGrossTotalCostPrice + (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity));
                     basketGrossTotalSalePrice = basketGrossTotalSalePrice + (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity));
                     basketDiscount = basketDiscount+ productDiscount;
@@ -266,10 +268,12 @@ namespace GUI
                     {
                         PosId = Convert.ToInt32(dtPos.Rows[rowIndex][colTxtPosId]),
                         PosTotalProductQuantity= basketQuantity,
-                        PosGrossAmount= basketGrossTotalSalePrice,
+                        PosGrossTotalCostPrice = Convert.ToDecimal(String.Format("{0:0.00}", basketGrossTotalCostPrice)),
+                        PosGrossTotalSalePrice = Convert.ToDecimal(String.Format("{0:0.00}", basketGrossTotalSalePrice)),
                         PosDiscount= basketDiscount,
-                        PosVAT= basketVAT,
-                        PosGrandTotal= basketGrandTotal,
+                        PosSubTotal = Convert.ToDecimal(String.Format("{0:0.00}", basketSubTotal)),
+                        PosVAT = basketVAT,
+                        PosGrandTotal= Convert.ToDecimal(String.Format("{0:0.00}", basketGrandTotal)),
                         PosCustomer=customerFullName,
                         UserFullName = userFullName,
                         PosDate=Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate])
