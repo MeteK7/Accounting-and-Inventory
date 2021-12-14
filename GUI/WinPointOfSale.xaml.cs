@@ -409,13 +409,13 @@ namespace GUI
                     pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);
                     pointOfSaleCUL.CustomerId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
                     pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
-                    pointOfSaleCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
-                    pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
-                    pointOfSaleCUL.GrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text);
+                    //pointOfSaleCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
+                    //pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
+                    //pointOfSaleCUL.GrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text);
                     pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
                     pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
                     pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
-                    pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                    //pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
                     pointOfSaleCUL.AddedDate = DateTime.Now;
                     pointOfSaleCUL.AddedBy = userId;
 
@@ -544,10 +544,17 @@ namespace GUI
             }
         }
 
-        private void LoadPastInvoice(int invoiceId = 0, int clickedArrow = -1)//Optional parameter
+        private void LoadPastInvoice(int invoiceId = (int)Numbers.InitialIndex, int clickedArrow = -(int)Numbers.UnitValue)//Optional parameter
         {
 
-            string productId, productName, productQuantity, productCostPrice, productSalePrice, productTotalCostPrice, productGrossTotalSalePrice, productDiscount, productVAT, productTotalSalePrice;
+            string productId, productName, productQuantity, productCostPrice, productSalePrice, productGrossTotalCostPrice, productGrossTotalSalePrice, productDiscount, productVAT, productTotalSalePrice;
+            decimal basketQuantity = (int)Numbers.InitialIndex,
+                    basketGrossTotalCostPrice = (int)Numbers.InitialIndex,
+                    basketGrossTotalSalePrice = (int)Numbers.InitialIndex,
+                    basketDiscount = (int)Numbers.InitialIndex,
+                    basketSubTotal = (int)Numbers.InitialIndex,
+                    basketVAT = (int)Numbers.InitialIndex,
+                    basketGrandTotal = (int)Numbers.InitialIndex;
 
             if (invoiceId == (int)Numbers.InitialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOS button to open it.
             {
@@ -595,9 +602,9 @@ namespace GUI
                         productId = dtPosDetail.Rows[currentRow][colTxtProductId].ToString();
                         productCurrentUnitId = Convert.ToInt32(dtPosDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPosDetail.Rows[currentRow][colTxtProductQty].ToString();
-                        productCostPrice = dtPosDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
-                        productSalePrice = dtPosDetail.Rows[currentRow][colTxtProductSalePrice].ToString();
-                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productCostPrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("0.00");
+                        productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductSalePrice]).ToString("0.00");
+                        productGrossTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
                         productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
@@ -624,7 +631,7 @@ namespace GUI
                             Quantity = productQuantity,
                             CostPrice = productCostPrice,
                             SalePrice = productSalePrice,
-                            TotalCostPrice = productTotalCostPrice,
+                            GrossTotalCostPrice = productGrossTotalCostPrice,
                             GrossTotalSalePrice = productGrossTotalSalePrice,
                             Discount = productDiscount,
                             VAT = productVAT,
@@ -636,19 +643,32 @@ namespace GUI
                             UnitCboSValuePath = colTxtId,
                             UnitCboDMemberPath = colTxtName,
                         });
+
+                        #region FILLING THE PREVIOUS BASKET INFORMATIONS TO VARIABLES
+                        basketQuantity = basketQuantity + Convert.ToDecimal(productQuantity);
+                        basketGrossTotalCostPrice = basketGrossTotalCostPrice + Convert.ToDecimal(productGrossTotalCostPrice);
+                        basketGrossTotalSalePrice = basketGrossTotalSalePrice + Convert.ToDecimal(productGrossTotalSalePrice);
+                        basketDiscount = basketDiscount + Convert.ToDecimal(productDiscount);
+                        basketSubTotal = basketSubTotal + (Convert.ToDecimal(productGrossTotalCostPrice) - Convert.ToDecimal(productDiscount));
+                        basketVAT = basketVAT + Convert.ToDecimal(productVAT);
+                        basketGrandTotal =
+                            basketGrandTotal +
+                            Convert.ToDecimal((Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)) -
+                            Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT));
+                        #endregion
                     }
                     #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
                     //We used initalIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtTotalPQuantity].ToString();
-                    txtBasketCostTotal.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtCostTotal].ToString();
-                    txtBasketGrossAmount.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtGrossAmount].ToString();
-                    txtBasketDiscount.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtDiscount].ToString();
-                    txtBasketSubTotal.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtSubTotal].ToString();
-                    txtBasketVat.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtVat].ToString();
-                    txtBasketGrandTotal.Text = dataTablePos.Rows[(int)Numbers.InitialIndex][colTxtGrandTotal].ToString();
+                    txtBasketQuantity.Text = basketQuantity.ToString();
+                    txtBasketCostTotal.Text = basketGrossTotalCostPrice.ToString("0.00");
+                    txtBasketGrossAmount.Text = basketGrossTotalSalePrice.ToString("0.00");
+                    txtBasketDiscount.Text = basketDiscount.ToString();
+                    txtBasketSubTotal.Text = basketSubTotal.ToString("0.00");
+                    txtBasketVat.Text = basketVAT.ToString();
+                    txtBasketGrandTotal.Text = basketGrandTotal.ToString("0.00");
 
                     #endregion
                 }

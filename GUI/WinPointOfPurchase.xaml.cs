@@ -355,7 +355,6 @@ namespace GUI
                             UnitCboDMemberPath = colTxtName,
                         });
 
-
                         #region FILLING THE PREVIOUS BASKET INFORMATIONS TO VARIABLES
                         basketQuantity = basketQuantity + Convert.ToDecimal(productQuantity);
                         basketGrossTotalCostPrice = basketGrossTotalCostPrice + Convert.ToDecimal(productGrossTotalCostPrice);

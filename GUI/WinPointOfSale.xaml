@@ -413,10 +413,10 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="{x:Static language:Lng.totalCostPrice}" Width="100">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossTotalCostPrice}" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
+                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
