@@ -327,18 +327,18 @@
                 <Label x:Name="lblProductName" Content="{x:Static language:Lng.name}" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="222"/>
                 <Label x:Name="lblProductUnit" Content="{x:Static language:Lng.unit}" HorizontalAlignment="Left" Margin="334,10,0,0" VerticalAlignment="Top" Width="55"/>
                 <Label x:Name="lblProductQuantity" Content="{x:Static language:Lng.quantity}" HorizontalAlignment="Left" Margin="394,10,0,0" VerticalAlignment="Top" Width="64" Height="25"/>
-                <Label x:Name="lblProductCostPrice" Content="{x:Static language:Lng.costPrice}" HorizontalAlignment="Left" Margin="463,10,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0,0.458" Height="26" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblProductSalePrice" Content="{x:Static language:Lng.salePrice}" HorizontalAlignment="Left" Margin="518,10,0,0" VerticalAlignment="Top" Width="61"/>
+                <Label x:Name="lblProductGrossCostPrice" Content="{x:Static language:Lng.grossCostPrice}" HorizontalAlignment="Left" Margin="463,10,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0,0.458" Height="26" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblProductGrossSalePrice" Content="{x:Static language:Lng.grossSalePrice}" HorizontalAlignment="Left" Margin="518,10,0,0" VerticalAlignment="Top" Width="61"/>
                 <Label x:Name="lblProductGrossTotalSalePrice" Content="{x:Static language:Lng.grossTotalSalePrice}" HorizontalAlignment="Left" Margin="584,10,0,0" VerticalAlignment="Top" Width="122" Foreground="#FF002EFF"/>
                 <Label x:Name="lblProductDiscount" Content="{x:Static language:Lng.discount}" HorizontalAlignment="Left" Margin="711,10,0,0" VerticalAlignment="Top" Width="64"/>
                 <Label x:Name="lblProductVAT" Content="{x:Static language:Lng.vat}" HorizontalAlignment="Left" Margin="780,10,0,0" VerticalAlignment="Top" Width="64"/>
-                <Label x:Name="lblProductTotalSalePrice" Content="{x:Static language:Lng.menu}" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top" Width="137" Foreground="Red"/>
+                <Label x:Name="lblProductTotalSalePrice" Content="{x:Static language:Lng.totalSalePrice}" HorizontalAlignment="Left" Margin="849,10,0,0" VerticalAlignment="Top" Width="137" Foreground="Red"/>
                 <TextBox x:Name="txtProductId" HorizontalAlignment="Left" Height="40" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" KeyUp="txtProductId_KeyUp" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Height="40" Margin="107,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <ComboBox x:Name="cboProductUnit" HorizontalAlignment="Left" Height="40" Margin="334,40,0,0" VerticalAlignment="Top" Width="55" SelectionChanged="cboProductUnit_SelectionChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <TextBox x:Name="txtProductQuantity" HorizontalAlignment="Left" Height="40" Margin="394,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" TextChanged="txtProductQuantity_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtProductCostPrice" HorizontalAlignment="Left" Height="40" Margin="463,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Opacity="0.75" IsReadOnly="True"/>
-                <TextBox x:Name="txtProductSalePrice" HorizontalAlignment="Left" Height="40" Margin="518,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductGrossCostPrice" HorizontalAlignment="Left" Height="40" Margin="463,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="11" Opacity="0.75" IsReadOnly="True"/>
+                <TextBox x:Name="txtProductGrossSalePrice" HorizontalAlignment="Left" Height="40" Margin="518,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductGrossTotalSalePrice" HorizontalAlignment="Left" Height="40" Margin="584,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122" Foreground="#FF002EFF" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductDiscount" HorizontalAlignment="Left" Height="40" Margin="711,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductDiscount_KeyUp" LostFocus="txtProductDiscount_LostFocus" IsReadOnly="True"/>
                 <TextBox x:Name="txtProductVAT" HorizontalAlignment="Left" Height="40" Margin="780,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyUp="txtProductVAT_KeyUp" LostFocus="txtProductVAT_LostFocus" IsReadOnly="True"/>
@@ -397,26 +397,26 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="{x:Static language:Lng.costPrice}" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossCostPrice}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                                    <TextBox x:Name="dgTxtProductGrossCostPrice" Text="{Binding CostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" VerticalContentAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="{x:Static language:Lng.salePrice}" Width="60">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossSalePrice}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductSalePrice" Text="{Binding SalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductSalePrice_KeyUp" VerticalContentAlignment="Center" FontSize="15" />
+                                    <TextBox x:Name="dgTxtProductGrossSalePrice" Text="{Binding SalePrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="dgTxtProductGrossSalePrice_KeyUp" VerticalContentAlignment="Center" FontSize="15" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="{x:Static language:Lng.totalCostPrice}" Width="100">
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.grossTotalCostPrice}" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="dgTxtProductTotalCostPrice" Text="{Binding TotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
+                                    <TextBox x:Name="dgTxtProductGrossTotalCostPrice" Text="{Binding GrossTotalCostPrice, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

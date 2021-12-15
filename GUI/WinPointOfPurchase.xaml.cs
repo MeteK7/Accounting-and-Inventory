@@ -262,6 +262,12 @@ namespace GUI
         private void LoadPastInvoice(int invoiceId = (int)Numbers.InitialIndex, int invoiceArrow = -(int)Numbers.UnitValue)//Optional parameter
         {
             string productId, productName, productQuantity, productGrossCostPrice, productCostPrice, productGrossTotalCostPrice, productDiscount, productVAT, productTotalCostPrice;
+            decimal basketQuantity=(int)Numbers.InitialIndex, 
+                    basketGrossTotalCostPrice = (int)Numbers.InitialIndex, 
+                    basketDiscount = (int)Numbers.InitialIndex, 
+                    basketSubTotal = (int)Numbers.InitialIndex, 
+                    basketVAT = (int)Numbers.InitialIndex, 
+                    basketGrandTotal = (int)Numbers.InitialIndex;
 
             if (invoiceId == (int)Numbers.InitialIndex)//If the ID is 0 came from the optional parameter, that means user just clicked the WinPOP button to open it.
             {
@@ -310,11 +316,11 @@ namespace GUI
                         productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productGrossCostPrice = dtPopDetail.Rows[currentRow][colTxtProductGrossCostPrice].ToString();
-                        productGrossTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("0.00");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPopDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPopDetail.Rows[currentRow][colTxtProductVAT].ToString();
-                        productCostPrice = dtPopDetail.Rows[currentRow][colTxtProductCostPrice].ToString();
-                        productTotalCostPrice = String.Format("{0:0.00}", (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT));//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("0.00");//Two digits are enough because we only store two float numbers for the product cost price in DB.
+                        productTotalCostPrice =((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("0.00");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName].ToString();//We used (int)Numbers.InitialIndex because there can be only one row in the datatable for a specific product.
@@ -349,18 +355,29 @@ namespace GUI
                             UnitCboDMemberPath = colTxtName,
                         });
 
+                        #region FILLING THE PREVIOUS BASKET INFORMATIONS TO VARIABLES
+                        basketQuantity = basketQuantity + Convert.ToDecimal(productQuantity);
+                        basketGrossTotalCostPrice = basketGrossTotalCostPrice + Convert.ToDecimal(productGrossTotalCostPrice);
+                        basketDiscount = basketDiscount + Convert.ToDecimal(productDiscount);
+                        basketSubTotal = basketSubTotal + (Convert.ToDecimal(productGrossTotalCostPrice) - Convert.ToDecimal(productDiscount));
+                        basketVAT = basketVAT + Convert.ToDecimal(productVAT);
+                        basketGrandTotal =
+                            basketGrandTotal + 
+                            Convert.ToDecimal((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - 
+                            Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT));
+                        #endregion
                     }
                     #endregion
 
                     #region FILLING THE PREVIOUS BASKET INFORMATIONS
 
-                    //We used (int)Numbers.InitialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
-                    txtBasketQuantity.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtTotalPQuantity].ToString();
-                    txtBasketGrossCostTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtGrossCostTotal].ToString();
-                    txtBasketDiscount.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtDiscount].ToString();
-                    txtBasketSubTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtSubTotal].ToString();
-                    txtBasketVat.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtVat].ToString();
-                    txtBasketGrandTotal.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtGrandTotal].ToString();
+                    //We used(int)Numbers.InitialIndex below as a row name because there can be only one row in the datatable for a specific Invoice.
+                    txtBasketQuantity.Text = basketQuantity.ToString();
+                    txtBasketGrossCostTotal.Text = basketGrossTotalCostPrice.ToString("0.00");
+                    txtBasketDiscount.Text = basketDiscount.ToString();
+                    txtBasketSubTotal.Text = basketSubTotal.ToString("0.00");
+                    txtBasketVat.Text = basketVAT.ToString();
+                    txtBasketGrandTotal.Text = basketGrandTotal.ToString("0.00");
 
                     #endregion
                 }
@@ -440,7 +457,7 @@ namespace GUI
 
             //If the old datagrid equals new datagrid and the old grand and the old asset id equals new asset id, no need for saving because the user did not change anything.
             //-1 means nothing has been chosen in the combobox. Note: We had to add the --&& txtInvoiceNo.Text.ToString()!= "0"-- into the if statement because the invoice text does not have the restriction so that the user may enter wrongly..
-            if (int.TryParse(txtInvoiceNo.Text, out int number) && isDgEqual == false & oldIdAsset != Convert.ToInt32(lblAssetId.Content) & oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) && cboMenuPaymentType.SelectedIndex != emptyCboIndex && cboMenuSupplier.SelectedIndex != emptyCboIndex && cboMenuAsset.SelectedIndex != emptyCboIndex && dgProducts.Items.Count != (int)Numbers.InitialIndex)
+            if (int.TryParse(txtInvoiceNo.Text, out int number) && /*isDgEqual == false && oldIdAsset != Convert.ToInt32(lblAssetId.Content) && oldIdAssetSupplier != Convert.ToInt32(lblAssetSupplierId.Content) &&*/ cboMenuPaymentType.SelectedIndex != emptyCboIndex && cboMenuSupplier.SelectedIndex != emptyCboIndex && cboMenuAsset.SelectedIndex != emptyCboIndex && dgProducts.Items.Count != (int)Numbers.InitialIndex)
             {
                 int invoiceNo = (int)Numbers.InitialIndex;//Defaulty, we are assigning 0 to the variable called invoiceNo in case the user would not enter any number.
                 if (txtInvoiceNo.Text != "")
@@ -491,12 +508,12 @@ namespace GUI
                 pointOfPurchaseCUL.InvoiceNo = invoiceNo;
                 pointOfPurchaseCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);//Selected value contains the id of the item so that no need to get it from DB.
                 pointOfPurchaseCUL.SupplierId = Convert.ToInt32(cboMenuSupplier.SelectedValue);
-                pointOfPurchaseCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
-                pointOfPurchaseCUL.GrossCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text);
-                pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
-                pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
-                pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
-                pointOfPurchaseCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                //pointOfPurchaseCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
+                //pointOfPurchaseCUL.GrossCostTotal = Convert.ToDecimal(txtBasketGrossCostTotal.Text);
+                //pointOfPurchaseCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+                //pointOfPurchaseCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+                //pointOfPurchaseCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+                //pointOfPurchaseCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
                 pointOfPurchaseCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                 pointOfPurchaseCUL.AddedDate = DateTime.Now;
                 pointOfPurchaseCUL.AddedBy = userId;

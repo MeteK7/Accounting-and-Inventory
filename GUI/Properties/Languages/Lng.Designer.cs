@@ -475,6 +475,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gross Sale Price.
+        /// </summary>
+        public static string grossSalePrice {
+            get {
+                return ResourceManager.GetString("grossSalePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gross Total Cost Price.
         /// </summary>
         public static string grossTotalCostPrice {

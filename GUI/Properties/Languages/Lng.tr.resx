@@ -255,6 +255,9 @@
   <data name="grossCostPrice" xml:space="preserve">
     <value>Brüt Maliyet Fiyatı</value>
   </data>
+  <data name="grossSalePrice" xml:space="preserve">
+    <value>Brüt Satış Fiyatı</value>
+  </data>
   <data name="grossTotalCostPrice" xml:space="preserve">
     <value>Brüt Toplam Maliyet Fiyatı</value>
   </data>

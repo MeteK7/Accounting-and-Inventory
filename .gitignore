@@ -2,3 +2,5 @@
 GUI/obj/Debug/net5.0-windows/GUI.g.resources
 GUI/obj/Debug/net5.0-windows/GUI.dll
 GUI/bin/Debug/net5.0-windows/GUI.dll
+*.v2
+.vs/KabaAccounting/v16/.suo
