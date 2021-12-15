@@ -59,7 +59,7 @@ namespace GUI
         {
             InitializeComponent();
             LoadDefaultDate();
-            LoadPayments();
+            LoadSales();
             LoadProductListView();
             LoadSaleListView();
         }
@@ -75,7 +75,7 @@ namespace GUI
             dateTo = String.Format("{0:yyyy-MM-dd}", dtpPosReportTo.SelectedDate) + " " + String.Format("{0:HH:mm:ss}", timePickerTo.Value);
 
             lvwSales.Items.Clear();
-            LoadPayments();
+            LoadSales();
             LoadProductListView();
             LoadSaleListView();
         }
@@ -99,7 +99,7 @@ namespace GUI
             lblProfitVar.Content = ((int)Numbers.InitialIndex).ToString();
         }
 
-        private void LoadPayments()
+        private void LoadSales()
         {
             ClearGroupBoxes();
 
@@ -111,18 +111,6 @@ namespace GUI
             lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
-            #endregion
-
-            #region PAYMENT RESULTS
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
-
-            for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPos.Rows.Count; rowIndex++)
-            {
-                lblCostVar.Content = Convert.ToDecimal(lblCostVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtCostTotal]);
-                lblRevenueVar.Content = Convert.ToDecimal(lblRevenueVar.Content) + Convert.ToDecimal(dtPos.Rows[rowIndex][colTxtPosGrandTotal]);
-            }
-
-            lblProfitVar.Content = Convert.ToDecimal(lblRevenueVar.Content) - Convert.ToDecimal(lblCostVar.Content);
             #endregion
 
             #region USER SALES
@@ -204,6 +192,7 @@ namespace GUI
             DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
             DataTable dtPosDetail;
             DataTable dtUsers,dtCustomers;
+            decimal totalCostPrice = (int)Numbers.InitialIndex, totalRevenue = (int)Numbers.InitialIndex;
             int userId,customerId;
             string userFullName,customerFullName;
             decimal productQuantity, 
@@ -217,7 +206,7 @@ namespace GUI
                     basketDiscount,
                     basketSubTotal,
                     basketVAT,
-                    basketGrandTotal;
+                    basketTotalSalePrice;
 
             for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
@@ -242,7 +231,7 @@ namespace GUI
                 basketDiscount = (int)Numbers.InitialIndex;
                 basketSubTotal = (int)Numbers.InitialIndex;
                 basketVAT = (int)Numbers.InitialIndex;
-                basketGrandTotal = (int)Numbers.InitialIndex;
+                basketTotalSalePrice = (int)Numbers.InitialIndex;
 
                 dtPosDetail = pointOfSaleDetailDAL.Search(Convert.ToInt32(dtPos.Rows[rowIndex][colTxtPosId]));
 
@@ -260,7 +249,7 @@ namespace GUI
                     basketDiscount = basketDiscount+ productDiscount;
                     basketSubTotal = basketSubTotal + (productSalePrice * productQuantity) + productDiscount;
                     basketVAT = basketVAT + productVAT;
-                    basketGrandTotal = basketGrandTotal + (productSalePrice * productQuantity) - productVAT + productDiscount;
+                    basketTotalSalePrice = basketTotalSalePrice + (productSalePrice * productQuantity) - productVAT + productDiscount;
                 }
 
                 lvwSales.Items.Add(
@@ -273,13 +262,23 @@ namespace GUI
                         PosDiscount= basketDiscount,
                         PosSubTotal = Convert.ToDecimal(String.Format("{0:0.00}", basketSubTotal)),
                         PosVAT = basketVAT,
-                        PosGrandTotal= Convert.ToDecimal(String.Format("{0:0.00}", basketGrandTotal)),
+                        PosGrandTotal= Convert.ToDecimal(String.Format("{0:0.00}", basketTotalSalePrice)),
                         PosCustomer=customerFullName,
                         UserFullName = userFullName,
                         PosDate=Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate])
                     });
                 #endregion
+
+                //PAYMENT SUMMARY
+                totalCostPrice = Convert.ToDecimal(totalCostPrice) + Convert.ToDecimal(basketGrossTotalCostPrice);
+                totalRevenue = Convert.ToDecimal(totalRevenue) + Convert.ToDecimal(basketTotalSalePrice);
             }
+
+            #region PAYMENT RESULTS
+            lblCostVar.Content = totalCostPrice.ToString("0.00");
+            lblRevenueVar.Content = totalRevenue.ToString("0.00");
+            lblProfitVar.Content = (totalRevenue- totalCostPrice).ToString("0.00");
+            #endregion
         }
     }
 }
