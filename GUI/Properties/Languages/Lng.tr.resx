@@ -264,6 +264,9 @@
   <data name="grossTotalSalePrice" xml:space="preserve">
     <value>Brüt Toplam Satış Fiyatı</value>
   </data>
+  <data name="hobbySingle" xml:space="preserve">
+    <value>HOBBY TEKLİ</value>
+  </data>
   <data name="inventory" xml:space="preserve">
     <value>ENVANTER</value>
   </data>

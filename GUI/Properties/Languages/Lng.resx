@@ -264,6 +264,9 @@
   <data name="grossTotalSalePrice" xml:space="preserve">
     <value>Gross Total Sale Price</value>
   </data>
+  <data name="hobbySingle" xml:space="preserve">
+    <value>Hobby Single</value>
+  </data>
   <data name="inventory" xml:space="preserve">
     <value>INVENTORY</value>
   </data>
@@ -383,6 +386,9 @@
   </data>
   <data name="staff" xml:space="preserve">
     <value>Staff</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
   <data name="subTotal" xml:space="preserve">
     <value>Sub Total</value>

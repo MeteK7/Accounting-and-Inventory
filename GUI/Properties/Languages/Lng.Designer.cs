@@ -502,6 +502,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hobby Single.
+        /// </summary>
+        public static string hobbySingle {
+            get {
+                return ResourceManager.GetString("hobbySingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INVENTORY.
         /// </summary>
         public static string inventory {
@@ -858,6 +867,15 @@ namespace GUI.Properties.Languages {
         public static string staff {
             get {
                 return ResourceManager.GetString("staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
