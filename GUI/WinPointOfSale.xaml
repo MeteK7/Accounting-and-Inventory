@@ -609,15 +609,15 @@
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.barcodelessProducts}" Margin="0,347,10,380" HorizontalAlignment="Right" Width="235">
             <Grid>
-                <Button x:Name="btnProductOne" Content="EKMEK" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductOne_Click"/>
+                <Button x:Name="btnProductOne" Content="{x:Static language:Lng.bread}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductOne_Click"/>
                 <Button x:Name="btnProductTwo" HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductTwo_Click">
-                    <TextBlock x:Name="tbProductTwo" Text="HOBBY TEKLİ" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock x:Name="tbProductTwo" Text="{x:Static language:Lng.hobbySingle}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
                 <Button x:Name="btnProductThree" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductThree_Click">
                     <TextBlock x:Name="tbProductThree" Text="TOPİTOP" TextWrapping="Wrap" TextAlignment="Center" FontSize="22"/>
                 </Button>
                 <Button x:Name="btnProductFour" HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductFour_Click">
-                    <TextBlock x:Name="tbProductFour" Text="FALIM TEKLİ" TextWrapping="Wrap" TextAlignment="Center" FontSize="22"/>
+                    <TextBlock x:Name="tbProductFour" Text="{x:Static language:Lng.falimSingle}" TextWrapping="Wrap" TextAlignment="Center" FontSize="22"/>
                 </Button>
             </Grid>
         </GroupBox>

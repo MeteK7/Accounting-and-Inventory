@@ -74,17 +74,17 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
-        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="65,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
-        <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
-        <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="315,127,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
-        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="{x:Static language:Lng.go}" HorizontalAlignment="Left" Margin="477,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
+        <DatePicker x:Name="dtpPosReportFrom" HorizontalAlignment="Left" Margin="113,61,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
+        <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="113,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
+        <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="364,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
+        <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="364,127,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
+        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="{x:Static language:Lng.go}" HorizontalAlignment="Left" Margin="532,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
             </Button.Background>
         </Button>
-        <Label x:Name="lblDateFrom" Content="{x:Static language:Lng.fromDate}" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="Red"/>
-        <Label x:Name="lblDateTo" Content="{x:Static language:Lng.toDate}" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="50" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
+        <Label x:Name="lblDateFrom" Content="{x:Static language:Lng.fromDate}" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="98" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="Red"/>
+        <Label x:Name="lblDateTo" Content="{x:Static language:Lng.toDate}" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="98" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontFamily="Californian FB" FontSize="14" Foreground="#FF009BD4"/>
         <GroupBox Header="{x:Static language:Lng.numberOfSales}" Margin="10,191,1033,596" FontSize="22" BorderBrush="Black">
             <Grid>
                 <Label x:Name="lblNumOfSalesVar" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="59" Width="255" FontSize="48" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F" Margin="0,10,0,0"/>
@@ -171,12 +171,12 @@
         </TabControl>
         <GroupBox Header="{x:Static language:Lng.summary}" Margin="670,873,10,10" BorderBrush="Black">
             <Grid>
-                <Label x:Name="lblCost" Content="{x:Static language:Lng.cost}" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" Height="30" Width="124" FontSize="24" FontFamily="Times New Roman"/>
-                <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="139,13,0,0" VerticalAlignment="Top" Height="38" Width="118" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-                <Label x:Name="lblProfit" Content="{x:Static language:Lng.profit}" HorizontalAlignment="Left" Margin="262,13,0,0" VerticalAlignment="Top" Height="38" Width="66" FontSize="14" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="333,13,0,0" VerticalAlignment="Top" Height="38" Width="60" FontSize="14" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
-                <Label x:Name="lblRevenue" Content="{x:Static language:Lng.revenue}" HorizontalAlignment="Left" Margin="418,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="20" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Height="38" Width="105" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFF30000"/>
+                <Label x:Name="lblCost" Content="{x:Static language:Lng.cost}" HorizontalAlignment="Left" Margin="166,0,0,0" VerticalAlignment="Center" Height="40" Width="124" FontSize="24" FontFamily="Times New Roman"/>
+                <Label x:Name="lblCostVar" Content="0" HorizontalAlignment="Left" Margin="295,0,0,0" VerticalAlignment="Center" Height="40" Width="118" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+                <Label x:Name="lblProfit" Content="{x:Static language:Lng.profit}" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Height="41" Width="66" FontSize="14" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblProfitVar" Content="0" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="41" Width="60" FontSize="14" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF1BA25F"/>
+                <Label x:Name="lblRevenue" Content="{x:Static language:Lng.revenue}" HorizontalAlignment="Left" Margin="418,0,0,0" VerticalAlignment="Center" Height="41" Width="121" FontSize="24" FontFamily="Times New Roman" VerticalContentAlignment="Center"/>
+                <Label x:Name="lblRevenueVar" Content="0" HorizontalAlignment="Left" Margin="544,0,0,0" VerticalAlignment="Center" Height="41" Width="89" FontSize="24" FontFamily="Times New Roman" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFF30000"/>
             </Grid>
         </GroupBox>
     </Grid>

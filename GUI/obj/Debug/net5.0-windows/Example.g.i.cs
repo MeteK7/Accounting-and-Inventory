@@ -54,7 +54,7 @@ namespace GUI {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUI;V1.0.0.0;component/example.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUI;component/example.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Example.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
