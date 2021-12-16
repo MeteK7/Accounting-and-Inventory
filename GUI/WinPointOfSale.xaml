@@ -607,7 +607,7 @@
                 <CheckBox x:Name="chkIsPaid" Content="Paid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="142" Foreground="#FF000CFF" FontSize="22" FontFamily="Calisto MT" FontWeight="Bold"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="{x:Static language:Lng.barcodelessProducts}" Margin="1128,347,10,380">
+        <GroupBox Header="{x:Static language:Lng.barcodelessProducts}" Margin="0,347,10,380" HorizontalAlignment="Right" Width="235">
             <Grid>
                 <Button x:Name="btnProductOne" Content="EKMEK" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductOne_Click"/>
                 <Button x:Name="btnProductTwo" HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Height="100" Width="100" FontSize="24" FontFamily="Sylfaen" Click="btnProductTwo_Click">
