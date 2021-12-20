@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {}
+    "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {}
   },
   "projects": {
-    "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
+    "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
         "projectName": "CUL",
-        "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
         "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
-        "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\obj\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

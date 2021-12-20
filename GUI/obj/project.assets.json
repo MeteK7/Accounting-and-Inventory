@@ -1352,11 +1352,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "projectUniqueName": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\GUI.csproj",
       "projectName": "GUI",
-      "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\GUI.csproj",
       "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
-      "outputPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\obj\\",
+      "outputPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1377,14 +1377,14 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\BLL\\BLL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\BLL\\BLL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\BLL\\BLL.csproj"
             },
-            "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj": {
-              "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj"
             },
-            "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj"
             }
           }
         }

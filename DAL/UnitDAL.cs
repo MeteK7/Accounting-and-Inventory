@@ -15,7 +15,7 @@ namespace DAL
     {
         UnitCUL unitCUL = new UnitCUL();
         //Static string method for Database Connnection String
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region Select Method
         public DataTable Select()

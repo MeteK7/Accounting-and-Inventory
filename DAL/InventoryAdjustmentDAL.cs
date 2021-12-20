@@ -12,7 +12,7 @@ namespace DAL
 {
     public class InventoryAdjustmentDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region SEARCH METHOD
         public DataTable Search(int inventoryAdjustmentId = 0)//Optional parameter

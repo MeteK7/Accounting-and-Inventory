@@ -13,14 +13,14 @@ namespace DAL
 {
     public class BackupDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         public string BackupDatabase(BackupCUL backupCUL)
         {
             string isSuccess = "";
             var backupCombined = Path.Combine(backupCUL.DatabasePath, backupCUL.DatabaseName);
             // Create the backup in the temp directory (the server should have access there)
-            var sqlQuery = "BACKUP DATABASE KabaAccounting TO DISK = @backup";
+            var sqlQuery = "BACKUP DATABASE Accounting TO DISK = @backup";
 
             using (var conn = new SqlConnection(connString))
             { 

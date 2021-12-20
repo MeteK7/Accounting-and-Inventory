@@ -11,7 +11,7 @@ namespace DAL
 {
     public class SourceTypeDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region SELECT METHOD
         public DataTable Select()

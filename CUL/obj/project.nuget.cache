@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SxQUZOPS/QDotJRXSBuFHFpxnjwTKamQLTcN305e3QIQGLmeptxmGfIz8b1tY72bxr5z9/vQaCYhSWTyUVu25A==",
+  "dgSpecHash": "XoKBt3Qh5jw5uH1R7Q+wR/JJlUyb/dHEs1nGvp8Y/ZfBtgdBhtG58KzW+KMl94884HD5hbZK+aYUyUBgr4eFHg==",
   "success": true,
-  "projectFilePath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\CUL\\CUL.csproj",
+  "projectFilePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"

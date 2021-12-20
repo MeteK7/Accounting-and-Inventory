@@ -154,7 +154,7 @@ namespace GUI
 
         private void FirstTimeRun()
         {
-            MessageBox.Show("Welcome!\n Thank you for choosing Kaba Accounting and Inventory System.");
+            MessageBox.Show("Welcome!\n Thank you for choosing Accounting and Inventory System.");
             btnEditRecord.IsEnabled = false;//There cannot be any editable records for the first run.
             btnDeleteRecord.IsEnabled = false;//There cannot be any deletible records for the first run.
             btnPrev.IsEnabled = false;//Disabling the btnPrev button because there is no any records in the database for the first time.
@@ -425,7 +425,7 @@ namespace GUI
                     MessageBox.Show("Enjoy!", "Enjoy");
                     break;
                 case MessageBoxResult.Cancel:
-                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    MessageBox.Show("Nevermind then...", "Accounting");
                     break;
             }
         }
@@ -672,7 +672,7 @@ namespace GUI
                     MessageBox.Show("Enjoy!", "Enjoy");
                     break;
                 case MessageBoxResult.Cancel:
-                    MessageBox.Show("Nevermind then...", "KABA Accounting");
+                    MessageBox.Show("Nevermind then...", "Accounting");
                     break;
             }
         }

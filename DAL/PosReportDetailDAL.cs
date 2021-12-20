@@ -12,7 +12,7 @@ namespace DAL
 {
     public class PosReportDetailDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region SEARCH BY TODAY METHOD
         public DataTable SearchBySaleDateId(int saleDateId)

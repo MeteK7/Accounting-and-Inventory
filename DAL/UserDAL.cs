@@ -13,7 +13,7 @@ namespace DAL
 {
     public class UserDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region Select Data from Database
         public DataTable Select()

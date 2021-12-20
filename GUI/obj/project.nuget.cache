@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v9LBLZtNc1STnru0oYH8wc216md7aebQbYypKP6G/d53ayfYlmIcqP8xaHRTa21Rjnz9bdmXUMsGWaYwrJ/Nuw==",
+  "dgSpecHash": "4OI0uOIPcYHxCYNrPm1uDEUH0s14xOB85ty+s0c2O2fDYFg2gjX4bOCGKj8g8A/cq2MluAuSdTVBiQiRIVHS8A==",
   "success": true,
-  "projectFilePath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\GUI\\GUI.csproj",
+  "projectFilePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\GUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",

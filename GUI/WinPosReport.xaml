@@ -78,7 +78,7 @@
         <DatePicker x:Name="dtpPosReportTo" HorizontalAlignment="Left" Margin="113,127,0,0" VerticalAlignment="Top" Width="246" FirstDayOfWeek="Monday"/>
         <syncfusion:SfTimePicker x:Name="timePickerFrom" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="364,61,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
         <syncfusion:SfTimePicker x:Name="timePickerTo" AllowNull="True" HorizontalAlignment="Left" Height="24" Margin="364,127,0,0" VerticalAlignment="Top" Value="12:00" Watermark="Pick a time" Width="120" FormatString="HH:mm:ss" SelectorFormatString="H:mm:ss"/>
-        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="{x:Static language:Lng.go}" HorizontalAlignment="Left" Margin="532,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="14" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
+        <Button Style="{StaticResource ButtonGoStyle}" x:Name="btnGo" Content="{x:Static language:Lng.go}" HorizontalAlignment="Left" Margin="532,61,0,0" VerticalAlignment="Top" Height="90" Width="90" Click="btnGo_Click" VerticalContentAlignment="Center" FontSize="10" FontFamily="PMingLiU-ExtB" Foreground="#FF17A800">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/productivity.png"/>
             </Button.Background>

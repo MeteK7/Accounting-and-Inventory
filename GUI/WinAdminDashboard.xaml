@@ -527,7 +527,7 @@
         </StackPanel>
         <Label x:Name="lblUser" Content="{x:Static language:Lng.user}" HorizontalAlignment="Left" Margin="89,129,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.785,1.417" Width="84" Height="46" VerticalContentAlignment="Center" FontSize="16" Foreground="White" FontFamily="SimSun-ExtB" FontWeight="Normal" HorizontalContentAlignment="Left"/>
         <Label x:Name="lblLoggedInUser" Content="SAMPLE NAME" HorizontalAlignment="Left" Margin="178,129,0,0" VerticalAlignment="Top" FontSize="20" Foreground="#FF0118FF" Width="287" Height="46" FontFamily="Javanese Text" VerticalContentAlignment="Center" FontWeight="Normal"/>
-        <Label x:Name="lblHead" Content="KABA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Height="60" FontWeight="Normal" FontFamily="Times New Roman" Margin="0,77,0,0"/>
+        <Label x:Name="lblHead" Content="WELCOME" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Height="60" FontWeight="Normal" FontFamily="Times New Roman" Margin="0,77,0,0"/>
         <Label x:Name="lblSubHead" Content="{x:Static language:Lng.accountingAndInventory}" FontSize="22" Foreground="#FF1272C1" FontWeight="SemiBold" Width="281" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Mongolian Baiti" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,175,0,0"/>
         <TabControl x:Name="tabHeader" Height="124" VerticalAlignment="Top" Margin="0,0,-1,0" HorizontalContentAlignment="Center">
             <TabControl.Background>

@@ -13,7 +13,7 @@ namespace DAL
 {
     public class ProductDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region Select All Data from Database | Search Product by Keyword (LIKE QUERY)
         public DataTable SelectAllOrByKeyword(string searchBy = null, string keyword = null)
