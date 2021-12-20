@@ -15,7 +15,7 @@ namespace DAL
     public class LoginDAL
     {
         //Static string to connect to the Database
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         public bool CheckLogin(LoginCUL login)
         {

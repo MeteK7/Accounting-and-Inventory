@@ -13,7 +13,7 @@ namespace DAL
 {
     public class PointOfPurchaseDetailDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
 
         #region SELECT METHOD

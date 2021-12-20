@@ -12,7 +12,7 @@ namespace DAL
 {
     public class PosReportDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region INSERT METHOD
         public void Insert(PosReportCUL posReportCUL)

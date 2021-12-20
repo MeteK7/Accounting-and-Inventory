@@ -11,7 +11,7 @@ namespace DAL
 {
     public class CommonDAL
     {
-        static string connString = ConfigurationManager.ConnectionStrings["KabaAccountingConnString"].ConnectionString;
+        static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
         #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
         public DataTable GetByIdOrLastId(string calledBy, int id = 0)//Optional parameter

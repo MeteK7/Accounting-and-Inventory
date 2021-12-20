@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IXJMM+pVOQYtVqkHbOdL1ObZZLSqLdI5h9r7e8VYhfM9ITVSBVUYDKmdGChypkW+anvQ6hOvnXenUofjdudcgg==",
+  "dgSpecHash": "M1G7FXFBjsBIxuMMdKwuWnbAlzvp6nqBs+cdJTcnBozrYA5m4R7Bbmdnwew4CYMEQ/ONrU0MpssGo7ETukVY0w==",
   "success": true,
-  "projectFilePath": "C:\\Lessons\\C# Programs\\Kaba-Accounting-and-Inventory\\DAL\\DAL.csproj",
+  "projectFilePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
