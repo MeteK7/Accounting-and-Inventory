@@ -40,7 +40,7 @@ namespace GUI
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
             backupCUL.DatabasePath = lblPath.Content.ToString();
-            backupCUL.DatabaseName = "AccountingAndInventory" + DateTime.Now.ToString("M-dd-yyyy-HH-mm-ss");
+            backupCUL.DatabaseName = "AccountingAndInventory" + DateTime.Now.ToString("M-dd-yyyy-HH-mm-ss")+".bak";
             string isSuccess=backupDAL.BackupDatabase(backupCUL);
 
             MessageBox.Show(isSuccess);
