@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\MeteK\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\MeteK\\.nuget\\packages",
+      "C:\\Users\\mete.kaba\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\mete.kaba\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ]
   }

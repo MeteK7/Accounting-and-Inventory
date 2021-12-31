@@ -57,3 +57,15 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.deps.json
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\bin\Debug\net5.0\ref\CUL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\bin\Debug\net5.0\CUL.pdb
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.AssemblyReference.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.GeneratedMSBuildEditorConfig.editorconfig
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.AssemblyInfoInputs.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.AssemblyInfo.cs
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.CoreCompileInputs.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb

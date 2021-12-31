@@ -10,8 +10,8 @@ namespace CUL.Enums
     public enum FileExtensions
     {
         [Description(".bak")]
-        bak,
+        Bak,
         [Description(".txt")]
-        txt
+        Txt
     }
 }
