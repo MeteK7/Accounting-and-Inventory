@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XoKBt3Qh5jw5uH1R7Q+wR/JJlUyb/dHEs1nGvp8Y/ZfBtgdBhtG58KzW+KMl94884HD5hbZK+aYUyUBgr4eFHg==",
+  "dgSpecHash": "1G6BKvI30sa51kIUOWWylRN8eU1lUQKf04cNH2Wm7pMglVLqVWhuMXy3yYeAZ6eXbv/ksTIcIKj/fJo6n/I3+g==",
   "success": true,
-  "projectFilePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
+  "projectFilePath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
-    "C:\\Users\\MeteK\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+    "C:\\Users\\mete.kaba\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
+    "C:\\Users\\mete.kaba\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

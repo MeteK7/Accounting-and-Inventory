@@ -1,4 +1,6 @@
-﻿using CUL;
+﻿using BLL;
+using CUL;
+using CUL.Enums;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,7 @@ namespace GUI
     {
         BackupDAL backupDAL = new BackupDAL();
         BackupCUL backupCUL = new BackupCUL();
+        EnumBLL enumBLL = new EnumBLL();
         public WinBackup()
         {
             InitializeComponent();
@@ -40,11 +43,10 @@ namespace GUI
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
             backupCUL.DatabasePath = lblPath.Content.ToString();
-            backupCUL.DatabaseName = "AccountingAndInventory" + DateTime.Now.ToString("M-dd-yyyy-HH-mm-ss");
+            backupCUL.DatabaseName = enumBLL.GetDescription(Names.AccountingAndInventory) + DateTime.Now.ToString("M-dd-yyyy-HH-mm-ss")+ enumBLL.GetDescription(FileExtensions.Bak);
             string isSuccess=backupDAL.BackupDatabase(backupCUL);
 
             MessageBox.Show(isSuccess);
-
         }
     }
 }
