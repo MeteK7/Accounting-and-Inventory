@@ -27,6 +27,14 @@ namespace GUI
     /// </summary>
     public partial class WinPointOfPurchase : Window
     {
+        private readonly UserDAL _userDAL;
+        private readonly UserBLL _userBLL;
+        public WinPointOfPurchase(UserDAL userDAL, UserBLL userBLL)
+        {
+            _userDAL = userDAL;
+            _userBLL = userBLL;
+        }
+
         public WinPointOfPurchase()
         {
             InitializeComponent();
@@ -464,7 +472,7 @@ namespace GUI
                     invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
-                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
+                int userId = _userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false,isSuccessAsset=false;
                 int productId;
                 int unitId;
