@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj": {}
+    "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
+    "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
         "projectName": "CUL",
-        "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj",
-        "packagesPath": "C:\\Users\\mete.kaba\\.nuget\\packages\\",
-        "outputPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\mete.kaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -65,24 +65,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj": {
+    "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\mete.kaba\\.nuget\\packages\\",
-        "outputPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\obj\\",
+        "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+        "outputPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\mete.kaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -98,8 +98,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
-                "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj"
+              "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
+                "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj"
               }
             }
           }
@@ -154,7 +154,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
