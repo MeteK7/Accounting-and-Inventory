@@ -61,3 +61,4 @@ GUI/obj/GUI.csproj.nuget.g.props
 GUI/obj/GUI.csproj.nuget.g.targets
 GUI/obj/project.assets.json
 GUI/obj/project.nuget.cache
+AccInvSetup/Debug/AccInvSetup.msi
