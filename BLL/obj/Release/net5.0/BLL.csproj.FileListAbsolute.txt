@@ -1,0 +1,17 @@
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\BLL.deps.json
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\BLL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\ref\BLL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\BLL.pdb
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\CUL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\DAL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\DAL.pdb
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Release\net5.0\CUL.pdb
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.csproj.AssemblyReference.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.AssemblyInfoInputs.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.AssemblyInfo.cs
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.csproj.CoreCompileInputs.cache
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.csproj.CopyComplete
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\ref\BLL.dll
+C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Release\net5.0\BLL.pdb

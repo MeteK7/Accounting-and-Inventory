@@ -35,7 +35,6 @@ namespace GUI
 
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         PointOfSaleDetailCUL pointOfSaleDetailCUL = new PointOfSaleDetailCUL();

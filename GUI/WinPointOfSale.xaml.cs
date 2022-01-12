@@ -93,7 +93,6 @@ namespace GUI
         UserDAL userDAL = new UserDAL();
         UserBLL userBLL = new UserBLL();
         BankDAL bankDAL = new BankDAL();
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleCUL pointOfSaleCUL = new PointOfSaleCUL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         PointOfSaleDetailCUL pointOfSaleDetailCUL = new PointOfSaleDetailCUL();
@@ -564,7 +563,7 @@ namespace GUI
             /*WE CANNOT USE ELSE IF FOR THE CODE BELOW! BOTH IF STATEMENTS ABOVE AND BELOVE MUST WORK.*/
             if (invoiceId != (int)Numbers.InitialIndex)// If the invoice number is still 0 even when we get the last invoice number by using code above, that means this is the first sale and do not run this code block.
             {
-                DataTable dataTablePos = pointOfSaleDAL.GetByIdOrLastId(invoiceId);
+                DataTable dataTablePos = PointOfSaleDAL.GetByIdOrLastId(invoiceId);
 
                 if (dataTablePos.Rows.Count != (int)Numbers.InitialIndex)
                 {
@@ -916,7 +915,7 @@ namespace GUI
                     int invoiceId = Convert.ToInt32(lblInvoiceId.Content); //GetLastInvoiceNumber(); You can also call this method and add number 1 to get the current invoice number, but getting the ready value is faster than getting the last invoice number from the database and adding a number to it to get the current invoice number.
 
                     pointOfSaleDetailDAL.Delete(invoiceId);
-                    pointOfSaleDAL.Delete(invoiceId);
+                    PointOfSaleDAL.Delete(invoiceId);
 
                     #endregion
 

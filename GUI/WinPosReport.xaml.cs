@@ -30,7 +30,6 @@ namespace GUI
         CustomerDAL customerDAL = new CustomerDAL();
         ProductDAL productDAL = new ProductDAL();
         ProductCUL productCUL = new ProductCUL();
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
         PointOfSaleDetailDAL pointOfSaleDetailDAL = new PointOfSaleDetailDAL();
         string dateFrom, dateTo;
         string
@@ -106,16 +105,16 @@ namespace GUI
             #region NUMBER OF SALES
             bool cash = true, credit = false;
 
-            lblCashSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
+            lblCashSales.Content = PointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, cash);//Send the variable cash to the parameter of the CountByDay method in the ProductDAL.
 
-            lblCreditSales.Content = pointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
+            lblCreditSales.Content = PointOfSaleDAL.CountPaymentTypeByToday(dateFrom, dateTo, credit);//Send the variable credit to the parameter of the CountByDay method in the ProductDAL.
 
             lblNumOfSalesVar.Content = Convert.ToInt32(lblCashSales.Content) + Convert.ToInt32(lblCreditSales.Content);//Sum cash and credit amount to find the total number of sales.
             #endregion
 
             #region USER SALES
             lvwUserSales.Items.Clear();//Clearing the listview before loading new datas in case the user changes the dates.
-            DataTable dtUserSales = pointOfSaleDAL.SumAmountByUserBetweenDates(dateFrom, dateTo);
+            DataTable dtUserSales = PointOfSaleDAL.SumAmountByUserBetweenDates(dateFrom, dateTo);
             DataTable dtUsers;
             int userId;
             decimal userSaleAmount;
@@ -148,7 +147,7 @@ namespace GUI
 
             lvwProducts.Items.Clear();
 
-            DataTable dtPosJoined = pointOfSaleDAL.JoinProductReportByDate(dateFrom, dateTo);
+            DataTable dtPosJoined = PointOfSaleDAL.JoinProductReportByDate(dateFrom, dateTo);
             DataTable dtProduct;
 
             for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPosJoined.Rows.Count; rowIndex++)
@@ -189,7 +188,7 @@ namespace GUI
 
         private void LoadSaleListView()
         {
-            DataTable dtPos = pointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
+            DataTable dtPos = PointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
             DataTable dtPosDetail;
             DataTable dtUsers,dtCustomers;
             decimal totalCostPrice = (int)Numbers.InitialIndex, totalRevenue = (int)Numbers.InitialIndex;
