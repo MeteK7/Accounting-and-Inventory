@@ -9,4 +9,3 @@ C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.csproj
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Release\net5.0\ref\CUL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.pdb
-C:\DOCUMENTS\Projects\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.csproj.AssemblyReference.cache

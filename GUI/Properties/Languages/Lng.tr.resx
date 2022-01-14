@@ -181,7 +181,10 @@
     <value>KATEGORİLER</value>
   </data>
   <data name="category" xml:space="preserve">
-    <value>Kadegori</value>
+    <value>Kategori</value>
+  </data>
+  <data name="categoryId" xml:space="preserve">
+    <value>Kadegori ID</value>
   </data>
   <data name="controls" xml:space="preserve">
     <value>Kontroller</value>
@@ -267,6 +270,12 @@
   <data name="hobbySingle" xml:space="preserve">
     <value>HOBBY TEKLİ</value>
   </data>
+  <data name="id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="idCapital" xml:space="preserve">
+    <value>ID</value>
+  </data>
   <data name="inventory" xml:space="preserve">
     <value>ENVANTER</value>
   </data>
@@ -288,8 +297,14 @@
   <data name="name" xml:space="preserve">
     <value>İsim</value>
   </data>
+  <data name="nameCapital" xml:space="preserve">
+    <value>İSİM</value>
+  </data>
   <data name="newRecord" xml:space="preserve">
     <value>YENİ (F2)</value>
+  </data>
+  <data name="numberOfPurchases" xml:space="preserve">
+    <value>Satın Alma Sayısı</value>
   </data>
   <data name="numberOfSales" xml:space="preserve">
     <value>Satış Sayısı</value>
@@ -304,6 +319,9 @@
     <value>Fiziksel Envanter</value>
   </data>
   <data name="pointOfPurchase" xml:space="preserve">
+    <value>Satın Alma Noktası</value>
+  </data>
+  <data name="pointOfPurchaseReport" xml:space="preserve">
     <value>Satın Alma Noktası</value>
   </data>
   <data name="pointOfSale" xml:space="preserve">
@@ -354,6 +372,9 @@
   <data name="quantityInUnitWholesale" xml:space="preserve">
     <value>Toptan Birimdeki Adet</value>
   </data>
+  <data name="quantityPurchased" xml:space="preserve">
+    <value>Satın Alınan Adet</value>
+  </data>
   <data name="quantitySold" xml:space="preserve">
     <value>Satılan Adet</value>
   </data>
@@ -378,6 +399,9 @@
   <data name="save" xml:space="preserve">
     <value>KAYDET (F5)</value>
   </data>
+  <data name="search" xml:space="preserve">
+    <value>Ara</value>
+  </data>
   <data name="services" xml:space="preserve">
     <value>SERVİSLER</value>
   </data>
@@ -396,11 +420,20 @@
   <data name="supplier" xml:space="preserve">
     <value>Tedarikçi</value>
   </data>
+  <data name="supplierId" xml:space="preserve">
+    <value>Tedarikçi Id</value>
+  </data>
+  <data name="supplierName" xml:space="preserve">
+    <value>Tedarikçi Adı</value>
+  </data>
   <data name="suppliers" xml:space="preserve">
     <value>TEDARİKÇİLER</value>
   </data>
   <data name="systemPreferences" xml:space="preserve">
     <value>Sistem Tercihleri</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Başlık</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>Şu Tarihe:</value>
@@ -443,6 +476,9 @@
   </data>
   <data name="username" xml:space="preserve">
     <value>Kullanıcı Adı:</value>
+  </data>
+  <data name="userPurchases" xml:space="preserve">
+    <value>Kullanıcı Satın Almaları</value>
   </data>
   <data name="users" xml:space="preserve">
     <value>Kullanıcılar</value>

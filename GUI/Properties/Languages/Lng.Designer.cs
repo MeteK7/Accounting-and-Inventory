@@ -19,7 +19,7 @@ namespace GUI.Properties.Languages {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Lng {
@@ -255,6 +255,15 @@ namespace GUI.Properties.Languages {
         public static string category {
             get {
                 return ResourceManager.GetString("category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category ID.
+        /// </summary>
+        public static string categoryId {
+            get {
+                return ResourceManager.GetString("categoryId", resourceCulture);
             }
         }
         
@@ -511,6 +520,24 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string id {
+            get {
+                return ResourceManager.GetString("id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string idCapital {
+            get {
+                return ResourceManager.GetString("idCapital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INVENTORY.
         /// </summary>
         public static string inventory {
@@ -574,11 +601,29 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NAME.
+        /// </summary>
+        public static string nameCapital {
+            get {
+                return ResourceManager.GetString("nameCapital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NEW (F2).
         /// </summary>
         public static string newRecord {
             get {
                 return ResourceManager.GetString("newRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Purchases.
+        /// </summary>
+        public static string numberOfPurchases {
+            get {
+                return ResourceManager.GetString("numberOfPurchases", resourceCulture);
             }
         }
         
@@ -624,6 +669,15 @@ namespace GUI.Properties.Languages {
         public static string pointOfPurchase {
             get {
                 return ResourceManager.GetString("pointOfPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point of Purchase Report.
+        /// </summary>
+        public static string pointOfPurchaseReport {
+            get {
+                return ResourceManager.GetString("pointOfPurchaseReport", resourceCulture);
             }
         }
         
@@ -772,6 +826,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity Purchased.
+        /// </summary>
+        public static string quantityPurchased {
+            get {
+                return ResourceManager.GetString("quantityPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity Sold.
         /// </summary>
         public static string quantitySold {
@@ -844,6 +907,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string search {
+            get {
+                return ResourceManager.GetString("search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SERVICES.
         /// </summary>
         public static string services {
@@ -867,15 +939,6 @@ namespace GUI.Properties.Languages {
         public static string staff {
             get {
                 return ResourceManager.GetString("staff", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
@@ -907,6 +970,24 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Supplier Id.
+        /// </summary>
+        public static string supplierId {
+            get {
+                return ResourceManager.GetString("supplierId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Name.
+        /// </summary>
+        public static string supplierName {
+            get {
+                return ResourceManager.GetString("supplierName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SUPPLIERS.
         /// </summary>
         public static string suppliers {
@@ -921,6 +1002,15 @@ namespace GUI.Properties.Languages {
         public static string systemPreferences {
             get {
                 return ResourceManager.GetString("systemPreferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string title {
+            get {
+                return ResourceManager.GetString("title", resourceCulture);
             }
         }
         
@@ -1047,6 +1137,15 @@ namespace GUI.Properties.Languages {
         public static string username {
             get {
                 return ResourceManager.GetString("username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Purchases.
+        /// </summary>
+        public static string userPurchases {
+            get {
+                return ResourceManager.GetString("userPurchases", resourceCulture);
             }
         }
         

@@ -183,6 +183,9 @@
   <data name="category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="categoryId" xml:space="preserve">
+    <value>Category ID</value>
+  </data>
   <data name="controls" xml:space="preserve">
     <value>Controls</value>
   </data>
@@ -267,6 +270,12 @@
   <data name="hobbySingle" xml:space="preserve">
     <value>Hobby Single</value>
   </data>
+  <data name="id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="idCapital" xml:space="preserve">
+    <value>ID</value>
+  </data>
   <data name="inventory" xml:space="preserve">
     <value>INVENTORY</value>
   </data>
@@ -288,8 +297,14 @@
   <data name="name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="nameCapital" xml:space="preserve">
+    <value>NAME</value>
+  </data>
   <data name="newRecord" xml:space="preserve">
     <value>NEW (F2)</value>
+  </data>
+  <data name="numberOfPurchases" xml:space="preserve">
+    <value>Number of Purchases</value>
   </data>
   <data name="numberOfSales" xml:space="preserve">
     <value>Number of Sales</value>
@@ -305,6 +320,9 @@
   </data>
   <data name="pointOfPurchase" xml:space="preserve">
     <value>Point of Purchase</value>
+  </data>
+  <data name="pointOfPurchaseReport" xml:space="preserve">
+    <value>Point of Purchase Report</value>
   </data>
   <data name="pointOfSale" xml:space="preserve">
     <value>Point of Sale</value>
@@ -354,6 +372,9 @@
   <data name="quantityInUnitWholesale" xml:space="preserve">
     <value>Quantity in Unit Wholesale</value>
   </data>
+  <data name="quantityPurchased" xml:space="preserve">
+    <value>Quantity Purchased</value>
+  </data>
   <data name="quantitySold" xml:space="preserve">
     <value>Quantity Sold</value>
   </data>
@@ -378,6 +399,9 @@
   <data name="save" xml:space="preserve">
     <value>SAVE (F5)</value>
   </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="services" xml:space="preserve">
     <value>SERVICES</value>
   </data>
@@ -386,9 +410,6 @@
   </data>
   <data name="staff" xml:space="preserve">
     <value>Staff</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
   <data name="subTotal" xml:space="preserve">
     <value>Sub Total</value>
@@ -399,11 +420,20 @@
   <data name="supplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
+  <data name="supplierId" xml:space="preserve">
+    <value>Supplier Id</value>
+  </data>
+  <data name="supplierName" xml:space="preserve">
+    <value>Supplier Name</value>
+  </data>
   <data name="suppliers" xml:space="preserve">
     <value>SUPPLIERS</value>
   </data>
   <data name="systemPreferences" xml:space="preserve">
     <value>System Preferences</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>To:</value>
@@ -446,6 +476,9 @@
   </data>
   <data name="username" xml:space="preserve">
     <value>Username:</value>
+  </data>
+  <data name="userPurchases" xml:space="preserve">
+    <value>User Purchases</value>
   </data>
   <data name="users" xml:space="preserve">
     <value>Users</value>
