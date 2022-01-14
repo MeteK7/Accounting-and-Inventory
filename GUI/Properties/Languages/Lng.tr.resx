@@ -231,6 +231,9 @@
   <data name="description" xml:space="preserve">
     <value>Açıklama</value>
   </data>
+  <data name="details" xml:space="preserve">
+    <value>Detaylar</value>
+  </data>
   <data name="discount" xml:space="preserve">
     <value>İndirim</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="expense" xml:space="preserve">
     <value>Masraf</value>
+  </data>
+  <data name="expenses" xml:space="preserve">
+    <value>MASRAFLAR</value>
   </data>
   <data name="falimSingle" xml:space="preserve">
     <value>FALIM TEKLİ</value>
@@ -395,6 +401,9 @@
   </data>
   <data name="receipt" xml:space="preserve">
     <value>Tahsil</value>
+  </data>
+  <data name="receipts" xml:space="preserve">
+    <value>TAHSİLLER</value>
   </data>
   <data name="reports" xml:space="preserve">
     <value>Raporlar</value>

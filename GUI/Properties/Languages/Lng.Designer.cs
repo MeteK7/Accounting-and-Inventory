@@ -403,6 +403,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string details {
+            get {
+                return ResourceManager.GetString("details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discount.
         /// </summary>
         public static string discount {
@@ -462,6 +471,15 @@ namespace GUI.Properties.Languages {
         public static string expense {
             get {
                 return ResourceManager.GetString("expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EXPENSES.
+        /// </summary>
+        public static string expenses {
+            get {
+                return ResourceManager.GetString("expenses", resourceCulture);
             }
         }
         
@@ -894,6 +912,15 @@ namespace GUI.Properties.Languages {
         public static string receipt {
             get {
                 return ResourceManager.GetString("receipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RECEIPTS.
+        /// </summary>
+        public static string receipts {
+            get {
+                return ResourceManager.GetString("receipts", resourceCulture);
             }
         }
         

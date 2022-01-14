@@ -231,6 +231,9 @@
   <data name="description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="discount" xml:space="preserve">
     <value>Discount</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="expense" xml:space="preserve">
     <value>Expense</value>
+  </data>
+  <data name="expenses" xml:space="preserve">
+    <value>EXPENSES</value>
   </data>
   <data name="falimSingle" xml:space="preserve">
     <value>FALIM SINGLE</value>
@@ -395,6 +401,9 @@
   </data>
   <data name="receipt" xml:space="preserve">
     <value>Receipt</value>
+  </data>
+  <data name="receipts" xml:space="preserve">
+    <value>RECEIPTS</value>
   </data>
   <data name="reports" xml:space="preserve">
     <value>Reports</value>
