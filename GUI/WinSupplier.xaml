@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="565.8" Width="832.8" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     
 <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
@@ -34,7 +35,7 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="SUPPLIERS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.suppliers}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -52,32 +53,32 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblId" Content="ID" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="68" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblId" Content="{x:Static language:Lng.idCapital}" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" Width="68" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="26" Margin="93,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" IsReadOnly="True" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblType" Content="Type" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
-        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblType" Content="{x:Static language:Lng.type}" HorizontalAlignment="Left" Margin="22,92,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblName" Content="{x:Static language:Lng.name}" HorizontalAlignment="Left" Margin="22,133,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" Margin="93,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblEmail" Content="{x:Static language:Lng.email}" HorizontalAlignment="Left" Margin="22,174,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="93,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblContact" Content="Contact" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblContact" Content="{x:Static language:Lng.contact}" HorizontalAlignment="Left" Margin="22,213,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="26" Margin="93,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="lblAddress" Content="Address" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblAddress" Content="{x:Static language:Lng.address}" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top" Width="66" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="249" Margin="93,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
@@ -88,22 +89,22 @@
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
-                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="150"/>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.id}"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.name}" Width="150"/>
                 <DataGridTextColumn Binding="{Binding Email}" ClipboardContentBinding="{x:Null}" Header="Email" Width="165"/>
-                <DataGridTextColumn Binding="{Binding Contact}" ClipboardContentBinding="{x:Null}" Header="Contact" Width="125"/>
-                <DataGridTextColumn Binding="{Binding Address}" ClipboardContentBinding="{x:Null}" Header="Address" Width="200"/>
-                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
-                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+                <DataGridTextColumn Binding="{Binding Contact}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.contact}" Width="125"/>
+                <DataGridTextColumn Binding="{Binding Address}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.address}" Width="200"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.addedBy}" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.addedDate}" Width="120"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label x:Name="lblSearch" Content="Search" HorizontalAlignment="Left" Margin="321,51,0,0" VerticalAlignment="Top" Width="72" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
+        <Label x:Name="lblSearch" Content="{x:Static language:Lng.search}" HorizontalAlignment="Left" Margin="321,51,0,0" VerticalAlignment="Top" Width="72" Foreground="Black" FontWeight="SemiBold" FontSize="13"/>
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="26" Margin="398,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" TextChanged="txtSearch_TextChanged" Opacity="0.77">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Button x:Name="btnAdd" Content="ADD" HorizontalAlignment="Left" Margin="321,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnAdd_Click">
+        <Button x:Name="btnAdd" Content="{x:Static language:Lng.add}" HorizontalAlignment="Left" Margin="321,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF0031FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="1,1,35,1" Click="btnAdd_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/add-user.png" Stretch="Uniform">
                     <ImageBrush.RelativeTransform>
@@ -117,7 +118,7 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="500,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnUpdate_Click">
+        <Button x:Name="btnUpdate" Content="{x:Static language:Lng.update}" HorizontalAlignment="Left" Margin="500,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FF35A900" Click="btnUpdate_Click">
             <Button.Background>
                 <ImageBrush Stretch="Uniform" ImageSource="/Images/Buttons/user.png">
                     <ImageBrush.RelativeTransform>
@@ -131,7 +132,7 @@
                 </ImageBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="679,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnDelete_Click">
+        <Button x:Name="btnDelete" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="679,518,0,0" VerticalAlignment="Top" Width="144" Height="38" FontSize="20" FontWeight="Light" Foreground="#FFEE1D1D" Click="btnDelete_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/Buttons/delete-user.png" Stretch="Uniform">
                     <ImageBrush.RelativeTransform>

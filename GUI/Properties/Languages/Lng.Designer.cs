@@ -115,6 +115,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string address {
+            get {
+                return ResourceManager.GetString("address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string amount {
@@ -268,6 +277,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        public static string contact {
+            get {
+                return ResourceManager.GetString("contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Controls.
         /// </summary>
         public static string controls {
@@ -381,6 +399,15 @@ namespace GUI.Properties.Languages {
         public static string edit {
             get {
                 return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string email {
+            get {
+                return ResourceManager.GetString("email", resourceCulture);
             }
         }
         
@@ -1065,6 +1092,15 @@ namespace GUI.Properties.Languages {
         public static string tr {
             get {
                 return ResourceManager.GetString("tr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string type {
+            get {
+                return ResourceManager.GetString("type", resourceCulture);
             }
         }
         

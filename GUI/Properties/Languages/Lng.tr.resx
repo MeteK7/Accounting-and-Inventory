@@ -135,6 +135,9 @@
   <data name="addedDate" xml:space="preserve">
     <value>Eklenme Tarihi</value>
   </data>
+  <data name="address" xml:space="preserve">
+    <value>Adres</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Miktar</value>
   </data>
@@ -186,6 +189,9 @@
   <data name="categoryId" xml:space="preserve">
     <value>Kadegori ID</value>
   </data>
+  <data name="contact" xml:space="preserve">
+    <value>İrtibat</value>
+  </data>
   <data name="controls" xml:space="preserve">
     <value>Kontroller</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="edit" xml:space="preserve">
     <value>DÜZENLE</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="en" xml:space="preserve">
     <value>İngilizce</value>
@@ -452,6 +461,9 @@
   </data>
   <data name="tr" xml:space="preserve">
     <value>Türkçe</value>
+  </data>
+  <data name="type" xml:space="preserve">
+    <value>Tür</value>
   </data>
   <data name="unit" xml:space="preserve">
     <value>Birim</value>
