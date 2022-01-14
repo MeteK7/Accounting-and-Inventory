@@ -133,6 +133,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AMOUNT:.
+        /// </summary>
+        public static string amountCapital {
+            get {
+                return ResourceManager.GetString("amountCapital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asset.
         /// </summary>
         public static string asset {
@@ -327,6 +336,15 @@ namespace GUI.Properties.Languages {
         public static string customer {
             get {
                 return ResourceManager.GetString("customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CUSTOMER.
+        /// </summary>
+        public static string customerCapital {
+            get {
+                return ResourceManager.GetString("customerCapital", resourceCulture);
             }
         }
         

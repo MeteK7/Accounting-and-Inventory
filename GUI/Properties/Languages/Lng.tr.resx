@@ -141,6 +141,9 @@
   <data name="amount" xml:space="preserve">
     <value>Miktar</value>
   </data>
+  <data name="amountCapital" xml:space="preserve">
+    <value>MİKTAR:</value>
+  </data>
   <data name="asset" xml:space="preserve">
     <value>Varlık</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="customer" xml:space="preserve">
     <value>Müşteri</value>
+  </data>
+  <data name="customerCapital" xml:space="preserve">
+    <value>MÜŞTERİLER</value>
   </data>
   <data name="customers" xml:space="preserve">
     <value>MÜŞTERİLER</value>

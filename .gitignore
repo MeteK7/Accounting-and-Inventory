@@ -65,3 +65,4 @@ AccInvSetup/Debug/AccInvSetup.msi
 GUI/bin/Release/net5.0-windows/GUI.dll
 GUI/obj/Release/net5.0-windows/GUI.dll
 GUI/obj/Release/net5.0-windows/GUI.g.resources
+.vs/AccountingAndInventory/v17/.suo
