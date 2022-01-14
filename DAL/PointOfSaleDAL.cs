@@ -11,13 +11,13 @@ using System.Windows;
 
 namespace DAL
 {
-    public class PointOfSaleDAL
+    public static class PointOfSaleDAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
 
         #region SELECT METHOD
-        public DataTable Select()
+        public static DataTable Select()
         {
             SqlConnection conn = new SqlConnection(connString);
 
@@ -46,7 +46,7 @@ namespace DAL
         #endregion
 
         #region INSERT METHOD
-        public bool Insert(PointOfSaleCUL pointOfSaleCUL)
+        public static bool Insert(PointOfSaleCUL pointOfSaleCUL)
         {
             bool isSuccess = false;
 
@@ -98,7 +98,7 @@ namespace DAL
         #endregion
 
         #region UPDATE METHOD
-        public bool Update(PointOfSaleCUL pointOfSaleCUL)
+        public static bool Update(PointOfSaleCUL pointOfSaleCUL)
         {
             bool isSuccess = false;
 
@@ -152,7 +152,7 @@ namespace DAL
         #endregion
 
         #region DELETE METHOD
-        public bool Delete(int invoiceId)
+        public static bool Delete(int invoiceId)
         {
             //Create a Boolean variable and set its value to false.
             bool isSuccess = false;
@@ -197,7 +197,7 @@ namespace DAL
         #endregion
 
         #region FETCH BY TODAY METHOD
-        public DataTable FetchReportByToday()
+        public static DataTable FetchReportByToday()
         {
             //Creating database connection
             SqlConnection conn = new SqlConnection(connString);
@@ -230,7 +230,7 @@ namespace DAL
         #endregion
 
         #region JOIN PRODUCT REPORT BY DATE METHOD
-        public DataTable JoinProductReportByDate(string dateFrom, string dateTo)
+        public static DataTable JoinProductReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -264,7 +264,7 @@ namespace DAL
         #endregion
 
         #region TOTAL SALES BY USER BETWEEN TWO DATES
-        public DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo)
+        public static DataTable SumAmountByUserBetweenDates(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -300,7 +300,7 @@ namespace DAL
         #endregion
 
         #region FETCH REPORT BY DATE METHOD
-        public DataTable FetchReportByDate(string dateFrom, string dateTo)
+        public static DataTable FetchReportByDate(string dateFrom, string dateTo)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -334,7 +334,7 @@ namespace DAL
         #endregion
 
         #region COUNT BY DAY METHOD
-        public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit)
+        public static int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit)
         {
             SqlConnection conn = new SqlConnection(connString);
 
@@ -376,7 +376,7 @@ namespace DAL
         #endregion
 
         #region GETTING ANY OR THE LAST ID AND ROW DATAS OF THE TABLE IN THE DATABASE
-        public DataTable GetByIdOrLastId(int invoiceId=0)//Optional parameter
+        public static DataTable GetByIdOrLastId(int invoiceId=0)//Optional parameter
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -422,7 +422,7 @@ namespace DAL
         #endregion
 
         #region CHECK RECORD EXISTANCE
-        public DataTable CheckReportExistance()
+        public static DataTable CheckReportExistance()
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {

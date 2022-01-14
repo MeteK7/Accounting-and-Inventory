@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d" Height="742" Width="1106" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="742" Width="1106" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -263,7 +264,7 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="EXPENSES" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.expenses}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -283,7 +284,7 @@
         </DockPanel>
         <GroupBox Header="Menu" Margin="10,34,219,610">
             <Grid>
-                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
+                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
@@ -297,7 +298,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
+                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="{x:Static language:Lng.save}" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-save.png">
                             <ImageBrush.RelativeTransform>
@@ -311,7 +312,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
+                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="{x:Static language:Lng.cancel}" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancellation.png">
                             <ImageBrush.RelativeTransform>
@@ -325,7 +326,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="EDIT" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuEdit_Click">
+                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="{x:Static language:Lng.edit}" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuEdit_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit-file.png">
                             <ImageBrush.RelativeTransform>
@@ -339,7 +340,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
+                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/file-trash.png">
                             <ImageBrush.RelativeTransform>
@@ -389,14 +390,14 @@
             </Grid>
         </GroupBox>
 
-        <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Left" Margin="553,137,0,0" VerticalAlignment="Top" Width="543" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Broadway Copyist Text Ext" FontSize="20" />
-        <RadioButton x:Name="rbAccount" Content="Account" HorizontalAlignment="Left" Margin="161,186,0,0" VerticalAlignment="Top" Width="79" Checked="rbAccount_Checked" FontFamily="Rockwell Condensed" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#FF26A23C" FontSize="20"/>
-        <RadioButton x:Name="rbBank" Content="Bank" HorizontalAlignment="Left" Margin="161,213,0,0" VerticalAlignment="Top" Width="79" Checked="rbBank_Checked" FontFamily="Rockwell Condensed" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#FF26A23C" FontSize="20"/>
-        <Label x:Name="lblFrom" Content="From" HorizontalAlignment="Left" Margin="33,186,0,0" VerticalAlignment="Top" Width="123" Height="54" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="16" FontFamily="Algerian"/>
-        <Label x:Name="lblTo" Content="To" HorizontalAlignment="Left" Margin="33,245,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
-        <Label x:Name="lblPaymentType" Content="Payment Type" HorizontalAlignment="Left" Margin="33,304,0,0" VerticalAlignment="Top" Width="123" Height="54"  FontFamily="Algerian" FontSize="16" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblAmount" Content="AMOUNT:" HorizontalAlignment="Left" Margin="33,376,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" FontFamily="Algerian" Foreground="Red"/>
-        <Label x:Name="lblDetails" Content="Details:" HorizontalAlignment="Left" Margin="33,451,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
+        <Label x:Name="lblDateAdded" Content="{x:Static language:Lng.date}" HorizontalAlignment="Left" Margin="553,137,0,0" VerticalAlignment="Top" Width="543" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Broadway Copyist Text Ext" FontSize="20" />
+        <RadioButton x:Name="rbAccount" Content="{x:Static language:Lng.account}" HorizontalAlignment="Left" Margin="161,186,0,0" VerticalAlignment="Top" Width="79" Checked="rbAccount_Checked" FontFamily="Rockwell Condensed" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#FF26A23C" FontSize="20"/>
+        <RadioButton x:Name="rbBank" Content="{x:Static language:Lng.bank}" HorizontalAlignment="Left" Margin="161,213,0,0" VerticalAlignment="Top" Width="79" Checked="rbBank_Checked" FontFamily="Rockwell Condensed" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="#FF26A23C" FontSize="20"/>
+        <Label x:Name="lblFrom" Content="{x:Static language:Lng.fromDate}" HorizontalAlignment="Left" Margin="33,186,0,0" VerticalAlignment="Top" Width="123" Height="54" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="16" FontFamily="Algerian"/>
+        <Label x:Name="lblTo" Content="{x:Static language:Lng.toDate}" HorizontalAlignment="Left" Margin="33,245,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
+        <Label x:Name="lblPaymentType" Content="{x:Static language:Lng.paymentType}" HorizontalAlignment="Left" Margin="33,304,0,0" VerticalAlignment="Top" Width="123" Height="54"  FontFamily="Algerian" FontSize="16" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblAmount" Content="{x:Static language:Lng.amountCapital}" HorizontalAlignment="Left" Margin="33,376,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" FontFamily="Algerian" Foreground="Red"/>
+        <Label x:Name="lblDetails" Content="{x:Static language:Lng.details}" HorizontalAlignment="Left" Margin="33,451,0,0" VerticalAlignment="Top" Width="123" Height="54" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Algerian" FontSize="16"/>
         <ComboBox x:Name="cboSourceTo" HorizontalAlignment="Left" Margin="161,244,0,0" VerticalAlignment="Top" Width="80" Height="54" SelectionChanged="cboSourceTo_SelectionChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"/>
         <ComboBox x:Name="cboFrom" HorizontalAlignment="Left" Margin="245,186,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboFrom_SelectionChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" />
         <ComboBox x:Name="cboTo" HorizontalAlignment="Left" Margin="245,245,0,0" VerticalAlignment="Top" Width="162" Height="54" SelectionChanged="cboTo_SelectionChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"/>

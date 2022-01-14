@@ -61,3 +61,8 @@ GUI/obj/GUI.csproj.nuget.g.props
 GUI/obj/GUI.csproj.nuget.g.targets
 GUI/obj/project.assets.json
 GUI/obj/project.nuget.cache
+AccInvSetup/Debug/AccInvSetup.msi
+GUI/bin/Release/net5.0-windows/GUI.dll
+GUI/obj/Release/net5.0-windows/GUI.dll
+GUI/obj/Release/net5.0-windows/GUI.g.resources
+.vs/AccountingAndInventory/v17/.suo

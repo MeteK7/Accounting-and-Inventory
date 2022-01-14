@@ -11,21 +11,20 @@ namespace BLL
 {
     public class PointOfSaleBLL
     {
-        PointOfSaleDAL pointOfSaleDAL = new PointOfSaleDAL();
 
         public bool InsertPOS(PointOfSaleCUL pointOfSaleCUL)
         {
-            return pointOfSaleDAL.Insert(pointOfSaleCUL);
+            return PointOfSaleDAL.Insert(pointOfSaleCUL);
         }
 
         public bool UpdatePOS(PointOfSaleCUL pointOfSaleCUL)
         {
-            return pointOfSaleDAL.Update(pointOfSaleCUL);
+            return PointOfSaleDAL.Update(pointOfSaleCUL);
         }
 
         public DataTable GetLastInvoiceRecord()
         {
-            DataTable dataTable = pointOfSaleDAL.GetByIdOrLastId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
+            DataTable dataTable = PointOfSaleDAL.GetByIdOrLastId();//A METHOD WHICH HAS AN OPTIONAL PARAMETER
 
             return dataTable;
         }
