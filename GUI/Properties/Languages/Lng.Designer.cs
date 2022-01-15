@@ -205,6 +205,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Name.
+        /// </summary>
+        public static string bankName {
+            get {
+                return ResourceManager.GetString("bankName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BANKS.
         /// </summary>
         public static string banks {
@@ -421,6 +430,33 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DEPOSIT.
+        /// </summary>
+        public static string depositCapital {
+            get {
+                return ResourceManager.GetString("depositCapital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit Number.
+        /// </summary>
+        public static string depositNumber {
+            get {
+                return ResourceManager.GetString("depositNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposits.
+        /// </summary>
+        public static string deposits {
+            get {
+                return ResourceManager.GetString("deposits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string description {
@@ -543,6 +579,15 @@ namespace GUI.Properties.Languages {
         public static string firstName {
             get {
                 return ResourceManager.GetString("firstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From:.
+        /// </summary>
+        public static string fromAsset {
+            get {
+                return ResourceManager.GetString("fromAsset", resourceCulture);
             }
         }
         
@@ -754,6 +799,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NEXT.
+        /// </summary>
+        public static string nextCapital {
+            get {
+                return ResourceManager.GetString("nextCapital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Specified.
         /// </summary>
         public static string notSpecified {
@@ -867,6 +921,15 @@ namespace GUI.Properties.Languages {
         public static string position {
             get {
                 return ResourceManager.GetString("position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PREV.
+        /// </summary>
+        public static string previousCapital {
+            get {
+                return ResourceManager.GetString("previousCapital", resourceCulture);
             }
         }
         
@@ -1191,6 +1254,15 @@ namespace GUI.Properties.Languages {
         public static string title {
             get {
                 return ResourceManager.GetString("title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To:.
+        /// </summary>
+        public static string toAsset {
+            get {
+                return ResourceManager.GetString("toAsset", resourceCulture);
             }
         }
         

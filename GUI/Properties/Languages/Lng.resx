@@ -165,6 +165,9 @@
   <data name="bank" xml:space="preserve">
     <value>Bank</value>
   </data>
+  <data name="bankName" xml:space="preserve">
+    <value>Bank Name</value>
+  </data>
   <data name="banks" xml:space="preserve">
     <value>BANKS</value>
   </data>
@@ -237,6 +240,15 @@
   <data name="deposit" xml:space="preserve">
     <value>Deposit</value>
   </data>
+  <data name="depositCapital" xml:space="preserve">
+    <value>DEPOSIT</value>
+  </data>
+  <data name="depositNumber" xml:space="preserve">
+    <value>Deposit Number</value>
+  </data>
+  <data name="deposits" xml:space="preserve">
+    <value>Deposits</value>
+  </data>
   <data name="description" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -278,6 +290,9 @@
   </data>
   <data name="firstName" xml:space="preserve">
     <value>First Name</value>
+  </data>
+  <data name="fromAsset" xml:space="preserve">
+    <value>From:</value>
   </data>
   <data name="fromDate" xml:space="preserve">
     <value>From:</value>
@@ -348,6 +363,9 @@
   <data name="newRecord" xml:space="preserve">
     <value>NEW (F2)</value>
   </data>
+  <data name="nextCapital" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
   <data name="notSpecified" xml:space="preserve">
     <value>Not Specified</value>
   </data>
@@ -386,6 +404,9 @@
   </data>
   <data name="position" xml:space="preserve">
     <value>Position</value>
+  </data>
+  <data name="previousCapital" xml:space="preserve">
+    <value>PREV</value>
   </data>
   <data name="print" xml:space="preserve">
     <value>PRINT</value>
@@ -494,6 +515,9 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="toAsset" xml:space="preserve">
+    <value>To:</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>To:</value>

@@ -165,6 +165,9 @@
   <data name="bank" xml:space="preserve">
     <value>Banka</value>
   </data>
+  <data name="bankName" xml:space="preserve">
+    <value>Banka Adı</value>
+  </data>
   <data name="banks" xml:space="preserve">
     <value>BANKALAR</value>
   </data>
@@ -237,6 +240,15 @@
   <data name="deposit" xml:space="preserve">
     <value>Mevduat</value>
   </data>
+  <data name="depositCapital" xml:space="preserve">
+    <value>DEPOSIT</value>
+  </data>
+  <data name="depositNumber" xml:space="preserve">
+    <value>Mevduat Numarası</value>
+  </data>
+  <data name="deposits" xml:space="preserve">
+    <value>Mevduatlar</value>
+  </data>
   <data name="description" xml:space="preserve">
     <value>Açıklama</value>
   </data>
@@ -278,6 +290,9 @@
   </data>
   <data name="firstName" xml:space="preserve">
     <value>İsim</value>
+  </data>
+  <data name="fromAsset" xml:space="preserve">
+    <value>Şuradan:</value>
   </data>
   <data name="fromDate" xml:space="preserve">
     <value>Şu Tarihten:</value>
@@ -348,6 +363,9 @@
   <data name="newRecord" xml:space="preserve">
     <value>YENİ (F2)</value>
   </data>
+  <data name="nextCapital" xml:space="preserve">
+    <value>SONRAKİ</value>
+  </data>
   <data name="notSpecified" xml:space="preserve">
     <value>Belirtilmemiş</value>
   </data>
@@ -386,6 +404,9 @@
   </data>
   <data name="position" xml:space="preserve">
     <value>Pozisyon</value>
+  </data>
+  <data name="previousCapital" xml:space="preserve">
+    <value>ÖNCEKİ</value>
   </data>
   <data name="print" xml:space="preserve">
     <value>YAZDIR</value>
@@ -465,7 +486,7 @@
   <data name="soldProducts" xml:space="preserve">
     <value>Satılan Ürünler</value>
   </data>
-  <data name="SpecifyPath" xml:space="preserve">
+  <data name="specifyPath" xml:space="preserve">
     <value>Yol Belirle</value>
   </data>
   <data name="staff" xml:space="preserve">
@@ -494,6 +515,9 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Başlık</value>
+  </data>
+  <data name="toAsset" xml:space="preserve">
+    <value>Şuraya:</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>Şu Tarihe:</value>
