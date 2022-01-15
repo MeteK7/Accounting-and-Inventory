@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUI", "GUI\GUI.csproj", "{00A31F23-AF2B-46ED-8609-DA3BA319C8A9}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AccInvSetup", "AccInvSetup\AccInvSetup.vdproj", "{6083FFC8-87D0-46C1-9BC4-857E2A42F0CC}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AccInstaller", "AccInstaller\AccInstaller.vdproj", "{00D1AF3F-8D39-457C-9B73-44804CE29B89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,8 +35,8 @@ Global
 		{00A31F23-AF2B-46ED-8609-DA3BA319C8A9}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{00A31F23-AF2B-46ED-8609-DA3BA319C8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00A31F23-AF2B-46ED-8609-DA3BA319C8A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6083FFC8-87D0-46C1-9BC4-857E2A42F0CC}.Debug|Any CPU.ActiveCfg = Debug
-		{6083FFC8-87D0-46C1-9BC4-857E2A42F0CC}.Release|Any CPU.ActiveCfg = Release
+		{00D1AF3F-8D39-457C-9B73-44804CE29B89}.Debug|Any CPU.ActiveCfg = Debug
+		{00D1AF3F-8D39-457C-9B73-44804CE29B89}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

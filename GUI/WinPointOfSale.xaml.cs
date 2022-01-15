@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CUL.Enums;
+using GUI.Properties.Languages;
 
 namespace GUI
 {
@@ -512,7 +513,7 @@ namespace GUI
                     }
                     else
                     {
-                        MessageBox.Show("Something went wrong :(");
+                        MessageBox.Show(Lng.somethingWentWrong);
                     }
                 }
 
@@ -525,7 +526,7 @@ namespace GUI
 
         public void LoadNewInvoice()/*INVOICE NUMBER REFERS TO THE ID NUMBER IN THE DATABASE FOR POINT OF SALE.*/
         {
-            if (isNewShortcutEnabled == true)
+            if (isNewShortcutEnabled == true)//If the new shortcut is enabled, we can load a new invoice.
             {
                 clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
                 lblDateAdded.Content = "";//Because it is only a single line of code, no need to make a special function for it.
@@ -1168,7 +1169,7 @@ namespace GUI
 
                 if (txtDgProductId.Text == productId.ToString())
                 {
-                    if (MessageBox.Show("There is already the same item in the list. Would you like to sum them?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show(Lng.sameItemPrompt, Lng.confirmation, MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
                     {
                         //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
                         ContentPresenter cpProductQty = dgProducts.Columns[(int)PosColumns.ColProductQuantity].GetCellContent(row) as ContentPresenter;

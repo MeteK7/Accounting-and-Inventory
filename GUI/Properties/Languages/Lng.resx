@@ -138,6 +138,9 @@
   <data name="address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Amount</value>
   </data>
@@ -153,8 +156,17 @@
   <data name="backup" xml:space="preserve">
     <value>Backup</value>
   </data>
+  <data name="backupCapital" xml:space="preserve">
+    <value>BACKUP</value>
+  </data>
+  <data name="backupRequest" xml:space="preserve">
+    <value>BACKUP</value>
+  </data>
   <data name="bank" xml:space="preserve">
     <value>Bank</value>
+  </data>
+  <data name="bankName" xml:space="preserve">
+    <value>Bank Name</value>
   </data>
   <data name="banks" xml:space="preserve">
     <value>BANKS</value>
@@ -192,6 +204,9 @@
   <data name="categoryId" xml:space="preserve">
     <value>Category ID</value>
   </data>
+  <data name="confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="contact" xml:space="preserve">
     <value>Contact</value>
   </data>
@@ -228,11 +243,20 @@
   <data name="deposit" xml:space="preserve">
     <value>Deposit</value>
   </data>
+  <data name="depositCapital" xml:space="preserve">
+    <value>DEPOSIT</value>
+  </data>
+  <data name="depositNumber" xml:space="preserve">
+    <value>Deposit Number</value>
+  </data>
+  <data name="deposits" xml:space="preserve">
+    <value>Deposits</value>
+  </data>
   <data name="description" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="details" xml:space="preserve">
-    <value>Details</value>
+    <value>Details:</value>
   </data>
   <data name="discount" xml:space="preserve">
     <value>Discount</value>
@@ -252,20 +276,41 @@
   <data name="enteredProducts" xml:space="preserve">
     <value>EnteredProducts</value>
   </data>
+  <data name="entrance" xml:space="preserve">
+    <value>Entrance</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>ERROR!</value>
+  </data>
   <data name="expense" xml:space="preserve">
     <value>Expense</value>
   </data>
   <data name="expenses" xml:space="preserve">
     <value>EXPENSES</value>
   </data>
+  <data name="failLogin" xml:space="preserve">
+    <value>Login Failed!</value>
+  </data>
   <data name="falimSingle" xml:space="preserve">
     <value>FALIM SINGLE</value>
+  </data>
+  <data name="female" xml:space="preserve">
+    <value>Female</value>
   </data>
   <data name="fileManagement" xml:space="preserve">
     <value>File Management</value>
   </data>
+  <data name="firstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="fromAsset" xml:space="preserve">
+    <value>From:</value>
+  </data>
   <data name="fromDate" xml:space="preserve">
     <value>From:</value>
+  </data>
+  <data name="gender" xml:space="preserve">
+    <value>Gender</value>
   </data>
   <data name="go" xml:space="preserve">
     <value>GO</value>
@@ -294,6 +339,9 @@
   <data name="id" xml:space="preserve">
     <value>Id</value>
   </data>
+  <data name="idBarcode" xml:space="preserve">
+    <value>Id / Barcode</value>
+  </data>
   <data name="idCapital" xml:space="preserve">
     <value>ID</value>
   </data>
@@ -309,8 +357,14 @@
   <data name="language" xml:space="preserve">
     <value>Language:</value>
   </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>LOGIN</value>
+  </data>
+  <data name="male" xml:space="preserve">
+    <value>Male</value>
   </data>
   <data name="menu" xml:space="preserve">
     <value>MENU</value>
@@ -324,6 +378,12 @@
   <data name="newRecord" xml:space="preserve">
     <value>NEW (F2)</value>
   </data>
+  <data name="nextCapital" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="notSpecified" xml:space="preserve">
+    <value>Not Specified</value>
+  </data>
   <data name="numberOfPurchases" xml:space="preserve">
     <value>Number of Purchases</value>
   </data>
@@ -333,8 +393,11 @@
   <data name="password" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="path" xml:space="preserve">
+    <value>Path:</value>
+  </data>
   <data name="paymentType" xml:space="preserve">
-    <value>Payment Type</value>
+    <value>Payment Type:</value>
   </data>
   <data name="physicalInventory" xml:space="preserve">
     <value>Physical Inventory</value>
@@ -357,11 +420,17 @@
   <data name="position" xml:space="preserve">
     <value>Position</value>
   </data>
+  <data name="previousCapital" xml:space="preserve">
+    <value>PREV</value>
+  </data>
   <data name="print" xml:space="preserve">
     <value>PRINT</value>
   </data>
   <data name="product" xml:space="preserve">
     <value>Product</value>
+  </data>
+  <data name="productCapital" xml:space="preserve">
+    <value>PRODUCT</value>
   </data>
   <data name="productId" xml:space="preserve">
     <value>Product Id</value>
@@ -420,11 +489,17 @@
   <data name="sales" xml:space="preserve">
     <value>SALES</value>
   </data>
+  <data name="sameItemPrompt" xml:space="preserve">
+    <value>The same item already exists in the list. Do you want to merge?</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>SAVE (F5)</value>
   </data>
   <data name="search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="searchCapital" xml:space="preserve">
+    <value>SEARCH</value>
   </data>
   <data name="services" xml:space="preserve">
     <value>SERVICES</value>
@@ -432,11 +507,20 @@
   <data name="soldProducts" xml:space="preserve">
     <value>Sold Products</value>
   </data>
+  <data name="somethingWentWrong" xml:space="preserve">
+    <value>Something went wrong :(</value>
+  </data>
+  <data name="specifyPath" xml:space="preserve">
+    <value>Specify Path</value>
+  </data>
   <data name="staff" xml:space="preserve">
     <value>Staff</value>
   </data>
   <data name="subTotal" xml:space="preserve">
     <value>Sub Total</value>
+  </data>
+  <data name="successLogin" xml:space="preserve">
+    <value>Successfully logged in!</value>
   </data>
   <data name="summary" xml:space="preserve">
     <value>SUMMARY</value>
@@ -458,6 +542,9 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="toAsset" xml:space="preserve">
+    <value>To:</value>
   </data>
   <data name="toDate" xml:space="preserve">
     <value>To:</value>
@@ -498,6 +585,9 @@
   <data name="user" xml:space="preserve">
     <value>User:</value>
   </data>
+  <data name="userId" xml:space="preserve">
+    <value>User ID</value>
+  </data>
   <data name="userInformations" xml:space="preserve">
     <value>User Informations</value>
   </data>
@@ -512,6 +602,12 @@
   </data>
   <data name="userSales" xml:space="preserve">
     <value>User Sales</value>
+  </data>
+  <data name="usersCapital" xml:space="preserve">
+    <value>USERS</value>
+  </data>
+  <data name="userSearch" xml:space="preserve">
+    <value>User Search</value>
   </data>
   <data name="userType" xml:space="preserve">
     <value>User Type:</value>

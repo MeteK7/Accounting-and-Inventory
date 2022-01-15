@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="Backup" Height="569" Width="785" WindowStartupLocation="CenterScreen">
+        Title="{x:Static language:Lng.backupCapital}" Height="569" Width="785" WindowStartupLocation="CenterScreen"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Background>
         <ImageBrush ImageSource="/Images/Backgrounds/worldwide.jpg" Stretch="Fill"/>
     </Window.Background>
     <Grid>
-        <Label x:Name="lblPath" Content="Path" HorizontalAlignment="Left" Margin="143,32,0,0" VerticalAlignment="Top" Height="27" Width="632"/>
-        <Button x:Name="btnPath" Content="Specify Path" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
-        <Button x:Name="btnBackup" Content="BACKUP" HorizontalAlignment="Left" Margin="31,96,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
+        <Label x:Name="lblPath" Content="{x:Static language:Lng.path}" HorizontalAlignment="Left" Margin="143,32,0,0" VerticalAlignment="Top" Height="27" Width="632"/>
+        <Button x:Name="btnPath" Content="{x:Static language:Lng.specifyPath}" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
+        <Button x:Name="btnBackup" Content="{x:Static language:Lng.backupRequest}" HorizontalAlignment="Left" Margin="31,96,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
 
     </Grid>
 </Window>

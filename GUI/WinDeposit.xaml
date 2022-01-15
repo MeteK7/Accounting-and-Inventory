@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="WinDeposit" Height="742" Width="1106" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="WinDeposit" Height="742" Width="1106" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -207,7 +208,7 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="DEPOSITS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.depositCapital}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -225,9 +226,9 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="Menu" Margin="10,34,219,610">
+        <GroupBox Header="{x:Static language:Lng.menu}" Margin="10,34,219,610">
             <Grid>
-                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="NEW" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
+                <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-file.png">
                             <ImageBrush.RelativeTransform>
@@ -241,7 +242,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="SAVE" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
+                <Button Style="{StaticResource ButtonMenuSaveStyle}" x:Name="btnMenuSave" Content="{x:Static language:Lng.save}" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/btn-save.png">
                             <ImageBrush.RelativeTransform>
@@ -255,7 +256,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
+                <Button Style="{StaticResource ButtonMenuCancelStyle}" x:Name="btnMenuCancel" Content="{x:Static language:Lng.cancel}" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancellation.png">
                             <ImageBrush.RelativeTransform>
@@ -269,7 +270,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="EDIT" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuEdit_Click">
+                <Button Style="{StaticResource ButtonMenuEditStyle}" x:Name="btnMenuEdit" Content="{x:Static language:Lng.edit}" HorizontalAlignment="Left" Margin="208,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuEdit_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit-file.png">
                             <ImageBrush.RelativeTransform>
@@ -283,7 +284,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="DELETE" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
+                <Button Style="{StaticResource ButtonMenuDeleteStyle}" x:Name="btnMenuDelete" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuDelete_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/file-trash.png">
                             <ImageBrush.RelativeTransform>
@@ -297,18 +298,18 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Label x:Name="lblMenuAccount" Content="Account" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <Label x:Name="lblMenuAccount" Content="{x:Static language:Lng.account}" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="112"/>
                 <ComboBox x:Name="cboMenuAccount" HorizontalAlignment="Left" Margin="457,10,0,0" VerticalAlignment="Top" Width="112" Height="29" Loaded="cboMenuAccount_Loaded"/>
-                <Button x:Name="btnPrev" Content="PREV" HorizontalAlignment="Left" Margin="709,7,0,0" VerticalAlignment="Top" Height="32" Width="71"/>
-                <Button x:Name="btnNext" Content="NEXT" HorizontalAlignment="Left" Margin="785,7,0,0" VerticalAlignment="Top" Height="32" Width="70" RenderTransformOrigin="0.729,0.517"/>
+                <Button x:Name="btnPrev" Content="{x:Static language:Lng.previousCapital}" HorizontalAlignment="Left" Margin="709,7,0,0" VerticalAlignment="Top" Height="32" Width="71"/>
+                <Button x:Name="btnNext" Content="{x:Static language:Lng.nextCapital}" HorizontalAlignment="Left" Margin="785,7,0,0" VerticalAlignment="Top" Height="32" Width="70" RenderTransformOrigin="0.729,0.517"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Entrance" Margin="10,137,219,501">
+        <GroupBox Header="{x:Static language:Lng.entrance}" Margin="10,137,219,501">
             <Grid>
-                <Label x:Name="lblEntranceBankId" Content="Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="73"/>
-                <Label x:Name="lblEntranceBankName" Content="Bank Name" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="112"/>
-                <Label x:Name="lblEntranceDescription" Content="Description" HorizontalAlignment="Left" Margin="205,11,0,0" VerticalAlignment="Top" Width="461"/>
-                <Label x:Name="lblEntranceAmount" Content="Amount" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="74"/>
+                <Label x:Name="lblEntranceBankId" Content="{x:Static language:Lng.id}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="73"/>
+                <Label x:Name="lblEntranceBankName" Content="{x:Static language:Lng.bankName}" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="112"/>
+                <Label x:Name="lblEntranceDescription" Content="{x:Static language:Lng.description}" HorizontalAlignment="Left" Margin="205,11,0,0" VerticalAlignment="Top" Width="461"/>
+                <Label x:Name="lblEntranceAmount" Content="{x:Static language:Lng.amount}" HorizontalAlignment="Left" Margin="671,10,0,0" VerticalAlignment="Top" Width="74"/>
                 <TextBox x:Name="txtEntranceBankId" HorizontalAlignment="Left" Margin="10,41,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" Height="30" KeyUp="txtId_KeyUp"/>
                 <ComboBox x:Name="cboEntranceBankName" HorizontalAlignment="Left" Margin="88,41,0,0" VerticalAlignment="Top" Width="112" Height="30" Loaded="cboBankName_Loaded" KeyUp="cboBankName_KeyUp"/>
                 <TextBox x:Name="txtEntranceDescription" HorizontalAlignment="Left" Margin="205,42,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" Height="30"/>
@@ -325,40 +326,40 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Deposits" Margin="10,246,219,10">
+        <GroupBox Header="{x:Static language:Lng.deposits}" Margin="10,246,219,10">
             <DataGrid x:Name="dgDeposits">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding BankId}" ClipboardContentBinding="{x:Null}" Header="Id" Width="50" />
-                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="Bank Name" Width="190"/>
-                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="455"/>
-                    <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount" Width="120"/>
-                    <DataGridTemplateColumn Header="Delete">
+                    <DataGridTextColumn Binding="{Binding BankId}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.id}" Width="50" />
+                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.bankName}" Width="190"/>
+                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.description}" Width="455"/>
+                    <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.amount}" Width="120"/>
+                    <DataGridTemplateColumn Header="{x:Static language:Lng.delete}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="btnDeleteDataGridRow" Content="Delete"/>
+                                <Button Name="btnDeleteDataGridRow" Content="{x:Static language:Lng.delete}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-        <GroupBox Header="Deposit Number" Margin="892,34,10,610">
+        <GroupBox Header="{x:Static language:Lng.depositNumber}" Margin="892,34,10,610">
             <Grid>
                 <Label x:Name="lblDepositNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="User Informations" Margin="892,137,10,501">
+        <GroupBox Header="{x:Static language:Lng.userInformations}" Margin="892,137,10,501">
             <Grid>
-                <Label x:Name="lblUserPosition" Content="Position" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
-                <Label x:Name="lblUsername" Content="Username" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <Label x:Name="lblUserPosition" Content="{x:Static language:Lng.position}" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <Label x:Name="lblUsername" Content="{x:Static language:Lng.username}" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
                 <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="78,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="78,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Summary" Margin="892,489,10,10">
+        <GroupBox Header="{x:Static language:Lng.summary}" Margin="892,489,10,10">
             <Grid>
-                <Label x:Name="lblSummaryTotalAmount" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
-                <TextBox x:Name="txtSummaryTotalAmount" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" Height="26" IsReadOnly="True"/>
+                <Label x:Name="lblSummaryTotalAmount" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="63"/>
+                <TextBox x:Name="txtSummaryTotalAmount" HorizontalAlignment="Left" Margin="78,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Height="26" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
 

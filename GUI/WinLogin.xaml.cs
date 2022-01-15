@@ -1,5 +1,6 @@
 ﻿using CUL;
 using DAL;
+using GUI.Properties.Languages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace GUI
             if (isSuccess == true)
             {
                 //Login Successful
-                MessageBox.Show("Login Successful");
+                MessageBox.Show(Lng.successLogin, Lng.error, MessageBoxButton.OK, MessageBoxImage.Information);
                 loggedInUserName = loginCUL.Username;
                 loggedInUserType = loginCUL.UserType;
 
@@ -80,7 +81,7 @@ namespace GUI
             else
             {
                 //Login Failed
-                MessageBox.Show("Login failed.");
+                MessageBox.Show(Lng.failLogin,Lng.error,MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
     }
