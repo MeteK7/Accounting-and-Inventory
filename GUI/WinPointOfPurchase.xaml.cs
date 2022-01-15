@@ -85,6 +85,7 @@ namespace GUI
             colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
             colTxtName = "name",
+            colTxtDateAdded = "added_date",
             colTxtProductGrossCostPrice = "product_gross_cost_price",
             colTxtProductCostPrice = "product_cost_price",
             colTxtProductDiscount = "product_discount",
@@ -256,6 +257,8 @@ namespace GUI
 
         private void LoadNewInvoice()
         {
+            clickedNewOrEdit = clickedNew;//0 stands for the user has entered the btnNew.
+            lblDateAdded.Content = "";//Because it is only a single line of code, no need to make a special function for it.
             ClearBasketTextBox();
             ClearProductsDataGrid();
 
@@ -314,6 +317,7 @@ namespace GUI
                     cboMenuSupplier.SelectedValue = Convert.ToInt32(dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtSupplierId].ToString());//Getting the id of supplier.
                     txtInvoiceNo.Text = dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtInvoiceNo].ToString();
                     lblInvoiceId.Content= dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtId].ToString();
+                    lblDateAdded.Content = Convert.ToDateTime(dataTablePop.Rows[(int)Numbers.InitialIndex][colTxtDateAdded]).ToString("MM/dd/yyyy HH:mm:ss");
 
                     #region LOADING THE PRODUCT DATA GRID
                     int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;

@@ -318,7 +318,7 @@
                 </Button>
             </Grid>
         </DockPanel>
-        <GroupBox Header="{x:Static language:Lng.product}" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
+        <GroupBox Header="{x:Static language:Lng.productCapital}" Margin="10,152,250,0" Padding="0" VerticalAlignment="Top" Height="116">
             <Grid Margin="10,0,-2,0">
                 <Label x:Name="lblProductId" Content="Id/Barcode" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
                 <Label x:Name="lblProductName" Content="{x:Static language:Lng.name}" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="237"/>
@@ -454,7 +454,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.invoiceNumber}" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
-            <Label x:Name="lblInvoiceId" Content="{x:Static language:Lng.welcome}" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="20" FontFamily="Bahnschrift Light"/>
+            <Label x:Name="lblInvoiceId" Content="{x:Static language:Lng.welcome}" HorizontalAlignment="Center" Margin="10,0,0,0" Width="215" Height="89" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFDE1717" FontSize="36" FontFamily="Bahnschrift Light"/>
         </GroupBox>
         <GroupBox Header="{x:Static language:Lng.userInformations}" Height="116" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235">
             <Grid Margin="0,-3,-1.8,-4.4">
@@ -593,7 +593,7 @@
                 </TextBox>
             </Grid>
         </GroupBox>
-        <Label x:Name="lblDateAdded" Content="DATE" HorizontalAlignment="Right" Margin="0,299,10,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Calisto MT" FontSize="20" />
+        <Label x:Name="lblDateAdded" Content="{x:Static language:Lng.date}" HorizontalAlignment="Right" Margin="0,299,10,0" VerticalAlignment="Top" Width="235" Height="43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#00000000" Foreground="#FFC12626" FontFamily="Calisto MT" FontSize="20" />
         <GroupBox Header="{x:Static language:Lng.controls}" Margin="0,347,10,364" HorizontalAlignment="Right" Width="235">
             <Grid>
                 <CheckBox x:Name="chkUpdateProductCosts" Content="{x:Static language:Lng.updateProductCosts}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="213" Foreground="#FF000CFF" FontSize="19" FontFamily="Calisto MT" FontWeight="Bold"/>

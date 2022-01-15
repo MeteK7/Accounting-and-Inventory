@@ -226,7 +226,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="Menu" Margin="10,34,219,610">
+        <GroupBox Header="{x:Static language:Lng.menu}" Margin="10,34,219,610">
             <Grid>
                 <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
@@ -304,7 +304,7 @@
                 <Button x:Name="btnNext" Content="{x:Static language:Lng.nextCapital}" HorizontalAlignment="Left" Margin="785,7,0,0" VerticalAlignment="Top" Height="32" Width="70" RenderTransformOrigin="0.729,0.517"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Entrance" Margin="10,137,219,501">
+        <GroupBox Header="{x:Static language:Lng.entrance}" Margin="10,137,219,501">
             <Grid>
                 <Label x:Name="lblEntranceBankId" Content="{x:Static language:Lng.id}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="73"/>
                 <Label x:Name="lblEntranceBankName" Content="{x:Static language:Lng.bankName}" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="112"/>
@@ -329,37 +329,37 @@
         <GroupBox Header="{x:Static language:Lng.deposits}" Margin="10,246,219,10">
             <DataGrid x:Name="dgDeposits">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding BankId}" ClipboardContentBinding="{x:Null}" Header="Id" Width="50" />
-                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="Bank Name" Width="190"/>
-                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="455"/>
-                    <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="Amount" Width="120"/>
-                    <DataGridTemplateColumn Header="Delete">
+                    <DataGridTextColumn Binding="{Binding BankId}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.id}" Width="50" />
+                    <DataGridTextColumn Binding="{Binding BankName}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.bankName}" Width="190"/>
+                    <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.description}" Width="455"/>
+                    <DataGridTextColumn Binding="{Binding Amount}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.amount}" Width="120"/>
+                    <DataGridTemplateColumn Header="{x:Static language:Lng.delete}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="btnDeleteDataGridRow" Content="Delete"/>
+                                <Button Name="btnDeleteDataGridRow" Content="{x:Static language:Lng.delete}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-        <GroupBox Header="Deposit Number" Margin="892,34,10,610">
+        <GroupBox Header="{x:Static language:Lng.depositNumber}" Margin="892,34,10,610">
             <Grid>
                 <Label x:Name="lblDepositNumber" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="User Informations" Margin="892,137,10,501">
+        <GroupBox Header="{x:Static language:Lng.userInformations}" Margin="892,137,10,501">
             <Grid>
-                <Label x:Name="lblUserPosition" Content="Position" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
-                <Label x:Name="lblUsername" Content="Username" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <Label x:Name="lblUserPosition" Content="{x:Static language:Lng.position}" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
+                <Label x:Name="lblUsername" Content="{x:Static language:Lng.username}" Margin="10,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="63"/>
                 <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="78,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="78,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Summary" Margin="892,489,10,10">
+        <GroupBox Header="{x:Static language:Lng.summary}" Margin="892,489,10,10">
             <Grid>
-                <Label x:Name="lblSummaryTotalAmount" Content="TOTAL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48"/>
-                <TextBox x:Name="txtSummaryTotalAmount" HorizontalAlignment="Left" Margin="63,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" Height="26" IsReadOnly="True"/>
+                <Label x:Name="lblSummaryTotalAmount" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="63"/>
+                <TextBox x:Name="txtSummaryTotalAmount" HorizontalAlignment="Left" Margin="78,10,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Height="26" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
 
