@@ -138,6 +138,9 @@
   <data name="address" xml:space="preserve">
     <value>Adres</value>
   </data>
+  <data name="admin" xml:space="preserve">
+    <value>Yönetici</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Miktar</value>
   </data>
@@ -152,6 +155,12 @@
   </data>
   <data name="backup" xml:space="preserve">
     <value>Yedekleme</value>
+  </data>
+  <data name="backupCapital" xml:space="preserve">
+    <value>YEDEKLEME</value>
+  </data>
+  <data name="backupRequest" xml:space="preserve">
+    <value>YEDEKLE</value>
   </data>
   <data name="bank" xml:space="preserve">
     <value>Banka</value>
@@ -261,11 +270,20 @@
   <data name="falimSingle" xml:space="preserve">
     <value>FALIM TEKLİ</value>
   </data>
+  <data name="female" xml:space="preserve">
+    <value>Kadın</value>
+  </data>
   <data name="fileManagement" xml:space="preserve">
     <value>Dosya Yönetimi</value>
   </data>
+  <data name="firstName" xml:space="preserve">
+    <value>İsim</value>
+  </data>
   <data name="fromDate" xml:space="preserve">
     <value>Şu Tarihten:</value>
+  </data>
+  <data name="gender" xml:space="preserve">
+    <value>Cinsiyet</value>
   </data>
   <data name="go" xml:space="preserve">
     <value>GİT</value>
@@ -309,8 +327,14 @@
   <data name="language" xml:space="preserve">
     <value>Dil:</value>
   </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Soyisim</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>GİRİŞ</value>
+  </data>
+  <data name="male" xml:space="preserve">
+    <value>Erkek</value>
   </data>
   <data name="menu" xml:space="preserve">
     <value>MENÜ</value>
@@ -324,6 +348,9 @@
   <data name="newRecord" xml:space="preserve">
     <value>YENİ (F2)</value>
   </data>
+  <data name="notSpecified" xml:space="preserve">
+    <value>Belirtilmemiş</value>
+  </data>
   <data name="numberOfPurchases" xml:space="preserve">
     <value>Satın Alma Sayısı</value>
   </data>
@@ -331,7 +358,10 @@
     <value>Satış Sayısı</value>
   </data>
   <data name="password" xml:space="preserve">
-    <value>Şifre:</value>
+    <value>Parola:</value>
+  </data>
+  <data name="path" xml:space="preserve">
+    <value>Yol:</value>
   </data>
   <data name="paymentType" xml:space="preserve">
     <value>Ödeme Türü</value>
@@ -426,11 +456,17 @@
   <data name="search" xml:space="preserve">
     <value>Ara</value>
   </data>
+  <data name="searchCapital" xml:space="preserve">
+    <value>ARA</value>
+  </data>
   <data name="services" xml:space="preserve">
     <value>SERVİSLER</value>
   </data>
   <data name="soldProducts" xml:space="preserve">
     <value>Satılan Ürünler</value>
+  </data>
+  <data name="SpecifyPath" xml:space="preserve">
+    <value>Yol Belirle</value>
   </data>
   <data name="staff" xml:space="preserve">
     <value>Çalışan</value>
@@ -498,6 +534,9 @@
   <data name="user" xml:space="preserve">
     <value>Kullanıcı:</value>
   </data>
+  <data name="userId" xml:space="preserve">
+    <value>Kullanıcı ID</value>
+  </data>
   <data name="userInformations" xml:space="preserve">
     <value>Kullanıcı Bilgileri</value>
   </data>
@@ -512,6 +551,12 @@
   </data>
   <data name="userSales" xml:space="preserve">
     <value>Kullanıcı Satışları</value>
+  </data>
+  <data name="usersCapital" xml:space="preserve">
+    <value>KULLANICILAR</value>
+  </data>
+  <data name="userSearch" xml:space="preserve">
+    <value>Kullanıcı Ara</value>
   </data>
   <data name="userType" xml:space="preserve">
     <value>Kullanıcı Türü:</value>

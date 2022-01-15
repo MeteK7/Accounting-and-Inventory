@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d" Height="492" Width="668.557" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        mc:Ignorable="d" Height="492" Width="668.557" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <Style x:Key="ButtonCloseStyle" TargetType="{x:Type Button}">
             <Setter Property="Background">
@@ -33,7 +34,7 @@
     </Window.Background>
     <Grid>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top">
-            <Label x:Name="lblTop" Content="ACCOUNTS" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.accounts}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="29" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -51,8 +52,8 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <Label x:Name="lblAccountId" Content="ID" HorizontalAlignment="Left" Margin="16,53,0,0" VerticalAlignment="Top" Width="46"/>
-        <Label x:Name="lblAccountName" Content="NAME" HorizontalAlignment="Left" Margin="16,92,0,0" VerticalAlignment="Top" Width="46"/>
+        <Label x:Name="lblAccountId" Content="{x:Static language:Lng.idCapital}" HorizontalAlignment="Left" Margin="16,53,0,0" VerticalAlignment="Top" Width="46"/>
+        <Label x:Name="lblAccountName" Content="{x:Static language:Lng.nameCapital}" HorizontalAlignment="Left" Margin="16,92,0,0" VerticalAlignment="Top" Width="46"/>
         <TextBox x:Name="txtAccountId" HorizontalAlignment="Left" Height="26" Margin="67,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsReadOnly="True">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
@@ -68,20 +69,20 @@
                 <SolidColorBrush Color="#FFF0F0F0" Opacity="0.85"/>
             </DataGrid.Background>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Id"/>
-                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="125"/>
-                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="Added By" Width="160"/>
-                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="Added Date" Width="120"/>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.id}"/>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.name}" Width="125"/>
+                <DataGridTextColumn Binding="{Binding AddedBy}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.addedBy}" Width="160"/>
+                <DataGridTextColumn Binding="{Binding AddedDate}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.addedDate}" Width="120"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label x:Name="lblAccountSearch" Content="SEARCH" HorizontalAlignment="Left" Margin="222,53,0,0" Width="62" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblAccountSearch" Content="{x:Static language:Lng.searchCapital}" HorizontalAlignment="Left" Margin="222,53,0,0" Width="62" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtAccountSearch" HorizontalAlignment="Left" Height="26" Margin="285,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" VerticalContentAlignment="Center" TextChanged="txtAccountSearch_TextChanged">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </TextBox.Background>
         </TextBox>
-        <Button x:Name="btnAdd" Content="ADD" HorizontalAlignment="Left" Margin="16,433,0,0" VerticalAlignment="Top" Width="60" Height="49" BorderBrush="#FF0068FF" Foreground="#FF000CFF" Click="btnAdd_Click"/>
-        <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="77,433,0,0" VerticalAlignment="Top" Width="60" Height="49" Foreground="#FF00C512" BorderBrush="#FF1B9300" Click="btnUpdate_Click"/>
-        <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="145,433,0,0" VerticalAlignment="Top" Width="57" Height="49" Foreground="Red" BorderBrush="Red" Click="btnDelete_Click"/>
+        <Button x:Name="btnAdd" Content="{x:Static language:Lng.add}" HorizontalAlignment="Left" Margin="16,433,0,0" VerticalAlignment="Top" Width="60" Height="49" BorderBrush="#FF0068FF" Foreground="#FF000CFF" Click="btnAdd_Click"/>
+        <Button x:Name="btnUpdate" Content="{x:Static language:Lng.update}" HorizontalAlignment="Left" Margin="76,433,0,0" VerticalAlignment="Top" Width="66" Height="49" Foreground="#FF00C512" BorderBrush="#FF1B9300" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="142,433,0,0" VerticalAlignment="Top" Width="60" Height="49" Foreground="Red" BorderBrush="Red" Click="btnDelete_Click"/>
     </Grid>
 </Window>

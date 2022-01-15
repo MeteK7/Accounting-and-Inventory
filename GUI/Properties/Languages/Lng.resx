@@ -138,6 +138,9 @@
   <data name="address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
   <data name="amount" xml:space="preserve">
     <value>Amount</value>
   </data>
@@ -152,6 +155,12 @@
   </data>
   <data name="backup" xml:space="preserve">
     <value>Backup</value>
+  </data>
+  <data name="backupCapital" xml:space="preserve">
+    <value>BACKUP</value>
+  </data>
+  <data name="backupRequest" xml:space="preserve">
+    <value>BACKUP</value>
   </data>
   <data name="bank" xml:space="preserve">
     <value>Bank</value>
@@ -261,11 +270,20 @@
   <data name="falimSingle" xml:space="preserve">
     <value>FALIM SINGLE</value>
   </data>
+  <data name="female" xml:space="preserve">
+    <value>Female</value>
+  </data>
   <data name="fileManagement" xml:space="preserve">
     <value>File Management</value>
   </data>
+  <data name="firstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
   <data name="fromDate" xml:space="preserve">
     <value>From:</value>
+  </data>
+  <data name="gender" xml:space="preserve">
+    <value>Gender</value>
   </data>
   <data name="go" xml:space="preserve">
     <value>GO</value>
@@ -309,8 +327,14 @@
   <data name="language" xml:space="preserve">
     <value>Language:</value>
   </data>
+  <data name="lastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>LOGIN</value>
+  </data>
+  <data name="male" xml:space="preserve">
+    <value>Male</value>
   </data>
   <data name="menu" xml:space="preserve">
     <value>MENU</value>
@@ -324,6 +348,9 @@
   <data name="newRecord" xml:space="preserve">
     <value>NEW (F2)</value>
   </data>
+  <data name="notSpecified" xml:space="preserve">
+    <value>Not Specified</value>
+  </data>
   <data name="numberOfPurchases" xml:space="preserve">
     <value>Number of Purchases</value>
   </data>
@@ -332,6 +359,9 @@
   </data>
   <data name="password" xml:space="preserve">
     <value>Password:</value>
+  </data>
+  <data name="path" xml:space="preserve">
+    <value>Path:</value>
   </data>
   <data name="paymentType" xml:space="preserve">
     <value>Payment Type</value>
@@ -426,11 +456,17 @@
   <data name="search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="searchCapital" xml:space="preserve">
+    <value>SEARCH</value>
+  </data>
   <data name="services" xml:space="preserve">
     <value>SERVICES</value>
   </data>
   <data name="soldProducts" xml:space="preserve">
     <value>Sold Products</value>
+  </data>
+  <data name="specifyPath" xml:space="preserve">
+    <value>Specify Path</value>
   </data>
   <data name="staff" xml:space="preserve">
     <value>Staff</value>
@@ -498,6 +534,9 @@
   <data name="user" xml:space="preserve">
     <value>User:</value>
   </data>
+  <data name="userId" xml:space="preserve">
+    <value>User ID</value>
+  </data>
   <data name="userInformations" xml:space="preserve">
     <value>User Informations</value>
   </data>
@@ -512,6 +551,12 @@
   </data>
   <data name="userSales" xml:space="preserve">
     <value>User Sales</value>
+  </data>
+  <data name="usersCapital" xml:space="preserve">
+    <value>USERS</value>
+  </data>
+  <data name="userSearch" xml:space="preserve">
+    <value>User Search</value>
   </data>
   <data name="userType" xml:space="preserve">
     <value>User Type:</value>
