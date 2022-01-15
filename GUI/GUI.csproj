@@ -139,6 +139,7 @@
     <None Remove="Images\Buttons\update-user.png" />
     <None Remove="Images\Buttons\user.png" />
     <None Remove="Images\Buttons\users.png" />
+    <None Remove="Images\Icons\cart.png" />
     <None Remove="Images\Icons\close-onmousehover.png" />
     <None Remove="Images\Icons\close.png" />
   </ItemGroup>
@@ -290,6 +291,7 @@
     <Resource Include="Images\Buttons\update-user.png" />
     <Resource Include="Images\Buttons\user.png" />
     <Resource Include="Images\Buttons\users.png" />
+    <Resource Include="Images\Icons\cart.png" />
     <Resource Include="Images\Icons\close-onmousehover.png" />
     <Resource Include="Images\Icons\close.png" />
   </ItemGroup>
