@@ -67,3 +67,8 @@ GUI/obj/Release/net5.0-windows/GUI.dll
 GUI/obj/Release/net5.0-windows/GUI.g.resources
 .vs/AccountingAndInventory/v17/.suo
 AccInstaller/Debug/AccInstaller.msi
+BLL/obj/Release/net5.0/BLL.csproj.AssemblyReference.cache
+CUL/obj/Release/net5.0/CUL.csproj.AssemblyReference.cache
+.vs/AccountingAndInventory/v17/.suo
+BLL/obj/Release/net5.0/BLL.csproj.AssemblyReference.cache
+CUL/obj/Release/net5.0/CUL.csproj.AssemblyReference.cache
