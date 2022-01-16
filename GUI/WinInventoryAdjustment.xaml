@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Height="875.8" Width="1373.107" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Height="875.8" Width="1373.107" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:language="clr-namespace:GUI.Properties.Languages">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -279,7 +280,7 @@
             <ImageBrush ImageSource="/Images/Backgrounds/stylish-soft-blue-curve-lines-abstract-background.jpg"/>
         </Grid.Background>
         <DockPanel x:Name="dpTop" Height="29" LastChildFill="False" Background="#FF3867D6" VerticalAlignment="Top" Margin="0,0,-0.2,0">
-            <Label x:Name="lblTop" Content="Inventory Adjustment" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
+            <Label x:Name="lblTop" Content="{x:Static language:Lng.inventoryAdjustment}" Height="28.8" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Top" Foreground="White"/>
             <Button Style="{StaticResource ButtonCloseStyle}" x:Name="btnClose" Content="" Margin="0,-28.8,0,-0.2" Height="29" Width="32" DockPanel.Dock="Top" HorizontalAlignment="Right" Click="btnClose_Click">
                 <Button.BorderBrush>
                     <SolidColorBrush Color="#FF707070" Opacity="0"/>
@@ -329,27 +330,27 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ENTERED PRODUCTS" Margin="10,260,214,18">
+        <GroupBox Header="{x:Static language:Lng.enteredProducts}" Margin="10,260,214,18">
             <Grid Margin="10,0,-2,0">
                 <DataGrid x:Name="dgProducts" HorizontalAlignment="Left" Height="561" VerticalAlignment="Top" Width="1119" IsReadOnly="True">
                     <DataGrid.Background>
                         <SolidColorBrush Color="#FFF0F0F0" Opacity="0.7"/>
                     </DataGrid.Background>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="Barcode" Width="150" />
-                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name" Width="300"/>
-                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" Width="35"/>
-                        <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="Cost Price" Width="65"/>
-                        <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="Sale Price" Width="65"/>
-                        <DataGridTextColumn Binding="{Binding QuantityInReal}" ClipboardContentBinding="{x:Null}" Header="Quantity in Real"/>
-                        <DataGridTextColumn Binding="{Binding QuantityInStock}" ClipboardContentBinding="{x:Null}" Header="Quantity in Stock"/>
-                        <DataGridTextColumn Binding="{Binding QuantityDifference}" ClipboardContentBinding="{x:Null}" Header="Quantity Difference"/>
-                        <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="T. Cost Price"/>
-                        <DataGridTextColumn Binding="{Binding TotalSalePrice}" ClipboardContentBinding="{x:Null}" Header="T. Sale Price" Width="85"/>
-                        <DataGridTemplateColumn Header="Delete">
+                        <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.barcode}" Width="150" />
+                        <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.name}" Width="300"/>
+                        <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.unit}" Width="35"/>
+                        <DataGridTextColumn Binding="{Binding CostPrice}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.costPrice}" Width="65"/>
+                        <DataGridTextColumn Binding="{Binding SalePrice}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.salePrice}" Width="65"/>
+                        <DataGridTextColumn Binding="{Binding QuantityInReal}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.quantityInReal}"/>
+                        <DataGridTextColumn Binding="{Binding QuantityInStock}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.quantityInStock}"/>
+                        <DataGridTextColumn Binding="{Binding QuantityDifference}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.quantityDifference}"/>
+                        <DataGridTextColumn Binding="{Binding TotalCostPrice}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.totalCostPrice}"/>
+                        <DataGridTextColumn Binding="{Binding TotalSalePrice}" ClipboardContentBinding="{x:Null}" Header="{x:Static language:Lng.totalSalePrice}" Width="85"/>
+                        <DataGridTemplateColumn Header="{x:Static language:Lng.delete}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="btnDeleteDataGridRow" Content="Delete" Click="BtnDeleteDataGridRow_Click"/>
+                                    <Button Name="btnDeleteDataGridRow" Content="{x:Static language:Lng.delete}" Click="BtnDeleteDataGridRow_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -357,28 +358,28 @@
                 </DataGrid>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Invoice Adjustment Id" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
+        <GroupBox Header="{x:Static language:Lng.inventoryAdjustmentId}" Height="118" Margin="0,34,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
             <Label x:Name="lblIventoryAdjustmentId" Content="WELCOME" Margin="10,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF0A8105" FontSize="36" FontFamily="Alef"/>
         </GroupBox>
-        <GroupBox Header="User Informations" Height="108" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
+        <GroupBox Header="{x:Static language:Lng.userInformations}" Height="108" Margin="0,152,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
             <Grid Margin="10,0,-2,0">
-                <Label x:Name="lblUserPosition" Content="Position" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65"/>
-                <Label x:Name="lblUsername" Content="Username" Margin="10,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65"/>
+                <Label x:Name="lblUserPosition" Content="{x:Static language:Lng.position}" Margin="10,21,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65"/>
+                <Label x:Name="lblUsername" Content="{x:Static language:Lng.username}" Margin="10,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65"/>
                 <TextBox x:Name="txtUserType" HorizontalAlignment="Left" Height="26" Margin="80,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="89" IsReadOnly="True"/>
                 <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="26" Margin="80,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="89" IsReadOnly="True"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Basket Informations" Height="148" Margin="0,710,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
+        <GroupBox Header="{x:Static language:Lng.basketInformations}" Height="148" Margin="0,710,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="199">
             <Grid Margin="10,0,-2,0" Height="120">
-                <Label x:Name="lblBasketTotalProducts" Content="Total Products" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,26,0,0" Width="80" HorizontalContentAlignment="Left" RenderTransformOrigin="0.099,0.656"/>
-                <Label x:Name="lblBasketTotal" Content="TOTAL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,60,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold" HorizontalContentAlignment="Left"/>
+                <Label x:Name="lblBasketTotalProducts" Content="{x:Static language:Lng.totalProducts}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,26,0,0" Width="80" HorizontalContentAlignment="Left" RenderTransformOrigin="0.099,0.656"/>
+                <Label x:Name="lblBasketTotal" Content="{x:Static language:Lng.total}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,60,0,0" Width="80" Foreground="#FFE61818" FontSize="14" Height="26" FontFamily="DejaVu Serif" FontWeight="SemiBold" HorizontalContentAlignment="Left"/>
                 <TextBox x:Name="txtBasketQuantity" HorizontalAlignment="Left" Height="26" Margin="95,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Text="0" HorizontalContentAlignment="Left"/>
                 <TextBox x:Name="txtBasketGrandTotal" HorizontalAlignment="Left" Height="26" Margin="95,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Text="0" Foreground="Red" FontSize="20" FontFamily="SimSun" HorizontalContentAlignment="Left"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Menu" Height="118" Margin="0,34,214,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1141">
+        <GroupBox Header="{x:Static language:Lng.menu}" Height="118" Margin="0,34,214,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1141">
             <Grid x:Name="___No_Name_" Margin="0,0,-2,0" Height="94">
-                <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="NEW" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnNew_Click">
+                <Button Style="{StaticResource ButtonNewStyle}" x:Name="btnNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnNew_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/add-to-cart.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -392,7 +393,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="SAVE" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnSave_Click">
+                <Button Style="{StaticResource ButtonSaveStyle}" x:Name="btnSave" Content="{x:Static language:Lng.save}" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom" Click="btnSave_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/floppy-disk.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -406,7 +407,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonCancelStyle}" x:Name="btnCancel" Content="CANCEL" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Width="105" Height="81" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnCancel_Click">
+                <Button Style="{StaticResource ButtonCancelStyle}" x:Name="btnCancel" Content="{x:Static language:Lng.cancel}" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Width="105" Height="81" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Click="btnCancel_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/cancel.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -420,7 +421,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEditRecord" Content="EDIT" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonEditStyle}" x:Name="btnEditRecord" Content="{x:Static language:Lng.edit}" HorizontalAlignment="Left" Margin="339,10,0,0" VerticalAlignment="Top" Width="105" Height="81" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/edit.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -434,7 +435,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDeleteRecord" Content="DELETE" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom" Click="BtnDeleteRecord_Click">
+                <Button Style="{StaticResource ButtonDeleteStyle}" x:Name="btnDeleteRecord" Content="{x:Static language:Lng.delete}" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="0.581,0.494" VerticalContentAlignment="Bottom" Click="BtnDeleteRecord_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/trash_red.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
@@ -448,7 +449,7 @@
                         </ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Style="{StaticResource ButtonPrintStyle}" x:Name="btnPrint" Content="PRINT" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="1.824,0.147" VerticalContentAlignment="Bottom">
+                <Button Style="{StaticResource ButtonPrintStyle}" x:Name="btnPrint" Content="{x:Static language:Lng.print}" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top" Width="105" Height="81" RenderTransformOrigin="1.824,0.147" VerticalContentAlignment="Bottom">
                     <Button.Background>
                         <ImageBrush ImageSource="/Images/Buttons/printer.png" Stretch="Uniform">
                             <ImageBrush.RelativeTransform>
