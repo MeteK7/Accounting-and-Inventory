@@ -17,6 +17,7 @@
     <None Remove="Images\Backgrounds\abstract-blue-line-wave.jpg" />
     <None Remove="Images\Backgrounds\abstract-dotted.jpg" />
     <None Remove="Images\Backgrounds\abstract-green.jpg" />
+    <None Remove="Images\Backgrounds\abstract-red-smooth-wave-lines.jpg" />
     <None Remove="Images\Backgrounds\abstract-white-shapes-background.jpg" />
     <None Remove="Images\Backgrounds\abstract_2.png" />
     <None Remove="Images\Backgrounds\accounting-pattern.jpg" />
@@ -145,6 +146,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Backgrounds\abstract-red-smooth-wave-lines.jpg" />
     <Resource Include="Images\Backgrounds\bg-expenses.jpg" />
     <Resource Include="Images\Backgrounds\futuristic-abstract.jpg" />
     <Resource Include="Images\Backgrounds\geometric_background_white_Mesa_de_trabajo_1.jpg" />

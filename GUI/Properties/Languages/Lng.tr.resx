@@ -285,6 +285,9 @@
   <data name="expense" xml:space="preserve">
     <value>Masraf</value>
   </data>
+  <data name="expenseNumber" xml:space="preserve">
+    <value>Masraf Numarası</value>
+  </data>
   <data name="expenses" xml:space="preserve">
     <value>MASRAFLAR</value>
   </data>
@@ -470,6 +473,9 @@
   </data>
   <data name="receipt" xml:space="preserve">
     <value>Tahsil</value>
+  </data>
+  <data name="receiptNumber" xml:space="preserve">
+    <value>Tahsil Numarası</value>
   </data>
   <data name="receipts" xml:space="preserve">
     <value>TAHSİLLER</value>

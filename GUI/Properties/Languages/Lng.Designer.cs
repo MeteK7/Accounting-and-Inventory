@@ -565,6 +565,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expense Number.
+        /// </summary>
+        public static string expenseNumber {
+            get {
+                return ResourceManager.GetString("expenseNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EXPENSES.
         /// </summary>
         public static string expenses {
@@ -1119,6 +1128,15 @@ namespace GUI.Properties.Languages {
         public static string receipt {
             get {
                 return ResourceManager.GetString("receipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt Number.
+        /// </summary>
+        public static string receiptNumber {
+            get {
+                return ResourceManager.GetString("receiptNumber", resourceCulture);
             }
         }
         

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d" Height="742" Width="1106" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        xmlns:language="clr-namespace:GUI.Properties.Languages">
+        xmlns:language="clr-namespace:GUI.Properties.Languages" RenderTransformOrigin="0.5,0.5">
     <Window.Resources>
         <!--Add images for button mouse over event.-->
         <ImageBrush x:Key="ButtonClose" ImageSource="/Images/Icons/close.png" Stretch="Uniform"></ImageBrush>
@@ -251,12 +251,12 @@
         </Style>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Images/Backgrounds/bg-expenses.jpg" Stretch="UniformToFill">
+        <ImageBrush ImageSource="/Images/Backgrounds/abstract-red-smooth-wave-lines.jpg" Stretch="None">
             <ImageBrush.RelativeTransform>
                 <TransformGroup>
-                    <ScaleTransform CenterY="0" CenterX="0" ScaleX="1" ScaleY="1"/>
-                    <SkewTransform CenterY="0" CenterX="0" AngleX="0"/>
-                    <RotateTransform CenterY="0" CenterX="0"/>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </ImageBrush.RelativeTransform>
@@ -282,7 +282,7 @@
                 </Button.Background>
             </Button>
         </DockPanel>
-        <GroupBox Header="Menu" Margin="10,34,219,610">
+        <GroupBox Header="{x:Static language:Lng.menu}" Margin="10,34,219,610">
             <Grid>
                 <Button Style="{StaticResource ButtonMenuNewStyle}" x:Name="btnMenuNew" Content="{x:Static language:Lng.newRecord}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="61" Width="61" VerticalContentAlignment="Bottom" FontFamily="Lucida Console" Click="btnMenuNew_Click">
                     <Button.Background>
@@ -384,7 +384,7 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Expense Number" Margin="892,34,10,610">
+        <GroupBox Header="{x:Static language:Lng.expenseNumber}" Margin="892,34,10,610">
             <Grid>
                 <Label x:Name="lblExpenseId" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>
