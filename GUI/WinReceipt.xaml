@@ -384,7 +384,7 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Receipt Number" Margin="892,34,10,610">
+        <GroupBox Header="{x:Static language:Lng.receiptNumber}" Margin="892,34,10,610">
             <Grid>
                 <Label x:Name="lblReceiptId" Content="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="172" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontSize="36" FontFamily="Georgia"/>
             </Grid>

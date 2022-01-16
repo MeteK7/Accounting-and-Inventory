@@ -285,6 +285,9 @@
   <data name="expense" xml:space="preserve">
     <value>Masraf</value>
   </data>
+  <data name="expenseNumber" xml:space="preserve">
+    <value>Masraf Numarası</value>
+  </data>
   <data name="expenses" xml:space="preserve">
     <value>MASRAFLAR</value>
   </data>
@@ -350,6 +353,9 @@
   </data>
   <data name="inventoryAdjustment" xml:space="preserve">
     <value>Envanter Düzeltmesi</value>
+  </data>
+  <data name="inventoryAdjustmentId" xml:space="preserve">
+    <value>Envanter Düzeltme Id</value>
   </data>
   <data name="invoiceNumber" xml:space="preserve">
     <value>Fatura Numarası</value>
@@ -453,6 +459,12 @@
   <data name="quantity" xml:space="preserve">
     <value>Adet</value>
   </data>
+  <data name="quantityDifference" xml:space="preserve">
+    <value>Adet Farkı</value>
+  </data>
+  <data name="quantityInReal" xml:space="preserve">
+    <value>Gerçekte Adet</value>
+  </data>
   <data name="quantityInStock" xml:space="preserve">
     <value>Stoktaki Adet</value>
   </data>
@@ -470,6 +482,9 @@
   </data>
   <data name="receipt" xml:space="preserve">
     <value>Tahsil</value>
+  </data>
+  <data name="receiptNumber" xml:space="preserve">
+    <value>Tahsil Numarası</value>
   </data>
   <data name="receipts" xml:space="preserve">
     <value>TAHSİLLER</value>
@@ -557,6 +572,9 @@
   </data>
   <data name="totalCostPrice" xml:space="preserve">
     <value>Toplam Maliyet Fiyatı</value>
+  </data>
+  <data name="totalProducts" xml:space="preserve">
+    <value>Toplam Ürünler</value>
   </data>
   <data name="totalSalePrice" xml:space="preserve">
     <value>Toplam Satış Fiyatı</value>

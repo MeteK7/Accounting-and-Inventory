@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0A5E256C8B2D4165AE33E434EDAE80E5"
+        "MsmKey" = "8:_7154F3DCC58845158E3CAC46F9DF260A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7154F3DCC58845158E3CAC46F9DF260A"
+        "MsmKey" = "8:_B50DC79E74ED4F4D8D6713C7D1EB5655"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -82,6 +82,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -114,9 +122,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A5E256C8B2D4165AE33E434EDAE80E5"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B50DC79E74ED4F4D8D6713C7D1EB5655"
             {
-            "SourcePath" = "8:C:\\Users\\mete.kaba\\Downloads\\cart.ico"
+            "SourcePath" = "8:C:\\Users\\mete.kaba\\Pictures\\cart.ico"
             "TargetName" = "8:cart.ico"
             "Tag" = "8:"
             "Folder" = "8:_16D3E395F6F84A3385B4F526A5E14E95"
@@ -189,7 +197,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Accounting and Inventory Installer"
+        "ProductName" = "8:Accounting and Inventory"
         "ProductCode" = "8:{C1750B52-C62E-4B67-BBD9-6C1A5CCBFCE9}"
         "PackageCode" = "8:{A9FC27EC-F1C4-4BD4-81AB-28EBECB46342}"
         "UpgradeCode" = "8:{729E43B1-1241-49C3-B655-A472E864BAC8}"
@@ -322,7 +330,7 @@
             "Target" = "8:_7154F3DCC58845158E3CAC46F9DF260A"
             "Folder" = "8:_16D3E395F6F84A3385B4F526A5E14E95"
             "WorkingFolder" = "8:_16D3E395F6F84A3385B4F526A5E14E95"
-            "Icon" = "8:_0A5E256C8B2D4165AE33E434EDAE80E5"
+            "Icon" = "8:_B50DC79E74ED4F4D8D6713C7D1EB5655"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D4651CF2DF424DDBB395B4A9D7E660AD"
@@ -336,7 +344,7 @@
             "Target" = "8:_7154F3DCC58845158E3CAC46F9DF260A"
             "Folder" = "8:_D5120FAC61EB4DC990D2C26692F5742F"
             "WorkingFolder" = "8:_16D3E395F6F84A3385B4F526A5E14E95"
-            "Icon" = "8:_0A5E256C8B2D4165AE33E434EDAE80E5"
+            "Icon" = "8:_B50DC79E74ED4F4D8D6713C7D1EB5655"
             "Feature" = "8:"
             }
         }

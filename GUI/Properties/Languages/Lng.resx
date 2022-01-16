@@ -274,7 +274,7 @@
     <value>ENTER</value>
   </data>
   <data name="enteredProducts" xml:space="preserve">
-    <value>EnteredProducts</value>
+    <value>Entered Products</value>
   </data>
   <data name="entrance" xml:space="preserve">
     <value>Entrance</value>
@@ -284,6 +284,9 @@
   </data>
   <data name="expense" xml:space="preserve">
     <value>Expense</value>
+  </data>
+  <data name="expenseNumber" xml:space="preserve">
+    <value>Expense Number</value>
   </data>
   <data name="expenses" xml:space="preserve">
     <value>EXPENSES</value>
@@ -350,6 +353,9 @@
   </data>
   <data name="inventoryAdjustment" xml:space="preserve">
     <value>Inventory Adjustment</value>
+  </data>
+  <data name="inventoryAdjustmentId" xml:space="preserve">
+    <value>Inventory Adjustment Id</value>
   </data>
   <data name="invoiceNumber" xml:space="preserve">
     <value>Invoice Number</value>
@@ -453,6 +459,12 @@
   <data name="quantity" xml:space="preserve">
     <value>Quantity</value>
   </data>
+  <data name="quantityDifference" xml:space="preserve">
+    <value>Quantity Difference</value>
+  </data>
+  <data name="quantityInReal" xml:space="preserve">
+    <value>Quantity in Real</value>
+  </data>
   <data name="quantityInStock" xml:space="preserve">
     <value>Quantity in Stock</value>
   </data>
@@ -470,6 +482,9 @@
   </data>
   <data name="receipt" xml:space="preserve">
     <value>Receipt</value>
+  </data>
+  <data name="receiptNumber" xml:space="preserve">
+    <value>Receipt Number</value>
   </data>
   <data name="receipts" xml:space="preserve">
     <value>RECEIPTS</value>
@@ -557,6 +572,9 @@
   </data>
   <data name="totalCostPrice" xml:space="preserve">
     <value>Total Cost Price</value>
+  </data>
+  <data name="totalProducts" xml:space="preserve">
+    <value>Total Products</value>
   </data>
   <data name="totalSalePrice" xml:space="preserve">
     <value>Total Sale Price</value>

@@ -529,7 +529,7 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EnteredProducts.
+        ///   Looks up a localized string similar to Entered Products.
         /// </summary>
         public static string enteredProducts {
             get {
@@ -561,6 +561,15 @@ namespace GUI.Properties.Languages {
         public static string expense {
             get {
                 return ResourceManager.GetString("expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense Number.
+        /// </summary>
+        public static string expenseNumber {
+            get {
+                return ResourceManager.GetString("expenseNumber", resourceCulture);
             }
         }
         
@@ -759,6 +768,15 @@ namespace GUI.Properties.Languages {
         public static string inventoryAdjustment {
             get {
                 return ResourceManager.GetString("inventoryAdjustment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Adjustment Id.
+        /// </summary>
+        public static string inventoryAdjustmentId {
+            get {
+                return ResourceManager.GetString("inventoryAdjustmentId", resourceCulture);
             }
         }
         
@@ -1069,6 +1087,24 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity Difference.
+        /// </summary>
+        public static string quantityDifference {
+            get {
+                return ResourceManager.GetString("quantityDifference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity in Real.
+        /// </summary>
+        public static string quantityInReal {
+            get {
+                return ResourceManager.GetString("quantityInReal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity in Stock.
         /// </summary>
         public static string quantityInStock {
@@ -1119,6 +1155,15 @@ namespace GUI.Properties.Languages {
         public static string receipt {
             get {
                 return ResourceManager.GetString("receipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt Number.
+        /// </summary>
+        public static string receiptNumber {
+            get {
+                return ResourceManager.GetString("receiptNumber", resourceCulture);
             }
         }
         
@@ -1380,6 +1425,15 @@ namespace GUI.Properties.Languages {
         public static string totalCostPrice {
             get {
                 return ResourceManager.GetString("totalCostPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Products.
+        /// </summary>
+        public static string totalProducts {
+            get {
+                return ResourceManager.GetString("totalProducts", resourceCulture);
             }
         }
         
