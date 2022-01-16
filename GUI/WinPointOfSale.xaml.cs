@@ -408,14 +408,14 @@ namespace GUI
                     pointOfSaleCUL.Id = invoiceId;//The column invoice id in the database is not auto incremental. This is for preventing the number increasing when the user deletes an existing invoice and creates a new invoice.
                     pointOfSaleCUL.PaymentTypeId = Convert.ToInt32(cboMenuPaymentType.SelectedValue);
                     pointOfSaleCUL.CustomerId = Convert.ToInt32(cboMenuCustomer.SelectedValue);
-                    pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                     //pointOfSaleCUL.TotalProductQuantity = Convert.ToDecimal(txtBasketQuantity.Text);
                     //pointOfSaleCUL.CostTotal = Convert.ToDecimal(txtBasketCostTotal.Text);
                     //pointOfSaleCUL.GrossAmount = Convert.ToDecimal(txtBasketGrossAmount.Text);
-                    pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
-                    pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
-                    pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
+                    //pointOfSaleCUL.Discount = Convert.ToDecimal(txtBasketDiscount.Text);
+                    //pointOfSaleCUL.SubTotal = Convert.ToDecimal(txtBasketSubTotal.Text);
+                    //pointOfSaleCUL.Vat = Convert.ToDecimal(txtBasketVat.Text);
                     //pointOfSaleCUL.GrandTotal = Convert.ToDecimal(txtBasketGrandTotal.Text);
+                    pointOfSaleCUL.AssetId = Convert.ToInt32(lblAssetId.Content);
                     pointOfSaleCUL.AddedDate = DateTime.Now;
                     pointOfSaleCUL.AddedBy = userId;
 
@@ -649,7 +649,7 @@ namespace GUI
                         basketGrossTotalCostPrice = basketGrossTotalCostPrice + Convert.ToDecimal(productGrossTotalCostPrice);
                         basketGrossTotalSalePrice = basketGrossTotalSalePrice + Convert.ToDecimal(productGrossTotalSalePrice);
                         basketDiscount = basketDiscount + Convert.ToDecimal(productDiscount);
-                        basketSubTotal = basketSubTotal + (Convert.ToDecimal(productGrossTotalCostPrice) - Convert.ToDecimal(productDiscount));
+                        basketSubTotal = basketSubTotal + (Convert.ToDecimal(productGrossTotalSalePrice) - Convert.ToDecimal(productDiscount));
                         basketVAT = basketVAT + Convert.ToDecimal(productVAT);
                         basketGrandTotal =
                             basketGrandTotal +

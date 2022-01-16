@@ -252,7 +252,7 @@ namespace GUI {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUI;V1.0.0.0;component/winpopreport.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUI;component/winpopreport.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WinPopReport.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
