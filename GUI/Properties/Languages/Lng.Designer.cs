@@ -1186,6 +1186,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RESTORE.
+        /// </summary>
+        public static string restoreRequest {
+            get {
+                return ResourceManager.GetString("restoreRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retail.
         /// </summary>
         public static string retail {
@@ -1461,6 +1470,15 @@ namespace GUI.Properties.Languages {
         public static string type {
             get {
                 return ResourceManager.GetString("type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UNDER CONSTRUCTION.
+        /// </summary>
+        public static string underConstruction {
+            get {
+                return ResourceManager.GetString("underConstruction", resourceCulture);
             }
         }
         

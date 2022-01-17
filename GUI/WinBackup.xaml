@@ -11,9 +11,10 @@
         <ImageBrush ImageSource="/Images/Backgrounds/worldwide.jpg" Stretch="Fill"/>
     </Window.Background>
     <Grid>
-        <Label x:Name="lblPath" Content="{x:Static language:Lng.path}" HorizontalAlignment="Left" Margin="143,32,0,0" VerticalAlignment="Top" Height="27" Width="632"/>
-        <Button x:Name="btnPath" Content="{x:Static language:Lng.specifyPath}" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
-        <Button x:Name="btnBackup" Content="{x:Static language:Lng.backupRequest}" HorizontalAlignment="Left" Margin="31,96,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
-
+        <Label x:Name="lblPath" Content="{x:Static language:Lng.path}" HorizontalAlignment="Left" Margin="154,22,0,0" VerticalAlignment="Top" Height="27" Width="621" Foreground="White"/>
+        <Button x:Name="btnPath" Content="{x:Static language:Lng.specifyPath}" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="76" Height="27" Click="btnPath_Click"/>
+        <Button x:Name="btnBackup" Content="{x:Static language:Lng.backupRequest}" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="36" FontFamily="Footlight MT Light" Click="btnBackup_Click"/>
+        <Button x:Name="btnRestore" Content="{x:Static language:Lng.restoreRequest}" HorizontalAlignment="Left" Margin="166,106,0,0" VerticalAlignment="Top" Height="93" Width="151" FontSize="20" FontFamily="Footlight MT Light" Click="btnRestore_Click"/>
+        <Label Content="{x:Static language:Lng.underConstruction}" HorizontalAlignment="Left" Margin="429,10,0,0" VerticalAlignment="Top" Height="91" Width="346" Foreground="Red" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontFamily="Bookman Old Style"/>
     </Grid>
 </Window>
