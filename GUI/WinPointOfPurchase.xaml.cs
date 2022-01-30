@@ -327,7 +327,7 @@ namespace GUI
                         productId = dtPopDetail.Rows[currentRow][colTxtProductId].ToString();
                         productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
-                        productGrossCostPrice = dtPopDetail.Rows[currentRow][colTxtProductGrossCostPrice].ToString();
+                        productGrossCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductGrossCostPrice]).ToString("G29");
                         productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("0.00");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPopDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPopDetail.Rows[currentRow][colTxtProductVAT].ToString();

@@ -48,5 +48,14 @@ namespace GUI
 
             MessageBox.Show(isSuccess);
         }
+
+        private void btnRestore_Click(object sender, RoutedEventArgs e)
+        {
+            //backupCUL.DatabasePath = @"C:\DOCUMENTS\Projects\Accounting-and-Inventory\DB BACKUP\";
+            //backupCUL.DatabaseName = "AccountingAndInventory12-31-2021-22-14-02.bak";
+            //string isSuccess = backupDAL.RestoreDatabase(backupCUL);
+
+            //MessageBox.Show(isSuccess);
+        }
     }
 }

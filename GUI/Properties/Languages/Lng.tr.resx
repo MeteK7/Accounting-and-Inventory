@@ -492,6 +492,9 @@
   <data name="reports" xml:space="preserve">
     <value>Raporlar</value>
   </data>
+  <data name="restoreRequest" xml:space="preserve">
+    <value>GERİ YÜKLE</value>
+  </data>
   <data name="retail" xml:space="preserve">
     <value>Perakende</value>
   </data>
@@ -584,6 +587,9 @@
   </data>
   <data name="type" xml:space="preserve">
     <value>Tür</value>
+  </data>
+  <data name="underConstruction" xml:space="preserve">
+    <value>YAPIM AŞAMASINA</value>
   </data>
   <data name="unit" xml:space="preserve">
     <value>Birim</value>

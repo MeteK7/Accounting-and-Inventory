@@ -492,6 +492,9 @@
   <data name="reports" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="restoreRequest" xml:space="preserve">
+    <value>RESTORE</value>
+  </data>
   <data name="retail" xml:space="preserve">
     <value>Retail</value>
   </data>
@@ -584,6 +587,9 @@
   </data>
   <data name="type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="underConstruction" xml:space="preserve">
+    <value>UNDER CONSTRUCTION</value>
   </data>
   <data name="unit" xml:space="preserve">
     <value>Unit</value>
