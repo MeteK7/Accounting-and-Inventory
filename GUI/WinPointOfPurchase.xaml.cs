@@ -581,9 +581,7 @@ namespace GUI
                         }
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[(int)Numbers.InitialIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
-                    productId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
-
+                    productId = Convert.ToInt32(cells[(int)Numbers.InitialIndex]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
                     dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[(int)PopColumns.ColProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
@@ -602,6 +600,8 @@ namespace GUI
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
                     #region PRODUCT QUANTITY AND COST UPDATE
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[(int)Numbers.InitialIndex]);//cells[0] contains product id.
+
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);
