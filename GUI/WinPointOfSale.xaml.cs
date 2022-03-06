@@ -106,6 +106,7 @@ namespace GUI
         UnitDAL unitDAL = new UnitDAL();
         UnitCUL unitCUL = new UnitCUL();
         PointOfSaleBLL pointOfSaleBLL = new PointOfSaleBLL();
+        PointOfPurchaseBLL pointOfPurchaseBLL = new PointOfPurchaseBLL();
         ProductBLL productBLL = new ProductBLL();
         AccountDAL accountDAL = new AccountDAL();
         AssetDAL assetDAL = new AssetDAL();
@@ -1248,6 +1249,7 @@ namespace GUI
             long number;
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(productIdFromUser);
 
+            //If user clicks enter during the cursor is in the textbox "txtProductId", bind datagrid of products directly.
             if (keyPressed == (int)Key.Enter && productIdFromUser != "")
             {
                 if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
@@ -1316,7 +1318,8 @@ namespace GUI
                 cboProductUnit.SelectedValue = productCurrentUnitId;
                 #endregion
 
-                costPrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtCostPrice].ToString();
+                //costPrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtCostPrice].ToString();
+                costPrice = pointOfPurchaseBLL.GetProductLatestValidCostPrice(productId).ToString();
                 salePrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtSalePrice].ToString();
 
                 txtProductGrossCostPrice.Text = costPrice;

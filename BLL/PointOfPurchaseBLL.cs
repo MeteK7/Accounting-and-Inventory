@@ -38,5 +38,14 @@ namespace BLL
 
             return dataTable;
         }
+
+        //This method is getting the product cost price from the oldest pop where we have purchased the related product once before.
+        //Note: Cost prices change with almost every purchase, so you should get the new cost price on the next purchase when the quantity for the product from the previous purchase has run out.
+        public decimal GetProductLatestValidCostPrice(int productId)
+        {
+            decimal costPrice = pointOfPurchaseDAL.GetProductLatestValidCostPriceById(productId);
+
+            return costPrice;
+        }
     }
 }
