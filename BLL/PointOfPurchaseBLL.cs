@@ -12,6 +12,7 @@ namespace BLL
     public class PointOfPurchaseBLL
     {
         PointOfPurchaseDAL pointOfPurchaseDAL = new PointOfPurchaseDAL();
+        PointOfPurchaseDetailDAL pointOfPurchaseDetailDAL = new PointOfPurchaseDetailDAL();
 
         public bool InsertPOP(PointOfPurchaseCUL pointOfPurchaseCUL)
         {
@@ -41,11 +42,18 @@ namespace BLL
 
         //This method is getting the product cost price from the oldest pop where we have purchased the related product once before.
         //Note: Cost prices change with almost every purchase, so you should get the new cost price on the next purchase when the quantity for the product from the previous purchase has run out.
-        public decimal GetProductLatestValidCostPrice(int productId)
+        public DataTable GetProductLatestValidCostPrice(int productId)
         {
-            decimal costPrice = pointOfPurchaseDAL.GetProductLatestValidCostPriceById(productId);
+            DataTable dtProductCostPrice = pointOfPurchaseDetailDAL.GetProductLatestValidCostPriceById(productId);
 
-            return costPrice;
+            return dtProductCostPrice;
         }
+
+        //public decimal GetProductLatestValidQuantityLeft(int productId)
+        //{
+        //    decimal productQuantityLeft = pointOfPurchaseDetailDAL.GetProductLatestValidQuantityLeftById(productId);
+
+        //    return productQuantityLeft;
+        //}
     }
 }

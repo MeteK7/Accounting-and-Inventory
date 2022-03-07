@@ -1,4 +1,5 @@
 ﻿using CUL;
+using CUL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -260,5 +261,37 @@ namespace DAL
             }
         }
         #endregion
+
+        public DataTable GetProductLatestValidCostPriceById(int productId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
     }
 }

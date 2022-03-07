@@ -469,10 +469,5 @@ namespace DAL
             }
         }
         #endregion
-
-        public decimal GetProductLatestValidCostPriceById(int productId)
-        {
-            return 0;
-        }
     }
 }

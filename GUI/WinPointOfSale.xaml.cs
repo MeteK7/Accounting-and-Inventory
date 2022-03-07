@@ -438,7 +438,6 @@ namespace GUI
                     ContentPresenter cpProduct;
                     TextBox tbCellContent;
                     ComboBox tbCellContentCbo;
-                    decimal tempCostPrice, tempQuantityLeft;
 
                     for (int rowNo = (int)Numbers.InitialIndex; rowNo < dgProducts.Items.Count; rowNo++)
                     {
@@ -474,10 +473,6 @@ namespace GUI
 
                         productId = Convert.ToInt32(cells[(int)Numbers.InitialIndex]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
-                        tempCostPrice = pointOfPurchaseBLL.GetProductLatestValidCostPrice(productId);
-                        tempQuantityLeft = pointOfPurchaseBLL.GetProductLatestValidQuantityLeft(productId);
-                        tempQuantityLeft = tempQuantityLeft - Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
-
                         dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[(int)PosColumns.ColProductUnit]));//Cell[2] contains the unit id in the combobox.
                         unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
@@ -486,8 +481,7 @@ namespace GUI
                         pointOfSaleDetailCUL.AddedBy = addedBy;
                         pointOfSaleDetailCUL.ProductRate = productRate;
                         pointOfSaleDetailCUL.ProductUnitId = unitId;
-                        //pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductCostPrice]);//SINCE WE CANNOT INSTANTLY GETTING COST PRICE BASED ON PURCHASE, COST PRICE CELL IS 0 WHEN WE BIND DATAGRID BEFORE SAVE.
-                        pointOfSaleDetailCUL.ProductCostPrice = tempCostPrice;//cells[4] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
+                        pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductCostPrice]);
                         pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductSalePrice]);//cells[5] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
                         pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
                         pointOfSaleDetailCUL.ProductDiscount = Convert.ToDecimal(cells[(int)PosColumns.ColProductDiscount]);
@@ -1220,6 +1214,13 @@ namespace GUI
 
             if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
             {
+
+                DataTable tempCostPrice;
+
+                tempCostPrice = pointOfPurchaseBLL.GetProductLatestValidCostPrice(productId);
+                //tempQuantityLeft = pointOfPurchaseBLL.GetProductLatestValidQuantityLeft(productId);
+                //tempQuantityLeft = tempQuantityLeft - Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
+
                 decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
