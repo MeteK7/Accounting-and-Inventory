@@ -268,7 +268,7 @@ namespace DAL
             {
                 DataTable dtReport = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
