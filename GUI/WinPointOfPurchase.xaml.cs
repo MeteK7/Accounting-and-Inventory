@@ -578,7 +578,7 @@ namespace GUI
                     dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[(int)PopColumns.ColProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    pointOfPurchaseDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
+                    pointOfPurchaseDetailCUL.PopId = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;

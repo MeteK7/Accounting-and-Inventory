@@ -136,6 +136,7 @@ namespace GUI
             colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
+            colTxtProductQuantityLeftForSale = "product_quantity_left_for_sale",
             colTxtProductCostPrice = "product_cost_price",
             colTxtProductSalePrice = "product_sale_price",
             colTxtProductDiscount = "product_discount",
@@ -345,6 +346,80 @@ namespace GUI
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
+        private void CountProductTotalQuantity()
+        {
+            int rowQuantity = dgProducts.Items.Count;
+
+            for (int i = (int)Numbers.InitialIndex; i < rowQuantity; i++)
+            {
+                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+
+                ContentPresenter cpProduct = dgProducts.Columns[(int)Numbers.InitialIndex].GetCellContent(row) as ContentPresenter;
+                var tmpProduct = cpProduct.ContentTemplate;
+                TextBox txtDgProductId = tmpProduct.FindName(dgCellNames[(int)Numbers.InitialIndex], cpProduct) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
+                ContentPresenter cpProductQty = dgProducts.Columns[(int)PosColumns.ColProductQuantity].GetCellContent(row) as ContentPresenter;
+                var tmpProductQty = cpProductQty.ContentTemplate;
+                TextBox txtDgProductQty = tmpProductQty.FindName(dgCellNames[(int)PosColumns.ColProductQuantity], cpProductQty) as TextBox;
+
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT COST PRICE
+                ContentPresenter cpProductGrossCostPrice = dgProducts.Columns[(int)PosColumns.ColProductGrossCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossCostPrice = cpProductGrossCostPrice.ContentTemplate;
+                TextBox txtProductDgGrossCostPrice = tmpProductGrossCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductGrossCostPrice], cpProductGrossCostPrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
+                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PosColumns.ColProductGrossTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
+                TextBox txtProductDgGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductGrossTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+
+
+                decimal productGrossCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
+                DataTable dtProductInfoInPurchase = pointOfPurchaseBLL.GetProductLatestValidCostPrice(Convert.ToInt32(txtDgProductId.Text));
+
+                if (dtProductInfoInPurchase != null)
+                {
+                    productQuantityLeftForSale = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductQuantityLeftForSale]);
+
+                    if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
+                    {
+                        productGrossCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
+                        txtProductDgGrossCostPrice.Text = productGrossCostPrice.ToString();
+
+                    }
+                    productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
+
+
+                }
+
+                else
+                {
+                    DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtDgProductId.Text);
+
+                    productGrossCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
+                    txtProductDgGrossCostPrice.Text = productGrossCostPrice.ToString();
+                }
+
+                txtProductDgGrossTotalCostPrice.Text = (productGrossCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT GROSS TOTAL SALE PRICE
+                ContentPresenter cpProductGrossTotalSalePrice = dgProducts.Columns[(int)PosColumns.ColProductGrossTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductGrossTotalSalePrice = cpProductGrossTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductGrossTotalSalePrice = tmpProductGrossTotalSalePrice.FindName(dgCellNames[(int)PosColumns.ColProductGrossTotalSalePrice], cpProductGrossTotalSalePrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL SALE PRICE
+                ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[(int)PosColumns.ColProductTotalSalePrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+
+                //CALCULATING NEW PRODUCT QUANTITY IN DATAGRID
+                productQuantity = Convert.ToInt32(txtDgProductQty.Text);
+                productQuantity += Convert.ToInt32(txtProductQuantity.Text);//We are adding the quantity entered in the "txtProductQuantity" to the previous quantity cell's quantity.
+
+                break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
+            }
+        }
 
         public void SaveInvoice()
         {
@@ -430,6 +505,10 @@ namespace GUI
                         //Creating a Boolean variable to insert data into the database.
                         isSuccess = pointOfSaleBLL.InsertPOS(pointOfSaleCUL);
                     }
+                    #endregion
+
+                    #region TABLE POS DETAILS CALCULATING GROSS COST PRICE
+                    CountProductTotalQuantity();
                     #endregion
 
                     #region TABLE POS DETAILS SAVING SECTION
@@ -1160,7 +1239,9 @@ namespace GUI
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
             int productId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
-            for (int i = 0; i < rowQuantity; i++)
+            #region MERGING OF DUPLICATED PRODUCTS
+            /*MERGING DUPLICATED PRODUCT FEATURE IS TEMPORARLY UNACTIVE!!!
+            for (int i = (int)Numbers.InitialIndex; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
 
@@ -1211,17 +1292,13 @@ namespace GUI
                     }
                 }
             }
+            */
+            #endregion
 
-            if (addNewProductLine == true)//Use ENUMS instead of this!!!!!!!
+            if (addNewProductLine == true)
             {
 
-                DataTable tempCostPrice;
-
-                tempCostPrice = pointOfPurchaseBLL.GetProductLatestValidCostPrice(productId);
-                //tempQuantityLeft = pointOfPurchaseBLL.GetProductLatestValidQuantityLeft(productId);
-                //tempQuantityLeft = tempQuantityLeft - Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
-
-                decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
+                //decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
                 dgProducts.Items.Add(new
@@ -1231,7 +1308,7 @@ namespace GUI
                     Quantity = txtProductQuantity.Text,
                     CostPrice = txtProductGrossCostPrice.Text,
                     SalePrice = txtProductGrossSalePrice.Text,
-                    GrossTotalCostPrice = grossTotalCostPrice.ToString(),
+                    GrossTotalCostPrice = ((int)Numbers.InitialIndex).ToString(),//Defaultly
                     GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
                     Discount = txtProductDiscount.Text,
                     VAT = txtProductVAT.Text,
@@ -1330,6 +1407,7 @@ namespace GUI
                 salePrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtSalePrice].ToString();
 
                 //txtProductGrossCostPrice.Text = costPrice;
+                txtProductGrossCostPrice.Text = ((int)Numbers.InitialIndex).ToString();
                 txtProductGrossSalePrice.Text = salePrice;
                 txtProductQuantity.Text = productQuantity.ToString();
                 txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();

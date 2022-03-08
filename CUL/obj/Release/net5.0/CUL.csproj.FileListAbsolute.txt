@@ -14,7 +14,6 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\bin\Release\net5.0\CUL.deps.
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\bin\Release\net5.0\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\bin\Release\net5.0\ref\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\bin\Release\net5.0\CUL.pdb
-C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.csproj.AssemblyReference.cache
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.GeneratedMSBuildEditorConfig.editorconfig
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.AssemblyInfoInputs.cache
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Release\net5.0\CUL.AssemblyInfo.cs

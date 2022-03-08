@@ -175,7 +175,7 @@ namespace GUI {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUI;component/wincategory.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUI;V1.0.0.0;component/wincategory.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\WinCategory.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

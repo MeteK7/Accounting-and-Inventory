@@ -8,7 +8,7 @@ namespace CUL
 {
     public class PointOfPurchaseDetailCUL
     {
-        public int Id { get; set; }
+        public int PopId { get; set; }
         public int ProductId { get; set; }
         public int ProductUnitId { get; set; }
         public decimal ProductRate { get; set; }

@@ -55,11 +55,11 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
+                String sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);//No incremental value in the database because there can be multiple goods with the same invoice id.
+                cmd.Parameters.AddWithValue("@id_pop", pointOfPurchaseDetailCUL.PopId);//No incremental value in the database because there can be multiple goods with the same invoice id.
                 cmd.Parameters.AddWithValue("@product_id", pointOfPurchaseDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);
@@ -156,12 +156,12 @@ namespace DAL
             try
             {
                 //SQL Query to Delete from the Database
-                string sqlQuery = "DELETE FROM tbl_pop_detailed WHERE id=@id";
+                string sqlQuery = "DELETE FROM tbl_pop_detailed WHERE id_pop=@id_pop";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@id", invoiceId);
+                cmd.Parameters.AddWithValue("@id_pop", invoiceId);
 
                 //Opening the SQL connection
                 conn.Open();
@@ -234,7 +234,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id= " + invoiceId + "";//SQL query to get the last id of rows in te table.
+                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id_pop= " + invoiceId + "";//SQL query to get the last id of rows in te table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
