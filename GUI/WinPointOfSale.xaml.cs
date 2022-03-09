@@ -346,7 +346,7 @@ namespace GUI
             Keyboard.Focus(txtProductId); // set keyboard focus
             DisableProductEntranceButtons();
         }
-        private void CountProductTotalQuantity()
+        private void CalculateProductCostPrice()
         {
             int rowQuantity = dgProducts.Items.Count;
 
@@ -376,7 +376,7 @@ namespace GUI
 
 
                 int pointOfPurchaseId;
-                decimal productGrossCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
+                decimal productCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
 
                 DataTable dtProductInfoInPurchase = pointOfPurchaseBLL.GetProductLatestValidCostPrice(Convert.ToInt32(txtDgProductId.Text));
 
@@ -387,8 +387,8 @@ namespace GUI
 
                     if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
                     {
-                        productGrossCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                        txtProductDgGrossCostPrice.Text = productGrossCostPrice.ToString();
+                        productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
+                        txtProductDgGrossCostPrice.Text = productCostPrice.ToString();
 
                     }
                     productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
@@ -400,11 +400,11 @@ namespace GUI
                 {
                     DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtDgProductId.Text);
 
-                    productGrossCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                    txtProductDgGrossCostPrice.Text = productGrossCostPrice.ToString();
+                    productCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
+                    txtProductDgGrossCostPrice.Text = productCostPrice.ToString();
                 }
 
-                txtProductDgGrossTotalCostPrice.Text = (productGrossCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
+                txtProductDgGrossTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
 
                 break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
             }
@@ -496,7 +496,7 @@ namespace GUI
                     }
                     #endregion
 
-                    #region TABLE POS DETAILS CALCULATING GROSS COST PRICE
+                    #region TABLE POS DETAILS CALCULATING GROSS COST PRICE BASED ON PURCHASE
                     CountProductTotalQuantity();
                     #endregion
 
