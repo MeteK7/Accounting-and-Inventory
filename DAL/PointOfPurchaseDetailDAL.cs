@@ -267,7 +267,7 @@ namespace DAL
             {
                 DataTable dtReport = new DataTable();
 
-                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id=" + productId + " AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -301,11 +301,11 @@ namespace DAL
 
                 try
                 {
-                    string sqlQuery = "UPDATE tbl_pop_detailed SET product_quantity_left_for_sale=@product_quantity_left_for_sale WHERE id='" + idPointOfPurchase + "'";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+                    string sqlQuery = "UPDATE tbl_pop_detailed SET quantity_left_for_sale=@quantity_left_for_sale WHERE id='" + idPointOfPurchase + "'";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
 
                     using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("product_quantity_left_for_sale", productQuantityLeftForSale);
+                        cmd.Parameters.AddWithValue("quantity_left_for_sale", productQuantityLeftForSale);
 
                         conn.Open();//Opening the database connection
                     }

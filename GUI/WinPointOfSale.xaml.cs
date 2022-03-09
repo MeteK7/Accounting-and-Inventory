@@ -136,7 +136,7 @@ namespace GUI
             colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
             colTxtProductUnitId = "product_unit_id",
-            colTxtProductQuantityLeftForSale = "product_quantity_left_for_sale",
+            colTxtProductQuantityLeftForSale = "quantity_left_for_sale",
             colTxtProductCostPrice = "product_cost_price",
             colTxtProductSalePrice = "product_sale_price",
             colTxtProductDiscount = "product_discount",
@@ -365,14 +365,14 @@ namespace GUI
 
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT COST PRICE
-                ContentPresenter cpProductGrossCostPrice = dgProducts.Columns[(int)PosColumns.ColProductCostPrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductGrossCostPrice = cpProductGrossCostPrice.ContentTemplate;
-                TextBox txtProductDgGrossCostPrice = tmpProductGrossCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductCostPrice], cpProductGrossCostPrice) as TextBox;
+                ContentPresenter cpProductCostPrice = dgProducts.Columns[(int)PosColumns.ColProductCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
+                TextBox txtProductDgCostPrice = tmpProductCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductCostPrice], cpProductCostPrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-                ContentPresenter cpProductGrossTotalCostPrice = dgProducts.Columns[(int)PosColumns.ColProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
-                var tmpProductGrossTotalCostPrice = cpProductGrossTotalCostPrice.ContentTemplate;
-                TextBox txtProductDgGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
+                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PosColumns.ColProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
+                TextBox txtProductDgTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
 
                 int pointOfPurchaseId;
@@ -388,23 +388,23 @@ namespace GUI
                     if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
                     {
                         productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                        txtProductDgGrossCostPrice.Text = productCostPrice.ToString();
-
+                        txtProductDgCostPrice.Text = productCostPrice.ToString();
                     }
                     productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
 
                     pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(pointOfPurchaseId, productQuantityLeftForSale);
                 }
 
+                //If there is no any purchase record for this product, get the cost price from tbl_products which contains latest cost price.
                 else
                 {
                     DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtDgProductId.Text);
 
                     productCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                    txtProductDgGrossCostPrice.Text = productCostPrice.ToString();
+                    txtProductDgCostPrice.Text = productCostPrice.ToString();
                 }
 
-                txtProductDgGrossTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
+                txtProductDgTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
 
                 break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
             }
@@ -497,7 +497,7 @@ namespace GUI
                     #endregion
 
                     #region TABLE POS DETAILS CALCULATING GROSS COST PRICE BASED ON PURCHASE
-                    CountProductTotalQuantity();
+                    CalculateProductCostPrice();
                     #endregion
 
                     #region TABLE POS DETAILS SAVING SECTION
