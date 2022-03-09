@@ -293,7 +293,7 @@ namespace DAL
             }
         }
 
-        public bool UpdateProductQuantityLeftForSale(int idPointOfPurchase, decimal productQuantityLeftForSale)
+        public bool UpdateProductQuantityLeftForSaleById(int idPointOfPurchase, decimal productQuantityLeftForSale)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {

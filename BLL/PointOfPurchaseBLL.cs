@@ -49,6 +49,13 @@ namespace BLL
             return dtProductCostPrice;
         }
 
+        public bool UpdateProductQuantityLeftForSale(int idPointOfPurchase, decimal productQuantityLeftForSale)
+        {
+            bool isSuccessfullyUpdated = pointOfPurchaseDetailDAL.UpdateProductQuantityLeftForSaleById(idPointOfPurchase, productQuantityLeftForSale);
+
+            return isSuccessfullyUpdated;
+        }
+
         //public decimal GetProductLatestValidQuantityLeft(int productId)
         //{
         //    decimal productQuantityLeft = pointOfPurchaseDetailDAL.GetProductLatestValidQuantityLeftById(productId);

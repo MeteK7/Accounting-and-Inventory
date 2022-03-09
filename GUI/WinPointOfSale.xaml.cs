@@ -375,7 +375,9 @@ namespace GUI
                 TextBox txtProductDgGrossTotalCostPrice = tmpProductGrossTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalCostPrice], cpProductGrossTotalCostPrice) as TextBox;
 
 
-                decimal pointOfPurchaseId, productGrossCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
+                int pointOfPurchaseId;
+                decimal productGrossCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
+
                 DataTable dtProductInfoInPurchase = pointOfPurchaseBLL.GetProductLatestValidCostPrice(Convert.ToInt32(txtDgProductId.Text));
 
                 if (dtProductInfoInPurchase != null)
@@ -391,7 +393,7 @@ namespace GUI
                     }
                     productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
 
-
+                    pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(pointOfPurchaseId, productQuantityLeftForSale);
                 }
 
                 else
