@@ -16,7 +16,6 @@ namespace DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
 
-
         #region SELECT METHOD
         public DataTable Select()
         {
@@ -55,7 +54,7 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
+                string sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -197,7 +196,7 @@ namespace DAL
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                String sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pop_details')";//SQL query to get the last id of rows in the table.
+                string sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pop_details')";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -234,7 +233,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id_pop= " + invoiceId + "";//SQL query to get the last id of rows in te table.
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id_pop= " + invoiceId + "";//SQL query to get the last id of rows in te table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -268,7 +267,7 @@ namespace DAL
             {
                 DataTable dtReport = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id='" + productId + "' AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -291,6 +290,35 @@ namespace DAL
                     }
                     return dtReport;
                 }
+            }
+        }
+
+        public bool UpdateProductQuantityLeftForSale(int idPointOfPurchase, decimal productQuantityLeftForSale)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                bool isSuccess = false;
+
+                try
+                {
+                    string sqlQuery = "UPDATE tbl_pop_detailed SET product_quantity_left_for_sale=@product_quantity_left_for_sale WHERE id='" + idPointOfPurchase + "'";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+
+                    using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("product_quantity_left_for_sale", productQuantityLeftForSale);
+
+                        conn.Open();//Opening the database connection
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return isSuccess;
             }
         }
     }
