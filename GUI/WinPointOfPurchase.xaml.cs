@@ -320,11 +320,11 @@ namespace GUI
                         productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productGrossCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductGrossCostPrice]).ToString("G29");
-                        productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("0.00");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("G29");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPopDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPopDetail.Rows[currentRow][colTxtProductVAT].ToString();
-                        productCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("0.00");//Two digits are enough because we only store two float numbers for the product cost price in DB.
-                        productTotalCostPrice =((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("0.00");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("G29");//Two digits are enough because we only store two float numbers for the product cost price in DB.
+                        productTotalCostPrice =((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("G29");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName].ToString();//We used (int)Numbers.InitialIndex because there can be only one row in the datatable for a specific product.
