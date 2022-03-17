@@ -54,7 +54,7 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
+                string sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, quantity_left_for_sale, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @quantity_left_for_sale, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
@@ -64,6 +64,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfPurchaseDetailCUL.ProductRate);
                 cmd.Parameters.AddWithValue("@quantity", pointOfPurchaseDetailCUL.ProductQuantity);
+                cmd.Parameters.AddWithValue("@quantity_left_for_sale", pointOfPurchaseDetailCUL.ProductQuantityLeftForSale);
                 cmd.Parameters.AddWithValue("@product_gross_cost_price", pointOfPurchaseDetailCUL.ProductGrossCostPrice);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfPurchaseDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_discount", pointOfPurchaseDetailCUL.ProductDiscount);
@@ -267,7 +268,7 @@ namespace DAL
             {
                 DataTable dtReport = new DataTable();
 
-                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id=" + productId + " AND quantity_left_for_sale > 0 ORDER BY id_pop";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id=" + productId + " AND quantity_left_for_sale > 0 ORDER BY id";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -308,6 +309,17 @@ namespace DAL
                         cmd.Parameters.AddWithValue("quantity_left_for_sale", productQuantityLeftForSale);
 
                         conn.Open();//Opening the database connection
+
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows > 0)
+                        {
+                            isSuccess = true;
+                        }
+                        else
+                        {
+                            isSuccess = false;
+                        }
                     }
                 }
                 catch (Exception ex)

@@ -380,7 +380,7 @@ namespace GUI
 
                 DataTable dtProductInfoInPurchase = pointOfPurchaseBLL.GetProductLatestValidCostPrice(Convert.ToInt32(txtDgProductId.Text));
 
-                if (dtProductInfoInPurchase != null)
+                if (dtProductInfoInPurchase.Rows.Count != (int)Numbers.InitialIndex)
                 {
                     pointOfPurchaseId = Convert.ToInt32(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtId]);
                     productQuantityLeftForSale = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductQuantityLeftForSale]);

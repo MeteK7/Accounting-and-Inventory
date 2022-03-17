@@ -585,6 +585,7 @@ namespace GUI
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
                     pointOfPurchaseDetailCUL.ProductGrossCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductGrossCostPrice]);//cells[4] contains gross cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
                     pointOfPurchaseDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);
+                    pointOfPurchaseDetailCUL.ProductQuantityLeftForSale = Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);//Assigning quantity left for sale in order to calculate profit later.
                     pointOfPurchaseDetailCUL.ProductDiscount = Convert.ToDecimal(cells[(int)PopColumns.ColProductDiscount]);
                     pointOfPurchaseDetailCUL.ProductVAT = Convert.ToDecimal(cells[(int)PopColumns.ColProductVAT]);
                     pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductCostPrice]);//cells[8] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.

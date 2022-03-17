@@ -61,23 +61,6 @@ C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.cs
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
 C:\Lessons\C# Programs\Kaba-Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.deps.json
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\ref\BLL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.pdb
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\CUL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.pdb
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\CUL.pdb
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.AssemblyReference.cache
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfo.cs
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CopyComplete
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.deps.json
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\bin\Debug\net5.0\ref\BLL.dll
@@ -95,3 +78,20 @@ C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.C
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.deps.json
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\ref\BLL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\BLL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\CUL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\DAL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\bin\Debug\net5.0\CUL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.AssemblyReference.cache
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.AssemblyInfo.cs
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.csproj.CopyComplete
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\ref\BLL.dll
+C:\Lessons\C# Programs\Accounting-and-Inventory\BLL\obj\Debug\net5.0\BLL.pdb
