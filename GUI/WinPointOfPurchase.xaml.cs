@@ -27,14 +27,6 @@ namespace GUI
     /// </summary>
     public partial class WinPointOfPurchase : Window
     {
-        private readonly UserDAL _userDAL;
-        private readonly UserBLL _userBLL;
-        public WinPointOfPurchase(UserDAL userDAL, UserBLL userBLL)
-        {
-            _userDAL = userDAL;
-            _userBLL = userBLL;
-        }
-
         public WinPointOfPurchase()
         {
             InitializeComponent();
@@ -328,11 +320,11 @@ namespace GUI
                         productCurrentUnitId = Convert.ToInt32(dtPopDetail.Rows[currentRow][colTxtProductUnitId]);
                         productQuantity = dtPopDetail.Rows[currentRow][colTxtProductQtyPurchased].ToString();
                         productGrossCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductGrossCostPrice]).ToString("G29");
-                        productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("0.00");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productGrossTotalCostPrice = (Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)).ToString("G29");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPopDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPopDetail.Rows[currentRow][colTxtProductVAT].ToString();
-                        productCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("0.00");//Two digits are enough because we only store two float numbers for the product cost price in DB.
-                        productTotalCostPrice =((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("0.00");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
+                        productCostPrice = Convert.ToDecimal(dtPopDetail.Rows[currentRow][colTxtProductCostPrice]).ToString("G29");//Two digits are enough because we only store two float numbers for the product cost price in DB.
+                        productTotalCostPrice =((Convert.ToDecimal(productGrossCostPrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("G29");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName].ToString();//We used (int)Numbers.InitialIndex because there can be only one row in the datatable for a specific product.
@@ -476,7 +468,7 @@ namespace GUI
                     invoiceNo = Convert.ToInt32(txtInvoiceNo.Text);
 
                 int invoiceId = Convert.ToInt32(lblInvoiceId.Content); /*lblInvoiceId stands for the invoice id in the database.*/
-                int userId = _userBLL.GetUserId(WinLogin.loggedInUserName);
+                int userId = userBLL.GetUserId(WinLogin.loggedInUserName);
                 bool isSuccess = false, isSuccessDetail = false,isSuccessAsset=false;
                 int productId;
                 int unitId;
@@ -581,20 +573,19 @@ namespace GUI
                         }
                     }
 
-                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[(int)Numbers.InitialIndex]);//Cell[0] may contain the product id or barcode_retail or barcode_wholesale.
-                    productId = Convert.ToInt32(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
-
+                    productId = Convert.ToInt32(cells[(int)Numbers.InitialIndex]);//Row index is always zero for this situation because there can be only one row of a product which has a unique barcode on the table.
 
                     dataTableUnit = unitDAL.GetUnitInfoById(Convert.ToInt32(cells[(int)PopColumns.ColProductUnit]));//Cell[2] contains the unit id in the combobox.
                     unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
-                    pointOfPurchaseDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
+                    pointOfPurchaseDetailCUL.PopId = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
                     pointOfPurchaseDetailCUL.ProductId = productId;
                     pointOfPurchaseDetailCUL.AddedBy = addedBy;
                     pointOfPurchaseDetailCUL.ProductRate = productRate;
                     pointOfPurchaseDetailCUL.ProductUnitId = unitId;
                     pointOfPurchaseDetailCUL.ProductGrossCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductGrossCostPrice]);//cells[4] contains gross cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
                     pointOfPurchaseDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);
+                    pointOfPurchaseDetailCUL.ProductQuantityLeftForSale = Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);//Assigning quantity left for sale in order to calculate profit later.
                     pointOfPurchaseDetailCUL.ProductDiscount = Convert.ToDecimal(cells[(int)PopColumns.ColProductDiscount]);
                     pointOfPurchaseDetailCUL.ProductVAT = Convert.ToDecimal(cells[(int)PopColumns.ColProductVAT]);
                     pointOfPurchaseDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PopColumns.ColProductCostPrice]);//cells[8] contains cost price of the product in the list. We have to store the current cost price as well because it may be changed in the future.
@@ -602,6 +593,8 @@ namespace GUI
                     isSuccessDetail = pointOfPurchaseDetailDAL.Insert(pointOfPurchaseDetailCUL);
 
                     #region PRODUCT QUANTITY AND COST UPDATE
+                    dataTableProduct = productDAL.SearchProductByIdBarcode(cells[(int)Numbers.InitialIndex]);//cells[0] contains product id.
+
                     productOldQtyInStock = Convert.ToDecimal(dataTableProduct.Rows[(int)Numbers.InitialIndex][colTxtQtyInStock].ToString());//Getting the old product quantity in stock.
 
                     newQuantity= productOldQtyInStock + Convert.ToDecimal(cells[(int)PopColumns.ColProductQuantity]);

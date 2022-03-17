@@ -1522,23 +1522,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mete.kaba\\.nuget\\packages\\": {},
+    "C:\\Users\\MeteK\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "projectUniqueName": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\GUI.csproj",
       "projectName": "GUI",
-      "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\GUI\\GUI.csproj",
-      "packagesPath": "C:\\Users\\mete.kaba\\.nuget\\packages\\",
-      "outputPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\GUI\\obj\\",
+      "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\GUI.csproj",
+      "packagesPath": "C:\\Users\\MeteK\\.nuget\\packages\\",
+      "outputPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\GUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mete.kaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MeteK\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1547,21 +1547,20 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nuget.caretta.net/nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\BLL\\BLL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\BLL\\BLL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\BLL\\BLL.csproj"
             },
-            "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
-              "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\CUL\\CUL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\CUL\\CUL.csproj"
             },
-            "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\DOCUMENTS\\Projects\\Accounting-and-Inventory\\DAL\\DAL.csproj"
+            "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj"
             }
           }
         }
@@ -1603,7 +1602,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

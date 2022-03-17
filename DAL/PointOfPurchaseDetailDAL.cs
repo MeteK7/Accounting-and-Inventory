@@ -1,4 +1,5 @@
 ﻿using CUL;
+using CUL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,6 @@ namespace DAL
     public class PointOfPurchaseDetailDAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["AccountingConnString"].ConnectionString;
-
 
         #region SELECT METHOD
         public DataTable Select()
@@ -54,16 +54,17 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pop_detailed (id, product_id, product_unit_id, added_by, rate, quantity, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
+                string sqlQuery = "INSERT INTO tbl_pop_detailed (id_pop, product_id, product_unit_id, added_by, rate, quantity, quantity_left_for_sale, product_gross_cost_price, product_cost_price, product_discount, product_vat) VALUES (@id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @quantity_left_for_sale, @product_gross_cost_price, @product_cost_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfPurchaseDetailCUL.Id);//No incremental value in the database because there can be multiple goods with the same invoice id.
+                cmd.Parameters.AddWithValue("@id_pop", pointOfPurchaseDetailCUL.PopId);//No incremental value in the database because there can be multiple goods with the same invoice id.
                 cmd.Parameters.AddWithValue("@product_id", pointOfPurchaseDetailCUL.ProductId);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfPurchaseDetailCUL.ProductUnitId);
                 cmd.Parameters.AddWithValue("@added_by", pointOfPurchaseDetailCUL.AddedBy);
                 cmd.Parameters.AddWithValue("@rate", pointOfPurchaseDetailCUL.ProductRate);
                 cmd.Parameters.AddWithValue("@quantity", pointOfPurchaseDetailCUL.ProductQuantity);
+                cmd.Parameters.AddWithValue("@quantity_left_for_sale", pointOfPurchaseDetailCUL.ProductQuantityLeftForSale);
                 cmd.Parameters.AddWithValue("@product_gross_cost_price", pointOfPurchaseDetailCUL.ProductGrossCostPrice);
                 cmd.Parameters.AddWithValue("@product_cost_price", pointOfPurchaseDetailCUL.ProductCostPrice);
                 cmd.Parameters.AddWithValue("@product_discount", pointOfPurchaseDetailCUL.ProductDiscount);
@@ -155,12 +156,12 @@ namespace DAL
             try
             {
                 //SQL Query to Delete from the Database
-                string sqlQuery = "DELETE FROM tbl_pop_detailed WHERE id=@id";
+                string sqlQuery = "DELETE FROM tbl_pop_detailed WHERE id_pop=@id_pop";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 //Passing the value using cmd
-                cmd.Parameters.AddWithValue("@id", invoiceId);
+                cmd.Parameters.AddWithValue("@id_pop", invoiceId);
 
                 //Opening the SQL connection
                 conn.Open();
@@ -196,7 +197,7 @@ namespace DAL
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                String sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pop_details')";//SQL query to get the last id of rows in the table.
+                string sql = "SELECT * FROM tbl_pop_detailed WHERE id=IDENT_CURRENT('tbl_pop_details')";//SQL query to get the last id of rows in the table.
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -233,7 +234,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id= " + invoiceId + "";//SQL query to get the last id of rows in te table.
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE id_pop= " + invoiceId + "";//SQL query to get the last id of rows in te table.
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {
@@ -260,5 +261,77 @@ namespace DAL
             }
         }
         #endregion
+
+        public DataTable GetProductLatestValidCostPriceById(int productId)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                DataTable dtReport = new DataTable();
+
+                string sqlQuery = "SELECT * FROM tbl_pop_detailed WHERE product_id=" + productId + " AND quantity_left_for_sale > 0 ORDER BY id";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                {
+                    try
+                    {
+                        conn.Open();//Opening the database connection
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd))
+                        {
+                            dataAdapter.Fill(dtReport);//Passing values from adapter to Data Table
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    return dtReport;
+                }
+            }
+        }
+
+        public bool UpdateProductQuantityLeftForSaleById(int idPointOfPurchase, decimal productQuantityLeftForSale)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                bool isSuccess = false;
+
+                try
+                {
+                    string sqlQuery = "UPDATE tbl_pop_detailed SET quantity_left_for_sale=@quantity_left_for_sale WHERE id='" + idPointOfPurchase + "'";//Somehow, the enum variable (int)Numbers.InitialIndex does not work.
+
+                    using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("quantity_left_for_sale", productQuantityLeftForSale);
+
+                        conn.Open();//Opening the database connection
+
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows > 0)
+                        {
+                            isSuccess = true;
+                        }
+                        else
+                        {
+                            isSuccess = false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return isSuccess;
+            }
+        }
     }
 }
