@@ -350,30 +350,49 @@ namespace GUI
         {
             int rowQuantity = dgProducts.Items.Count;
 
-            for (int i = (int)Numbers.InitialIndex; i < rowQuantity; i++)
+            for (int rowNo = (int)Numbers.InitialIndex; rowNo < rowQuantity; rowNo++)
             {
-                DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
+                DataGridRow dgRow = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(rowNo);
 
-                ContentPresenter cpProduct = dgProducts.Columns[(int)Numbers.InitialIndex].GetCellContent(row) as ContentPresenter;
-                var tmpProduct = cpProduct.ContentTemplate;
-                TextBox txtDgProductId = tmpProduct.FindName(dgCellNames[(int)Numbers.InitialIndex], cpProduct) as TextBox;
+                //GETTING THE CELL CONTENT OF THE PRODUCT ID
+                ContentPresenter cpProductId = dgProducts.Columns[(int)PosColumns.ColProductId].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductId = cpProductId.ContentTemplate;
+                TextBox txtDgProductId = tmpProductId.FindName(dgCellNames[(int)PosColumns.ColProductId], cpProductId) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT NAME
+                ContentPresenter cpProductName = dgProducts.Columns[(int)PosColumns.ColProductName].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductName = cpProductName.ContentTemplate;
+                TextBox txtDgProductName = tmpProductName.FindName(dgCellNames[(int)PosColumns.ColProductName], cpProductName) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT QUANTITY
-                ContentPresenter cpProductQty = dgProducts.Columns[(int)PosColumns.ColProductQuantity].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductQty = dgProducts.Columns[(int)PosColumns.ColProductQuantity].GetCellContent(dgRow) as ContentPresenter;
                 var tmpProductQty = cpProductQty.ContentTemplate;
                 TextBox txtDgProductQty = tmpProductQty.FindName(dgCellNames[(int)PosColumns.ColProductQuantity], cpProductQty) as TextBox;
 
-
                 //GETTING THE CELL CONTENT OF THE PRODUCT COST PRICE
-                ContentPresenter cpProductCostPrice = dgProducts.Columns[(int)PosColumns.ColProductCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductCostPrice = dgProducts.Columns[(int)PosColumns.ColProductCostPrice].GetCellContent(dgRow) as ContentPresenter;
                 var tmpProductCostPrice = cpProductCostPrice.ContentTemplate;
-                TextBox txtProductDgCostPrice = tmpProductCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductCostPrice], cpProductCostPrice) as TextBox;
+                TextBox txtDgProductCostPrice = tmpProductCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductCostPrice], cpProductCostPrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT SALE PRICE
+                ContentPresenter cpProductSalePrice = dgProducts.Columns[(int)PosColumns.ColProductSalePrice].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductSalePrice = cpProductSalePrice.ContentTemplate;
+                TextBox txtDgProductSalePrice = tmpProductSalePrice.FindName(dgCellNames[(int)PosColumns.ColProductSalePrice], cpProductSalePrice) as TextBox;
 
                 //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL COST PRICE
-                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PosColumns.ColProductTotalCostPrice].GetCellContent(row) as ContentPresenter;
+                ContentPresenter cpProductTotalCostPrice = dgProducts.Columns[(int)PosColumns.ColProductTotalCostPrice].GetCellContent(dgRow) as ContentPresenter;
                 var tmpProductTotalCostPrice = cpProductTotalCostPrice.ContentTemplate;
-                TextBox txtProductDgTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
+                TextBox txtDgProductTotalCostPrice = tmpProductTotalCostPrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalCostPrice], cpProductTotalCostPrice) as TextBox;
 
+                //GETTING THE CELL CONTENT OF THE PRODUCT TOTAL SALE PRICE
+                ContentPresenter cpProductTotalSalePrice = dgProducts.Columns[(int)PosColumns.ColProductTotalSalePrice].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductTotalSalePrice = cpProductTotalSalePrice.ContentTemplate;
+                TextBox txtDgProductTotalSalePrice = tmpProductTotalSalePrice.FindName(dgCellNames[(int)PosColumns.ColProductTotalSalePrice], cpProductTotalSalePrice) as TextBox;
+
+                //GETTING THE CELL CONTENT OF THE PRODUCT UNIT
+                ContentPresenter cpProductUnit = dgProducts.Columns[(int)PosColumns.ColProductUnit].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductUnit = cpProductUnit.ContentTemplate;
+                ComboBox cboDgProductUnit = tmpProductUnit.FindName(dgCellNames[(int)PosColumns.ColProductUnit], cpProductUnit) as ComboBox;
 
                 int pointOfPurchaseId;
                 decimal productCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
@@ -389,7 +408,7 @@ namespace GUI
                     if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
                     {
                         productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                        txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
+                        txtDgProductCostPrice.Text = productCostPrice.ToString("G29");
                         productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
                     }
 
@@ -397,13 +416,34 @@ namespace GUI
                     else
                     {
                         productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                        txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
+                        txtDgProductCostPrice.Text = productCostPrice.ToString("G29");
 
                         decimal productQuantityForNewLine = Convert.ToDecimal(txtDgProductQty.Text) - productQuantityLeftForSale;//Calculating new quantity will be added to the next line.
                         txtDgProductQty.Text=productQuantityLeftForSale.ToString("G29");//Assigning all quantity left for sale to the current line's quantity cell.
                         productQuantityLeftForSale = (int)Numbers.InitialIndex;//Assigning zero to productQuantityLeftForSale because we used all it's quantity for the current line's quantity cell.
-                        
 
+                        #region BINDING NEW PRODUCT TO PRODUCT DATA GRID IN CASE AN EXTRA PRODUCT QUANTITY
+                        PointOfSaleDetailCUL pointOfSaleDetailCUL =new PointOfSaleDetailCUL();
+
+                        pointOfSaleDetailCUL.ProductId = Convert.ToInt32(txtDgProductId.Text);
+                        //pointOfSaleDetailCUL.ProductName = txtDgProductName.Text; IT IS ALWAYS A GOOD PRACTICE TO GET THE NAME FROM DB BY ID INSTEAD OF GETTING IT STATIC.
+                        pointOfSaleDetailCUL.ProductQuantity= productQuantityForNewLine;
+                        pointOfSaleDetailCUL.ProductCostPrice= (int)Numbers.InitialIndex;//Defaultly
+                        pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(txtDgProductSalePrice.Text);
+                        pointOfSaleDetailCUL.ProductDiscount = (int)Numbers.InitialIndex;//Defaultly
+                        pointOfSaleDetailCUL.ProductVAT = (int)Numbers.InitialIndex;//Defaultly
+
+                        //BINDING DATAGRID COMBOBOX
+                        pointOfSaleDetailCUL.ProductCboItemsSource= cboDgProductUnit.ItemsSource;
+                        pointOfSaleDetailCUL.ProductCboSelectedValue= cboDgProductUnit.SelectedValue;
+                        pointOfSaleDetailCUL.ProductCboSelectedValuePath= cboDgProductUnit.SelectedValuePath;
+                        pointOfSaleDetailCUL.ProductCboDisplayMemberPath= cboDgProductUnit.DisplayMemberPath;
+
+                        BindProductDataGridByNewQuantityInPurchase(pointOfSaleDetailCUL);
+
+                        dgProducts.UpdateLayout();
+                        rowQuantity = dgProducts.Items.Count;
+                        #endregion
                     }
 
                     pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(pointOfPurchaseId, productQuantityLeftForSale);
@@ -414,11 +454,12 @@ namespace GUI
                 {
                     DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtDgProductId.Text);
 
-                    productCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                    txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
+                    productCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtCostPrice]);
+                    txtDgProductCostPrice.Text = productCostPrice.ToString("G29");
                 }
 
-                txtProductDgTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
+                txtDgProductTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString("G29");
+                txtDgProductTotalSalePrice.Text = (Convert.ToDecimal(txtDgProductSalePrice.Text) * Convert.ToDecimal(txtDgProductQty.Text)).ToString("G29");
 
                 //break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
             }
@@ -850,7 +891,7 @@ namespace GUI
 
         private void btnProductAdd_Click(object sender, RoutedEventArgs e)//Try to do this by using listview
         {
-            BindDataGridByProduct();
+            BindProductDataGrid();
         }
 
         private void PopulateBasket()
@@ -1329,43 +1370,35 @@ namespace GUI
             ClearProductEntranceTextBox();
         }
 
-        private void BindDataGridByProduct()
+        private void BindProductDataGridByNewQuantityInPurchase(PointOfSaleDetailCUL pointOfSaleDetailCUL)
         {
-            bool addNewProductLine = true;
-            int rowQuantity = dgProducts.Items.Count;
+            DataTable dtProduct = productDAL.SearchProductByIdBarcode(pointOfSaleDetailCUL.ProductId.ToString());
+            pointOfSaleDetailCUL.ProductId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+            pointOfSaleDetailCUL.ProductName = (dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName]).ToString();
 
-            DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
-            int productId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
-
-            if (addNewProductLine == true)
+            dgProducts.Items.Add(new
             {
-                //decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
+                Id = pointOfSaleDetailCUL.ProductId,
+                Name = pointOfSaleDetailCUL.ProductName,
+                Quantity = pointOfSaleDetailCUL.ProductQuantity,
+                CostPrice = pointOfSaleDetailCUL.ProductCostPrice,
+                SalePrice = pointOfSaleDetailCUL.ProductSalePrice,
+                GrossTotalCostPrice = ((int)Numbers.InitialIndex).ToString(),//Defaultly
+                GrossTotalSalePrice = (pointOfSaleDetailCUL.ProductSalePrice)*(pointOfSaleDetailCUL.ProductQuantity),
+                Discount = ((int)Numbers.InitialIndex).ToString(),//Defaultly
+                VAT = ((int)Numbers.InitialIndex).ToString(),//Defaultly
+                TotalSalePrice = txtProductTotalSalePrice.Text,
 
-                //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
-                dgProducts.Items.Add(new
-                {
-                    Id = productId,
-                    Name = txtProductName.Text,
-                    Quantity = txtProductQuantity.Text,
-                    CostPrice = txtProductGrossCostPrice.Text,
-                    SalePrice = txtProductGrossSalePrice.Text,
-                    GrossTotalCostPrice = ((int)Numbers.InitialIndex).ToString(),//Defaultly
-                    GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
-                    Discount = txtProductDiscount.Text,
-                    VAT = txtProductVAT.Text,
-                    TotalSalePrice = txtProductTotalSalePrice.Text,
+                //BINDING DATAGRID COMBOBOX
+                UnitCboItemsSource = pointOfSaleDetailCUL.ProductCboItemsSource,
+                UnitCboSValue = pointOfSaleDetailCUL.ProductCboSelectedValue,
+                UnitCboSValuePath = pointOfSaleDetailCUL.ProductCboSelectedValuePath,
+                UnitCboDMemberPath = pointOfSaleDetailCUL.ProductCboDisplayMemberPath,
+            });
 
-                    //BINDING DATAGRID COMBOBOX
-                    UnitCboItemsSource = cboProductUnit.ItemsSource,
-                    UnitCboSValue = cboProductUnit.SelectedValue,
-                    UnitCboSValuePath = cboProductUnit.SelectedValuePath,
-                    UnitCboDMemberPath = cboProductUnit.DisplayMemberPath,
-                });
-            }
-
-            dgProducts.UpdateLayout();
-            PopulateBasket();
-            ClearProductEntranceTextBox();
+            //dgProducts.UpdateLayout();
+            //PopulateBasket();
+            //ClearProductEntranceTextBox();
         }
 
         private void PopulateProductEntryById(int keyPressed)
@@ -1379,7 +1412,7 @@ namespace GUI
             {
                 if (btnProductAdd.IsEnabled == true)//If either product add or cancel is activated, that means the user has entered a valid id and first If statement above is worked.
                 {
-                    BindDataGridByProduct();
+                    BindProductDataGrid();
                 }
                 else
                 {
