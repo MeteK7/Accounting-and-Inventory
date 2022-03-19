@@ -348,6 +348,9 @@
   <data name="idCapital" xml:space="preserve">
     <value>ID</value>
   </data>
+  <data name="idPop" xml:space="preserve">
+    <value>ID Pop</value>
+  </data>
   <data name="inventory" xml:space="preserve">
     <value>INVENTORY</value>
   </data>

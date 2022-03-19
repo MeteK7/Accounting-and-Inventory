@@ -754,6 +754,15 @@ namespace GUI.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Pop.
+        /// </summary>
+        public static string idPop {
+            get {
+                return ResourceManager.GetString("idPop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INVENTORY.
         /// </summary>
         public static string inventory {

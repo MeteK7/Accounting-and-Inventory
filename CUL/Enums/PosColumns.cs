@@ -18,6 +18,7 @@ namespace CUL.Enums
         ColProductGrossTotalSalePrice, 
         ColProductDiscount, 
         ColProductVAT, 
-        ColProductTotalSalePrice
+        ColProductTotalSalePrice,
+        ColProductPopId
     }
 }

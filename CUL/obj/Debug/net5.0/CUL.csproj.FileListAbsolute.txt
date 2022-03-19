@@ -68,3 +68,4 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\ref\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\CUL\obj\Debug\net5.0\CUL.csproj.AssemblyReference.cache
