@@ -113,10 +113,10 @@ namespace GUI
         AssetCUL assetCUL = new AssetCUL();
         CommonBLL commonBLL = new CommonBLL();
 
-        const int colLength = 11;
+        const int colLength = 12;
         int clickedNewOrEdit;
         const int clickedNew = 0, clickedEdit = 1, clickedNull = 2;//0 stands for user clicked the button New, and 1 stands for user clicked the button Edit.
-        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductGrossCostPrice", "dgTxtProductGrossSalePrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice" };
+        string[] dgCellNames = new string[colLength] { "dgTxtProductId", "dgTxtProductName", "dgTxtProductUnit", "dgTxtProductQuantity", "dgTxtProductGrossCostPrice", "dgTxtProductGrossSalePrice", "dgTxtProductGrossTotalCostPrice", "dgTxtProductGrossTotalSalePrice", "dgTxtProductDiscount", "dgTxtProductVAT", "dgTxtProductTotalSalePrice", "dgTxtIdPop" };
         string[,] oldDgProductCells = new string[,] { };
 
         string calledBy = "tbl_pos";
@@ -135,6 +135,7 @@ namespace GUI
             colTxtDateAdded = "added_date",
             colTxtProductQty = "quantity",
             colTxtProductId = "product_id",
+            colTxtProductPopId = "id_pop",
             colTxtProductUnitId = "product_unit_id",
             colTxtProductQuantityLeftForSale = "quantity_left_for_sale",
             colTxtProductCostPrice = "product_cost_price",
@@ -359,6 +360,11 @@ namespace GUI
                 var tmpProductId = cpProductId.ContentTemplate;
                 TextBox txtDgProductId = tmpProductId.FindName(dgCellNames[(int)PosColumns.ColProductId], cpProductId) as TextBox;
 
+                //GETTING THE CELL CONTENT OF THE PRODUCT ID FROM POINT OF PURCHASE
+                ContentPresenter cpProductIdPop = dgProducts.Columns[(int)PosColumns.ColProductPopId].GetCellContent(dgRow) as ContentPresenter;
+                var tmpProductIdPop = cpProductIdPop.ContentTemplate;
+                TextBox txtDgProductIdPop = tmpProductIdPop.FindName(dgCellNames[(int)PosColumns.ColProductPopId], cpProductIdPop) as TextBox;
+
                 //GETTING THE CELL CONTENT OF THE PRODUCT NAME
                 ContentPresenter cpProductName = dgProducts.Columns[(int)PosColumns.ColProductName].GetCellContent(dgRow) as ContentPresenter;
                 var tmpProductName = cpProductName.ContentTemplate;
@@ -394,15 +400,16 @@ namespace GUI
                 var tmpProductUnit = cpProductUnit.ContentTemplate;
                 ComboBox cboDgProductUnit = tmpProductUnit.FindName(dgCellNames[(int)PosColumns.ColProductUnit], cpProductUnit) as ComboBox;
 
-                int pointOfPurchaseId;
+                int idPointOfPurchase;
                 decimal productCostPrice=(int)Numbers.InitialIndex, productQuantityLeftForSale;
 
                 DataTable dtProductInfoInPurchase = pointOfPurchaseBLL.GetProductLatestValidCostPrice(Convert.ToInt32(txtDgProductId.Text));
 
                 if (dtProductInfoInPurchase.Rows.Count != (int)Numbers.InitialIndex)
                 {
-                    pointOfPurchaseId = Convert.ToInt32(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtId]);
+                    idPointOfPurchase = Convert.ToInt32(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtId]);
                     productQuantityLeftForSale = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductQuantityLeftForSale]);
+                    txtDgProductIdPop.Text = idPointOfPurchase.ToString();
 
                     //If entered product quantity is less than or equal to productQuantityLeftForSale, get the cost price from productQuantityLeftForSale
                     if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
@@ -425,7 +432,7 @@ namespace GUI
                         #region BINDING NEW PRODUCT TO PRODUCT DATA GRID IN CASE AN EXTRA PRODUCT QUANTITY
                         PointOfSaleDetailCUL pointOfSaleDetailCUL =new PointOfSaleDetailCUL();
 
-                        pointOfSaleDetailCUL.ProductId = Convert.ToInt32(txtDgProductId.Text);
+                        pointOfSaleDetailCUL.IdProduct = Convert.ToInt32(txtDgProductId.Text);
                         //pointOfSaleDetailCUL.ProductName = txtDgProductName.Text; IT IS ALWAYS A GOOD PRACTICE TO GET THE NAME FROM DB BY ID INSTEAD OF GETTING IT STATIC.
                         pointOfSaleDetailCUL.ProductQuantity= productQuantityForNewLine;
                         pointOfSaleDetailCUL.ProductCostPrice= (int)Numbers.InitialIndex;//Defaultly
@@ -446,7 +453,7 @@ namespace GUI
                         #endregion
                     }
 
-                    pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(pointOfPurchaseId, productQuantityLeftForSale);
+                    pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(idPointOfPurchase, productQuantityLeftForSale);
                 }
 
                 //If there is no any purchase record for this product, get the cost price from tbl_products which contains latest cost price.
@@ -600,10 +607,11 @@ namespace GUI
                         unitId = Convert.ToInt32(dataTableUnit.Rows[(int)Numbers.InitialIndex][colTxtId]);//Row index is always zero for this situation because there can be only one row of a specific unit.
 
                         pointOfSaleDetailCUL.Id = invoiceId;//No incremental value in the database because there can be multiple goods with the same invoice id.
-                        pointOfSaleDetailCUL.ProductId = productId;
+                        pointOfSaleDetailCUL.IdProduct = productId;
                         pointOfSaleDetailCUL.AddedBy = addedBy;
                         pointOfSaleDetailCUL.ProductRate = productRate;
-                        pointOfSaleDetailCUL.ProductUnitId = unitId;
+                        pointOfSaleDetailCUL.IdProductUnit = unitId;
+                        pointOfSaleDetailCUL.ProductPopId = Convert.ToInt32(cells[(int)PosColumns.ColProductPopId]);
                         pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductCostPrice]);
                         pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductSalePrice]);//cells[5] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
                         pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
@@ -670,8 +678,7 @@ namespace GUI
 
         private void LoadPastInvoice(int invoiceId = (int)Numbers.InitialIndex, int clickedArrow = -(int)Numbers.UnitValue)//Optional parameter
         {
-
-            string productId, productName, productQuantity, productCostPrice, productSalePrice, productGrossTotalCostPrice, productGrossTotalSalePrice, productDiscount, productVAT, productTotalSalePrice;
+            string productPopId, productId, productName, productQuantity, productCostPrice, productSalePrice, productGrossTotalCostPrice, productGrossTotalSalePrice, productDiscount, productVAT, productTotalSalePrice;
             decimal basketQuantity = (int)Numbers.InitialIndex,
                     basketGrossTotalCostPrice = (int)Numbers.InitialIndex,
                     basketGrossTotalSalePrice = (int)Numbers.InitialIndex,
@@ -733,6 +740,7 @@ namespace GUI
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
                         productTotalSalePrice =((Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("G29");
+                        productPopId= dtPosDetail.Rows[currentRow][colTxtProductPopId].ToString();
 
                         dtProduct = productDAL.SearchById(productId);
                         productName = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName].ToString();//We used initalIndex because there can be only one row in the datatable for a specific product.
@@ -751,6 +759,7 @@ namespace GUI
                         dgProducts.Items.Add(new
                         {
                             Id = productId,
+                            IdPop= productPopId,
                             Name = productName,
                             Quantity = productQuantity,
                             CostPrice = productCostPrice,
@@ -1372,13 +1381,13 @@ namespace GUI
 
         private void BindProductDataGridByNewQuantityInPurchase(PointOfSaleDetailCUL pointOfSaleDetailCUL)
         {
-            DataTable dtProduct = productDAL.SearchProductByIdBarcode(pointOfSaleDetailCUL.ProductId.ToString());
-            pointOfSaleDetailCUL.ProductId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+            DataTable dtProduct = productDAL.SearchProductByIdBarcode(pointOfSaleDetailCUL.IdProduct.ToString());
+            pointOfSaleDetailCUL.IdProduct = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
             pointOfSaleDetailCUL.ProductName = (dtProduct.Rows[(int)Numbers.InitialIndex][colTxtName]).ToString();
 
             dgProducts.Items.Add(new
             {
-                Id = pointOfSaleDetailCUL.ProductId,
+                Id = pointOfSaleDetailCUL.IdProduct,
                 Name = pointOfSaleDetailCUL.ProductName,
                 Quantity = pointOfSaleDetailCUL.ProductQuantity,
                 CostPrice = pointOfSaleDetailCUL.ProductCostPrice,
