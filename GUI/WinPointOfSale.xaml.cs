@@ -729,7 +729,7 @@ namespace GUI
                         productCostPrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductCostPrice]).ToString();
                         productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[currentRow][colTxtProductSalePrice]).ToString();
                         productGrossTotalCostPrice = (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity)).ToString("G29");//We do NOT store the total cost in the db to reduce the storage. Instead of it, we multiply the unit cost with the quantity to find the total cost.
-                        productGrossTotalSalePrice = String.Format("{0:0.00}", (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)));//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
+                        productGrossTotalSalePrice = (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)).ToString("G29");//We do NOT store the total price in the db to reduce the storage. Instead of it, we multiply the unit price with the quantity to find the total price.
                         productDiscount = dtPosDetail.Rows[currentRow][colTxtProductDiscount].ToString();
                         productVAT = dtPosDetail.Rows[currentRow][colTxtProductVAT].ToString();
                         productTotalSalePrice =((Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity)) - Convert.ToDecimal(productDiscount) + Convert.ToDecimal(productVAT)).ToString("G29");
@@ -1430,7 +1430,7 @@ namespace GUI
                 int productId;
                 int productCurrentUnitId, productRetailUnitId, productWholesaleUnitId;
                 string productBarcodeRetail/*, productBarcodeWholesale*/;
-                string costPrice, salePrice;
+                string costPrice, grossSalePrice;
 
                 btnProductAdd.IsEnabled = true; //Enabling the add button if any valid barcode is entered.
 
@@ -1478,16 +1478,16 @@ namespace GUI
 
 
                 //costPrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtCostPrice].ToString();
-                salePrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtSalePrice].ToString();
+                grossSalePrice = dtProduct.Rows[(int)Numbers.InitialIndex][colTxtSalePrice].ToString();
 
                 //txtProductGrossCostPrice.Text = costPrice;
                 txtProductGrossCostPrice.Text = ((int)Numbers.InitialIndex).ToString();
-                txtProductGrossSalePrice.Text = salePrice;
+                txtProductGrossSalePrice.Text = grossSalePrice;
                 txtProductQuantity.Text = productQuantity.ToString();
-                txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity).ToString();
+                txtProductGrossTotalSalePrice.Text = (Convert.ToDecimal(grossSalePrice) * productQuantity).ToString();
                 txtProductDiscount.Text = productDiscount.ToString();
                 txtProductVAT.Text = productVAT.ToString();
-                txtProductTotalSalePrice.Text = (Convert.ToDecimal(salePrice) * productQuantity - productDiscount + productVAT).ToString();
+                txtProductTotalSalePrice.Text = (Convert.ToDecimal(grossSalePrice) * productQuantity - productDiscount + productVAT).ToString();
             }
 
             /*--->If the txtProductId is empty which means user has clicked the backspace button and if the txtProductName is filled once before, then erase all the text contents.
