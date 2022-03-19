@@ -385,12 +385,26 @@ namespace GUI
                     pointOfPurchaseId = Convert.ToInt32(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtId]);
                     productQuantityLeftForSale = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductQuantityLeftForSale]);
 
+                    //If entered product quantity is less than or equal to productQuantityLeftForSale, get the cost price from productQuantityLeftForSale
                     if (Convert.ToDecimal(txtDgProductQty.Text) <= productQuantityLeftForSale)
                     {
                         productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                        txtProductDgCostPrice.Text = productCostPrice.ToString();
+                        txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
+                        productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
                     }
-                    productQuantityLeftForSale = productQuantityLeftForSale - Convert.ToDecimal(txtDgProductQty.Text);
+
+                    //If entered product quantity is greater than productQuantityLeftForSale, create a new line for the extra product quantity to calculate it's cost price later.
+                    else
+                    {
+                        productCostPrice = Convert.ToDecimal(dtProductInfoInPurchase.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
+                        txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
+
+                        decimal productQuantityForNewLine = Convert.ToDecimal(txtDgProductQty.Text) - productQuantityLeftForSale;//Calculating new quantity will be added to the next line.
+                        txtDgProductQty.Text=productQuantityLeftForSale.ToString("G29");//Assigning all quantity left for sale to the current line's quantity cell.
+                        productQuantityLeftForSale = (int)Numbers.InitialIndex;//Assigning zero to productQuantityLeftForSale because we used all it's quantity for the current line's quantity cell.
+                        
+
+                    }
 
                     pointOfPurchaseBLL.UpdateProductQuantityLeftForSale(pointOfPurchaseId, productQuantityLeftForSale);
                 }
@@ -401,12 +415,12 @@ namespace GUI
                     DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtDgProductId.Text);
 
                     productCostPrice = Convert.ToDecimal(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtProductCostPrice]);
-                    txtProductDgCostPrice.Text = productCostPrice.ToString();
+                    txtProductDgCostPrice.Text = productCostPrice.ToString("G29");
                 }
 
                 txtProductDgTotalCostPrice.Text = (productCostPrice * Convert.ToDecimal(txtDgProductQty.Text)).ToString();
 
-                break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
+                //break;//We have to break the loop if the user clicked "yes" because no need to scan the rest of the rows after confirming.
             }
         }
 
@@ -1220,16 +1234,16 @@ namespace GUI
                 txtProductVAT.Text = ((int)Numbers.InitialIndex).ToString();
         }
 
-        private void BindDataGridByProduct()
+        private void BindProductDataGrid()
         {
             bool addNewProductLine = true;
-            int productQuantity;
             int rowQuantity = dgProducts.Items.Count;
+
             DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
             int productId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
 
             #region MERGING OF DUPLICATED PRODUCTS
-            /*MERGING DUPLICATED PRODUCT FEATURE IS TEMPORARLY UNACTIVE!!!
+            /*MERGING DUPLICATED PRODUCT FEATURE IS TEMPORARLY UNACTIVE BACAUSE WE STARTED ASSIGNING PRODUCT COST PRICE BASED ON PURCHASE!!!
             for (int i = (int)Numbers.InitialIndex; i < rowQuantity; i++)
             {
                 DataGridRow row = (DataGridRow)dgProducts.ItemContainerGenerator.ContainerFromIndex(i);
@@ -1286,7 +1300,45 @@ namespace GUI
 
             if (addNewProductLine == true)
             {
+                //decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
+                //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
+                dgProducts.Items.Add(new
+                {
+                    Id = productId,
+                    Name = txtProductName.Text,
+                    Quantity = txtProductQuantity.Text,
+                    CostPrice = txtProductGrossCostPrice.Text,
+                    SalePrice = txtProductGrossSalePrice.Text,
+                    GrossTotalCostPrice = ((int)Numbers.InitialIndex).ToString(),//Defaultly
+                    GrossTotalSalePrice = txtProductGrossTotalSalePrice.Text,
+                    Discount = txtProductDiscount.Text,
+                    VAT = txtProductVAT.Text,
+                    TotalSalePrice = txtProductTotalSalePrice.Text,
+
+                    //BINDING DATAGRID COMBOBOX
+                    UnitCboItemsSource = cboProductUnit.ItemsSource,
+                    UnitCboSValue = cboProductUnit.SelectedValue,
+                    UnitCboSValuePath = cboProductUnit.SelectedValuePath,
+                    UnitCboDMemberPath = cboProductUnit.DisplayMemberPath,
+                });
+            }
+
+            dgProducts.UpdateLayout();
+            PopulateBasket();
+            ClearProductEntranceTextBox();
+        }
+
+        private void BindDataGridByProduct()
+        {
+            bool addNewProductLine = true;
+            int rowQuantity = dgProducts.Items.Count;
+
+            DataTable dtProduct = productDAL.SearchProductByIdBarcode(txtProductId.Text);
+            int productId = Convert.ToInt32(dtProduct.Rows[(int)Numbers.InitialIndex][colTxtId]); //We need to get the Id of the product from the db even if the user enters an id because user may also enter a barcode.
+
+            if (addNewProductLine == true)
+            {
                 //decimal grossTotalCostPrice = Convert.ToDecimal(txtProductGrossCostPrice.Text) * Convert.ToDecimal(txtProductQuantity.Text);
 
                 //dgProducts.Items.Add(new ProductCUL(){ Id = Convert.ToInt32(txtProductId.Text), Name = txtProductName.Text });// You can also apply this code instead of the code below. Note that you have to change the binding name in the datagrid with the name of the property in ProductCUL if you wish to use this code.
