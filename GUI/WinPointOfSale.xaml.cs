@@ -611,7 +611,7 @@ namespace GUI
                         pointOfSaleDetailCUL.AddedBy = addedBy;
                         pointOfSaleDetailCUL.ProductRate = productRate;
                         pointOfSaleDetailCUL.IdProductUnit = unitId;
-                        pointOfSaleDetailCUL.ProductPopId = Convert.ToInt32(cells[(int)PosColumns.ColProductPopId]);
+                        //pointOfSaleDetailCUL.ProductPopId = Convert.ToInt32(cells[(int)PosColumns.ColProductPopId]); We are unable to use it now. Pop is used to calculate the profit according to that purchase from suppliers.
                         pointOfSaleDetailCUL.ProductCostPrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductCostPrice]);
                         pointOfSaleDetailCUL.ProductSalePrice = Convert.ToDecimal(cells[(int)PosColumns.ColProductSalePrice]);//cells[5] contains sale price of the product in the list. We have to store the current sale price as well because it may be changed in the future.
                         pointOfSaleDetailCUL.ProductQuantity = Convert.ToDecimal(cells[(int)PosColumns.ColProductQuantity]);
