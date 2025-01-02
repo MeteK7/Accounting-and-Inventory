@@ -21,6 +21,7 @@ namespace CUL
         public decimal PosSubTotal { get; set; }
         public decimal PosVAT { get; set; }
         public decimal PosGrandTotal { get; set; }
+        public decimal Profit { get; set; }
         public string PosCustomer { get; set; }
         public DateTime PosDate { get; set; }
         public string UserFullName { get; set; }

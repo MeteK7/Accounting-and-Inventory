@@ -10,10 +10,10 @@ namespace CUL
     public class PointOfSaleDetailCUL
     {
         public int Id { get; set; }
+        public int IdPos { get; set; }
         public int InvoiceNo { get; set; }
         public int IdProduct { get; set; }
         public int IdProductUnit { get; set; }
-        public int ProductPopId { get; set; }
         public string ProductName { get; set; }
         public decimal ProductRate { get; set; }
         public decimal ProductQuantity { get; set; }

@@ -453,14 +453,6 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="{x:Static language:Lng.idPop}" MaxWidth="0">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="dgTxtIdPop" Text="{Binding IdPop, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" FontSize="17" FontWeight="Bold" VerticalContentAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
                         <DataGridTemplateColumn Header="{x:Static language:Lng.delete}" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

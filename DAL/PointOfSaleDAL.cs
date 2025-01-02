@@ -54,23 +54,16 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "INSERT INTO tbl_pos (id, payment_type_id, customer_id, asset_id, total_product_quantity, cost_total, gross_amount, discount, sub_total, vat, grand_total, added_date, added_by) VALUES (@id, @payment_type_id, @customer_id, @asset_id, @total_product_quantity, @cost_total, @gross_amount, @discount, @sub_total, @vat, @grand_total, @added_date, @added_by)";
-
+                string sqlQuery = "INSERT INTO tbl_pos (payment_type_id, customer_id, asset_id, discount, vat, added_date, added_by) VALUES (@payment_type_id, @customer_id, @asset_id, @discount, @vat, @added_date, @added_by)";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfSaleCUL.Id);//The column id in the database is not auto incremental. This is to prevent the number from increasing when the user deletes an existing invoice and creates a new invoice.
                 cmd.Parameters.AddWithValue("@payment_type_id", pointOfSaleCUL.PaymentTypeId);
                 cmd.Parameters.AddWithValue("@customer_id", pointOfSaleCUL.CustomerId);
                 cmd.Parameters.AddWithValue("@asset_id", pointOfSaleCUL.AssetId);
-                cmd.Parameters.AddWithValue("@total_product_quantity", pointOfSaleCUL.TotalProductQuantity);
-                cmd.Parameters.AddWithValue("@cost_total", pointOfSaleCUL.CostTotal);
-                cmd.Parameters.AddWithValue("@gross_amount", pointOfSaleCUL.GrossAmount);
                 cmd.Parameters.AddWithValue("@discount", pointOfSaleCUL.Discount);
-                cmd.Parameters.AddWithValue("@sub_total", pointOfSaleCUL.SubTotal);
-                cmd.Parameters.AddWithValue("@vat",pointOfSaleCUL.Vat);
-                cmd.Parameters.AddWithValue("@grand_total",pointOfSaleCUL.GrandTotal);
-                cmd.Parameters.AddWithValue("@added_date",pointOfSaleCUL.AddedDate);
-                cmd.Parameters.AddWithValue("@added_by",pointOfSaleCUL.AddedBy);
+                cmd.Parameters.AddWithValue("@vat", pointOfSaleCUL.Vat);
+                cmd.Parameters.AddWithValue("@added_date", pointOfSaleCUL.AddedDate);
+                cmd.Parameters.AddWithValue("@added_by", pointOfSaleCUL.AddedBy);
 
                 conn.Open();
 
@@ -106,23 +99,17 @@ namespace DAL
 
             try
             {
-                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, asset_id=@asset_id, total_product_quantity=@total_product_quantity, cost_total=@cost_total, gross_amount=@gross_amount, discount=@discount, sub_total=@sub_total, vat=@vat, grand_total=@grand_total, added_date=@added_date, added_by=@added_by WHERE id=@id";
-
+                string sqlQuery = "UPDATE tbl_pos SET payment_type_id=@payment_type_id, customer_id=@customer_id, asset_id=@asset_id, discount=@discount, vat=@vat, added_date=@added_date, added_by=@added_by WHERE id=@id";
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("payment_type_id", pointOfSaleCUL.PaymentTypeId);
-                cmd.Parameters.AddWithValue("customer_id", pointOfSaleCUL.CustomerId);
-                cmd.Parameters.AddWithValue("asset_id", pointOfSaleCUL.AssetId);
-                cmd.Parameters.AddWithValue("total_product_quantity", pointOfSaleCUL.TotalProductQuantity);
-                cmd.Parameters.AddWithValue("cost_total", pointOfSaleCUL.CostTotal);
-                cmd.Parameters.AddWithValue("gross_amount", pointOfSaleCUL.GrossAmount);
-                cmd.Parameters.AddWithValue("discount", pointOfSaleCUL.Discount);
-                cmd.Parameters.AddWithValue("sub_total", pointOfSaleCUL.SubTotal);
-                cmd.Parameters.AddWithValue("vat", pointOfSaleCUL.Vat);
-                cmd.Parameters.AddWithValue("grand_total", pointOfSaleCUL.GrandTotal);
-                cmd.Parameters.AddWithValue("added_date", pointOfSaleCUL.AddedDate);
-                cmd.Parameters.AddWithValue("added_by", pointOfSaleCUL.AddedBy);
-                cmd.Parameters.AddWithValue("id", pointOfSaleCUL.Id);//Do you really need to update the ID?
+                cmd.Parameters.AddWithValue("@payment_type_id", pointOfSaleCUL.PaymentTypeId);
+                cmd.Parameters.AddWithValue("@customer_id", pointOfSaleCUL.CustomerId);
+                cmd.Parameters.AddWithValue("@asset_id", pointOfSaleCUL.AssetId);
+                cmd.Parameters.AddWithValue("@discount", pointOfSaleCUL.Discount);
+                cmd.Parameters.AddWithValue("@vat", pointOfSaleCUL.Vat);
+                cmd.Parameters.AddWithValue("@added_date", pointOfSaleCUL.AddedDate);
+                cmd.Parameters.AddWithValue("@added_by", pointOfSaleCUL.AddedBy);
+                cmd.Parameters.AddWithValue("@id", pointOfSaleCUL.Id);//Do you really need to update the ID?
 
 
                 conn.Open();
@@ -419,6 +406,43 @@ namespace DAL
                 }
             }
         }
+        #endregion
+
+        #region GETTING SALES BY PRODUCT ID BEFORE DATE
+        public static DataTable GetSalesByProductIdBeforeDate(int productId, DateTime targetDate)
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                string sqlQuery = @"
+            SELECT pd.*, p.added_date 
+            FROM tbl_pos_detailed pd
+            INNER JOIN tbl_pos p ON pd.id_pos = p.id
+            WHERE pd.product_id = @productId AND p.added_date < @targetDate
+            ORDER BY p.added_date ASC";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@productId", productId);
+                cmd.Parameters.AddWithValue("@targetDate", targetDate);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                conn.Open();
+
+                dataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dataTable;
+        }
+
         #endregion
 
         #region CHECK RECORD EXISTANCE

@@ -54,12 +54,11 @@ namespace DAL
 
             try
             {
-                String sqlQuery = "INSERT INTO tbl_pos_detailed (id, id_pop, product_id, product_unit_id, added_by, rate, quantity, product_cost_price, product_sale_price, product_discount, product_vat) VALUES (@id, @id_pop, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price, @product_sale_price, @product_discount, @product_vat)";
+                String sqlQuery = "INSERT INTO tbl_pos_detailed (id_pos, product_id, product_unit_id, added_by, rate, quantity, product_cost_price, product_sale_price, product_discount, product_vat) VALUES (@id_pos, @product_id, @product_unit_id, @added_by, @rate, @quantity, @product_cost_price, @product_sale_price, @product_discount, @product_vat)";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-                cmd.Parameters.AddWithValue("@id", pointOfSaleDetailCUL.Id);//No incremental value in the database because there can be multiple goods with the same invoice id.
-                cmd.Parameters.AddWithValue("@id_pop", pointOfSaleDetailCUL.ProductPopId);
+                cmd.Parameters.AddWithValue("@id_pos", pointOfSaleDetailCUL.IdPos);
                 cmd.Parameters.AddWithValue("@product_id", pointOfSaleDetailCUL.IdProduct);
                 cmd.Parameters.AddWithValue("@product_unit_id", pointOfSaleDetailCUL.IdProductUnit);
                 cmd.Parameters.AddWithValue("@added_by", pointOfSaleDetailCUL.AddedBy);
@@ -234,7 +233,7 @@ namespace DAL
             {
                 DataTable dataTable = new DataTable();
 
-                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE id= " + invoiceNo + "";
+                String sqlQuery = "SELECT * FROM tbl_pos_detailed WHERE id_pos= " + invoiceNo + "";
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
                 {

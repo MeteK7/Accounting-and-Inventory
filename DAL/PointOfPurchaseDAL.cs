@@ -325,6 +325,42 @@ namespace DAL
         }
         #endregion
 
+        #region GETTING PURCHASES BY PRODUCT ID
+        public static DataTable GetPurchasesByProductId(int productId)
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                string sqlQuery = @"
+            SELECT pd.*, p.added_date
+            FROM tbl_pop_detailed pd
+            INNER JOIN tbl_pop p ON pd.id_pop = p.id
+            WHERE pd.product_id = @productId
+            ORDER BY p.added_date ASC";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@productId", productId);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                conn.Open();
+
+                dataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dataTable;
+        }
+
+        #endregion
+
         #region COUNT BY DAY METHOD
         public int CountPaymentTypeByToday(string dateFrom, string dateTo, bool cashOrCredit) //YOU HAVE THE SAME FUNCTION IN POSDAL!!!!
         {

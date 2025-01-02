@@ -37,7 +37,7 @@ namespace GUI
             colPosCustomerId="customer_id",
             colTxtProductId = "product_id",
             colTxtProductQty = "quantity",
-            colTxtPosTotalProductQuantity="total_product_quantity",
+            //colTxtPosTotalProductQuantity="total_product_quantity",
             colTxtProductCostPrice = "product_cost_price",
             colTxtProductSalePrice = "product_sale_price",
             colTxtProductDiscount="product_discount",
@@ -191,7 +191,7 @@ namespace GUI
             DataTable dtPos = PointOfSaleDAL.FetchReportByDate(dateFrom, dateTo);
             DataTable dtPosDetail;
             DataTable dtUsers,dtCustomers;
-            decimal totalCostPrice = (int)Numbers.InitialIndex, totalRevenue = (int)Numbers.InitialIndex;
+            decimal totalCostPrice = (int)Numbers.InitialIndex, totalRevenue = (int)Numbers.InitialIndex, totalProfit = (int)Numbers.InitialIndex;
             int userId,customerId;
             string userFullName,customerFullName;
             decimal productQuantity, 
@@ -205,7 +205,8 @@ namespace GUI
                     basketDiscount,
                     basketSubTotal,
                     basketVAT,
-                    basketTotalSalePrice;
+                    basketTotalSalePrice,
+                    saleProfit=(int)Numbers.InitialIndex;
 
             for (int rowIndex = (int)Numbers.InitialIndex; rowIndex < dtPos.Rows.Count; rowIndex++)
             {
@@ -224,6 +225,8 @@ namespace GUI
                 #endregion
 
                 #region INVOICE ROW POPULATING
+                productSalePrice = (int)Numbers.InitialIndex;
+                productQuantity = (int)Numbers.InitialIndex;
                 basketQuantity = (int)Numbers.InitialIndex;
                 basketGrossTotalCostPrice = (int)Numbers.InitialIndex;
                 basketGrossTotalSalePrice = (int)Numbers.InitialIndex;
@@ -241,7 +244,6 @@ namespace GUI
                     productSalePrice = Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductSalePrice]);
                     productDiscount= Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductDiscount]);
                     productVAT = Convert.ToDecimal(dtPosDetail.Rows[invoiceIndex][colTxtProductVAT]);
-
                     basketQuantity = basketQuantity+ productQuantity;
                     basketGrossTotalCostPrice =  basketGrossTotalCostPrice + (Convert.ToDecimal(productCostPrice) * Convert.ToDecimal(productQuantity));
                     basketGrossTotalSalePrice = basketGrossTotalSalePrice + (Convert.ToDecimal(productSalePrice) * Convert.ToDecimal(productQuantity));
@@ -249,6 +251,11 @@ namespace GUI
                     basketSubTotal = basketSubTotal + (productSalePrice * productQuantity) + productDiscount;
                     basketVAT = basketVAT + productVAT;
                     basketTotalSalePrice = basketTotalSalePrice + (productSalePrice * productQuantity) - productVAT + productDiscount;
+
+
+                    // Calculate profit for the sale
+                    saleProfit += CalculateProfit(Convert.ToInt32(dtPosDetail.Rows[invoiceIndex][colTxtProductId]), productQuantity, productSalePrice, Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate]));
+
                 }
 
                 lvwSales.Items.Add(
@@ -264,20 +271,74 @@ namespace GUI
                         PosGrandTotal= Convert.ToDecimal(String.Format("{0:0.00}", basketTotalSalePrice)),
                         PosCustomer=customerFullName,
                         UserFullName = userFullName,
-                        PosDate=Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate])
+                        PosDate=Convert.ToDateTime(dtPos.Rows[rowIndex][colPosDate]),
+                        Profit = saleProfit
                     });
                 #endregion
 
                 //PAYMENT SUMMARY
-                totalCostPrice = Convert.ToDecimal(totalCostPrice) + Convert.ToDecimal(basketGrossTotalCostPrice);
-                totalRevenue = Convert.ToDecimal(totalRevenue) + Convert.ToDecimal(basketTotalSalePrice);
+                totalCostPrice +=Convert.ToDecimal(basketGrossTotalCostPrice);
+                totalRevenue += Convert.ToDecimal(basketTotalSalePrice);
+                totalProfit += saleProfit;
             }
 
             #region PAYMENT RESULTS
             lblCostVar.Content = totalCostPrice.ToString("0.00");
             lblRevenueVar.Content = totalRevenue.ToString("0.00");
-            lblProfitVar.Content = (totalRevenue- totalCostPrice).ToString("0.00");
+            lblProfitVar.Content = totalProfit.ToString("0.00");
             #endregion
         }
+
+        public decimal CalculateProfit(int productId, decimal saleQuantity, decimal salePrice, DateTime targetDate)
+        {
+            decimal profit = 0m;
+            decimal remainingSaleQuantity = saleQuantity;
+
+            // Step 1: Retrieve all purchases for the product in FIFO order
+            DataTable purchaseData = PointOfPurchaseDAL.GetPurchasesByProductId(productId);
+            purchaseData.DefaultView.Sort = "added_date ASC"; // FIFO order
+
+            // Step 2: Deduct prior sales from purchases
+            DataTable priorSales = PointOfSaleDAL.GetSalesByProductIdBeforeDate(productId, targetDate);
+            foreach (DataRow sale in priorSales.Rows)
+            {
+                decimal priorSaleQuantity = Convert.ToDecimal(sale["quantity"]);
+
+                foreach (DataRow purchase in purchaseData.Rows)
+                {
+                    if (priorSaleQuantity <= 0) break;
+
+                    decimal purchaseQuantity = Convert.ToDecimal(purchase["quantity"]);
+                    if (purchaseQuantity > 0)
+                    {
+                        decimal quantityToDeduct = Math.Min(priorSaleQuantity, purchaseQuantity);
+                        purchase["quantity"] = purchaseQuantity - quantityToDeduct;
+                        priorSaleQuantity -= quantityToDeduct;
+                    }
+                }
+            }
+
+            // Step 3: Calculate profit for sales on the target date
+            foreach (DataRow purchase in purchaseData.Rows)
+            {
+                if (remainingSaleQuantity <= 0) break;
+
+                decimal purchaseQuantity = Convert.ToDecimal(purchase["quantity"]);
+                decimal purchaseCostPrice = Convert.ToDecimal(purchase["product_cost_price"]);
+
+                if (purchaseQuantity > 0)
+                {
+                    decimal quantityToUse = Math.Min(remainingSaleQuantity, purchaseQuantity);
+                    remainingSaleQuantity -= quantityToUse;
+
+                    decimal cost = quantityToUse * purchaseCostPrice;
+                    decimal revenue = quantityToUse * salePrice;
+                    profit += (revenue - cost);
+                }
+            }
+
+            return profit;
+        }
+
     }
 }
