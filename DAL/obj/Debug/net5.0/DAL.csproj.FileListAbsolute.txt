@@ -75,7 +75,6 @@ C:\DOCUMENTS\Projects\Accounting-and-Inventory\DAL\obj\Debug\net5.0\ref\DAL.dll
 C:\DOCUMENTS\Projects\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.pdb
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.deps.json
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\ref\DAL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\DAL.pdb
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\bin\Debug\net5.0\CUL.pdb
@@ -84,7 +83,9 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.Generat
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfoInputs.cache
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.AssemblyInfo.cs
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.CoreCompileInputs.cache
-C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.CopyComplete
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\ref\DAL.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.pdb
+C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.sourcelink.json
+C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\DAL.csproj.Up2Date
+C:\Lessons\C# Programs\Accounting-and-Inventory\DAL\obj\Debug\net5.0\refint\DAL.dll
