@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CUL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7db72402002876dd11753c5a615633e6cb4322d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("CUL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CUL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

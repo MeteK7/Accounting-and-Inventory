@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/0KvpDmO6cR2qC9SS7TkvbjJ02E1pCZhKuv821xjdoNlYCwaY19BQ2/5l6VoXG43jLuSqu1ULQbYvD875SscjA==",
+  "dgSpecHash": "ca1RX+HkOHs=",
   "success": true,
   "projectFilePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
   "expectedPackageFiles": [
@@ -33,5 +33,30 @@
     "C:\\Users\\MeteK\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
     "C:\\Users\\MeteK\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'System.Data.SqlClient' 4.8.3 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-8g2p-5pqh-5jmc",
+      "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+      "libraryId": "System.Data.SqlClient",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Data.SqlClient' 4.8.3 has a known high severity vulnerability, https://github.com/advisories/GHSA-98g6-xh36-x2p7",
+      "projectPath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Lessons\\C# Programs\\Accounting-and-Inventory\\DAL\\DAL.csproj",
+      "libraryId": "System.Data.SqlClient",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }

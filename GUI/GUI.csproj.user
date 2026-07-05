@@ -72,6 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\Languages\Lng.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Languages\Lng.tr.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

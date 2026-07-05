@@ -363,7 +363,10 @@
           "Microsoft.Extensions.DependencyInjection": "6.0.0"
         },
         "runtime": {
-          "CUL.dll": {}
+          "CUL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

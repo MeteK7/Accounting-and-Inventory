@@ -358,7 +358,10 @@
           "Microsoft.Extensions.DependencyInjection": "6.0.0"
         },
         "runtime": {
-          "CUL.dll": {}
+          "CUL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "DAL/1.0.0": {
@@ -372,7 +375,10 @@
           "System.Data.SqlClient": "4.8.3"
         },
         "runtime": {
-          "DAL.dll": {}
+          "DAL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

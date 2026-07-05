@@ -432,7 +432,6 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\GUI
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\GUI.runtimeconfig.json
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\GUI.runtimeconfig.dev.json
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\GUI.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\ref\GUI.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\GUI.pdb
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\tr\GUI.resources.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\bin\Debug\net5.0-windows\Microsoft.Extensions.Configuration.dll
@@ -532,8 +531,10 @@ C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.AssemblyInfo.cs
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csproj.CoreCompileInputs.cache
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\tr\GUI.resources.dll
-C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csproj.CopyComplete
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\ref\GUI.dll
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.pdb
 C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.genruntimeconfig.cache
+C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.sourcelink.json
+C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\GUI.csproj.Up2Date
+C:\Lessons\C# Programs\Accounting-and-Inventory\GUI\obj\Debug\net5.0-windows\refint\GUI.dll
