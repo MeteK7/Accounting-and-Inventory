@@ -32,6 +32,7 @@ namespace GUI
         CategoryBLL categoryBLL = new CategoryBLL();
         CategoryDAL categoryDAL = new CategoryDAL();
         ProductDAL productDAL = new ProductDAL();
+        UserDAL userDAL = new UserDAL();
 
         string searchBy=null; //Fix the naming!!!
         int initialCboIndex=-1;
@@ -61,18 +62,18 @@ namespace GUI
             for (int rowIndex = 0; rowIndex < dataTableProduct.Rows.Count; rowIndex++)
             {
                 lvwPhyInventory.Items.Add(
-                    new ProductCUL()
-                    {
-                        Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
-                        Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
-                        CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
-                        Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
-                        QuantityInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["quantity_in_stock"]),
-                        CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
-                        SalePrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["saleprice"]),
-                        AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["added_date"]),
-                        AddedBy = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["added_by"])
-                    });
+                new ProductCUL()
+                {
+                    Id = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["id"]),
+                    Name = dataTableProduct.Rows[rowIndex]["name"].ToString(),
+                    CategoryName = categoryBLL.GetCategoryName(dataTableProduct, rowIndex),
+                    Rating = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["rating"]),
+                    QuantityInStock = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["quantity_in_stock"]),
+                    CostPrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["costprice"]),
+                    SalePrice = Convert.ToDecimal(dataTableProduct.Rows[rowIndex]["saleprice"]),
+                    AddedDate = Convert.ToDateTime(dataTableProduct.Rows[rowIndex]["added_date"]),
+                    AddedByUsername = GetUsernameById(dataTableProduct, rowIndex)
+                });
             }
         }
         private void txtSearchByKeyword_TextChanged(object sender, TextChangedEventArgs e)
@@ -109,6 +110,17 @@ namespace GUI
             cboSearchByCategory.SelectedIndex = initialCboIndex;
             LoadLvwPhysicalInventory();
             canLoadListView = true;//You can now let the listview to be populated in case of any changes in the txt and cbo part.
+        }
+
+        private string GetUsernameById(DataTable dataTableProduct, int rowIndex)
+        {
+            int addedById = Convert.ToInt32(dataTableProduct.Rows[rowIndex]["added_by"]);
+
+            DataTable dataTableUserInfo = new UserDAL().GetUserInfoById(addedById);
+
+            return dataTableUserInfo.Rows[0]["first_name"].ToString()
+                + " "
+                + dataTableUserInfo.Rows[0]["last_name"].ToString();
         }
     }
 }

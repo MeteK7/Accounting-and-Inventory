@@ -78,7 +78,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding CostPrice}" Header="Cost Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding SalePrice}" Header="SalePrice" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding AddedDate}" Header="Added Date" Width="128"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding AddedBy}" Header="Added By" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding AddedByUsername}" Header="Added By" Width="170"/>
                 </GridView>
             </ListView.View>
             <ListView.Background>
